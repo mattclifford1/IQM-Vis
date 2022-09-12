@@ -27,8 +27,8 @@ def MAE(im_ref, im_comp):
 ''' can also call as a class to input default args '''
 class MSE:
     def __init__(self):
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.metric = nn.MSELoss()
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.preproccess_function = preprocess_numpy_image
 
     def __call__(self, im_ref, im_comp):
@@ -36,8 +36,31 @@ class MSE:
         im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)
         _score = self.metric(im_ref, im_comp)
         return _score.cpu().detach().numpy()
-        
 
+
+'''Example of metric image produced to display'''
+class SSIM_image:
+    def __init__(self):
+        with warnings.catch_warnings():    # we don't care about the warnings these give
+            warnings.simplefilter("ignore")
+            self.metric_image = SSIM(return_full_image=True, reduction=None)
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.preproccess_function = preprocess_numpy_image
+
+    def __call__(self, im_ref, im_comp):
+        im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
+        im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)
+        _, ssim_full_im = self.metric_image(im_ref, im_comp)
+        self.metric_image.reset()   # clear mem buffer to stop overflow
+        ssim_full_im = torch.squeeze(ssim_full_im, axis=0)
+        ssim_full_im = ssim_full_im.permute(1, 2, 0)
+        ssim_full_im = torch.clip(ssim_full_im, 0, 1)
+        return ssim_full_im.cpu().detach().numpy()
+
+
+'''
+Helper functions for metric computation
+'''
 def preprocess_numpy_image(image):
     if len(image.shape) == 2:
         image = np.expand_dims(image, axis=2)

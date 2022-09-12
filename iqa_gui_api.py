@@ -24,13 +24,15 @@ import metrics
 class make_app(QMainWindow):
     def __init__(self, app,
                 image_path,
-                metrics_dict):
+                metrics_dict,
+                metrics_image_dict):
         super().__init__()
         self.app = app
         self.image_path = image_path
         self.metrics_dict = metrics_dict
+        self.metrics_image_dict = metrics_image_dict
 
-        self.metrics = metrics.im_metrics()
+        # self.metrics = metrics.im_metrics()
         self.init_widgets()
         self.init_images()
         self.init_layout()
@@ -90,15 +92,15 @@ class make_app(QMainWindow):
                 self.widgets['label'][im_name] = QLabel(self)
                 self.widgets['label'][im_name].setAlignment(Qt.AlignmentFlag.AlignCenter)
                 self.widgets['label'][im_name].setText(im_name)
-                # self.widgets['label'][im_name].setContentsMargins(0,0,0,0)
-            # ssim images
-            ssim_name = 'SSIM('+str(im_pair)+')'
-            self.widgets['image'][ssim_name] = QLabel(self)
-            self.widgets['image'][ssim_name].setAlignment(Qt.AlignmentFlag.AlignCenter)
-            # image label
-            self.widgets['label'][ssim_name] = QLabel(self)
-            self.widgets['label'][ssim_name].setAlignment(Qt.AlignmentFlag.AlignCenter)
-            self.widgets['label'][ssim_name].setText(ssim_name)
+            # metrics images
+            for key in self.metrics_image_dict.keys():
+                metric_name = key+'('+str(im_pair)+')'
+                self.widgets['image'][metric_name] = QLabel(self)
+                self.widgets['image'][metric_name].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                # image label
+                self.widgets['label'][metric_name] = QLabel(self)
+                self.widgets['label'][metric_name].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                self.widgets['label'][metric_name].setText(metric_name)
             # metrics info
             self.widgets['label'][str(im_pair)+'_metrics'] = QLabel(self)
             self.widgets['label'][str(im_pair)+'_metrics'].setAlignment(Qt.AlignmentFlag.AlignRight)
@@ -106,13 +108,6 @@ class make_app(QMainWindow):
             self.widgets['label'][str(im_pair)+'_metrics_info'] = QLabel(self)
             self.widgets['label'][str(im_pair)+'_metrics_info'].setAlignment(Qt.AlignmentFlag.AlignLeft)
             self.widgets['label'][str(im_pair)+'_metrics_info'].setText('')
-            # error info
-            self.widgets['label'][str(im_pair)+'_errors'] = QLabel(self)
-            self.widgets['label'][str(im_pair)+'_errors'].setAlignment(Qt.AlignmentFlag.AlignRight)
-            self.widgets['label'][str(im_pair)+'_errors'].setText('Pose Errors:')
-            self.widgets['label'][str(im_pair)+'_errors_info'] = QLabel(self)
-            self.widgets['label'][str(im_pair)+'_errors_info'].setAlignment(Qt.AlignmentFlag.AlignRight)
-            self.widgets['label'][str(im_pair)+'_errors_info'].setText('')
 
         '''buttons'''
         # self.widgets['button']['load_dataset'] = QPushButton('Choose Dataset', self)
@@ -176,17 +171,15 @@ class make_app(QMainWindow):
             self.layout.addWidget(self.widgets['label'][im_pair[1]], start_im-1+im_row*(im_height+button), (im_height+button)*col, button, im_width)
             self.layout.addWidget(self.widgets['image'][im_pair[1]], start_im+im_row*(im_height+button), (im_height+button)*col, im_height, im_width)
             col += 1
-            ssim_name = 'SSIM('+str(im_pair)+')'
-            self.layout.addWidget(self.widgets['label'][ssim_name], start_im-1+im_row*(im_height+button), (im_height+button)*col, button, im_width)
-            self.layout.addWidget(self.widgets['image'][ssim_name], start_im+im_row*(im_height+button), (im_height+button)*col, im_height, im_width)
-            col += 1
+            for key in self.metrics_image_dict.keys():
+                metric_name = key+'('+str(im_pair)+')'
+                self.layout.addWidget(self.widgets['label'][metric_name], start_im-1+im_row*(im_height+button), (im_height+button)*col, button, im_width)
+                self.layout.addWidget(self.widgets['image'][metric_name], start_im+im_row*(im_height+button), (im_height+button)*col, im_height, im_width)
+                col += 1
             # metircs info
             self.layout.addWidget(self.widgets['label'][str(im_pair)+'_metrics'], start_im+im_row*(im_height+button)+1, (im_height+button)*col, button, button)
             self.layout.addWidget(self.widgets['label'][str(im_pair)+'_metrics_info'], start_im+im_row*(im_height+button)+1, (im_height+button)*col+button, im_height, button)
             col += 1
-            # errors info
-            self.layout.addWidget(self.widgets['label'][str(im_pair)+'_errors'], start_im+im_row*(im_height+button)+1, (im_height+button)*col+(button*2), button, button)
-            self.layout.addWidget(self.widgets['label'][str(im_pair)+'_errors_info'], start_im+im_row*(im_height+button)+1, (im_height+button)*col+(button*3), im_height, button)
             im_row += 1
 
         # load files
@@ -286,9 +279,11 @@ class make_app(QMainWindow):
 
     def update_image_widgets(self):
         # display images
-        for im_pair in self.im_pair_names:
-            for im_name in im_pair:
-                change_im(self.widgets['image'][im_name], self.image_data[im_name], resize=self.image_display_size)
+        for key in self.image_data.keys():
+            change_im(self.widgets['image'][key], self.image_data[key], resize=self.image_display_size)
+        # for im_pair in self.im_pair_names:
+        #     for im_name in im_pair:
+        #         change_im(self.widgets['image'][im_name], self.image_data[im_name], resize=self.image_display_size)
             # ssim_name = 'SSIM('+str(im_pair)+')'
             # change_im(self.widgets['image'][ssim_name], self.image_data[ssim_name], resize=self.image_display_size)
 
@@ -297,33 +292,18 @@ class make_app(QMainWindow):
     '''
     def compute_metrics(self):
         for im_pair in self.im_pair_names:
+            # compute metric scores
             metrics_values = {}
             for key in self.metrics_dict.keys():
                 metrics_values[key] = self.metrics_dict[key](self.image_data[im_pair[0]], self.image_data[im_pair[1]])
             self.display_metrics(metrics_values, str(im_pair))
-
-
-    def get_metrics_errors(self):
-        metrics = {}
-        for im_pair in self.im_pair_names:
-            ssim_name = 'SSIM('+str(im_pair)+')'
-            metric, ssim_full_im = self.metrics.get_metrics(self.image_data[im_pair[0]], self.image_data[im_pair[1]])
-            metrics[str(im_pair)] = metric
-            self.image_data[ssim_name] = ssim_full_im
-            # errors[str(im_pair)] = {}
-            # for im_name in im_pair:
-            #     # decide whether to use real or simulated space pose estimation
-            #     if 'Xs' in im_name or 'G' in im_name:
-            #         errors[str(im_pair)][im_name] = self.pose_esimator_sim.get_error(self.image_data[im_name], self.image_data['poses'])
-            #     else:
-            #         errors[str(im_pair)][im_name] = self.pose_esimator_real.get_error(self.image_data[im_name], self.image_data['poses'])
-
-            self.display_metrics(metrics[str(im_pair)], str(im_pair))
-            # self.display_errors(errors[str(im_pair)], str(im_pair))
+            # compute metric images
+            for key in self.metrics_image_dict.keys():
+                image_name = key +'(' + str(im_pair) + ')'
+                self.image_data[image_name] = self.metrics_image_dict[key](self.image_data[im_pair[0]], self.image_data[im_pair[1]])
 
     def display_metrics(self, metrics, label):
         text = ''
-        print(metrics)
         for key in metrics.keys():
             metric = str(metrics[key])
             metric = metric[:min(len(metric), 5)]
@@ -358,10 +338,16 @@ if __name__ == '__main__':
     parser.add_argument('--image_path', type=str, help='image file to use', default=os.path.join(os.path.expanduser('~'),'summer-project/data/Bourne/tactip/sim/surface_3d/tap/128x128/csv_train/images/image_1.png'))
     args = parser.parse_args()
 
+    # metrics functions must return a single value
     metrics_dict = {'MAE': metrics.MAE}
+    # metrics images return a numpy image
+    metrics_image_dict = {'SSIM': metrics.SSIM_image(),
+                          'SSIM2': metrics.SSIM_image()}
 
     app = QApplication(sys.argv)
-    window = make_app(app, args.image_path, metrics_dict)
+    window = make_app(app, args.image_path,
+                           metrics_dict,
+                           metrics_image_dict)
 
 
     sys.exit(app.exec())
