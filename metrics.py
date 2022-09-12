@@ -15,6 +15,29 @@ from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity as LPI
 
 from expert.pyramids import LaplacianPyramid
 
+''' simple functional format to call a metric '''
+def MAE(im_ref, im_comp):
+    metric = nn.L1Loss()
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    im_ref = preprocess_numpy_image(im_ref).to(device=device, dtype=torch.float)
+    im_comp = preprocess_numpy_image(im_comp).to(device=device, dtype=torch.float)
+    _score = metric(im_ref, im_comp)
+    return _score.cpu().detach().numpy()
+
+''' can also call as a class to input default args '''
+class MSE:
+    def __init__(self):
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.metric = nn.MSELoss()
+        self.preproccess_function = preprocess_numpy_image
+
+    def __call__(self, im_ref, im_comp):
+        im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
+        im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)
+        _score = self.metric(im_ref, im_comp)
+        return _score.cpu().detach().numpy()
+        
+
 def preprocess_numpy_image(image):
     if len(image.shape) == 2:
         image = np.expand_dims(image, axis=2)
@@ -34,6 +57,7 @@ class grey_to_3_channel_input():
         if x2.shape[1] == 1:
             x2 = torch.cat([x2, x2, x2], dim=1)
         return self.func(x1, x2)
+
 
 class im_metrics():
     def __init__(self):

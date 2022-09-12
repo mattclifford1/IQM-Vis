@@ -23,10 +23,12 @@ import metrics
 
 class make_app(QMainWindow):
     def __init__(self, app,
-                image_path):
+                image_path,
+                metrics_dict):
         super().__init__()
         self.app = app
         self.image_path = image_path
+        self.metrics_dict = metrics_dict
 
         self.metrics = metrics.im_metrics()
         self.init_widgets()
@@ -269,7 +271,8 @@ class make_app(QMainWindow):
 
     def display_images(self):
         self.get_image_data()
-        self.get_metrics_errors()
+        self.compute_metrics()
+        # self.get_metrics_errors()
         self.update_image_widgets()
 
     def _display_images_quick(self):
@@ -286,15 +289,22 @@ class make_app(QMainWindow):
         for im_pair in self.im_pair_names:
             for im_name in im_pair:
                 change_im(self.widgets['image'][im_name], self.image_data[im_name], resize=self.image_display_size)
-            ssim_name = 'SSIM('+str(im_pair)+')'
-            change_im(self.widgets['image'][ssim_name], self.image_data[ssim_name], resize=self.image_display_size)
+            # ssim_name = 'SSIM('+str(im_pair)+')'
+            # change_im(self.widgets['image'][ssim_name], self.image_data[ssim_name], resize=self.image_display_size)
 
     '''
     metrics/error info updaters
     '''
+    def compute_metrics(self):
+        for im_pair in self.im_pair_names:
+            metrics_values = {}
+            for key in self.metrics_dict.keys():
+                metrics_values[key] = self.metrics_dict[key](self.image_data[im_pair[0]], self.image_data[im_pair[1]])
+            self.display_metrics(metrics_values, str(im_pair))
+
+
     def get_metrics_errors(self):
         metrics = {}
-        errors = {}
         for im_pair in self.im_pair_names:
             ssim_name = 'SSIM('+str(im_pair)+')'
             metric, ssim_full_im = self.metrics.get_metrics(self.image_data[im_pair[0]], self.image_data[im_pair[1]])
@@ -313,8 +323,9 @@ class make_app(QMainWindow):
 
     def display_metrics(self, metrics, label):
         text = ''
+        print(metrics)
         for key in metrics.keys():
-            metric = str(metrics[key][0])
+            metric = str(metrics[key])
             metric = metric[:min(len(metric), 5)]
             text += key + ': ' + metric + '\n'
         self.widgets['label'][label+'_metrics_info'].setText(text)
@@ -347,8 +358,10 @@ if __name__ == '__main__':
     parser.add_argument('--image_path', type=str, help='image file to use', default=os.path.join(os.path.expanduser('~'),'summer-project/data/Bourne/tactip/sim/surface_3d/tap/128x128/csv_train/images/image_1.png'))
     args = parser.parse_args()
 
+    metrics_dict = {'MAE': metrics.MAE}
+
     app = QApplication(sys.argv)
-    window = make_app(app, args.image_path)
+    window = make_app(app, args.image_path, metrics_dict)
 
 
     sys.exit(app.exec())
