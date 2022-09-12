@@ -25,12 +25,14 @@ class make_app(QMainWindow):
     def __init__(self, app,
                 image_paths,
                 metrics_dict,
-                metrics_image_dict):
+                metrics_image_dict,
+                transformations):
         super().__init__()
         self.app = app
         self.image_paths = image_paths
         self.metrics_dict = metrics_dict
         self.metrics_image_dict = metrics_image_dict
+        self.transformations = transformations
 
         # self.metrics = metrics.im_metrics()
         self.init_images()
@@ -66,15 +68,12 @@ class make_app(QMainWindow):
         '''
         create all the widgets we need and init params
         '''
-        # define what sliders we are using
-        self.sliders = {
-                   'rotation':{'min':-180, 'max':180, 'init_value':0, 'value_change':[partial(self.generic_value_change, 'rotation', normalise=None), self.display_images], 'release': [self.display_images]},
-                   'blur':{'min':0, 'max':40, 'init_value':0, 'value_change':[partial(self.generic_value_change, 'blur', normalise='odd')], 'release': [self.display_images]},
-                   'brightness':{'min':-255, 'max':255, 'init_value':0, 'value_change':[partial(self.generic_value_change, 'brightness', normalise=255)], 'release': [self.display_images]},
-                   'zoom':{'min':10, 'max':400, 'init_value':100, 'value_change':[partial(self.generic_value_change, 'zoom', normalise=100), self.display_images], 'release': [self.display_images]},
-                   'x_shift':{'min':-100, 'max':100, 'init_value':0, 'value_change':[partial(self.generic_value_change, 'x_shift', normalise=100), self.display_images], 'release': [self.display_images]},
-                   'y_shift':{'min':-100, 'max':100, 'init_value':0, 'value_change':[partial(self.generic_value_change, 'y_shift', normalise=100), self.display_images], 'release': [self.display_images]},
-                   }
+        # define what sliders we are using from image transformations
+        self.sliders = {}
+        for key in self.transformations.keys():
+            self.sliders[key] = self.transformations[key]
+            self.sliders[key]['value_change'] = [partial(self.generic_value_change, key, normalise=self.transformations[key]['normalise']), self.display_images]
+            self.sliders[key]['release'] = [self.display_images]
 
         # widget dictionary store
         self.widgets = {'button': {}, 'slider': {}, 'checkbox': {}, 'label': {}, 'image':{}}
@@ -339,10 +338,21 @@ if __name__ == '__main__':
     metrics_image_dict = {'SSIM': metrics.SSIM_image(),
                           'SSIM2': metrics.SSIM_image()}
 
+    transformations = {
+               'rotation':{'min':-180, 'max':180, 'init_value':0, 'normalise':None},
+               'blur':{'min':0, 'max':40, 'init_value':0, 'normalise':'odd'},
+               'brightness':{'min':-255, 'max':255, 'init_value':0, 'normalise':255},
+               'zoom':{'min':10, 'max':400, 'init_value':100, 'normalise':100},
+               'x_shift':{'min':-100, 'max':100, 'init_value':0, 'normalise':100},
+               'y_shift':{'min':-100, 'max':100, 'init_value':0, 'normalise':100},
+               }
+
+
     app = QApplication(sys.argv)
     window = make_app(app,
                       image_paths,
                       metrics_dict,
-                      metrics_image_dict)
+                      metrics_image_dict,
+                      transformations)
 
     sys.exit(app.exec())
