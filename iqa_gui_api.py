@@ -23,18 +23,18 @@ import metrics
 
 class make_app(QMainWindow):
     def __init__(self, app,
-                image_path,
+                image_paths,
                 metrics_dict,
                 metrics_image_dict):
         super().__init__()
         self.app = app
-        self.image_path = image_path
+        self.image_paths = image_paths
         self.metrics_dict = metrics_dict
         self.metrics_image_dict = metrics_image_dict
 
         # self.metrics = metrics.im_metrics()
-        self.init_widgets()
         self.init_images()
+        self.init_widgets()
         self.init_layout()
 
         self.image_display_size = (175, 175)
@@ -53,11 +53,14 @@ class make_app(QMainWindow):
 
         # load images
         self.image_data = {}
-        if os.path.exists(self.image_path):
-            self.image_data['X'] = image_loader(self.image_path)
-        else:
-            print('Cannot find image file: ', self.image_path)
-            self.image_data['X'] = np.zeros([128, 128, 1], dtype=np.uint8)
+        self.im_pair_names = []
+        for key in self.image_paths.keys():
+            if os.path.exists(self.image_paths[key]):
+                self.image_data[key] = image_loader(self.image_paths[key])
+            else:
+                print('Cannot find image file: ', self.image_paths[key])
+                self.image_data[key] = np.zeros([128, 128, 1], dtype=np.uint8)
+            self.im_pair_names.append((key, 'T('+key+')'))
 
     def init_widgets(self):
         '''
@@ -73,14 +76,6 @@ class make_app(QMainWindow):
                    'y_shift':{'min':-100, 'max':100, 'init_value':0, 'value_change':[partial(self.generic_value_change, 'y_shift', normalise=100), self.display_images], 'release': [self.display_images]},
                    }
 
-        '''images'''
-        # set up layout of images
-        self.im_pair_names = [
-                              # ('Xr', 'T(Xr)'),
-                              ('X', 'T(X)'),
-                              # ('G(Xr)', 'T(G(Xr))'),
-                              # ('G(T(Xr))', 'T(G(Xr))_'),
-                              ]
         # widget dictionary store
         self.widgets = {'button': {}, 'slider': {}, 'checkbox': {}, 'label': {}, 'image':{}}
         for im_pair in self.im_pair_names:
@@ -275,7 +270,8 @@ class make_app(QMainWindow):
 
     def get_image_data(self):
         # get transformed images
-        self.image_data['T(X)'] = self.transform_image(self.image_data['X'])
+        for key in self.image_paths.keys():
+            self.image_data['T('+key+')'] = self.transform_image(self.image_data[key])
 
     def update_image_widgets(self):
         # display images
@@ -310,12 +306,6 @@ class make_app(QMainWindow):
             text += key + ': ' + metric + '\n'
         self.widgets['label'][label+'_metrics_info'].setText(text)
 
-    def display_errors(self, errors_dict, label):
-        text = ''
-        for key in errors_dict.keys():
-            text += key + ': ' + str(errors_dict[key]['MAE'][0])[:5] + '\n'
-        self.widgets['label'][label+'_errors_info'].setText(text)
-
     '''
     utils
     '''
@@ -335,19 +325,24 @@ def image_loader(im_path):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--image_path', type=str, help='image file to use', default=os.path.join(os.path.expanduser('~'),'summer-project/data/Bourne/tactip/sim/surface_3d/tap/128x128/csv_train/images/image_1.png'))
+    parser.add_argument('--image_path1', type=str, help='image file to use', default=os.path.join(os.path.expanduser('~'),'summer-project/data/Bourne/tactip/sim/surface_3d/tap/128x128/csv_train/images/image_1.png'))
+    parser.add_argument('--image_path2', type=str, help='image file to use', default=os.path.join(os.path.expanduser('~'),'summer-project/data/Bourne/tactip/sim/surface_3d/tap/128x128/csv_train/images/image_1.png'))
     args = parser.parse_args()
 
+    image_paths = {'X1': args.image_path1,
+                   'X2': args.image_path2}
+
     # metrics functions must return a single value
-    metrics_dict = {'MAE': metrics.MAE}
+    metrics_dict = {'MAE': metrics.MAE,
+                    'MSE': metrics.MSE()}
     # metrics images return a numpy image
     metrics_image_dict = {'SSIM': metrics.SSIM_image(),
                           'SSIM2': metrics.SSIM_image()}
 
     app = QApplication(sys.argv)
-    window = make_app(app, args.image_path,
-                           metrics_dict,
-                           metrics_image_dict)
-
+    window = make_app(app,
+                      image_paths,
+                      metrics_dict,
+                      metrics_image_dict)
 
     sys.exit(app.exec())
