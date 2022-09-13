@@ -4,7 +4,7 @@ from PyQt6.QtWidgets import QApplication
 import numpy as np
 from skimage.util import img_as_ubyte
 from skimage.transform import resize
-
+import image_utils
 
 '''
 image helper functions
@@ -29,7 +29,24 @@ def change_im(widget, im, resize=False, return_qimage=False):
                     # QImage.Format_RGB888)  # PyQt5
     pixmap = QPixmap(qimage)
     widget.setPixmap(pixmap)
-    # qApp.processEvents()   # force to change other UI wont respond
     QApplication.processEvents()   # force to change other UI wont respond
     if return_qimage:
         return qimage
+
+def image_loader(im_path):
+    return image_utils.load_image(im_path)
+
+
+'''
+text utils
+'''
+
+def str_to_len(string, length=5, append_char='0', plus=False):
+    # cut string to length, or append character to make to length
+    if string[0] !=  '-' and plus == True:
+        string = '+' + string
+    if len(string) > length:
+        string = string[:length]
+    elif len(string) < length:
+        string = string + append_char*(length-len(string))
+    return string

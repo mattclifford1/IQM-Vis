@@ -15,19 +15,26 @@ from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity as LPI
 
 from expert.pyramids import LaplacianPyramid
 
-''' simple functional format to call a metric '''
+''' simple functional format to call a metric (numpy)'''
 def MAE(im_ref, im_comp):
-    metric = nn.L1Loss()
+    L1 = np.abs(im_ref - im_comp)
+    return L1.mean()
+
+''' functional (using torch)'''
+def MSE(im_ref, im_comp):
+    metric = nn.MSELoss()
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     im_ref = preprocess_numpy_image(im_ref).to(device=device, dtype=torch.float)
     im_comp = preprocess_numpy_image(im_comp).to(device=device, dtype=torch.float)
     _score = metric(im_ref, im_comp)
     return _score.cpu().detach().numpy()
 
-''' can also call as a class to input default args '''
-class MSE:
+''' can also call as a class to input default args (using torch)'''
+class ssim:
     def __init__(self):
-        self.metric = nn.MSELoss()
+        with warnings.catch_warnings():    # we don't care about the warnings these give
+            warnings.simplefilter("ignore")
+            self.metric = SSIM()
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.preproccess_function = preprocess_numpy_image
 
@@ -38,7 +45,12 @@ class MSE:
         return _score.cpu().detach().numpy()
 
 
-'''Example of metric image produced to display'''
+'''Example of metric image produced to display (using numpy)'''
+def MSE_image(im_ref, im_comp):
+    L2 = (im_ref - im_comp)**2
+    return L2
+
+'''Example of metric image produced to display (using torch metrics)'''
 class SSIM_image:
     def __init__(self):
         with warnings.catch_warnings():    # we don't care about the warnings these give
