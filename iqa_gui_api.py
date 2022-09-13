@@ -36,6 +36,7 @@ class make_app(QMainWindow):
 
         # self.metrics = metrics.im_metrics()
         self.init_images()
+        self.init_transforms()
         self.init_widgets()
         self.init_layout()
 
@@ -64,17 +65,27 @@ class make_app(QMainWindow):
                 self.image_data[key] = np.zeros([128, 128, 1], dtype=np.uint8)
             self.im_pair_names.append((key, 'T('+key+')'))
 
+    def init_transforms(self):
+            # define what sliders we are using from image transformations
+        self.sliders = {}
+        for key in self.transformations.keys():
+            self.sliders[key] = self.transformations[key]
+            self.sliders[key]['release'] = [self.display_images]
+            if 'normalise' not in self.transformations[key].keys():
+                self.sliders[key]['normalise'] = None
+            self.sliders[key]['value_change'] = [partial(self.generic_value_change, key), self.display_images]
+            if 'num_values' not in self.transformations[key].keys():
+                self.sliders[key]['num_values'] = 21   # make default value for steps in slider range
+            self.sliders[key]['values'] = np.linspace(self.sliders[key]['min'], self.sliders[key]['max'], self.sliders[key]['num_values'])
+            if self.transformations[key]['normalise'] == 'odd':
+                self.sliders[key]['values'] = self.sliders[key]['values'][self.sliders[key]['values']%2 == 1]
+                self.sliders[key]['num_values'] = len(self.sliders[key]['values'])
+            self.sliders[key]['init_ind'] = np.searchsorted(self.sliders[key]['values'], self.transformations[key]['init_value'], side='left')
+
     def init_widgets(self):
         '''
         create all the widgets we need and init params
         '''
-        # define what sliders we are using from image transformations
-        self.sliders = {}
-        for key in self.transformations.keys():
-            self.sliders[key] = self.transformations[key]
-            self.sliders[key]['value_change'] = [partial(self.generic_value_change, key, normalise=self.transformations[key]['normalise']), self.display_images]
-            self.sliders[key]['release'] = [self.display_images]
-
         # widget dictionary store
         self.widgets = {'button': {}, 'slider': {}, 'checkbox': {}, 'label': {}, 'image':{}}
         for im_pair in self.im_pair_names:
@@ -115,20 +126,20 @@ class make_app(QMainWindow):
         self.widgets['button']['next'].clicked.connect(self.load_next_image)
         self.widgets['button']['reset_sliders'] = QPushButton('Reset', self)
         self.widgets['button']['reset_sliders'].clicked.connect(self.reset_sliders)
-        self.widgets['button']['force_update'] = QPushButton('Update', self)
+        self.widgets['button']['force_update'] = QPushButton('Force Update', self)
         self.widgets['button']['force_update'].clicked.connect(self.display_images)
 
         '''sliders'''
         self.im_trans_params = {}
         for key in self.sliders.keys():
             self.widgets['slider'][key] = QSlider(Qt.Orientation.Horizontal)
-            self.widgets['slider'][key].setMinimum(self.sliders[key]['min'])
-            self.widgets['slider'][key].setMaximum(self.sliders[key]['max'])
+            self.widgets['slider'][key].setMinimum(0)
+            self.widgets['slider'][key].setMaximum(self.sliders[key]['num_values']-1)
             for func in self.sliders[key]['value_change']:
                 self.widgets['slider'][key].valueChanged.connect(func)
             for func in self.sliders[key]['release']:
                 self.widgets['slider'][key].sliderReleased.connect(func)
-            self.im_trans_params[key] = self.sliders[key]['init_value']
+            self.im_trans_params[key] = self.sliders[key]['init_ind']
             self.widgets['label'][key] = QLabel(self)
             self.widgets['label'][key].setAlignment(Qt.AlignmentFlag.AlignRight)
             self.widgets['label'][key].setText(key+':')
@@ -227,27 +238,20 @@ class make_app(QMainWindow):
         self.display_images()
 
     # sliders value changes
-    def generic_value_change(self, key, normalise=None):
-        if normalise == 'odd':
-            self.im_trans_params[key] = (int(self.widgets['slider'][key].value()/2)*2) + 1    # need to make kernel size odd
-            if self.im_trans_params[key] == 1:
-                self.im_trans_params[key] = 0
-        else:
-            self.im_trans_params[key] = self.widgets['slider'][key].value()
-        if type(normalise) is int:
-            self.im_trans_params[key] = self.im_trans_params[key]/normalise
+    def generic_value_change(self, key):
+        index = self.widgets['slider'][key].value()
+        self.im_trans_params[key] = self.sliders[key]['values'][index]
+        self.display_slider_num(key) # display the new value ont UI
+
+    def display_slider_num(self, key, disp_len=5):
         # display the updated value
         value_str = str(self.im_trans_params[key])
-        disp_len = 4
-        if len(value_str) > disp_len:
-            value_str = value_str[:disp_len]
-        elif len(value_str) < disp_len:
-            value_str = ' '*(disp_len-len(value_str)) + value_str
+        value_str = str_to_len(value_str, disp_len, '0', plus=True)
         self.widgets['label'][key+'_value'].setText(value_str)
 
     def reset_sliders(self):
         for key in self.sliders.keys():
-            self.widgets['slider'][key].setValue(self.sliders[key]['init_value'])
+            self.widgets['slider'][key].setValue(self.sliders[key]['init_ind'])
         self.display_images()
 
     '''
@@ -297,11 +301,10 @@ class make_app(QMainWindow):
                 image_name = key +'(' + str(im_pair) + ')'
                 self.image_data[image_name] = self.metrics_image_dict[key](self.image_data[im_pair[0]], self.image_data[im_pair[1]])
 
-    def display_metrics(self, metrics, label):
+    def display_metrics(self, metrics, label, disp_len=5):
         text = ''
         for key in metrics.keys():
-            metric = str(metrics[key])
-            metric = metric[:min(len(metric), 5)]
+            metric = str_to_len(str(metrics[key]), disp_len, '0')
             text += key + ': ' + metric + '\n'
         self.widgets['label'][label+'_metrics_info'].setText(text)
 
@@ -316,6 +319,15 @@ class make_app(QMainWindow):
         self.load_sim_image()
         self.load_real_image()
 
+def str_to_len(string, length=5, append_char='0', plus=False):
+    # cut string to length, or append character to make to length
+    if string[0] !=  '-' and plus == True:
+        string = '+' + string
+    if len(string) > length:
+        string = string[:length]
+    elif len(string) < length:
+        string = string + append_char*(length-len(string))
+    return string
 
 def image_loader(im_path):
     im = load_image(im_path)
@@ -339,12 +351,12 @@ if __name__ == '__main__':
                           'SSIM2': metrics.SSIM_image()}
 
     transformations = {
-               'rotation':{'min':-180, 'max':180, 'init_value':0, 'normalise':None},
+               'rotation':{'min':-180, 'max':180, 'init_value':0},
                'blur':{'min':0, 'max':40, 'init_value':0, 'normalise':'odd'},
-               'brightness':{'min':-255, 'max':255, 'init_value':0, 'normalise':255},
-               'zoom':{'min':10, 'max':400, 'init_value':100, 'normalise':100},
-               'x_shift':{'min':-100, 'max':100, 'init_value':0, 'normalise':100},
-               'y_shift':{'min':-100, 'max':100, 'init_value':0, 'normalise':100},
+               'brightness':{'min':-1, 'max':1, 'init_value':0},
+               'zoom':{'min':0.5, 'max':2, 'init_value':1, 'num_values': 31},
+               'x_shift':{'min':-0.5, 'max':0.5, 'init_value':0},
+               'y_shift':{'min':-0.5, 'max':0.5, 'init_value':0},
                }
 
 
