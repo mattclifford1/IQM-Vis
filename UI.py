@@ -1,40 +1,29 @@
 import sys
-import argparse
 from functools import partial
 import os
-import pandas as pd
+# import pandas as pd
 
-import cv2
 import numpy as np
 from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QInputDialog, QLineEdit, QMenu, QFileDialog, QPushButton, QGridLayout, QLabel, QSlider, QComboBox, QCheckBox
-# from PyQt6.QtGui import QImage, QColor
 from PyQt6.QtCore import Qt
 
-from PyQt6.QtGui import QPainter, QBrush
-from PyQt6.QtWidgets import QStyle, QStyleOptionSlider
-from PyQt6.QtCore import QRect, QPoint, Qt
-
-import sys; sys.path.append('..'); sys.path.append('.')
-from image_utils import load_image
-from gui_utils import change_im
-import image_utils
-# import networks
-import metrics
+import gui_utils
 
 class make_app(QMainWindow):
     def __init__(self, app,
                 image_paths,
                 metrics_dict,
                 metrics_image_dict,
-                transformations):
+                transformations,
+                image_loader=gui_utils.image_loader):
         super().__init__()
         self.app = app
         self.image_paths = image_paths
         self.metrics_dict = metrics_dict
         self.metrics_image_dict = metrics_image_dict
         self.transformations = transformations
+        self.image_loader = image_loader
 
-        # self.metrics = metrics.im_metrics()
         self.init_images()
         self.init_transforms()
         self.init_widgets()
@@ -59,7 +48,7 @@ class make_app(QMainWindow):
         self.im_pair_names = []
         for key in self.image_paths.keys():
             if os.path.exists(self.image_paths[key]):
-                self.image_data[key] = image_loader(self.image_paths[key])
+                self.image_data[key] = self.image_loader(self.image_paths[key])
             else:
                 print('Cannot find image file: ', self.image_paths[key])
                 self.image_data[key] = np.zeros([128, 128, 1], dtype=np.uint8)
@@ -122,13 +111,13 @@ class make_app(QMainWindow):
         '''buttons'''
         # self.widgets['button']['load_dataset'] = QPushButton('Choose Dataset', self)
         # self.widgets['button']['load_dataset'].clicked.connect(self.choose_dataset)
-        self.widgets['button']['prev'] = QPushButton('<', self)
-        self.widgets['button']['prev'].clicked.connect(self.load_prev_image)
-        self.widgets['label']['filename'] = QLabel(self)
-        self.widgets['label']['filename'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.widgets['label']['filename'].setText('')
-        self.widgets['button']['next'] = QPushButton('>', self)
-        self.widgets['button']['next'].clicked.connect(self.load_next_image)
+        # self.widgets['button']['prev'] = QPushButton('<', self)
+        # self.widgets['button']['prev'].clicked.connect(self.load_prev_image)
+        # self.widgets['label']['filename'] = QLabel(self)
+        # self.widgets['label']['filename'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+        # self.widgets['label']['filename'].setText('')
+        # self.widgets['button']['next'] = QPushButton('>', self)
+        # self.widgets['button']['next'].clicked.connect(self.load_next_image)
         self.widgets['button']['reset_sliders'] = QPushButton('Reset', self)
         self.widgets['button']['reset_sliders'].clicked.connect(self.reset_sliders)
         self.widgets['button']['force_update'] = QPushButton('Force Update', self)
@@ -196,9 +185,9 @@ class make_app(QMainWindow):
         # self.layout.addWidget(self.widgets['button']['load_dataset'], im_height, 1, 1, 1)
 
         # image buttons (prev, copy, next, etc.)
-        self.layout.addWidget(self.widgets['button']['prev'], start_im+im_row*(im_height+button), 1, button, int(im_width*0.66))
-        self.layout.addWidget(self.widgets['label']['filename'], start_im+im_row*(im_height+button), int(im_width*0.66)+1, button, int(im_width*0.66))
-        self.layout.addWidget(self.widgets['button']['next'], start_im+im_row*(im_height+button), int(im_width*0.66)*2+1, button, int(im_width*0.66))
+        # self.layout.addWidget(self.widgets['button']['prev'], start_im+im_row*(im_height+button), 1, button, int(im_width*0.66))
+        # self.layout.addWidget(self.widgets['label']['filename'], start_im+im_row*(im_height+button), int(im_width*0.66)+1, button, int(im_width*0.66))
+        # self.layout.addWidget(self.widgets['button']['next'], start_im+im_row*(im_height+button), int(im_width*0.66)*2+1, button, int(im_width*0.66))
         # self.layout.addWidget(self.button_copy_im, 0, 1, 1, 1)
 
         i = (im_height+button)*im_row+button+start_im
@@ -251,7 +240,7 @@ class make_app(QMainWindow):
     def display_slider_num(self, key, disp_len=5):
         # display the updated value
         value_str = str(self.im_trans_params[key])
-        value_str = str_to_len(value_str, disp_len, '0', plus=True)
+        value_str = gui_utils.str_to_len(value_str, disp_len, '0', plus=True)
         self.widgets['label'][key+'_value'].setText(value_str)
 
     def reset_sliders(self):
@@ -286,12 +275,12 @@ class make_app(QMainWindow):
     def update_image_widgets(self):
         # display images
         for key in self.image_data.keys():
-            change_im(self.widgets['image'][key], self.image_data[key], resize=self.image_display_size)
+            gui_utils.change_im(self.widgets['image'][key], self.image_data[key], resize=self.image_display_size)
         # for im_pair in self.im_pair_names:
         #     for im_name in im_pair:
-        #         change_im(self.widgets['image'][im_name], self.image_data[im_name], resize=self.image_display_size)
+        #         gui_utils.change_im(self.widgets['image'][im_name], self.image_data[im_name], resize=self.image_display_size)
             # ssim_name = 'SSIM('+str(im_pair)+')'
-            # change_im(self.widgets['image'][ssim_name], self.image_data[ssim_name], resize=self.image_display_size)
+            # gui_utils.change_im(self.widgets['image'][ssim_name], self.image_data[ssim_name], resize=self.image_display_size)
 
     '''
     metrics/error info updaters
@@ -311,40 +300,30 @@ class make_app(QMainWindow):
     def display_metrics(self, metrics, label, disp_len=5):
         text = ''
         for key in metrics.keys():
-            metric = str_to_len(str(metrics[key]), disp_len, '0')
+            metric = gui_utils.str_to_len(str(metrics[key]), disp_len, '0')
             text += key + ': ' + metric + '\n'
         self.widgets['label'][label+'_metrics_info'].setText(text)
 
-    '''
-    utils
-    '''
-    def load_dataset(self, csv_file):
-        self.df = pd.read_csv(csv_file)
-        self.im_num = 0   # row of csv dataset to use
-        self.im_sim_dir = os.path.join(os.path.dirname(csv_file), 'images')
-        self.im_real_dir = os.path.join(os.path.dirname(image_utils.get_real_csv_given_sim(csv_file)), 'images')
-        self.load_sim_image()
-        self.load_real_image()
-
-def str_to_len(string, length=5, append_char='0', plus=False):
-    # cut string to length, or append character to make to length
-    if string[0] !=  '-' and plus == True:
-        string = '+' + string
-    if len(string) > length:
-        string = string[:length]
-    elif len(string) < length:
-        string = string + append_char*(length-len(string))
-    return string
-
-def image_loader(im_path):
-    im = load_image(im_path)
-    return image_utils.process_im(im, data_type='sim')
+    # '''
+    # utils
+    # '''
+    # def load_dataset(self, csv_file):
+    #     self.df = pd.read_csv(csv_file)
+    #     self.im_num = 0   # row of csv dataset to use
+    #     self.im_sim_dir = os.path.join(os.path.dirname(csv_file), 'images')
+    #     self.im_real_dir = os.path.join(os.path.dirname(image_utils.get_real_csv_given_sim(csv_file)), 'images')
+    #     self.load_sim_image()
+    #     self.load_real_image()
 
 
 if __name__ == '__main__':
+    import argparse
+    import sys
+    import metrics
+    import image_utils
     parser = argparse.ArgumentParser()
     parser.add_argument('--image_path1', type=str, help='image file to use', default=os.path.join(os.path.expanduser('~'),'summer-project/data/Bourne/tactip/sim/surface_3d/tap/128x128/csv_train/images/image_1.png'))
-    parser.add_argument('--image_path2', type=str, help='image file to use', default=os.path.join(os.path.expanduser('~'),'summer-project/data/Bourne/tactip/sim/surface_3d/tap/128x128/csv_train/images/image_1.png'))
+    parser.add_argument('--image_path2', type=str, help='image file to use', default=os.path.join(os.path.expanduser('~'),'summer-project/data/Bourne/tactip/sim/edge_2d/tap/128x128/csv_train/images/image_15.png'))
     args = parser.parse_args()
 
     image_paths = {'X1': args.image_path1,
@@ -354,8 +333,8 @@ if __name__ == '__main__':
     metrics_dict = {'MAE': metrics.MAE,
                     'MSE': metrics.MSE()}
     # metrics images return a numpy image
-    metrics_image_dict = {'SSIM': metrics.SSIM_image(),
-                          'SSIM2': metrics.SSIM_image()}
+    metrics_image_dict = {'MSE': metrics.MSE_image,
+                          'SSIM': metrics.SSIM_image()}
 
     transformations = {
                'rotation':{'min':-180, 'max':180, 'init_value':0, 'function':image_utils.rotation},    # normal input
@@ -367,11 +346,11 @@ if __name__ == '__main__':
                }
 
 
+    # make GUI app
     app = QApplication(sys.argv)
     window = make_app(app,
                       image_paths,
                       metrics_dict,
                       metrics_image_dict,
                       transformations)
-
     sys.exit(app.exec())

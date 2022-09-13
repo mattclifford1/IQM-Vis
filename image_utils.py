@@ -5,7 +5,13 @@ import numpy as np
 
 
 def load_image(image_path):
-    return cv2.imread(image_path)
+    image = cv2.imread(image_path)
+    # Convert to gray scale
+    # image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # Add channel axis
+    # image = image[..., np.newaxis]
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    return image.astype(np.float32) / 255.0
 
 def load_and_crop_raw_real(image_path):
     image = cv2.imread(image_path)
