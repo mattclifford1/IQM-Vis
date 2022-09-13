@@ -28,7 +28,7 @@ api.make_UI(image_path, metric, metric_im, trans)
 ## Additional items
 Add more entries to the dictionaries to include extra items examples found [here](examples/multiple.py)
 
-![Alt text](images/ui-mutli.png?raw=true "Multi UI")
+![Alt text](images/ui-multi.png?raw=true "Multi UI")
 
 
 ## Installation (todo: `setup.py` and pypi)
