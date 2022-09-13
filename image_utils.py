@@ -51,32 +51,30 @@ def get_real_csv_given_sim(sim_csv):
     else:
         return sim_csv
 
-def transform_image(image, params_dict={}):
-    if 'rotation' in params_dict.keys():
-        image = rotate(image, params_dict['rotation'])
+def rotation(image, param):
+    return rotate(image, param)
 
-    if 'blur' in params_dict.keys():
-        if params_dict['blur'] > 0:
-            blur_odd = (int(params_dict['blur']/2)*2) + 1    # need to make kernel size odd
-            image = cv2.GaussianBlur(image,(blur_odd, blur_odd), cv2.BORDER_DEFAULT)
-            if len(image.shape) == 2:
-                image = np.expand_dims(image, axis=2)
-
-    if 'zoom' in params_dict.keys():
-        image = zoom_image(image, params_dict['zoom'])
-
-    if 'x_shift' in params_dict.keys() and 'y_shift' in params_dict.keys():
-        image = translate_image(image, params_dict['x_shift'], params_dict['y_shift'])
-    elif 'x_shift' in params_dict.keys():
-        image = translate_image(image, params_dict['x_shift'], 0)
-    elif 'y_shift' in params_dict.keys():
-        image = translate_image(image, 0, params_dict['y_shift'])
-
-
-    if 'brightness' in params_dict.keys():
-        image = np.clip(image + params_dict['brightness'], 0, 1)
-
+def blur(image, param):
+    if param == 1:
+        return image
+    elif param > 0:
+        blur_odd = (int(param/2)*2) + 1    # need to make kernel size odd
+        image = cv2.GaussianBlur(image,(blur_odd, blur_odd), cv2.BORDER_DEFAULT)
+        if len(image.shape) == 2:
+            image = np.expand_dims(image, axis=2)
     return image
+
+def zoom(image, param):
+    return zoom_image(image, param)
+
+def x_shift(image, param):
+    return translate_image(image, param, 0)
+
+def y_shift(image, param):
+    return translate_image(image, 0, param)
+
+def brightness(image, param):
+    return np.clip(image + param, 0, 1)
 
 def translate_image(image, x_shift, y_shift):
     ''' x and y shift in range (-1, 1)'''

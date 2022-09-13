@@ -69,17 +69,22 @@ class make_app(QMainWindow):
             # define what sliders we are using from image transformations
         self.sliders = {}
         for key in self.transformations.keys():
-            self.sliders[key] = self.transformations[key]
+            self.sliders[key] = {}
             self.sliders[key]['release'] = [self.display_images]
-            if 'normalise' not in self.transformations[key].keys():
-                self.sliders[key]['normalise'] = None
             self.sliders[key]['value_change'] = [partial(self.generic_value_change, key), self.display_images]
-            if 'num_values' not in self.transformations[key].keys():
-                self.sliders[key]['num_values'] = 21   # make default value for steps in slider range
-            self.sliders[key]['values'] = np.linspace(self.sliders[key]['min'], self.sliders[key]['max'], self.sliders[key]['num_values'])
-            if self.transformations[key]['normalise'] == 'odd':
-                self.sliders[key]['values'] = self.sliders[key]['values'][self.sliders[key]['values']%2 == 1]
-                self.sliders[key]['num_values'] = len(self.sliders[key]['values'])
+            self.sliders[key]['function'] = self.transformations[key]['function']
+            if 'values' in self.transformations[key].keys():
+                self.sliders[key]['values'] = self.transformations[key]['values']
+            else:
+                if 'num_values' not in self.transformations[key].keys():
+                    self.transformations[key]['num_values'] = 21   # make default value for steps in slider range
+                self.sliders[key]['values'] = np.linspace(self.transformations[key]['min'], self.transformations[key]['max'], self.transformations[key]['num_values'])
+                # see if we need to make odd numbers (for use with kernel sizes)
+                if 'normalise' in self.transformations[key].keys():
+                    if self.transformations[key]['normalise'] == 'odd':
+                        self.sliders[key]['values'] = self.sliders[key]['values'][self.sliders[key]['values']%2 == 1]
+                        self.transformations[key]['num_values'] = len(self.sliders[key]['values'])
+            # get ind of the initial value to set the slider at
             self.sliders[key]['init_ind'] = np.searchsorted(self.sliders[key]['values'], self.transformations[key]['init_value'], side='left')
 
     def init_widgets(self):
@@ -134,7 +139,7 @@ class make_app(QMainWindow):
         for key in self.sliders.keys():
             self.widgets['slider'][key] = QSlider(Qt.Orientation.Horizontal)
             self.widgets['slider'][key].setMinimum(0)
-            self.widgets['slider'][key].setMaximum(self.sliders[key]['num_values']-1)
+            self.widgets['slider'][key].setMaximum(len(self.sliders[key]['values'])-1)
             for func in self.sliders[key]['value_change']:
                 self.widgets['slider'][key].valueChanged.connect(func)
             for func in self.sliders[key]['release']:
@@ -258,7 +263,9 @@ class make_app(QMainWindow):
     image updaters
     '''
     def transform_image(self, image):
-        return image_utils.transform_image(image, self.im_trans_params)
+        for key in self.sliders.keys():
+            image = self.sliders[key]['function'](image, self.im_trans_params[key])
+        return image
 
     def display_images(self):
         self.get_image_data()
@@ -351,12 +358,12 @@ if __name__ == '__main__':
                           'SSIM2': metrics.SSIM_image()}
 
     transformations = {
-               'rotation':{'min':-180, 'max':180, 'init_value':0},
-               'blur':{'min':0, 'max':40, 'init_value':0, 'normalise':'odd'},
-               'brightness':{'min':-1, 'max':1, 'init_value':0},
-               'zoom':{'min':0.5, 'max':2, 'init_value':1, 'num_values': 31},
-               'x_shift':{'min':-0.5, 'max':0.5, 'init_value':0},
-               'y_shift':{'min':-0.5, 'max':0.5, 'init_value':0},
+               'rotation':{'min':-180, 'max':180, 'init_value':0, 'function':image_utils.rotation},    # normal input
+               'blur':{'min':0, 'max':40, 'init_value':0, 'normalise':'odd', 'function':image_utils.blur},  # only odd ints
+               'brightness':{'min':-1, 'max':1, 'init_value':0, 'function':image_utils.brightness},   # normal but with float
+               'zoom':{'min':0.5, 'max':2, 'init_value':1, 'num_values': 31, 'function':image_utils.zoom},  # define number of steps
+               'x_shift':{'values':np.linspace(-0.5, 0.5, 21), 'init_value':0, 'function':image_utils.x_shift},  # explicit definition of values
+               'y_shift':{'min':-0.5, 'max':0.5, 'init_value':0, 'function':image_utils.y_shift},
                }
 
 
