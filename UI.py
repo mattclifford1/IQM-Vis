@@ -334,33 +334,27 @@ class make_app(QMainWindow):
                     for metric in self.metrics_dict.keys():
                         metric_score = self.metrics_dict[metric](self.image_data[im_pair[0]], trans_im)
                         data_store[str(im_pair)][metric][trans].append(float(metric_score))
-        import plotly.express as px
-        import pandas as pd
         from statistics import mean
-        import matplotlib.pyplot as plt
 
         # plot
-        bar_width = 1/(len(self.metrics_dict.keys())+1)
+        num_bars = len(self.metrics_dict.keys())
+        num_vars = len(self.sliders.keys())
+        bar_width = 1/(num_bars+1)
+        bars = [np.arange(num_vars)]
+        for i in range(1, num_bars):
+            bars.append([x + bar_width for x in bars[i-1]])
+
         for im_pair in self.im_pair_names:
-            for metric in self.metrics_dict.keys():
+            for i, metric in enumerate(self.metrics_dict.keys()):
                 mean_value = []
                 transform = []
                 for trans in self.sliders.keys():
                     transform.append(trans)
                     mean_value.append(mean(data_store[str(im_pair)][metric][trans]))
 
-                # sc = gui_utils.MplCanvas(self, width=5, height=4, dpi=100)
-                self.widgets['graph'][str(im_pair)+'_metrics'].axes.plot([0,1,2,3,4], [10,1,20,3,40])
-                # self.widgets['graph'][str(im_pair)+'_metrics'].draw()
-                self.show()
-                # plt.bar(transform, mean_value)
-                # plt.show()
-                break
-            break
-
-        print(data_store)
-
-
+                self.widgets['graph'][str(im_pair)+'_metrics'].axes.bar(bars[i], mean_value, width=bar_width, label=metric)
+                self.widgets['graph'][str(im_pair)+'_metrics'].draw()
+                # self.widgets['graph'][str(im_pair)+'_metrics'].xticks([r + bar_width for r in range(num_vars)], transform)
 
 
     # '''
