@@ -24,14 +24,16 @@ class make_app(QMainWindow):
         self.transformations = transformations
         self.image_loader = image_loader
 
+        self.image_display_size = (175, 175)
+
         self.init_images()
         self.init_transforms()
         self.init_widgets()
         self.init_layout()
 
-        self.image_display_size = (175, 175)
         self.display_images()
         self.reset_sliders()
+        self.get_metrics_over_range()
 
     def init_images(self, screen=False):
         '''
@@ -83,7 +85,7 @@ class make_app(QMainWindow):
         create all the widgets we need and init params
         '''
         # widget dictionary store
-        self.widgets = {'button': {}, 'slider': {}, 'checkbox': {}, 'label': {}, 'image':{}}
+        self.widgets = {'button': {}, 'slider': {}, 'checkbox': {}, 'label': {}, 'image':{}, 'graph':{}}
         for im_pair in self.im_pair_names:
             for im_name in im_pair:
                 # image widget
@@ -109,6 +111,8 @@ class make_app(QMainWindow):
             self.widgets['label'][str(im_pair)+'_metrics_info'] = QLabel(self)
             self.widgets['label'][str(im_pair)+'_metrics_info'].setAlignment(Qt.AlignmentFlag.AlignLeft)
             self.widgets['label'][str(im_pair)+'_metrics_info'].setText('')
+            # metrics graphs
+            self.widgets['graph'][str(im_pair)+'_metrics'] = gui_utils.MplCanvas(self)
 
         '''buttons'''
         # self.widgets['button']['load_dataset'] = QPushButton('Choose Dataset', self)
@@ -180,6 +184,10 @@ class make_app(QMainWindow):
             # metircs info
             self.layout.addWidget(self.widgets['label'][str(im_pair)+'_metrics'], start_im+im_row*(im_height+button)+1, (im_height+button)*col, button, button)
             self.layout.addWidget(self.widgets['label'][str(im_pair)+'_metrics_info'], start_im+im_row*(im_height+button)+1, (im_height+button)*col+button, im_height, button)
+            col += 1
+            # self.layout.addWidget(self.widgets['graph'][str(im_pair)+'_metrics'], start_im+im_row*(im_height+button)+1, (im_height+button)*col, button, button)
+            # self.layout.addWidget(self.widgets['graph'][str(im_pair)+'_metrics'], start_im+im_row*(im_height+button)+1, (im_height+button)*col, im_height, im_width)
+            self.layout.addWidget(self.widgets['graph'][str(im_pair)+'_metrics'], start_im+im_row*(im_height+button)+1, (im_height+button)*col, im_height, self.image_display_size[1]//4)
             col += 1
             im_row += 1
 
@@ -306,6 +314,54 @@ class make_app(QMainWindow):
             metric = gui_utils.str_to_len(str(metrics[key]), disp_len, '0')
             text += key + ': ' + metric + '\n'
         self.widgets['label'][label+'_metrics_info'].setText(text)
+
+    def get_metrics_over_range(self):
+        # compute all metrics over their range of params and get avg/std
+        data_store = {}
+        # initialise data_store
+        for im_pair in self.im_pair_names:
+            data_store[str(im_pair)] = {}
+            for metric in self.metrics_dict.keys():
+                data_store[str(im_pair)][metric] = {}
+                for trans in self.sliders.keys():
+                    data_store[str(im_pair)][metric][trans] = []
+
+        # compute over all image transformations
+        for im_pair in self.im_pair_names:
+            for trans in self.sliders.keys():
+                for trans_value in self.sliders[trans]['values']:
+                    trans_im = self.sliders[trans]['function'](self.image_data[im_pair[0]], trans_value)
+                    for metric in self.metrics_dict.keys():
+                        metric_score = self.metrics_dict[metric](self.image_data[im_pair[0]], trans_im)
+                        data_store[str(im_pair)][metric][trans].append(float(metric_score))
+        import plotly.express as px
+        import pandas as pd
+        from statistics import mean
+        import matplotlib.pyplot as plt
+
+        # plot
+        bar_width = 1/(len(self.metrics_dict.keys())+1)
+        for im_pair in self.im_pair_names:
+            for metric in self.metrics_dict.keys():
+                mean_value = []
+                transform = []
+                for trans in self.sliders.keys():
+                    transform.append(trans)
+                    mean_value.append(mean(data_store[str(im_pair)][metric][trans]))
+
+                # sc = gui_utils.MplCanvas(self, width=5, height=4, dpi=100)
+                self.widgets['graph'][str(im_pair)+'_metrics'].axes.plot([0,1,2,3,4], [10,1,20,3,40])
+                # self.widgets['graph'][str(im_pair)+'_metrics'].draw()
+                self.show()
+                # plt.bar(transform, mean_value)
+                # plt.show()
+                break
+            break
+
+        print(data_store)
+
+
+
 
     # '''
     # utils

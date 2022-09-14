@@ -2,3 +2,6 @@ opencv-python
 scikit-image
 numpy
 PyQt6
+matplotlib
+plotly
+pandas
