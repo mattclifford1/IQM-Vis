@@ -331,15 +331,16 @@ if __name__ == '__main__':
 
     # metrics functions must return a single value
     metrics_dict = {'MAE': metrics.MAE,
-                    'MSE': metrics.MSE()}
+                    'MSE': metrics.MSE,
+                    'SSIM': metrics.ssim()}
     # metrics images return a numpy image
     metrics_image_dict = {'MSE': metrics.MSE_image,
                           'SSIM': metrics.SSIM_image()}
 
     transformations = {
                'rotation':{'min':-180, 'max':180, 'init_value':0, 'function':image_utils.rotation},    # normal input
-               'blur':{'min':0, 'max':40, 'init_value':0, 'normalise':'odd', 'function':image_utils.blur},  # only odd ints
-               'brightness':{'min':-1, 'max':1, 'init_value':0, 'function':image_utils.brightness},   # normal but with float
+               'blur':{'min':1, 'max':41, 'init_value':0, 'normalise':'odd', 'function':image_utils.blur},  # only odd ints
+               'brightness':{'min':-0.5, 'max':0.5, 'init_value':0, 'function':image_utils.brightness},   # normal but with float
                'zoom':{'min':0.5, 'max':2, 'init_value':1, 'num_values': 31, 'function':image_utils.zoom},  # define number of steps
                'x_shift':{'values':np.linspace(-0.5, 0.5, 21), 'init_value':0, 'function':image_utils.x_shift},  # explicit definition of values
                'y_shift':{'min':-0.5, 'max':0.5, 'init_value':0, 'function':image_utils.y_shift},
