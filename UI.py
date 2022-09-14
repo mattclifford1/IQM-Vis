@@ -62,6 +62,8 @@ class make_app(QMainWindow):
             self.sliders[key]['release'] = [self.display_images]
             self.sliders[key]['value_change'] = [partial(self.generic_value_change, key), self.display_images]
             self.sliders[key]['function'] = self.transformations[key]['function']
+            if 'init_value' not in self.transformations[key].keys():
+                self.transformations[key]['init_value'] = 0
             if 'values' in self.transformations[key].keys():
                 self.sliders[key]['values'] = self.transformations[key]['values']
             else:
@@ -339,12 +341,12 @@ if __name__ == '__main__':
                           'SSIM': metrics.SSIM_image()}
 
     transformations = {
-               'rotation':{'min':-180, 'max':180, 'init_value':0, 'function':image_utils.rotation},    # normal input
-               'blur':{'min':1, 'max':41, 'init_value':0, 'normalise':'odd', 'function':image_utils.blur},  # only odd ints
-               'brightness':{'min':-0.5, 'max':0.5, 'init_value':0, 'function':image_utils.brightness},   # normal but with float
+               'rotation':{'min':-180, 'max':180, 'function':image_utils.rotation},    # normal input
+               'blur':{'min':1, 'max':41, 'normalise':'odd', 'function':image_utils.blur},  # only odd ints
+               'brightness':{'min':-0.5, 'max':0.5, 'function':image_utils.brightness},   # normal but with float
                'zoom':{'min':0.5, 'max':2, 'init_value':1, 'num_values': 31, 'function':image_utils.zoom},  # define number of steps
-               'x_shift':{'values':np.linspace(-0.5, 0.5, 21), 'init_value':0, 'function':image_utils.x_shift},  # explicit definition of values
-               'y_shift':{'min':-0.5, 'max':0.5, 'init_value':0, 'function':image_utils.y_shift},
+               'x_shift':{'values':np.linspace(-0.5, 0.5, 21), 'function':image_utils.x_shift},  # explicit definition of values
+               'y_shift':{'min':-0.5, 'max':0.5, 'function':image_utils.y_shift},
                }
 
 
