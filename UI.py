@@ -93,7 +93,7 @@ class make_app(QMainWindow):
                 self.widgets['label'][im_name].setText(im_name)
             # metrics images
             for key in self.metrics_image_dict.keys():
-                metric_name = key+'('+str(im_pair)+')'
+                metric_name = gui_utils.get_metric_image_name(key, im_pair)
                 self.widgets['image'][metric_name] = QLabel(self)
                 self.widgets['image'][metric_name].setAlignment(Qt.AlignmentFlag.AlignCenter)
                 # image label
@@ -171,7 +171,7 @@ class make_app(QMainWindow):
             self.layout.addWidget(self.widgets['image'][im_pair[1]], start_im+im_row*(im_height+button), (im_height+button)*col, im_height, im_width)
             col += 1
             for key in self.metrics_image_dict.keys():
-                metric_name = key+'('+str(im_pair)+')'
+                metric_name = gui_utils.get_metric_image_name(key, im_pair)
                 self.layout.addWidget(self.widgets['label'][metric_name], start_im-1+im_row*(im_height+button), (im_height+button)*col, button, im_width)
                 self.layout.addWidget(self.widgets['image'][metric_name], start_im+im_row*(im_height+button), (im_height+button)*col, im_height, im_width)
                 col += 1
@@ -294,7 +294,8 @@ class make_app(QMainWindow):
             self.display_metrics(metrics_values, str(im_pair))
             # compute metric images
             for key in self.metrics_image_dict.keys():
-                image_name = key +'(' + str(im_pair) + ')'
+                image_name = gui_utils.get_metric_image_name(key, im_pair)
+                image_name = key+str(im_pair)
                 self.image_data[image_name] = self.metrics_image_dict[key](self.image_data[im_pair[0]], self.image_data[im_pair[1]])
 
     def display_metrics(self, metrics, label, disp_len=5):
