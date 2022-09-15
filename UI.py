@@ -107,10 +107,10 @@ class make_app(QMainWindow):
                 self.widgets['label'][metric_name].setText(metric_name)
             # metrics info
             self.widgets['label'][str(im_pair)+'_metrics'] = QLabel(self)
-            self.widgets['label'][str(im_pair)+'_metrics'].setAlignment(Qt.AlignmentFlag.AlignRight)
-            self.widgets['label'][str(im_pair)+'_metrics'].setText('Metrics '+str(im_pair)+':')
+            self.widgets['label'][str(im_pair)+'_metrics'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+            self.widgets['label'][str(im_pair)+'_metrics'].setText('Metrics '+str(im_pair))
             self.widgets['label'][str(im_pair)+'_metrics_info'] = QLabel(self)
-            self.widgets['label'][str(im_pair)+'_metrics_info'].setAlignment(Qt.AlignmentFlag.AlignLeft)
+            self.widgets['label'][str(im_pair)+'_metrics_info'].setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.widgets['label'][str(im_pair)+'_metrics_info'].setText('')
             # metrics graphs
             self.widgets['label'][str(im_pair)+'_metrics_graph'] = QLabel(self)
@@ -186,8 +186,8 @@ class make_app(QMainWindow):
                 self.layout.addWidget(self.widgets['image'][metric_name], start_im+im_row*(im_height+button), (im_height+button)*col, im_height, im_width)
                 col += 1
             # metircs info
-            self.layout.addWidget(self.widgets['label'][str(im_pair)+'_metrics'], start_im+im_row*(im_height+button)+1, (im_height+button)*col, button, button)
-            self.layout.addWidget(self.widgets['label'][str(im_pair)+'_metrics_info'], start_im+im_row*(im_height+button)+1, (im_height+button)*col+button, im_height, button)
+            self.layout.addWidget(self.widgets['label'][str(im_pair)+'_metrics'], start_im-1+im_row*(im_height+button), (im_height+button)*col, button, im_width)
+            self.layout.addWidget(self.widgets['label'][str(im_pair)+'_metrics_info'], start_im+im_row*(im_height+button), (im_height+button)*col+button, im_height, im_width)
             col += 1
             self.layout.addWidget(self.widgets['label'][str(im_pair)+'_metrics_graph'], start_im-1+im_row*(im_height+button), (im_height+button)*col, button, im_width)
             self.layout.addWidget(self.widgets['graph'][str(im_pair)+'_metrics'], start_im+im_row*(im_height+button), (im_height+button)*col, im_height, im_width)
@@ -353,12 +353,9 @@ class make_app(QMainWindow):
                 for trans in self.sliders.keys():
                     transform.append(trans)
                     mean_value.append(np.mean(data_store[str(im_pair)][metric][trans]))
-                    std_value.append(np.std(data_store[str(im_pair)][metric][trans]))
+                    # std_value.append(np.std(data_store[str(im_pair)][metric][trans]))
                 bar_plt.plot(metric, mean_value)
             bar_plt.show()
-                # self.widgets['graph'][str(im_pair)+'_metrics'].axes.bar(bars[i], mean_value, width=bar_width, label=metric)
-                # self.widgets['graph'][str(im_pair)+'_metrics'].draw()
-                # self.widgets['graph'][str(im_pair)+'_metrics'].xticks([r + bar_width for r in range(num_vars)], transform)
 
 
     # '''
