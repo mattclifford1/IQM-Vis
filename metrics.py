@@ -42,7 +42,7 @@ class ssim:
         im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
         im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)
         _score = self.metric(im_ref, im_comp)
-        return _score.cpu().detach().numpy()
+        return 1 - _score.cpu().detach().numpy()
 
 
 '''Example of metric image produced to display (using numpy)'''

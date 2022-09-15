@@ -11,7 +11,7 @@ image_paths = {'X1': 'images/image2.jpg',
 # metrics functions must return a single value
 metrics_dict = {'MAE': metrics.MAE,
                 'MSE': metrics.MSE,
-                'SSIM': metrics.ssim()}
+                '1-SSIM': metrics.ssim()}
 
 # metrics images return a numpy image
 metrics_image_dict = {'MSE': metrics.MSE_image,
