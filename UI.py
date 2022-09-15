@@ -16,7 +16,9 @@ class make_app(QMainWindow):
                 metrics_dict,
                 metrics_image_dict,
                 transformations,
-                image_loader=gui_utils.image_loader):
+                image_loader=gui_utils.image_loader,
+                metrics_info_format='graph'    # graph or text
+                ):
         super().__init__()
         self.app = app
         self.image_paths = image_paths
@@ -24,6 +26,7 @@ class make_app(QMainWindow):
         self.metrics_image_dict = metrics_image_dict
         self.transformations = transformations
         self.image_loader = image_loader
+        self.metrics_info_format = metrics_info_format
 
         self.image_display_size = (175, 175)
 
@@ -109,12 +112,15 @@ class make_app(QMainWindow):
             self.widgets['label'][str(im_pair)+'_metrics'] = QLabel(self)
             self.widgets['label'][str(im_pair)+'_metrics'].setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.widgets['label'][str(im_pair)+'_metrics'].setText('Metrics '+str(im_pair))
-            self.widgets['label'][str(im_pair)+'_metrics_info'] = QLabel(self)
-            self.widgets['label'][str(im_pair)+'_metrics_info'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-            self.widgets['label'][str(im_pair)+'_metrics_info'].setText('')
+            if self.metrics_info_format == 'graph':
+                self.widgets['label'][str(im_pair)+'_metrics_info'] = gui_utils.MplCanvas(self)
+            else:
+                self.widgets['label'][str(im_pair)+'_metrics_info'] = QLabel(self)
+                self.widgets['label'][str(im_pair)+'_metrics_info'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                self.widgets['label'][str(im_pair)+'_metrics_info'].setText('')
             # metrics graphs
             self.widgets['label'][str(im_pair)+'_metrics_graph'] = QLabel(self)
-            self.widgets['label'][str(im_pair)+'_metrics_graph'].setAlignment(Qt.AlignmentFlag.AlignRight)
+            self.widgets['label'][str(im_pair)+'_metrics_graph'].setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.widgets['label'][str(im_pair)+'_metrics_graph'].setText('Metrics Avg. Graph')
             self.widgets['graph'][str(im_pair)+'_metrics'] = gui_utils.MplCanvas(self)
 
@@ -304,19 +310,35 @@ class make_app(QMainWindow):
             metrics_values = {}
             for key in self.metrics_dict.keys():
                 metrics_values[key] = self.metrics_dict[key](self.image_data[im_pair[0]], self.image_data[im_pair[1]])
-            self.display_metrics(metrics_values, str(im_pair))
+            self.display_metrics(metrics_values, im_pair)
             # compute metric images
             for key in self.metrics_image_dict.keys():
                 image_name = gui_utils.get_metric_image_name(key, im_pair)
                 image_name = key+str(im_pair)
                 self.image_data[image_name] = self.metrics_image_dict[key](self.image_data[im_pair[0]], self.image_data[im_pair[1]])
 
-    def display_metrics(self, metrics, label, disp_len=5):
+    def display_metrics(self, metrics, label):
+        if self.metrics_info_format == 'graph':
+            self.display_metrics_graph(metrics, label)
+        else:
+            self.display_metrics_text(metrics, label)
+
+    def display_metrics_graph(self, metrics, label):
+        # bar_plt = gui_utils.bar_plotter(bar_names=[label[0]],
+        #                                 var_names=list(metrics.keys()),
+        #                                 ax=self.widgets['label'][str(label)+'_metrics_info'])
+        # bar_plt.plot(label[0], list(metrics.values()))
+        # bar_plt.show()
+        self.widgets['label'][str(label)+'_metrics_info'].axes.clear()
+        self.widgets['label'][str(label)+'_metrics_info'].axes.bar(list(metrics.keys()), list(metrics.values()))
+        self.widgets['label'][str(label)+'_metrics_info'].draw()
+
+    def display_metrics_text(self, metrics, label, disp_len=5):
         text = ''
         for key in metrics.keys():
             metric = gui_utils.str_to_len(str(metrics[key]), disp_len, '0')
             text += key + ': ' + metric + '\n'
-        self.widgets['label'][label+'_metrics_info'].setText(text)
+        self.widgets['label'][str(label)+'_metrics_info'].setText(text)
 
     def get_metrics_over_range(self):
         # compute all metrics over their range of params and get avg/std
