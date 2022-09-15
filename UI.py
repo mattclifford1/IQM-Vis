@@ -6,6 +6,7 @@ import os
 import numpy as np
 from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QInputDialog, QLineEdit, QMenu, QFileDialog, QPushButton, QGridLayout, QLabel, QSlider, QComboBox, QCheckBox
 from PyQt6.QtCore import Qt
+from matplotlib.figure import Figure
 
 import gui_utils
 
@@ -112,6 +113,9 @@ class make_app(QMainWindow):
             self.widgets['label'][str(im_pair)+'_metrics_info'].setAlignment(Qt.AlignmentFlag.AlignLeft)
             self.widgets['label'][str(im_pair)+'_metrics_info'].setText('')
             # metrics graphs
+            self.widgets['label'][str(im_pair)+'_metrics_graph'] = QLabel(self)
+            self.widgets['label'][str(im_pair)+'_metrics_graph'].setAlignment(Qt.AlignmentFlag.AlignRight)
+            self.widgets['label'][str(im_pair)+'_metrics_graph'].setText('Metrics Avg. Graph')
             self.widgets['graph'][str(im_pair)+'_metrics'] = gui_utils.MplCanvas(self)
 
         '''buttons'''
@@ -144,7 +148,7 @@ class make_app(QMainWindow):
             self.widgets['label'][key].setAlignment(Qt.AlignmentFlag.AlignRight)
             self.widgets['label'][key].setText(key+':')
             self.widgets['label'][key+'_value'] = QLabel(self)
-            self.widgets['label'][key+'_value'].setAlignment(Qt.AlignmentFlag.AlignRight)
+            self.widgets['label'][key+'_value'].setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.widgets['label'][key+'_value'].setText(str(self.im_trans_params[key]))
 
     def init_layout(self):
@@ -185,9 +189,8 @@ class make_app(QMainWindow):
             self.layout.addWidget(self.widgets['label'][str(im_pair)+'_metrics'], start_im+im_row*(im_height+button)+1, (im_height+button)*col, button, button)
             self.layout.addWidget(self.widgets['label'][str(im_pair)+'_metrics_info'], start_im+im_row*(im_height+button)+1, (im_height+button)*col+button, im_height, button)
             col += 1
-            # self.layout.addWidget(self.widgets['graph'][str(im_pair)+'_metrics'], start_im+im_row*(im_height+button)+1, (im_height+button)*col, button, button)
-            # self.layout.addWidget(self.widgets['graph'][str(im_pair)+'_metrics'], start_im+im_row*(im_height+button)+1, (im_height+button)*col, im_height, im_width)
-            self.layout.addWidget(self.widgets['graph'][str(im_pair)+'_metrics'], start_im+im_row*(im_height+button)+1, (im_height+button)*col, im_height, self.image_display_size[1]//4)
+            self.layout.addWidget(self.widgets['label'][str(im_pair)+'_metrics_graph'], start_im-1+im_row*(im_height+button), (im_height+button)*col, button, im_width)
+            self.layout.addWidget(self.widgets['graph'][str(im_pair)+'_metrics'], start_im+im_row*(im_height+button), (im_height+button)*col, im_height, im_width)
             col += 1
             im_row += 1
 
@@ -334,26 +337,27 @@ class make_app(QMainWindow):
                     for metric in self.metrics_dict.keys():
                         metric_score = self.metrics_dict[metric](self.image_data[im_pair[0]], trans_im)
                         data_store[str(im_pair)][metric][trans].append(float(metric_score))
-        from statistics import mean
+        self.plot_metrics_graphs(data_store)
 
+    def plot_metrics_graphs(self, data_store):
         # plot
-        num_bars = len(self.metrics_dict.keys())
-        num_vars = len(self.sliders.keys())
-        bar_width = 1/(num_bars+1)
-        bars = [np.arange(num_vars)]
-        for i in range(1, num_bars):
-            bars.append([x + bar_width for x in bars[i-1]])
 
         for im_pair in self.im_pair_names:
-            for i, metric in enumerate(self.metrics_dict.keys()):
+            bar_plt = gui_utils.bar_plotter(bar_names=list(self.metrics_dict.keys()),
+                                            var_names=list(self.sliders.keys()),
+                                            ax=self.widgets['graph'][str(im_pair)+'_metrics'])
+            for metric in self.metrics_dict.keys():
                 mean_value = []
+                std_value = []
                 transform = []
                 for trans in self.sliders.keys():
                     transform.append(trans)
-                    mean_value.append(mean(data_store[str(im_pair)][metric][trans]))
-
-                self.widgets['graph'][str(im_pair)+'_metrics'].axes.bar(bars[i], mean_value, width=bar_width, label=metric)
-                self.widgets['graph'][str(im_pair)+'_metrics'].draw()
+                    mean_value.append(np.mean(data_store[str(im_pair)][metric][trans]))
+                    std_value.append(np.std(data_store[str(im_pair)][metric][trans]))
+                bar_plt.plot(metric, mean_value)
+            bar_plt.show()
+                # self.widgets['graph'][str(im_pair)+'_metrics'].axes.bar(bars[i], mean_value, width=bar_width, label=metric)
+                # self.widgets['graph'][str(im_pair)+'_metrics'].draw()
                 # self.widgets['graph'][str(im_pair)+'_metrics'].xticks([r + bar_width for r in range(num_vars)], transform)
 
 
