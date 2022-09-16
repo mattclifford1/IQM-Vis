@@ -47,11 +47,11 @@ $ cd IQA_GUI
 ```
 Install requirements
 ```
-$ pip install requirements.txt
+$ pip install -r requirements.txt
 ```
 Run MWE
 ```
-$ python example_simple.py
+$ python examples/simple.py
 ```
 
 ## To do - datasets
