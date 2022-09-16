@@ -9,6 +9,7 @@ from PyQt6.QtCore import Qt
 from matplotlib.figure import Figure
 
 import gui_utils
+import plot_utils
 
 class make_app(QMainWindow):
     def __init__(self, app,
@@ -122,7 +123,7 @@ class make_app(QMainWindow):
             self.widgets['label'][str(im_pair)+'_metrics_graph'] = QLabel(self)
             self.widgets['label'][str(im_pair)+'_metrics_graph'].setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.widgets['label'][str(im_pair)+'_metrics_graph'].setText('Metrics Avg. Graph')
-            self.widgets['graph'][str(im_pair)+'_metrics'] = gui_utils.MplCanvas(self)
+            self.widgets['graph'][str(im_pair)+'_metrics'] = gui_utils.MplCanvas(self, polar=True)
 
         '''buttons'''
         # self.widgets['button']['load_dataset'] = QPushButton('Choose Dataset', self)
@@ -365,7 +366,7 @@ class make_app(QMainWindow):
         # plot
 
         for im_pair in self.im_pair_names:
-            bar_plt = gui_utils.bar_plotter(bar_names=list(self.metrics_dict.keys()),
+            bar_plt = plot_utils.radar_plotter(radar_names=list(self.metrics_dict.keys()),
                                             var_names=list(self.sliders.keys()),
                                             ax=self.widgets['graph'][str(im_pair)+'_metrics'])
             for metric in self.metrics_dict.keys():

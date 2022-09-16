@@ -65,29 +65,7 @@ matplotlib widget utils
 '''
 # Get a matplotlib canvas as a Qt Widget
 class MplCanvas(FigureCanvasQTAgg):
-    def __init__(self, parent=None, width=5, height=3, dpi=100):
+    def __init__(self, parent=None, width=5, height=3, dpi=100, polar=False):
         fig = Figure(figsize=(width, height), dpi=dpi)
-        self.axes = fig.add_subplot(111)
+        self.axes = fig.add_subplot(111, polar=polar)
         super(MplCanvas, self).__init__(fig)
-
-# plot bar chart on matplotlib qt qidget
-class bar_plotter:
-    def __init__(self, bar_names, var_names, ax):
-            self.bar_names = bar_names
-            self.var_names = var_names
-            self.ax = ax
-            self.num_bars = len(self.bar_names)
-            self.num_vars = len(self.var_names)
-            self.bar_width = 1/(self.num_bars+1)
-            self.bars = [np.arange(self.num_vars)]
-            for i in range(1, self.num_bars):
-                self.bars.append([x + self.bar_width for x in self.bars[i-1]])
-
-    def plot(self, bar_name, var_values):
-        i = self.bar_names.index(bar_name)
-        self.ax.axes.bar(self.bars[i], var_values, width=self.bar_width, label=bar_name)
-
-    def show(self):
-        self.ax.axes.legend()
-        self.ax.axes.set_xticks([r + self.bar_width for r in range(self.num_vars)], self.var_names)
-        self.ax.draw()
