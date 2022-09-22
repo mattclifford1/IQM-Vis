@@ -8,6 +8,7 @@ class bar_plotter:
             self.bar_names = bar_names
             self.var_names = var_names
             self.ax = ax
+            self.ax.axes.clear()
             self.num_bars = len(self.bar_names)
             self.num_vars = len(self.var_names)
             self.bar_width = 1/(self.num_bars+1)
@@ -20,9 +21,17 @@ class bar_plotter:
         self.ax.axes.bar(self.bars[i], var_values, width=self.bar_width, label=bar_name)
 
     def show(self):
-        self.ax.axes.legend()
-        self.ax.axes.set_xticks([r + self.bar_width for r in range(self.num_vars)], self.var_names)
+        if len(self.bar_names) > 1:
+            self.ax.axes.legend()
+            self.ax.axes.set_xticks([r + self.bar_width for r in range(self.num_vars)], self.var_names)
+        self.set_plot_lims()
+        self.ax.fig.tight_layout()
         self.ax.draw()
+
+    def set_plot_lims(self):
+        y_lims = self.ax.axes.get_ylim()
+        # self.ax.axes.set_ylim(min(0, y_lims[0], max(1, y_lims[1])))
+        self.ax.axes.set_ylim(top= max(1, y_lims[1]))
 
 '''
 plot radar chart on matplotlib qt
@@ -32,6 +41,7 @@ class radar_plotter:
             self.radar_names = radar_names
             self.var_names = var_names
             self.ax = ax
+            self.ax.axes.clear()
             self.num_radars = len(self.radar_names)
             self.num_vars = len(self.var_names)
             self.radar_angles = [n/float(self.num_vars)*2*np.pi for n in range(self.num_vars)]
@@ -45,9 +55,16 @@ class radar_plotter:
 
     def show(self):
         # self.ax.axes.legend(loc='upper right', bbox_to_anchor=(0.1, 0.1))
-        self.ax.axes.legend()
+        self.ax.axes.legend(fontsize='x-small', loc='upper left')
         self.ax.axes.set_xticks(self.radar_angles[:-1], self.var_names)
+        self.set_plot_lims()
+        # self.ax.fig.tight_layout()
         self.ax.draw()
+
+    def set_plot_lims(self):
+        y_lims = self.ax.axes.get_ylim()
+        # self.ax.axes.set_ylim(min(0, y_lims[0], max(1, y_lims[1])))
+        self.ax.axes.set_ylim(top= max(1, y_lims[1]))
 
 if __name__ == '__main__':
     bar_names = ['MAE', 'MSE', '1-SSIM']

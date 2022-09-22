@@ -325,14 +325,14 @@ class make_app(QMainWindow):
             self.display_metrics_text(metrics, label)
 
     def display_metrics_graph(self, metrics, label):
-        # bar_plt = gui_utils.bar_plotter(bar_names=[label[0]],
-        #                                 var_names=list(metrics.keys()),
-        #                                 ax=self.widgets['label'][str(label)+'_metrics_info'])
-        # bar_plt.plot(label[0], list(metrics.values()))
-        # bar_plt.show()
-        self.widgets['label'][str(label)+'_metrics_info'].axes.clear()
-        self.widgets['label'][str(label)+'_metrics_info'].axes.bar(list(metrics.keys()), list(metrics.values()))
-        self.widgets['label'][str(label)+'_metrics_info'].draw()
+        bar_plt = plot_utils.bar_plotter(bar_names=[label[0]],
+                                        var_names=list(metrics.keys()),
+                                        ax=self.widgets['label'][str(label)+'_metrics_info'])
+        bar_plt.plot(label[0], list(metrics.values()))
+        bar_plt.show()
+        # self.widgets['label'][str(label)+'_metrics_info'].axes.clear()
+        # self.widgets['label'][str(label)+'_metrics_info'].axes.bar(list(metrics.keys()), list(metrics.values()))
+        # self.widgets['label'][str(label)+'_metrics_info'].draw()
 
     def display_metrics_text(self, metrics, label, disp_len=5):
         text = ''

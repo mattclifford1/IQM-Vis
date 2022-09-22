@@ -66,6 +66,6 @@ matplotlib widget utils
 # Get a matplotlib canvas as a Qt Widget
 class MplCanvas(FigureCanvasQTAgg):
     def __init__(self, parent=None, width=5, height=3, dpi=100, polar=False):
-        fig = Figure(figsize=(width, height), dpi=dpi)
-        self.axes = fig.add_subplot(111, polar=polar)
-        super(MplCanvas, self).__init__(fig)
+        self.fig = Figure(figsize=(width, height), dpi=dpi)
+        self.axes = self.fig.add_subplot(111, polar=polar)
+        super(MplCanvas, self).__init__(self.fig)
