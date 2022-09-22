@@ -10,4 +10,5 @@ trans = {'brightness': {'min':-1, 'max':1, 'init_value':0, 'function':lambda im,
 api.make_UI(image_path,
         metric,
         metric_im,
-        trans)
+        trans,
+        metrics_info_format='text')
