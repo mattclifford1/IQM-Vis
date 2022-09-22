@@ -137,8 +137,9 @@ class make_app(QMainWindow):
         # self.widgets['button']['next'].clicked.connect(self.load_next_image)
         self.widgets['button']['reset_sliders'] = QPushButton('Reset', self)
         self.widgets['button']['reset_sliders'].clicked.connect(self.reset_sliders)
-        self.widgets['button']['force_update'] = QPushButton('Force Update', self)
+        self.widgets['button']['force_update'] = QPushButton('Update', self)
         self.widgets['button']['force_update'].clicked.connect(self.display_images)
+        self.widgets['button']['force_update'].clicked.connect(self.get_metrics_over_range)
 
         '''sliders'''
         self.im_trans_params = {}
@@ -354,12 +355,18 @@ class make_app(QMainWindow):
 
         # compute over all image transformations
         for im_pair in self.im_pair_names:
-            for trans in self.sliders.keys():
-                for trans_value in self.sliders[trans]['values']:
-                    trans_im = self.sliders[trans]['function'](self.image_data[im_pair[0]], trans_value)
+            for curr_trans in self.sliders.keys():
+                for trans_value in self.sliders[curr_trans]['values']:
+                    trans_im = self.image_data[im_pair[0]]
+                    for other_trans in self.sliders.keys():
+                        if other_trans != curr_trans:
+                            ui_slider_value = self.im_trans_params[other_trans]
+                            trans_im = self.sliders[other_trans]['function'](trans_im, ui_slider_value)
+                        else:
+                            trans_im = self.sliders[curr_trans]['function'](trans_im, trans_value)
                     for metric in self.metrics_dict.keys():
                         metric_score = self.metrics_dict[metric](self.image_data[im_pair[0]], trans_im)
-                        data_store[str(im_pair)][metric][trans].append(float(metric_score))
+                        data_store[str(im_pair)][metric][curr_trans].append(float(metric_score))
         self.plot_metrics_graphs(data_store)
 
     def plot_metrics_graphs(self, data_store):

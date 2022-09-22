@@ -42,7 +42,9 @@ class ssim:
         im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
         im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)
         _score = self.metric(im_ref, im_comp)
-        return 1 - _score.cpu().detach().numpy()
+        score = 1 - _score.cpu().detach().numpy()
+        self.metric.reset()
+        return score
 
 
 '''Example of metric image produced to display (using numpy)'''
@@ -63,11 +65,12 @@ class SSIM_image:
         im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
         im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)
         _, ssim_full_im = self.metric_image(im_ref, im_comp)
-        self.metric_image.reset()   # clear mem buffer to stop overflow
         ssim_full_im = torch.squeeze(ssim_full_im, axis=0)
         ssim_full_im = ssim_full_im.permute(1, 2, 0)
         ssim_full_im = torch.clip(ssim_full_im, 0, 1)
-        return ssim_full_im.cpu().detach().numpy()
+        im = ssim_full_im.cpu().detach().numpy()
+        self.metric_image.reset()   # clear mem buffer to stop overflow
+        return im
 
 
 '''
