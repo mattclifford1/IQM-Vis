@@ -1,5 +1,7 @@
-# Image Quality Metric User Interface
-Extendable user interface for assessment of image transformations on image metrics
+# IQM-VIS
+Image Quality Metric Visualision
+
+Extendable user interface for the assessment of transformations on image metrics.
 
 ## Minimal Example of API
 Define image path and name:
