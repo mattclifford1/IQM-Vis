@@ -23,7 +23,7 @@ class bar_plotter:
     def show(self):
         if len(self.bar_names) > 1:
             self.ax.axes.legend()
-            self.ax.axes.set_xticks([r + self.bar_width for r in range(self.num_vars)], self.var_names)
+        self.ax.axes.set_xticks([r + self.bar_width for r in range(self.num_vars)], self.var_names)
         self.set_plot_lims()
         self.ax.fig.tight_layout()
         self.ax.draw()
