@@ -30,6 +30,7 @@ class make_app(QMainWindow):
         self.metrics_info_format = metrics_info_format
 
         self.image_display_size = (175, 175)
+        self.setStyleSheet("background-color: white;")
 
         self.init_images()
         self.init_transforms()
@@ -331,9 +332,6 @@ class make_app(QMainWindow):
                                         ax=self.widgets['label'][str(label)+'_metrics_info'])
         bar_plt.plot(label[0], list(metrics.values()))
         bar_plt.show()
-        # self.widgets['label'][str(label)+'_metrics_info'].axes.clear()
-        # self.widgets['label'][str(label)+'_metrics_info'].axes.bar(list(metrics.keys()), list(metrics.values()))
-        # self.widgets['label'][str(label)+'_metrics_info'].draw()
 
     def display_metrics_text(self, metrics, label, disp_len=5):
         text = ''
@@ -371,9 +369,8 @@ class make_app(QMainWindow):
 
     def plot_metrics_graphs(self, data_store):
         # plot
-
         for im_pair in self.im_pair_names:
-            bar_plt = plot_utils.radar_plotter(radar_names=list(self.metrics_dict.keys()),
+            radar_plotter = plot_utils.radar_plotter(radar_names=list(self.metrics_dict.keys()),
                                             var_names=list(self.sliders.keys()),
                                             ax=self.widgets['graph'][str(im_pair)+'_metrics'])
             for metric in self.metrics_dict.keys():
@@ -384,8 +381,8 @@ class make_app(QMainWindow):
                     transform.append(trans)
                     mean_value.append(np.mean(data_store[str(im_pair)][metric][trans]))
                     # std_value.append(np.std(data_store[str(im_pair)][metric][trans]))
-                bar_plt.plot(metric, mean_value)
-            bar_plt.show()
+                radar_plotter.plot(metric, mean_value)
+            radar_plotter.show()
 
 
     # '''

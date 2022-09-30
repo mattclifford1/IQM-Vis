@@ -17,13 +17,17 @@ class bar_plotter:
                 self.bars.append([x + self.bar_width for x in self.bars[i-1]])
 
     def plot(self, bar_name, var_values):
-        i = self.bar_names.index(bar_name)
-        self.ax.axes.bar(self.bars[i], var_values, width=self.bar_width, label=bar_name)
+        if len(self.bar_names) > 1:
+            i = self.bar_names.index(bar_name)
+            self.ax.axes.bar(self.bars[i], var_values, width=self.bar_width, label=bar_name)
+        else:
+            self.ax.axes.bar(self.var_names, var_values)
+
 
     def show(self):
         if len(self.bar_names) > 1:
             self.ax.axes.legend()
-        self.ax.axes.set_xticks([r + self.bar_width for r in range(self.num_vars)], self.var_names)
+            self.ax.axes.set_xticks([r + self.bar_width for r in range(self.num_vars)], self.var_names)
         self.set_plot_lims()
         self.ax.fig.tight_layout()
         self.ax.draw()

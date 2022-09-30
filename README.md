@@ -36,11 +36,11 @@ Add more entries to the dictionaries to include extra items examples found [here
 ## Installation (todo: `setup.py` and pypi)
 Currently under development so install from GitHub. First create a new python venv, eg. using conda
 ```
-$ conda create -n iqa python=3.9
+$ conda create -n iqm_vis python=3.9
 ```
 Activate env:
 ```
-$ conda activate iqa
+$ conda activate iqm_vis
 ```
 Clone repo
 ```
