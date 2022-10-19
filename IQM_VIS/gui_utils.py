@@ -9,7 +9,7 @@ from PyQt6.QtWidgets import QApplication
 import numpy as np
 from skimage.util import img_as_ubyte
 from skimage.transform import resize
-import image_utils
+from IQM_VIS import image_utils
 
 '''
 image helper functions

@@ -5,6 +5,8 @@ no_git_data
 pytests/models
 *.csv#
 
+dev
+
 # bc4 files
 /server/outputs
 

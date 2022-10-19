@@ -1,6 +1,6 @@
 import numpy as np
 import sys; sys.path.append('.'); sys.path.append('..')
-import api
+from IQM_VIS import api
 
 image_path = {'X': 'images/image2.jpg'}
 metric = {'MAE': lambda im1, im2: np.abs(im1 - im2).mean()}
