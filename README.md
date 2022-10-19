@@ -1,3 +1,5 @@
+[![PyPI version](https://badge.fury.io/py/IQM-VIS.svg)](https://badge.fury.io/py/IQM-VIS)
+
 # IQM-VIS
 Image Quality Metric Visualision
 
