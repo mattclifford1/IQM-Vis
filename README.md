@@ -27,12 +27,12 @@ Use the API to create the UI:
 import api
 api.make_UI(image_path, metric, metric_im, trans)
 ```
-![Alt text](images/ui-simple.png?raw=true "Simple UI")
+![Alt text](examplesimages/ui-simple.png?raw=true "Simple UI")
 
 ## Additional items
 Add more entries to the dictionaries to include extra items examples found [here](examples/multiple.py)
 
-![Alt text](images/ui-multi.png?raw=true "Multi UI")
+![Alt text](examples/images/ui-multi.png?raw=true "Multi UI")
 
 
 ## Installation (todo: `setup.py` and pypi)

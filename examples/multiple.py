@@ -4,8 +4,8 @@ from IQM_VIS import api, image_utils
 
 import metrics
 
-image_paths = {'X1': 'images/image2.jpg',
-               'X2': 'images/image3.jpg'}
+image_paths = {'X1': 'examples/images/image2.jpg',
+               'X2': 'examples/images/image3.jpg'}
 
 # metrics functions must return a single value
 metrics_dict = {'MAE': metrics.MAE,
