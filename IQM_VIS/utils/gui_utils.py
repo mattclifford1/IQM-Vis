@@ -9,7 +9,7 @@ from PyQt6.QtWidgets import QApplication
 import numpy as np
 from skimage.util import img_as_ubyte
 from skimage.transform import resize
-from IQM_VIS import image_utils
+import cv2
 
 '''
 image helper functions
@@ -38,8 +38,10 @@ def change_im(widget, im, resize=False, return_qimage=False):
     if return_qimage:
         return qimage
 
-def image_loader(im_path):
-    return image_utils.load_image(im_path)
+def image_loader(image_path):
+    image = cv2.imread(image_path)
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    return image.astype(np.float32) / 255.0
 
 
 '''

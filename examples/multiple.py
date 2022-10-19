@@ -1,8 +1,8 @@
 import numpy as np
 import sys; sys.path.append('.'); sys.path.append('..')
-from IQM_VIS import api, image_utils
+from IQM_VIS import api
 
-import metrics
+import metrics, image_utils
 
 image_paths = {'X1': 'examples/images/image2.jpg',
                'X2': 'examples/images/image3.jpg'}

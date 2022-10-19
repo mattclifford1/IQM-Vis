@@ -35,8 +35,11 @@ Add more entries to the dictionaries to include extra items examples found [here
 ![Alt text](examples/images/ui-multi.png?raw=true "Multi UI")
 
 
-## Installation (todo: `setup.py` and pypi)
-Currently under development so install from GitHub. First create a new python venv, eg. using conda
+## Installation
+The latest stable version can be downloaded via [PyPi](https://pypi.org/project/IQM-VIS/0.1/).
+
+## Dev Setup
+First create a new python venv, eg. using conda
 ```
 $ conda create -n iqm_vis python=3.9
 ```
@@ -51,11 +54,16 @@ $ cd IQA_GUI
 ```
 Install requirements
 ```
-$ pip install -r requirements.txt
+$ pip install -r requirements-dev.txt
 ```
-Run MWE
+Install package in editable mode
+```
+$ pip install -e .
+```
+Run MWEs
 ```
 $ python examples/simple.py
+$ python examples/multiple.py
 ```
 
 ## To do - datasets

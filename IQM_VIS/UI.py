@@ -8,7 +8,7 @@ from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QInputDialog, QL
 from PyQt6.QtCore import Qt
 from matplotlib.figure import Figure
 
-from IQM_VIS import gui_utils, plot_utils
+from IQM_VIS.utils import gui_utils, plot_utils
 
 class make_app(QMainWindow):
     def __init__(self, app,
