@@ -1,5 +1,6 @@
 *.ptc
 *.pth
+*.pyc
 no_git_data
 pytests/models
 *.csv#

@@ -30,7 +30,7 @@ class make_app(QMainWindow):
         self.metrics_info_format = metrics_info_format
 
         self.image_display_size = (175, 175)
-        self.setStyleSheet("background-color: white;")
+        self.init_style()
 
         self.init_images()
         self.init_transforms()
@@ -40,6 +40,10 @@ class make_app(QMainWindow):
         self.display_images()
         self.reset_sliders()
         self.get_metrics_over_range()
+
+    def init_style(self, css_file='style.css'):
+        with open(css_file, 'r') as file:
+            self.app.setStyleSheet(file.read())
 
     def init_images(self, screen=False):
         '''
