@@ -35,7 +35,7 @@ Add more entries to the dictionaries to include extra items examples found [here
 ![Alt text](examples/images/ui-multi.png?raw=true "Multi UI")
 
 
-## Installation
+# Installation
 The latest stable version can be downloaded via [PyPi](https://pypi.org/project/IQM-VIS/0.1/).
 ```
 $ pip install IQM-VIS
