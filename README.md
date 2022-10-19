@@ -37,6 +37,9 @@ Add more entries to the dictionaries to include extra items examples found [here
 
 ## Installation
 The latest stable version can be downloaded via [PyPi](https://pypi.org/project/IQM-VIS/0.1/).
+```
+$ pip install IQM-VIS
+```
 
 ## Dev Setup
 First create a new python venv, eg. using conda
