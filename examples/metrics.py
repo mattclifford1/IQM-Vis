@@ -36,6 +36,7 @@ class ssim:
             warnings.simplefilter("ignore")
             self.metric = SSIM()
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.metric.to(self.device)
         self.preproccess_function = preprocess_numpy_image
 
     def __call__(self, im_ref, im_comp):
@@ -59,6 +60,7 @@ class SSIM_image:
             warnings.simplefilter("ignore")
             self.metric_image = SSIM(return_full_image=True, reduction=None)
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.metric_image.to(self.device)
         self.preproccess_function = preprocess_numpy_image
 
     def __call__(self, im_ref, im_comp):
