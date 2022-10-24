@@ -1,3 +1,8 @@
+'''
+main entry point to initialise the UI
+'''
+# Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+
 import sys
 import os
 # import pandas as pd

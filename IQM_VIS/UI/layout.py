@@ -1,3 +1,7 @@
+'''
+UI create layout
+'''
+# Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 import os
 
 from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QInputDialog, QLineEdit, QMenu, QFileDialog, QPushButton, QGridLayout, QLabel, QSlider, QComboBox, QCheckBox

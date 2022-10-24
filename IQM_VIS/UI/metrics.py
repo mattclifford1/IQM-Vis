@@ -1,3 +1,8 @@
+'''
+UI getting metrics fucntions
+'''
+# Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+
 import numpy as np
 
 from IQM_VIS.utils import gui_utils, plot_utils

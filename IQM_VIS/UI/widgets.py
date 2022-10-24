@@ -1,3 +1,9 @@
+'''
+UI create widgets 
+'''
+# Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+
+
 from functools import partial
 
 import numpy as np

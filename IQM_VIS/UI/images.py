@@ -1,3 +1,8 @@
+'''
+UI image functions
+'''
+# Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+
 import os
 
 import numpy as np
