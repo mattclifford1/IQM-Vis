@@ -12,10 +12,10 @@ from IQM_VIS.utils import gui_utils, plot_utils
 
 class make_app(QMainWindow):
     def __init__(self, app,
-                image_paths,
-                metrics_dict,
-                metrics_image_dict,
-                transformations,
+                image_paths: dict,
+                metrics_dict: dict,
+                metrics_image_dict: dict,
+                transformations: dict,
                 image_loader=gui_utils.image_loader,
                 metrics_info_format='graph'    # graph or text
                 ):
@@ -43,8 +43,6 @@ class make_app(QMainWindow):
     def init_style(self, css_file=None):
         if css_file == None:
             dir = os.path.dirname(os.path.abspath(__file__))
-            print(__file__)
-            print(dir)
             css_file = os.path.join(dir, 'style.css')
         with open(css_file, 'r') as file:
             self.app.setStyleSheet(file.read())
@@ -244,23 +242,6 @@ class make_app(QMainWindow):
     '''
     ==================== functions to bind to widgets ====================
     '''
-    # buttons
-    def load_prev_image(self):
-        self.im_num -= 1
-        if self.im_num < 0:
-            self.im_num = len(self.df) - 1
-        self.load_sim_image()
-        self.load_real_image()
-        self.display_images()
-
-    def load_next_image(self):
-        self.im_num += 1
-        if self.im_num == len(self.df):
-            self.im_num = 0
-        self.load_sim_image()
-        self.load_real_image()
-        self.display_images()
-
     # sliders value changes
     def generic_value_change(self, key):
         index = self.widgets['slider'][key].value()
@@ -289,7 +270,6 @@ class make_app(QMainWindow):
     def display_images(self):
         self.get_image_data()
         self.compute_metrics()
-        # self.get_metrics_errors()
         self.update_image_widgets()
 
     def _display_images_quick(self):
@@ -306,11 +286,6 @@ class make_app(QMainWindow):
         # display images
         for key in self.image_data.keys():
             gui_utils.change_im(self.widgets['image'][key], self.image_data[key], resize=self.image_display_size)
-        # for im_pair in self.im_pair_names:
-        #     for im_name in im_pair:
-        #         gui_utils.change_im(self.widgets['image'][im_name], self.image_data[im_name], resize=self.image_display_size)
-            # ssim_name = 'SSIM('+str(im_pair)+')'
-            # gui_utils.change_im(self.widgets['image'][ssim_name], self.image_data[ssim_name], resize=self.image_display_size)
 
     '''
     metrics/error info updaters
@@ -391,18 +366,6 @@ class make_app(QMainWindow):
                     # std_value.append(np.std(data_store[str(im_pair)][metric][trans]))
                 radar_plotter.plot(metric, mean_value)
             radar_plotter.show()
-
-
-    # '''
-    # utils
-    # '''
-    # def load_dataset(self, csv_file):
-    #     self.df = pd.read_csv(csv_file)
-    #     self.im_num = 0   # row of csv dataset to use
-    #     self.im_sim_dir = os.path.join(os.path.dirname(csv_file), 'images')
-    #     self.im_real_dir = os.path.join(os.path.dirname(image_utils.get_real_csv_given_sim(csv_file)), 'images')
-    #     self.load_sim_image()
-    #     self.load_real_image()
 
 
 if __name__ == '__main__':
