@@ -1,6 +1,6 @@
 import sys
 from PyQt6.QtWidgets import QApplication
-from IQM_VIS import make_app
+from IQM_VIS.UI.main import make_app
 
 def make_UI(image_paths,
             metrics_dict,

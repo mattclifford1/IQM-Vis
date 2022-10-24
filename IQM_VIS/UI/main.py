@@ -1,5 +1,4 @@
 import sys
-from functools import partial
 import os
 # import pandas as pd
 
@@ -9,8 +8,10 @@ from PyQt6.QtCore import Qt
 from matplotlib.figure import Figure
 
 from IQM_VIS.utils import gui_utils, plot_utils
+from IQM_VIS.UI.layout import app_layout
+from IQM_VIS.UI.widgets import app_widgets
 
-class make_app(QMainWindow):
+class make_app(app_widgets, app_layout):
     def __init__(self, app,
                 image_paths: dict,
                 metrics_dict: dict,
@@ -30,7 +31,6 @@ class make_app(QMainWindow):
 
         self.image_display_size = (175, 175)
         self.init_style()
-
         self.init_images()
         self.init_transforms()
         self.init_widgets()
@@ -39,13 +39,6 @@ class make_app(QMainWindow):
         self.display_images()
         self.reset_sliders()
         self.get_metrics_over_range()
-
-    def init_style(self, css_file=None):
-        if css_file == None:
-            dir = os.path.dirname(os.path.abspath(__file__))
-            css_file = os.path.join(dir, 'style.css')
-        with open(css_file, 'r') as file:
-            self.app.setStyleSheet(file.read())
 
     def init_images(self, screen=False):
         '''
@@ -67,197 +60,6 @@ class make_app(QMainWindow):
                 print('Cannot find image file: ', self.image_paths[key])
                 self.image_data[key] = np.zeros([128, 128, 1], dtype=np.uint8)
             self.im_pair_names.append((key, 'T('+key+')'))
-
-    def init_transforms(self):
-            # define what sliders we are using from image transformations
-        self.sliders = {}
-        for key in self.transformations.keys():
-            self.sliders[key] = {}
-            self.sliders[key]['release'] = [self.display_images]
-            self.sliders[key]['value_change'] = [partial(self.generic_value_change, key), self.display_images]
-            self.sliders[key]['function'] = self.transformations[key]['function']
-            if 'init_value' not in self.transformations[key].keys():
-                self.transformations[key]['init_value'] = 0
-            if 'values' in self.transformations[key].keys():
-                self.sliders[key]['values'] = self.transformations[key]['values']
-            else:
-                if 'num_values' not in self.transformations[key].keys():
-                    self.transformations[key]['num_values'] = 21   # make default value for steps in slider range
-                self.sliders[key]['values'] = np.linspace(self.transformations[key]['min'], self.transformations[key]['max'], self.transformations[key]['num_values'])
-                # see if we need to make odd numbers (for use with kernel sizes)
-                if 'normalise' in self.transformations[key].keys():
-                    if self.transformations[key]['normalise'] == 'odd':
-                        self.sliders[key]['values'] = self.sliders[key]['values'][self.sliders[key]['values']%2 == 1]
-                        self.transformations[key]['num_values'] = len(self.sliders[key]['values'])
-            # get ind of the initial value to set the slider at
-            self.sliders[key]['init_ind'] = np.searchsorted(self.sliders[key]['values'], self.transformations[key]['init_value'], side='left')
-
-    def init_widgets(self):
-        '''
-        create all the widgets we need and init params
-        '''
-        # widget dictionary store
-        self.widgets = {'button': {}, 'slider': {}, 'checkbox': {}, 'label': {}, 'image':{}, 'graph':{}}
-        for im_pair in self.im_pair_names:
-            for im_name in im_pair:
-                # image widget
-                self.widgets['image'][im_name] = QLabel(self)
-                self.widgets['image'][im_name].setAlignment(Qt.AlignmentFlag.AlignCenter)
-                # image label
-                self.widgets['label'][im_name] = QLabel(self)
-                self.widgets['label'][im_name].setAlignment(Qt.AlignmentFlag.AlignCenter)
-                self.widgets['label'][im_name].setText(im_name)
-            # metrics images
-            for key in self.metrics_image_dict.keys():
-                metric_name = gui_utils.get_metric_image_name(key, im_pair)
-                self.widgets['image'][metric_name] = QLabel(self)
-                self.widgets['image'][metric_name].setAlignment(Qt.AlignmentFlag.AlignCenter)
-                # image label
-                self.widgets['label'][metric_name] = QLabel(self)
-                self.widgets['label'][metric_name].setAlignment(Qt.AlignmentFlag.AlignCenter)
-                self.widgets['label'][metric_name].setText(metric_name)
-            # metrics info
-            self.widgets['label'][str(im_pair)+'_metrics'] = QLabel(self)
-            self.widgets['label'][str(im_pair)+'_metrics'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-            self.widgets['label'][str(im_pair)+'_metrics'].setText('Metrics '+str(im_pair))
-            if self.metrics_info_format == 'graph':
-                self.widgets['label'][str(im_pair)+'_metrics_info'] = gui_utils.MplCanvas(self)
-            else:
-                self.widgets['label'][str(im_pair)+'_metrics_info'] = QLabel(self)
-                self.widgets['label'][str(im_pair)+'_metrics_info'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-                self.widgets['label'][str(im_pair)+'_metrics_info'].setText('')
-            # metrics graphs
-            self.widgets['label'][str(im_pair)+'_metrics_graph'] = QLabel(self)
-            self.widgets['label'][str(im_pair)+'_metrics_graph'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-            self.widgets['label'][str(im_pair)+'_metrics_graph'].setText('Metrics Avg. Graph')
-            self.widgets['graph'][str(im_pair)+'_metrics'] = gui_utils.MplCanvas(self, polar=True)
-
-        '''buttons'''
-        # self.widgets['button']['load_dataset'] = QPushButton('Choose Dataset', self)
-        # self.widgets['button']['load_dataset'].clicked.connect(self.choose_dataset)
-        # self.widgets['button']['prev'] = QPushButton('<', self)
-        # self.widgets['button']['prev'].clicked.connect(self.load_prev_image)
-        # self.widgets['label']['filename'] = QLabel(self)
-        # self.widgets['label']['filename'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-        # self.widgets['label']['filename'].setText('')
-        # self.widgets['button']['next'] = QPushButton('>', self)
-        # self.widgets['button']['next'].clicked.connect(self.load_next_image)
-        self.widgets['button']['reset_sliders'] = QPushButton('Reset', self)
-        self.widgets['button']['reset_sliders'].clicked.connect(self.reset_sliders)
-        self.widgets['button']['force_update'] = QPushButton('Update', self)
-        self.widgets['button']['force_update'].clicked.connect(self.display_images)
-        self.widgets['button']['force_update'].clicked.connect(self.get_metrics_over_range)
-
-        '''sliders'''
-        self.im_trans_params = {}
-        for key in self.sliders.keys():
-            self.widgets['slider'][key] = QSlider(Qt.Orientation.Horizontal)
-            self.widgets['slider'][key].setMinimum(0)
-            self.widgets['slider'][key].setMaximum(len(self.sliders[key]['values'])-1)
-            for func in self.sliders[key]['value_change']:
-                self.widgets['slider'][key].valueChanged.connect(func)
-            for func in self.sliders[key]['release']:
-                self.widgets['slider'][key].sliderReleased.connect(func)
-            self.im_trans_params[key] = self.sliders[key]['init_ind']
-            self.widgets['label'][key] = QLabel(self)
-            self.widgets['label'][key].setAlignment(Qt.AlignmentFlag.AlignRight)
-            self.widgets['label'][key].setText(key+':')
-            self.widgets['label'][key+'_value'] = QLabel(self)
-            self.widgets['label'][key+'_value'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-            self.widgets['label'][key+'_value'].setText(str(self.im_trans_params[key]))
-
-    def init_layout(self):
-        '''
-        place all the widgets in the window
-        '''
-        # make main widget insdie the QMainWindow
-        self.main_widget = QWidget()
-        self.layout = QGridLayout()
-        self.main_widget.setLayout(self.layout)
-        self.setCentralWidget(self.main_widget)
-        # sizes
-        im_width = 15
-        im_height = 15
-        button = 1
-        slider_width = int(im_width*2)
-        check_box_width = 5
-        # horizonal start values
-        start_im = 1
-        start_controls = 0#im_width*2+button
-
-        # display images
-        im_row = 0
-        for im_pair in self.im_pair_names:
-            col = 0
-            self.layout.addWidget(self.widgets['label'][im_pair[0]], start_im-1+im_row*(im_height+button), (im_height+button)*col, button, im_width)
-            self.layout.addWidget(self.widgets['image'][im_pair[0]], start_im+im_row*(im_height+button), (im_height+button)*col,   im_height, im_width)
-            col += 1
-            self.layout.addWidget(self.widgets['label'][im_pair[1]], start_im-1+im_row*(im_height+button), (im_height+button)*col, button, im_width)
-            self.layout.addWidget(self.widgets['image'][im_pair[1]], start_im+im_row*(im_height+button), (im_height+button)*col, im_height, im_width)
-            col += 1
-            for key in self.metrics_image_dict.keys():
-                metric_name = gui_utils.get_metric_image_name(key, im_pair)
-                self.layout.addWidget(self.widgets['label'][metric_name], start_im-1+im_row*(im_height+button), (im_height+button)*col, button, im_width)
-                self.layout.addWidget(self.widgets['image'][metric_name], start_im+im_row*(im_height+button), (im_height+button)*col, im_height, im_width)
-                col += 1
-            # metircs info
-            self.layout.addWidget(self.widgets['label'][str(im_pair)+'_metrics'], start_im-1+im_row*(im_height+button), (im_height+button)*col, button, im_width)
-            self.layout.addWidget(self.widgets['label'][str(im_pair)+'_metrics_info'], start_im+im_row*(im_height+button), (im_height+button)*col+button, im_height, im_width)
-            col += 1
-            self.layout.addWidget(self.widgets['label'][str(im_pair)+'_metrics_graph'], start_im-1+im_row*(im_height+button), (im_height+button)*col, button, im_width)
-            self.layout.addWidget(self.widgets['graph'][str(im_pair)+'_metrics'], start_im+im_row*(im_height+button), (im_height+button)*col, im_height, im_width)
-            col += 1
-            im_row += 1
-
-        # load files
-        # self.layout.addWidget(self.widgets['button']['load_dataset'], im_height, 1, 1, 1)
-
-        # image buttons (prev, copy, next, etc.)
-        # self.layout.addWidget(self.widgets['button']['prev'], start_im+im_row*(im_height+button), 1, button, int(im_width*0.66))
-        # self.layout.addWidget(self.widgets['label']['filename'], start_im+im_row*(im_height+button), int(im_width*0.66)+1, button, int(im_width*0.66))
-        # self.layout.addWidget(self.widgets['button']['next'], start_im+im_row*(im_height+button), int(im_width*0.66)*2+1, button, int(im_width*0.66))
-        # self.layout.addWidget(self.button_copy_im, 0, 1, 1, 1)
-
-        i = (im_height+button)*im_row+button+start_im
-        # checkboxes
-        # self.layout.addWidget(self.widgets['checkbox']['real_im'],   button*i, start_controls+button, button, check_box_width)
-        # self.layout.addWidget(self.widgets['checkbox']['run_generator'], button*i, start_controls+button+check_box_width, button, check_box_width)
-        # i += 1
-
-        # sliders
-        for slider in self.sliders.keys():
-            self.layout.addWidget(self.widgets['slider'][slider],   button*i, start_controls+button, button, slider_width)
-            self.layout.addWidget(self.widgets['label'][slider],    button*i, start_controls,   button, button)
-            self.layout.addWidget(self.widgets['label'][slider+'_value'], button*i, start_controls+button+slider_width,   button, button)
-            i += 1
-
-        # reset sliders
-        self.layout.addWidget(self.widgets['button']['reset_sliders'], button*i, start_controls, button, button)
-        self.layout.addWidget(self.widgets['button']['force_update'], button*i, start_controls+button, button, button)
-        i += 1
-        # init it!
-        self.show()
-
-
-    '''
-    ==================== functions to bind to widgets ====================
-    '''
-    # sliders value changes
-    def generic_value_change(self, key):
-        index = self.widgets['slider'][key].value()
-        self.im_trans_params[key] = self.sliders[key]['values'][index]
-        self.display_slider_num(key) # display the new value ont UI
-
-    def display_slider_num(self, key, disp_len=5):
-        # display the updated value
-        value_str = str(self.im_trans_params[key])
-        value_str = gui_utils.str_to_len(value_str, disp_len, '0', plus=True)
-        self.widgets['label'][key+'_value'].setText(value_str)
-
-    def reset_sliders(self):
-        for key in self.sliders.keys():
-            self.widgets['slider'][key].setValue(self.sliders[key]['init_ind'])
-        self.display_images()
 
     '''
     image updaters
