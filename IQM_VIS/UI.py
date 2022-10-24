@@ -40,7 +40,12 @@ class make_app(QMainWindow):
         self.reset_sliders()
         self.get_metrics_over_range()
 
-    def init_style(self, css_file='style.css'):
+    def init_style(self, css_file=None):
+        if css_file == None:
+            dir = os.path.dirname(os.path.abspath(__file__))
+            print(__file__)
+            print(dir)
+            css_file = os.path.join(dir, 'style.css')
         with open(css_file, 'r') as file:
             self.app.setStyleSheet(file.read())
 

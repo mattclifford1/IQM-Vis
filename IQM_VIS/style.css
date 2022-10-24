@@ -3,7 +3,7 @@ QWidget {
     color: "black";
 }
 QPushButton {
-    font-size: 16px;
+    /* font-size: 16px; */
     background-color: "white"
 }
 QLineEdit {
