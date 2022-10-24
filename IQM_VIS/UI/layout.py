@@ -59,22 +59,9 @@ class app_layout(QMainWindow):
             col += 1
             im_row += 1
 
-         # load files
-        # self.layout.addWidget(self.widgets['button']['load_dataset'], im_height, 1, 1, 1)
-
-        # image buttons (prev, copy, next, etc.)
-        # self.layout.addWidget(self.widgets['button']['prev'], start_im+im_row*(im_height+button), 1, button, int(im_width*0.66))
-        # self.layout.addWidget(self.widgets['label']['filename'], start_im+im_row*(im_height+button), int(im_width*0.66)+1, button, int(im_width*0.66))
-        # self.layout.addWidget(self.widgets['button']['next'], start_im+im_row*(im_height+button), int(im_width*0.66)*2+1, button, int(im_width*0.66))
-        # self.layout.addWidget(self.button_copy_im, 0, 1, 1, 1)
-
-        i = (im_height+button)*im_row+button+start_im
-        # checkboxes
-        # self.layout.addWidget(self.widgets['checkbox']['real_im'],   button*i, start_controls+button, button, check_box_width)
-        # self.layout.addWidget(self.widgets['checkbox']['run_generator'], button*i, start_controls+button+check_box_width, button, check_box_width)
-        # i += 1
 
         # sliders
+        i = (im_height+button)*im_row+button+start_im
         for slider in self.sliders.keys():
             self.layout.addWidget(self.widgets['slider'][slider],   button*i, start_controls+button, button, slider_width)
             self.layout.addWidget(self.widgets['label'][slider],    button*i, start_controls,   button, button)

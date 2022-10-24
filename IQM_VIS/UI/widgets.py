@@ -73,15 +73,6 @@ class app_widgets():
             self.widgets['graph'][str(im_pair)+'_metrics'] = gui_utils.MplCanvas(self, polar=True)
 
         '''buttons'''
-        # self.widgets['button']['load_dataset'] = QPushButton('Choose Dataset', self)
-        # self.widgets['button']['load_dataset'].clicked.connect(self.choose_dataset)
-        # self.widgets['button']['prev'] = QPushButton('<', self)
-        # self.widgets['button']['prev'].clicked.connect(self.load_prev_image)
-        # self.widgets['label']['filename'] = QLabel(self)
-        # self.widgets['label']['filename'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-        # self.widgets['label']['filename'].setText('')
-        # self.widgets['button']['next'] = QPushButton('>', self)
-        # self.widgets['button']['next'].clicked.connect(self.load_next_image)
         self.widgets['button']['reset_sliders'] = QPushButton('Reset', self)
         self.widgets['button']['reset_sliders'].clicked.connect(self.reset_sliders)
         self.widgets['button']['force_update'] = QPushButton('Update', self)
