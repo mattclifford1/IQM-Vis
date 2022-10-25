@@ -13,17 +13,20 @@ class app_layout(QMainWindow):
         super().__init__()
         self.image_display_size = (175, 175)
 
-    def init_style(self, css_file=None):
-        if css_file == None:
-            dir = os.path.dirname(os.path.abspath(__file__))
-            css_file = os.path.join(dir, 'style.css')
-        with open(css_file, 'r') as file:
-            self.app.setStyleSheet(file.read())
+    def get_layout_defininition(self):
+        '''define layout of the UI
+        change in here to make the appearance of the UI widgets different
+        --> widgets groups must be present in app_widgets'''
+        ### tODO: make this layout work to be more generalisable!!!
+
+        # self.layout_def = {self.im_pair_names:['label', 'label',
+        #                    self.sliders.keys(): 'a'}
 
     def init_layout(self):
         '''
         place all the widgets in the window
         '''
+        self.get_layout_defininition() # define the structure of the layout
         # make main widget insdie the QMainWindow
         self.main_widget = QWidget()
         self.layout = QGridLayout()
@@ -78,3 +81,10 @@ class app_layout(QMainWindow):
         i += 1
         # init it!
         self.show()
+
+    def init_style(self, css_file=None):
+        if css_file == None:
+            dir = os.path.dirname(os.path.abspath(__file__))
+            css_file = os.path.join(dir, 'style.css')
+        with open(css_file, 'r') as file:
+            self.app.setStyleSheet(file.read())
