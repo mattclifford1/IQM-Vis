@@ -10,6 +10,14 @@ from IQM_VIS.utils import gui_utils, plot_utils
 class app_metrics:
     '''
     metrics/error info updaters
+
+    use predefined attributes:
+        - im_pair_names
+        - image_data
+        - metrics_dict
+        - metrics_image_dict
+        - widgets
+        - sliders
     '''
     def compute_metrics(self):
         for im_pair in self.im_pair_names:
