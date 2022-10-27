@@ -4,8 +4,7 @@ UI create layout
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 import os
 
-from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QInputDialog, QLineEdit, QMenu, QFileDialog, QPushButton, QGridLayout, QLabel, QSlider, QComboBox, QCheckBox
-from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QWidget, QMainWindow, QGridLayout,
 
 # layout class
 class app_layout(QMainWindow):

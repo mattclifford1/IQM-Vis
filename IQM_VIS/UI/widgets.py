@@ -1,5 +1,5 @@
 '''
-UI create widgets 
+UI create widgets
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 
@@ -105,7 +105,7 @@ class app_widgets():
 
 
     '''
-    ==================== functions to bind to widgets ====================
+    ==================== functions to bind to sliders/widgets ====================
     '''
     # sliders value changes
     def generic_value_change(self, key):
