@@ -7,8 +7,8 @@ from PyQt6.QtWidgets import QApplication
 from IQM_VIS.UI.main import make_app
 
 
-def make_UI(*args, metrics_info_format='graph'):
-    ui = UI_wrapper(*args, metrics_info_format)
+def make_UI(*args, **kwargs):
+    ui = UI_wrapper(*args, **kwargs)
     ui.show()
 
 
@@ -19,6 +19,7 @@ class UI_wrapper:
     metrics_image_dict: dict
     transformations: dict
     metrics_info_format: str='graph'
+    metrics_avg_graph: bool=False
 
     def show(self):
         self._check_inputs()
@@ -28,7 +29,8 @@ class UI_wrapper:
                           self.metrics_dict,
                           self.metrics_image_dict,
                           self.transformations,
-                          metrics_info_format=self.metrics_info_format)
+                          metrics_info_format=self.metrics_info_format,
+                          metrics_avg_graph=self.metrics_avg_graph)
         sys.exit(app.exec())
 
     def _check_inputs(self):

@@ -83,7 +83,8 @@ class app_widgets():
         self.widgets['button']['reset_sliders'].clicked.connect(self.reset_sliders)
         self.widgets['button']['force_update'] = QPushButton('Update', self)
         self.widgets['button']['force_update'].clicked.connect(self.display_images)
-        self.widgets['button']['force_update'].clicked.connect(self.get_metrics_over_range)
+        if self.metrics_avg_graph:
+            self.widgets['button']['force_update'].clicked.connect(self.get_metrics_over_range)
 
         '''sliders'''
         self.im_trans_params = {}

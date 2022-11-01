@@ -4,7 +4,7 @@ UI create layout
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 import os
 
-from PyQt6.QtWidgets import QWidget, QMainWindow, QGridLayout,
+from PyQt6.QtWidgets import QWidget, QMainWindow, QGridLayout
 
 # layout class
 class app_layout(QMainWindow):
@@ -60,9 +60,10 @@ class app_layout(QMainWindow):
             self.layout.addWidget(self.widgets['label'][str(im_pair)+'_metrics'], start_im-1+im_row*(im_height+button), (im_height+button)*col, button, im_width)
             self.layout.addWidget(self.widgets['label'][str(im_pair)+'_metrics_info'], start_im+im_row*(im_height+button), (im_height+button)*col+button, im_height, im_width)
             col += 1
-            self.layout.addWidget(self.widgets['label'][str(im_pair)+'_metrics_graph'], start_im-1+im_row*(im_height+button), (im_height+button)*col, button, im_width)
-            self.layout.addWidget(self.widgets['graph'][str(im_pair)+'_metrics'], start_im+im_row*(im_height+button), (im_height+button)*col, im_height, im_width)
-            col += 1
+            if self.metrics_avg_graph:
+                self.layout.addWidget(self.widgets['label'][str(im_pair)+'_metrics_graph'], start_im-1+im_row*(im_height+button), (im_height+button)*col, button, im_width)
+                self.layout.addWidget(self.widgets['graph'][str(im_pair)+'_metrics'], start_im+im_row*(im_height+button), (im_height+button)*col, im_height, im_width)
+                col += 1
             im_row += 1
 
 

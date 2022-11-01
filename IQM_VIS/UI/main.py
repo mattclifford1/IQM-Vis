@@ -25,7 +25,8 @@ class make_app(app_widgets, app_layout, app_metrics, app_images):
                 metrics_image_dict: dict,
                 transformations: dict,
                 image_loader=gui_utils.image_loader,
-                metrics_info_format='graph'    # graph or text
+                metrics_info_format='graph',    # graph or text
+                metrics_avg_graph=False
                 ):
         super().__init__()
         self.app = app
@@ -35,6 +36,7 @@ class make_app(app_widgets, app_layout, app_metrics, app_images):
         self.transformations = transformations
         self.image_loader = image_loader
         self.metrics_info_format = metrics_info_format
+        self.metrics_avg_graph = metrics_avg_graph
 
         self.init_style()
         self.init_images()
@@ -44,4 +46,5 @@ class make_app(app_widgets, app_layout, app_metrics, app_images):
 
         self.display_images()
         self.reset_sliders()
-        self.get_metrics_over_range()
+        if self.metrics_avg_graph:
+            self.get_metrics_over_range()
