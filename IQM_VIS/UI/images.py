@@ -25,11 +25,7 @@ class app_images:
         self.image_data = {}
         self.im_pair_names = []
         for key in self.image_paths.keys():
-            if os.path.exists(self.image_paths[key]):
-                self.image_data[key] = self.image_loader(self.image_paths[key])
-            else:
-                print('Cannot find image file: ', self.image_paths[key])
-                self.image_data[key] = np.zeros([128, 128, 1], dtype=np.uint8)
+            self.image_data[key] = self.image_paths[key]
             self.im_pair_names.append((key, 'T('+key+')'))
 
     '''
@@ -41,16 +37,11 @@ class app_images:
         return image
 
     def display_images(self):
-        self.get_image_data()
+        self.get_transformed_image()
         self.compute_metrics()
         self.update_image_widgets()
 
-    def _display_images_quick(self):
-        # dont calc metrics/errors - just update widgets
-        self.get_image_data()
-        self.update_image_widgets()
-
-    def get_image_data(self):
+    def get_transformed_image(self):
         # get transformed images
         for key in self.image_paths.keys():
             self.image_data['T('+key+')'] = self.transform_image(self.image_data[key])

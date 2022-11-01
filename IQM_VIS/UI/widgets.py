@@ -43,7 +43,7 @@ class app_widgets():
         create all the widgets we need and init params
         '''
         # widget dictionary store
-        self.widgets = {'button': {}, 'slider': {}, 'checkbox': {}, 'label': {}, 'image':{}, 'graph':{}}
+        self.widgets = {'button': {}, 'slider': {}, 'label': {}, 'image':{}, 'graph':{}}
         for im_pair in self.im_pair_names:
             for im_name in im_pair:
                 # image widget
