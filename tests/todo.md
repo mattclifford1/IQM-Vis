@@ -4,7 +4,6 @@ make API a new format
 -> better handling of image data
 -> better construction of widgets/layout
 
--> only make update button when graph avg chosen
 
 later
 -> pass a generator to loop over the dataset
