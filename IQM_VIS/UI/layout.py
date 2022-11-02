@@ -77,7 +77,8 @@ class app_layout(QMainWindow):
 
         # reset sliders
         self.layout.addWidget(self.widgets['button']['reset_sliders'], button*i, start_controls, button, button)
-        self.layout.addWidget(self.widgets['button']['force_update'], button*i, start_controls+button, button, button)
+        if self.metrics_avg_graph:
+            self.layout.addWidget(self.widgets['button']['force_update'], button*i, start_controls+button, button, button)
         i += 1
         # init it!
         self.show()

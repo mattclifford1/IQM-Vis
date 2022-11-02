@@ -72,18 +72,21 @@ class app_widgets():
                 self.widgets['label'][str(im_pair)+'_metrics_info'] = QLabel(self)
                 self.widgets['label'][str(im_pair)+'_metrics_info'].setAlignment(Qt.AlignmentFlag.AlignCenter)
                 self.widgets['label'][str(im_pair)+'_metrics_info'].setText('')
-            # metrics graphs
-            self.widgets['label'][str(im_pair)+'_metrics_graph'] = QLabel(self)
-            self.widgets['label'][str(im_pair)+'_metrics_graph'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-            self.widgets['label'][str(im_pair)+'_metrics_graph'].setText('Metrics Avg. Graph')
-            self.widgets['graph'][str(im_pair)+'_metrics'] = gui_utils.MplCanvas(self, polar=True)
+            # metrics avgerage graphs
+            if self.metrics_avg_graph:
+                self.widgets['label'][str(im_pair)+'_metrics_graph'] = QLabel(self)
+                self.widgets['label'][str(im_pair)+'_metrics_graph'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                self.widgets['label'][str(im_pair)+'_metrics_graph'].setText('Metrics Avg. Graph')
+                self.widgets['graph'][str(im_pair)+'_metrics'] = gui_utils.MplCanvas(self, polar=True)
+                self.widgets['graph'][str(im_pair)+'_metrics'].setToolTip('Mean metric value over the range of each transform.')
 
         '''buttons'''
         self.widgets['button']['reset_sliders'] = QPushButton('Reset', self)
         self.widgets['button']['reset_sliders'].clicked.connect(self.reset_sliders)
-        self.widgets['button']['force_update'] = QPushButton('Update', self)
-        self.widgets['button']['force_update'].clicked.connect(self.display_images)
         if self.metrics_avg_graph:
+            self.widgets['button']['force_update'] = QPushButton('Calc. Avg.', self)
+            self.widgets['button']['force_update'].setToolTip('Update metrics average plot using the current slider values.')
+            self.widgets['button']['force_update'].clicked.connect(self.display_images)
             self.widgets['button']['force_update'].clicked.connect(self.get_metrics_over_range)
 
         '''sliders'''
@@ -124,3 +127,5 @@ class app_widgets():
         for key in self.sliders.keys():
             self.widgets['slider'][key].setValue(self.sliders[key]['init_ind'])
         self.display_images()
+        if self.metrics_avg_graph:
+            self.get_metrics_over_range()

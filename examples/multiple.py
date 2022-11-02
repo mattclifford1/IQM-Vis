@@ -24,4 +24,8 @@ transformations = {
            }
 
 # make app
-api.make_UI(image_paths, metrics_dict, metrics_image_dict, transformations, metrics_avg_graph=True)
+api.make_UI(image_paths,
+            metrics_dict,
+            metrics_image_dict,
+            transformations,
+            metrics_avg_graph=True)
