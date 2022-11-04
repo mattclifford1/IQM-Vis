@@ -23,7 +23,7 @@ class app_images:
 
         # load images
         self.image_data = {}
-        self.im_pair_names = []
+        # self.im_pair_names = []
         for key in self.image_paths.keys():
             self.image_data[key] = self.image_paths[key]
             self.im_pair_names.append((key, 'T('+key+')'))
@@ -37,16 +37,18 @@ class app_images:
         return image
 
     def display_images(self):
-        self.get_transformed_image()
-        self.compute_metrics()
-        self.update_image_widgets()
+        for i, data_store in enumerate(self.data_stores):
+            gui_utils.change_im(self.widget_row[i]['images'][data_store.image_name]['data'], data_store.image_data, resize=self.image_display_size)
+            trans_im = self.transform_image(data_store.image_data)
+            gui_utils.change_im(self.widget_row[i]['images'][gui_utils.get_transformed_image_name(data_store.image_name)]['data'], trans_im, resize=self.image_display_size)
 
-    def get_transformed_image(self):
-        # get transformed images
-        for key in self.image_paths.keys():
-            self.image_data['T('+key+')'] = self.transform_image(self.image_data[key])
+            metrics = data_store.get_metrics(trans_im)
+            metric_images = data_store.get_metric_images(trans_im)
+            # self.compute_metrics()
+            # self.update_image_widgets()
 
     def update_image_widgets(self):
         # display images
-        for key in self.image_data.keys():
+        # for key in self.image_data.keys():
+        for i in self.widget_row.keys():
             gui_utils.change_im(self.widgets['image'][key], self.image_data[key], resize=self.image_display_size)

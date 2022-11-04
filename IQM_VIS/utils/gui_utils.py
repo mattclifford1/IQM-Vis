@@ -58,8 +58,14 @@ def str_to_len(string, length=5, append_char='0', plus=False):
         string = string + append_char*(length-len(string))
     return string
 
-def get_metric_image_name(metric, image_pair):
-    return metric+str(image_pair)
+def get_metric_image_name(metric, image_name):
+    return metric+get_image_pair_name(image_name)
+
+def get_transformed_image_name(image_name):
+    return 'T('+image_name+')'
+
+def get_image_pair_name(image_name):
+    return str((image_name, get_transformed_image_name(image_name)))
 
 
 '''

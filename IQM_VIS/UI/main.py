@@ -19,31 +19,24 @@ from IQM_VIS.UI.images import app_images
 
 class make_app(app_widgets, app_layout, app_metrics, app_images):
     def __init__(self, app,
-                image_paths: dict,
-                metrics_dict: dict,
-                metrics_image_dict: dict,
+                data_stores: list,
                 transformations: dict,
-                image_loader=gui_utils.image_loader,
                 metrics_info_format='graph',    # graph or text
                 metrics_avg_graph=False
                 ):
         super().__init__()
         self.app = app
-        self.image_paths = image_paths
-        self.metrics_dict = metrics_dict
-        self.metrics_image_dict = metrics_image_dict
+        self.data_stores = data_stores
         self.transformations = transformations
-        self.image_loader = image_loader
         self.metrics_info_format = metrics_info_format
         self.metrics_avg_graph = metrics_avg_graph
 
-        self.init_style()
-        self.init_images()
-        self.init_transforms()
-        self.init_widgets()
-        self.init_layout()
+        self.init_style()                  # app_layout
+        # self.init_images()               #
+        self.init_widgets()                # app_widgets
+        self.init_layout()                 # app_layout
 
-        self.display_images()
-        self.reset_sliders()
+        self.display_images()              # app_images
+        self.reset_sliders()               # app_widgets
         if self.metrics_avg_graph:
-            self.get_metrics_over_range()
+            self.get_metrics_over_range()  # app_metrics

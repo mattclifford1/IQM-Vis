@@ -14,7 +14,7 @@ from IQM_VIS.utils import gui_utils
 
 # base sub class to initialise QMainWindow and general UI functions for widgets
 class app_widgets():
-    def init_transforms(self):
+    def _init_transforms(self):
         # define what sliders we are using from image transformations
         self.sliders = {}
         for key in self.transformations.keys():
@@ -42,70 +42,86 @@ class app_widgets():
         '''
         create all the widgets we need and init params
         '''
-        # widget dictionary store
-        self.widgets = {'button': {}, 'slider': {}, 'label': {}, 'image':{}, 'graph':{}}
-        for im_pair in self.im_pair_names:
-            for im_name in im_pair:
+        self._init_transforms() # first setup the slider data
+
+        self.widget_row = {}
+        for i, data_store in enumerate(self.data_stores):   # create each row of the widgets
+            '''
+            follow the below dict structure!!!!
+            '''
+            self.widget_row[i] = {'images':{}, 'metrics':{}, 'metric_images':{}}
+
+            '''image and transformed image'''
+            for image_name in [data_store.image_name,
+                               gui_utils.get_transformed_image_name(data_store.image_name)]:
+                self.widget_row[i]['images'][image_name] = {}
                 # image widget
-                self.widgets['image'][im_name] = QLabel(self)
-                self.widgets['image'][im_name].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                self.widget_row[i]['images'][image_name]['data'] = QLabel(self)
+                self.widget_row[i]['images'][image_name]['data'].setAlignment(Qt.AlignmentFlag.AlignCenter)
                 # image label
-                self.widgets['label'][im_name] = QLabel(self)
-                self.widgets['label'][im_name].setAlignment(Qt.AlignmentFlag.AlignCenter)
-                self.widgets['label'][im_name].setText(im_name)
-            # metrics images
-            for key in self.metrics_image_dict.keys():
-                metric_name = gui_utils.get_metric_image_name(key, im_pair)
-                self.widgets['image'][metric_name] = QLabel(self)
-                self.widgets['image'][metric_name].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                self.widget_row[i]['images'][image_name]['label'] = QLabel(self)
+                self.widget_row[i]['images'][image_name]['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                self.widget_row[i]['images'][image_name]['label'].setText(image_name)
+
+            '''metric images'''
+            for key in data_store.metric_images.keys():
+                metric_name = gui_utils.get_metric_image_name(key, data_store.image_name)
+                self.widget_row[i]['metric_images'][metric_name] = {}
+                self.widget_row[i]['metric_images'][metric_name]['data'] = QLabel(self)
+                self.widget_row[i]['metric_images'][metric_name]['data'].setAlignment(Qt.AlignmentFlag.AlignCenter)
                 # image label
-                self.widgets['label'][metric_name] = QLabel(self)
-                self.widgets['label'][metric_name].setAlignment(Qt.AlignmentFlag.AlignCenter)
-                self.widgets['label'][metric_name].setText(metric_name)
-            # metrics info
-            self.widgets['label'][str(im_pair)+'_metrics'] = QLabel(self)
-            self.widgets['label'][str(im_pair)+'_metrics'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-            self.widgets['label'][str(im_pair)+'_metrics'].setText('Metrics '+str(im_pair))
+                self.widget_row[i]['metric_images'][metric_name]['label'] = QLabel(self)
+                self.widget_row[i]['metric_images'][metric_name]['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                self.widget_row[i]['metric_images'][metric_name]['label'].setText(metric_name)
+
+            '''metrics graphs'''
+            im_pair_name = gui_utils.get_image_pair_name(data_store.image_name)
+            self.widget_row[i]['metrics']['info'] = {}
+            self.widget_row[i]['metrics']['info']['label'] = QLabel(self)
+            self.widget_row[i]['metrics']['info']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+            self.widget_row[i]['metrics']['info']['label'].setText('Metrics '+im_pair_name)
             if self.metrics_info_format == 'graph':
-                self.widgets['label'][str(im_pair)+'_metrics_info'] = gui_utils.MplCanvas(self)
+                self.widget_row[i]['metrics']['info']['data'] = gui_utils.MplCanvas(self)
             else:
-                self.widgets['label'][str(im_pair)+'_metrics_info'] = QLabel(self)
-                self.widgets['label'][str(im_pair)+'_metrics_info'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-                self.widgets['label'][str(im_pair)+'_metrics_info'].setText('')
+                self.widget_row[i]['metrics']['info']['data'] = QLabel(self)
+                self.widget_row[i]['metrics']['info']['data'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                self.widget_row[i]['metrics']['info']['data'].setText('')
             # metrics avgerage graphs
             if self.metrics_avg_graph:
-                self.widgets['label'][str(im_pair)+'_metrics_graph'] = QLabel(self)
-                self.widgets['label'][str(im_pair)+'_metrics_graph'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-                self.widgets['label'][str(im_pair)+'_metrics_graph'].setText('Metrics Avg. Graph')
-                self.widgets['graph'][str(im_pair)+'_metrics'] = gui_utils.MplCanvas(self, polar=True)
-                self.widgets['graph'][str(im_pair)+'_metrics'].setToolTip('Mean metric value over the range of each transform.')
+                self.widget_row[i]['metrics']['avg']['label'] = QLabel(self)
+                self.widget_row[i]['metrics']['avg']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                self.widget_row[i]['metrics']['avg']['label'].setText('Metrics Avg. Graph')
+                self.widget_row[i]['metrics']['avg']['data'] = gui_utils.MplCanvas(self, polar=True)
+                self.widget_row[i]['metrics']['avg']['data'].setToolTip('Mean metric value over the range of each transform.')
 
         '''buttons'''
-        self.widgets['button']['reset_sliders'] = QPushButton('Reset', self)
-        self.widgets['button']['reset_sliders'].clicked.connect(self.reset_sliders)
+        self.widget_sliders = {'button': {}, 'slider':{}}
+        self.widget_sliders['button']['reset_sliders'] = QPushButton('Reset', self)
+        self.widget_sliders['button']['reset_sliders'].clicked.connect(self.reset_sliders)
         if self.metrics_avg_graph:
-            self.widgets['button']['force_update'] = QPushButton('Calc. Avg.', self)
-            self.widgets['button']['force_update'].setToolTip('Update metrics average plot using the current slider values.')
-            self.widgets['button']['force_update'].clicked.connect(self.display_images)
-            self.widgets['button']['force_update'].clicked.connect(self.get_metrics_over_range)
+            self.widget_sliders['button']['force_update'] = QPushButton('Calc. Avg.', self)
+            self.widget_sliders['button']['force_update'].setToolTip('Update metrics average plot using the current slider values.')
+            self.widget_sliders['button']['force_update'].clicked.connect(self.display_images)
+            self.widget_sliders['button']['force_update'].clicked.connect(self.get_metrics_over_range)
 
         '''sliders'''
         self.im_trans_params = {}
         for key in self.sliders.keys():
-            self.widgets['slider'][key] = QSlider(Qt.Orientation.Horizontal)
-            self.widgets['slider'][key].setMinimum(0)
-            self.widgets['slider'][key].setMaximum(len(self.sliders[key]['values'])-1)
+            self.widget_sliders['slider'][key] = {}
+            self.widget_sliders['slider'][key]['data'] = QSlider(Qt.Orientation.Horizontal)
+            self.widget_sliders['slider'][key]['data'].setMinimum(0)
+            self.widget_sliders['slider'][key]['data'].setMaximum(len(self.sliders[key]['values'])-1)
             for func in self.sliders[key]['value_change']:
-                self.widgets['slider'][key].valueChanged.connect(func)
+                self.widget_sliders['slider'][key]['data'].valueChanged.connect(func)
             for func in self.sliders[key]['release']:
-                self.widgets['slider'][key].sliderReleased.connect(func)
+                self.widget_sliders['slider'][key]['data'].sliderReleased.connect(func)
             self.im_trans_params[key] = self.sliders[key]['init_ind']
-            self.widgets['label'][key] = QLabel(self)
-            self.widgets['label'][key].setAlignment(Qt.AlignmentFlag.AlignRight)
-            self.widgets['label'][key].setText(key+':')
-            self.widgets['label'][key+'_value'] = QLabel(self)
-            self.widgets['label'][key+'_value'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-            self.widgets['label'][key+'_value'].setText(str(self.im_trans_params[key]))
+            self.widget_sliders['slider'][key]['label'] = QLabel(self)
+            self.widget_sliders['slider'][key]['label'].setAlignment(Qt.AlignmentFlag.AlignRight)
+            self.widget_sliders['slider'][key]['label'].setText(key+':')
+            self.widget_sliders['slider'][key]['value'] = QLabel(self)
+            self.widget_sliders['slider'][key]['value'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+            self.widget_sliders['slider'][key]['value'].setText(str(self.im_trans_params[key]))
 
 
     '''
@@ -113,7 +129,7 @@ class app_widgets():
     '''
     # sliders value changes
     def generic_value_change(self, key):
-        index = self.widgets['slider'][key].value()
+        index = self.widget_sliders['slider'][key]['data'].value()
         self.im_trans_params[key] = self.sliders[key]['values'][index]
         self.display_slider_num(key) # display the new value ont UI
 
@@ -121,11 +137,11 @@ class app_widgets():
         # display the updated value
         value_str = str(self.im_trans_params[key])
         value_str = gui_utils.str_to_len(value_str, disp_len, '0', plus=True)
-        self.widgets['label'][key+'_value'].setText(value_str)
+        self.widget_sliders['slider'][key]['value'].setText(value_str)
 
     def reset_sliders(self):
         for key in self.sliders.keys():
-            self.widgets['slider'][key].setValue(self.sliders[key]['init_ind'])
+            self.widget_sliders['slider'][key]['data'].setValue(self.sliders[key]['init_ind'])
         self.display_images()
         if self.metrics_avg_graph:
             self.get_metrics_over_range()
