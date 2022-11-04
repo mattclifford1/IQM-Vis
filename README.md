@@ -18,7 +18,7 @@ The latest stable version can be downloaded via [PyPi](https://pypi.org/project/
 ```
 $ pip install IQM-VIS
 ```
-
+Example usage of the package can be found in [examples](examples)
 ## Dev Setup
 First create a new python venv, eg. using conda
 ```
