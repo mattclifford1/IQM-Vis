@@ -14,21 +14,22 @@ metric = {'MAE': metrics.MAE,
 metric_images = {'MSE': metrics.MSE_image,
                  'SSIM': metrics.SSIM_image()}
 
+# first row of images
 row_1 = data.holder(('X1', gui_utils.image_loader('examples/images/image2.jpg')),
                          metric,
                          metric_images)
-
+# second row of images
 row_2 = data.holder(('X2', gui_utils.image_loader('examples/images/image3.jpg')),
                          metric,
                          metric_images)
-
+# define the transformations
 transformations = {
            'rotation':{'min':-180, 'max':180, 'function':image_utils.rotation},    # normal input
            'blur':{'min':1, 'max':41, 'normalise':'odd', 'function':image_utils.blur},  # only odd ints
            'brightness':{'min':-1, 'max':1, 'function':image_utils.brightness},   # normal but with float
            }
 
-# make app
+# use the API to create the UI
 api.make_UI([row_1, row_2],
             transformations,
             metrics_avg_graph=True)
