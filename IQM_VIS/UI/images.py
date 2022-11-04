@@ -70,9 +70,9 @@ class app_images:
         bar_plt.plot('', list(metrics.values()))
         bar_plt.show()
 
-    def display_metrics_text(self, metrics, label, disp_len=5):
+    def display_metrics_text(self, metrics, i, disp_len=5):
         text = ''
         for key in metrics.keys():
             metric = gui_utils.str_to_len(str(metrics[key]), disp_len, '0')
             text += key + ': ' + metric + '\n'
-        self.widgets['label'][str(label)+'_metrics_info'].setText(text)
+        self.widget_row[i]['metrics']['info']['data'].setText(text)
