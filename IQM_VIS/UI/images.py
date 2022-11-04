@@ -43,8 +43,9 @@ class app_images:
             gui_utils.change_im(self.widget_row[i]['images'][gui_utils.get_transformed_image_name(data_store.image_name)]['data'], trans_im, resize=self.image_display_size)
 
             metrics = data_store.get_metrics(trans_im)
-            metric_images = data_store.get_metric_images(trans_im)
             self.display_metrics(metrics, i)
+            metric_images = data_store.get_metric_images(trans_im)
+            self.display_metric_images(metric_images, i)
             # self.compute_metrics()
             # self.update_image_widgets()
 
@@ -76,3 +77,11 @@ class app_images:
             metric = gui_utils.str_to_len(str(metrics[key]), disp_len, '0')
             text += key + ': ' + metric + '\n'
         self.widget_row[i]['metrics']['info']['data'].setText(text)
+
+    '''
+    metric image updaters
+    '''
+    def display_metric_images(self, metric_images, i):
+        for key in metric_images.keys():
+            widget = self.widget_row[i]['metric_images'][key]['data']
+            gui_utils.change_im(widget, metric_images[key], resize=self.image_display_size)

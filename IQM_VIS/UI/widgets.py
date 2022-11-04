@@ -65,14 +65,14 @@ class app_widgets():
 
             '''metric images'''
             for key in data_store.metric_images.keys():
-                metric_name = gui_utils.get_metric_image_name(key, data_store.image_name)
-                self.widget_row[i]['metric_images'][metric_name] = {}
-                self.widget_row[i]['metric_images'][metric_name]['data'] = QLabel(self)
-                self.widget_row[i]['metric_images'][metric_name]['data'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                self.widget_row[i]['metric_images'][key] = {}
+                self.widget_row[i]['metric_images'][key]['data'] = QLabel(self)
+                self.widget_row[i]['metric_images'][key]['data'].setAlignment(Qt.AlignmentFlag.AlignCenter)
                 # image label
-                self.widget_row[i]['metric_images'][metric_name]['label'] = QLabel(self)
-                self.widget_row[i]['metric_images'][metric_name]['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-                self.widget_row[i]['metric_images'][metric_name]['label'].setText(metric_name)
+                metric_name = gui_utils.get_metric_image_name(key, data_store.image_name)
+                self.widget_row[i]['metric_images'][key]['label'] = QLabel(self)
+                self.widget_row[i]['metric_images'][key]['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                self.widget_row[i]['metric_images'][key]['label'].setText(metric_name)
 
             '''metrics graphs'''
             im_pair_name = gui_utils.get_image_pair_name(data_store.image_name)
