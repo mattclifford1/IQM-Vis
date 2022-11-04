@@ -6,11 +6,15 @@ UI image functions
 import os
 
 import numpy as np
+from PyQt6.QtWidgets import QApplication
 
 from IQM_VIS.utils import gui_utils, plot_utils
 
 
 class app_images:
+    def __init__(self):
+        # self.image_display_size = (175, 175)
+        self.image_display_size = False
     '''
     image updaters
     '''
@@ -29,8 +33,8 @@ class app_images:
             self.display_metrics(metrics, i)
             metric_images = data_store.get_metric_images(trans_im)
             self.display_metric_images(metric_images, i)
-            # self.compute_metrics()
-            # self.update_image_widgets()
+
+            QApplication.processEvents()   # force to change other UI wont respond
 
     def update_image_widgets(self):
         # display images

@@ -10,7 +10,6 @@ from PyQt6.QtWidgets import QWidget, QMainWindow, QGridLayout
 class app_layout(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.image_display_size = (175, 175)
 
     def get_layout_defininition(self):
         '''define layout of the UI

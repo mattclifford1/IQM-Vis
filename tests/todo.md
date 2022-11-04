@@ -24,5 +24,8 @@ later
 
 
 docs:
+
+transforms run top to bottom of the sliders
+
 know issues:
    sliders on wayland display server as less responsive
