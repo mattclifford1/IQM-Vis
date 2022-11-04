@@ -11,23 +11,6 @@ from IQM_VIS.utils import gui_utils, plot_utils
 
 
 class app_images:
-    def init_images(self, screen=False):
-        '''
-        make blank images to place on screen before actual image is chosen
-        this creates the UI to be the correct size
-        '''
-        # make image placeholders
-        self.height = int(256)
-        self.width_ratio = 1
-        self.width = int(self.height*self.width_ratio)
-
-        # load images
-        self.image_data = {}
-        # self.im_pair_names = []
-        for key in self.image_paths.keys():
-            self.image_data[key] = self.image_paths[key]
-            self.im_pair_names.append((key, 'T('+key+')'))
-
     '''
     image updaters
     '''
@@ -85,3 +68,48 @@ class app_images:
         for key in metric_images.keys():
             widget = self.widget_row[i]['metric_images'][key]['data']
             gui_utils.change_im(widget, metric_images[key], resize=self.image_display_size)
+
+    '''
+    metric averaging plots
+    '''
+    def get_metrics_over_range(self):
+        # compute all metrics over their range of params and get avg/std
+        results = {}
+        # initialise results
+        for i, data_store in enumerate(self.data_stores):
+            results[i] = {}
+            for metric in data_store.metrics.keys():
+                results[i][metric] = {}
+                for trans in self.sliders.keys():
+                    results[i][metric][trans] = []
+
+        # compute over all image transformations
+        for i, data_store in enumerate(self.data_stores):
+            for curr_trans in self.sliders.keys():
+                for trans_value in self.sliders[curr_trans]['values']:
+                    trans_im = self.transform_image(data_store.image_data)
+                    for other_trans in self.sliders.keys():
+                        if other_trans != curr_trans:
+                            ui_slider_value = self.im_trans_params[other_trans]
+                            trans_im = self.sliders[other_trans]['function'](trans_im, ui_slider_value)
+                        else:
+                            trans_im = self.sliders[curr_trans]['function'](trans_im, trans_value)
+                    metric_scores = data_store.get_metrics(trans_im)
+                    for metric in metric_scores.keys():
+                        results[i][metric][curr_trans].append(float(metric_scores[metric]))
+            self.plot_metrics_graphs(results, i, list(data_store.metrics.keys()))
+
+    def plot_metrics_graphs(self, results, i, metrics_names):
+        radar_plotter = plot_utils.radar_plotter(radar_names=metrics_names,
+                                        var_names=list(self.sliders.keys()),
+                                        ax=self.widget_row[i]['metrics']['avg']['data'])
+        for metric in metrics_names:
+            mean_value = []
+            std_value = []
+            transform = []
+            for trans in self.sliders.keys():
+                transform.append(trans)
+                mean_value.append(np.mean(results[i][metric][trans]))
+                # std_value.append(np.std(results[i][metric][trans]))
+            radar_plotter.plot(metric, mean_value)
+        radar_plotter.show()

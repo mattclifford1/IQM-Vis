@@ -144,5 +144,5 @@ class app_widgets():
         for key in self.sliders.keys():
             self.widget_sliders['slider'][key]['data'].setValue(self.sliders[key]['init_ind'])
         self.display_images()
-        # if self.metrics_avg_graph:
-        #     self.get_metrics_over_range()
+        if self.metrics_avg_graph:
+            self.get_metrics_over_range()
