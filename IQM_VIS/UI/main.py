@@ -38,5 +38,3 @@ class make_app(app_widgets, app_layout, app_metrics, app_images):
 
         self.display_images()              # app_images
         self.reset_sliders()               # app_widgets
-        if self.metrics_avg_graph:
-            self.get_metrics_over_range()  # app_metrics

@@ -88,6 +88,7 @@ class app_widgets():
                 self.widget_row[i]['metrics']['info']['data'].setText('')
             # metrics avgerage graphs
             if self.metrics_avg_graph:
+                self.widget_row[i]['metrics']['avg'] = {}
                 self.widget_row[i]['metrics']['avg']['label'] = QLabel(self)
                 self.widget_row[i]['metrics']['avg']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
                 self.widget_row[i]['metrics']['avg']['label'].setText('Metrics Avg. Graph')
@@ -143,5 +144,5 @@ class app_widgets():
         for key in self.sliders.keys():
             self.widget_sliders['slider'][key]['data'].setValue(self.sliders[key]['init_ind'])
         self.display_images()
-        if self.metrics_avg_graph:
-            self.get_metrics_over_range()
+        # if self.metrics_avg_graph:
+        #     self.get_metrics_over_range()

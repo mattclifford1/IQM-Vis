@@ -62,7 +62,7 @@ class app_layout(QMainWindow):
             col += 1
             if self.metrics_avg_graph:
                 self.layout.addWidget(self.widget_row[i]['metrics']['avg']['label'], start_im-1+im_row*(im_height+button), (im_height+button)*col, button, im_width)
-                self.layout.addWidget(self.widget_row[i]['metrics']['avg']['graph'], start_im+im_row*(im_height+button), (im_height+button)*col, im_height, im_width)
+                self.layout.addWidget(self.widget_row[i]['metrics']['avg']['data'], start_im+im_row*(im_height+button), (im_height+button)*col, im_height, im_width)
                 col += 1
             im_row += 1
 
@@ -78,7 +78,7 @@ class app_layout(QMainWindow):
         # reset sliders
         self.layout.addWidget(self.widget_sliders['button']['reset_sliders'], button*i, start_controls, button, button)
         if self.metrics_avg_graph:
-            self.layout.addWidget(self.widgets_sliders['button']['force_update'], button*i, start_controls+button, button, button)
+            self.layout.addWidget(self.widget_sliders['button']['force_update'], button*i, start_controls+button, button, button)
         i += 1
         # init it!
         self.show()

@@ -7,7 +7,7 @@ import os
 
 import numpy as np
 
-from IQM_VIS.utils import gui_utils
+from IQM_VIS.utils import gui_utils, plot_utils
 
 
 class app_images:
@@ -44,6 +44,7 @@ class app_images:
 
             metrics = data_store.get_metrics(trans_im)
             metric_images = data_store.get_metric_images(trans_im)
+            self.display_metrics(metrics, i)
             # self.compute_metrics()
             # self.update_image_widgets()
 
@@ -52,3 +53,26 @@ class app_images:
         # for key in self.image_data.keys():
         for i in self.widget_row.keys():
             gui_utils.change_im(self.widgets['image'][key], self.image_data[key], resize=self.image_display_size)
+
+    '''
+    metric updaters
+    '''
+    def display_metrics(self, metrics, i):
+        if self.metrics_info_format == 'graph':
+            self.display_metrics_graph(metrics, i)
+        else:
+            self.display_metrics_text(metrics, i)
+
+    def display_metrics_graph(self, metrics, i):
+        bar_plt = plot_utils.bar_plotter(bar_names=[''],
+                                        var_names=list(metrics.keys()),
+                                        ax=self.widget_row[i]['metrics']['info']['data'])
+        bar_plt.plot('', list(metrics.values()))
+        bar_plt.show()
+
+    def display_metrics_text(self, metrics, label, disp_len=5):
+        text = ''
+        for key in metrics.keys():
+            metric = gui_utils.str_to_len(str(metrics[key]), disp_len, '0')
+            text += key + ': ' + metric + '\n'
+        self.widgets['label'][str(label)+'_metrics_info'].setText(text)

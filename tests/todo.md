@@ -23,3 +23,12 @@ later
   - need to have __len__ and __call__ properties
 -> can link image labels from dataset into metrics
 -> show next arrows when generator used
+
+
+
+
+
+
+docs:
+know issues:
+   sliders on wayland display server as less responsive

@@ -1,21 +1,26 @@
 import numpy as np
 import sys; sys.path.append('.'); sys.path.append('..')
-from IQM_VIS import api
+from IQM_VIS import api, data
 from IQM_VIS.utils import gui_utils
 
 import metrics, image_utils
 
-image_paths = {'X1': gui_utils.image_loader('examples/images/image2.jpg'),
-               'X2': gui_utils.image_loader('examples/images/image3.jpg')}
-
 # metrics functions must return a single value
-metrics_dict = {'MAE': metrics.MAE,
-                'MSE': metrics.MSE,
-                '1-SSIM': metrics.ssim()}
+metric = {'MAE': metrics.MAE,
+          'MSE': metrics.MSE,
+          '1-SSIM': metrics.ssim()}
 
 # metrics images return a numpy image
-metrics_image_dict = {'MSE': metrics.MSE_image,
-                      'SSIM': metrics.SSIM_image()}
+metric_images = {'MSE': metrics.MSE_image,
+                 'SSIM': metrics.SSIM_image()}
+
+row_1 = data.holder(('X1', gui_utils.image_loader('examples/images/image2.jpg')),
+                         metric,
+                         metric_images)
+
+row_2 = data.holder(('X2', gui_utils.image_loader('examples/images/image3.jpg')),
+                         metric,
+                         metric_images)
 
 transformations = {
            'rotation':{'min':-180, 'max':180, 'function':image_utils.rotation},    # normal input
@@ -24,8 +29,6 @@ transformations = {
            }
 
 # make app
-api.make_UI(image_paths,
-            metrics_dict,
-            metrics_image_dict,
+api.make_UI([row_1, row_2],
             transformations,
             metrics_avg_graph=True)
