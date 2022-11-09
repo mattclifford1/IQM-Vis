@@ -7,12 +7,12 @@ UI create widgets
 from functools import partial
 
 import numpy as np
-from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QInputDialog, QLineEdit, QMenu, QFileDialog, QPushButton, QGridLayout, QLabel, QSlider, QComboBox, QCheckBox
+from PyQt6.QtWidgets import QPushButton, QLabel, QSlider
 from PyQt6.QtCore import Qt
 
 from IQM_VIS.utils import gui_utils
 
-# base sub class to initialise QMainWindow and general UI functions for widgets
+# sub class used by IQM_VIS.main.make_app to initialise widgets and general UI functions for widgets
 class app_widgets():
     def _init_transforms(self):
         # define what sliders we are using from image transformations

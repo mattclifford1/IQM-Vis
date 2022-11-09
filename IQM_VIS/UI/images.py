@@ -10,11 +10,11 @@ from PyQt6.QtWidgets import QApplication
 
 from IQM_VIS.utils import gui_utils, plot_utils
 
-
+# sub class used by IQM_VIS.main.make_app to control all of the image widgets
 class app_images:
     def __init__(self):
-        # self.image_display_size = (175, 175)
-        self.image_display_size = False
+        self.image_display_size = (175, 175)
+        # self.image_display_size = False
     '''
     image updaters
     '''
@@ -38,7 +38,6 @@ class app_images:
 
     def update_image_widgets(self):
         # display images
-        # for key in self.image_data.keys():
         for i in self.widget_row.keys():
             gui_utils.change_im(self.widgets['image'][key], self.image_data[key], resize=self.image_display_size)
 
@@ -109,7 +108,7 @@ class app_images:
                                         ax=self.widget_row[i]['metrics']['avg']['data'])
         for metric in metrics_names:
             mean_value = []
-            std_value = []
+            # std_value = []
             transform = []
             for trans in self.sliders.keys():
                 transform.append(trans)

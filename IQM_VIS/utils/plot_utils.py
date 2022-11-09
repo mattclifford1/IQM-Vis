@@ -69,12 +69,3 @@ class radar_plotter:
         y_lims = self.ax.axes.get_ylim()
         # self.ax.axes.set_ylim(min(0, y_lims[0], max(1, y_lims[1])))
         self.ax.axes.set_ylim(top= max(1, y_lims[1]))
-
-if __name__ == '__main__':
-    bar_names = ['MAE', 'MSE', '1-SSIM']
-    var_names = ['rotation', 'blur', 'brightness']
-    data = {
-    'MAE': [0.2668716006335758, 0.051162821817256156, 0.3446149318700745],
-    'MSE': [0.1271412351301738, 0.005791870333875219, 0.17419698209102666],
-    '1-SSIM': [0.8360364398076421, 0.47519104253678096, 0.5506169538684411],
-    }

@@ -6,26 +6,17 @@ import os
 
 from PyQt6.QtWidgets import QWidget, QMainWindow, QGridLayout
 
-# layout class
+
+# sub class used by IQM_VIS.main.make_app to initialise layout of the UI
+# uses widgets from IQM_VIS.widgets.app_widgets
 class app_layout(QMainWindow):
     def __init__(self):
         super().__init__()
-
-    def get_layout_defininition(self):
-        '''define layout of the UI
-        change in here to make the appearance of the UI widgets different
-        --> widgets groups must be present in app_widgets'''
-        ### tODO: make this layout work to be more generalisable!!!
-
-        # self.layout_def = {self.im_pair_names:['label', 'label',
-        #                    self.sliders.keys(): 'a'}
-        pass
 
     def init_layout(self):
         '''
         place all the widgets in the window
         '''
-        self.get_layout_defininition() # define the structure of the layout
         # make main widget insdie the QMainWindow
         self.main_widget = QWidget()
         self.layout = QGridLayout()

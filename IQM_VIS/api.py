@@ -6,11 +6,6 @@ from PyQt6.QtWidgets import QApplication
 from IQM_VIS.UI.main import make_app
 
 
-# def make_UI(*args, **kwargs):
-#     ui = UI_wrapper(*args, **kwargs)
-#     ui.show()
-
-
 class make_UI:
     def __init__(self, data_store,
                        transformations: dict,
@@ -30,13 +25,6 @@ class make_UI:
                           self.transformations,
                           metrics_info_format=self.metrics_info_format,
                           metrics_avg_graph=self.metrics_avg_graph)
-        # window = make_app(app,
-        #                   self.image_paths,
-        #                   self.metrics_dict,
-        #                   self.metrics_image_dict,
-        #                   self.transformations,
-        #                   metrics_info_format=self.metrics_info_format,
-        #                   metrics_avg_graph=self.metrics_avg_graph)
         sys.exit(app.exec())
 
     def _check_inputs(self):
@@ -51,7 +39,7 @@ class make_UI:
 
         #### write check for data store as list
 
-        
+
         if type(self.metrics_info_format) != str:
             var_name = f'{self.metrics_info_format=}'.split('=')[0]
             raise TypeError('make_UI input: '+var_name+' should be a string not '+str(type(self.metrics_info_format)))

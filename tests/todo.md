@@ -27,5 +27,7 @@ docs:
 
 transforms run top to bottom of the sliders
 
+**images are resized before showing as an image widget
+
 know issues:
    sliders on wayland display server as less responsive

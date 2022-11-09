@@ -2,16 +2,6 @@
 main entry point to initialise the UI
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
-
-import sys
-import os
-
-import numpy as np
-from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QInputDialog, QLineEdit, QMenu, QFileDialog, QPushButton, QGridLayout, QLabel, QSlider, QComboBox, QCheckBox
-from PyQt6.QtCore import Qt
-from matplotlib.figure import Figure
-
-from IQM_VIS.utils import gui_utils, plot_utils
 from IQM_VIS.UI.layout import app_layout
 from IQM_VIS.UI.widgets import app_widgets
 from IQM_VIS.UI.images import app_images
