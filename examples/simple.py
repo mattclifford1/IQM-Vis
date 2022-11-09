@@ -7,7 +7,7 @@ from IQM_VIS.utils import gui_utils
 metric = {'MAE': lambda im1, im2: np.abs(im1 - im2).mean()}
 metric_im = {'MAE': lambda im1, im2: np.abs(im1 - im2)}
 # add numpy image and the metrics to the data handler
-data_store = data.holder(('X', gui_utils.image_loader('examples/images/image2.jpg')),
+data_store = data.holder(('X', gui_utils.image_loader('examples/images/wave3.jpeg')),
                          metric,
                          metric_im)
 # define the transformations

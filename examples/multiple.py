@@ -15,11 +15,11 @@ metric_images = {'MSE': metrics.MSE_image,
                  'SSIM': metrics.SSIM_image()}
 
 # first row of images
-row_1 = data.holder(('X1', gui_utils.image_loader('examples/images/image2.jpg')),
+row_1 = data.holder(('X1', gui_utils.image_loader('examples/images/wave3.jpeg')),
                          metric,
                          metric_images)
 # second row of images
-row_2 = data.holder(('X2', gui_utils.image_loader('examples/images/image3.jpg')),
+row_2 = data.holder(('X2', gui_utils.image_loader('examples/images/waves1.jpeg')),
                          metric,
                          metric_images)
 # define the transformations
