@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 import IQM_VIS
 
 setup(name='IQM-VIS',
-      version='0.2.1',
+      version='0.2.2',
       packages=find_packages(),
       install_requires=['numpy', 'opencv-python', 'scikit-image', 'PyQt6', 'matplotlib'],
       author="Matt Clifford",
