@@ -1,1 +1,1 @@
-from IQM_VIS.UI.main import make_app
+from .UI.main import make_app

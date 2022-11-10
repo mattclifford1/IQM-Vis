@@ -2,11 +2,9 @@
 main entry point to initialise the UI
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
-from IQM_VIS.UI.layout import app_layout
-from IQM_VIS.UI.widgets import app_widgets
-from IQM_VIS.UI.images import app_images
+from IQM_VIS.UI import layout, widgets, images
 
-class make_app(app_widgets, app_layout, app_images):
+class make_app(widgets, layout, images):
     def __init__(self, app,
                 data_stores: list,
                 transformations: dict,
@@ -20,8 +18,8 @@ class make_app(app_widgets, app_layout, app_images):
         self.metrics_info_format = metrics_info_format
         self.metrics_avg_graph = metrics_avg_graph
 
-        self.init_style()     # app_layout
-        self.init_widgets()   # app_widgets
-        self.init_layout()    # app_layout
-        self.display_images() # app_images
-        self.reset_sliders()  # app_widgets
+        self.init_style()     # layout
+        self.init_widgets()   # widgets
+        self.init_layout()    # layout
+        self.display_images() # images
+        self.reset_sliders()  # widgets

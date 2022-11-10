@@ -9,7 +9,7 @@ from PyQt6.QtWidgets import QWidget, QMainWindow, QGridLayout
 
 # sub class used by IQM_VIS.main.make_app to initialise layout of the UI
 # uses widgets from IQM_VIS.widgets.app_widgets
-class app_layout(QMainWindow):
+class layout(QMainWindow):
     def __init__(self):
         super().__init__()
 

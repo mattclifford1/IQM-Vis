@@ -13,7 +13,7 @@ from PyQt6.QtCore import Qt
 from IQM_VIS.utils import gui_utils
 
 # sub class used by IQM_VIS.main.make_app to initialise widgets and general UI functions for widgets
-class app_widgets():
+class widgets():
     def _init_transforms(self):
         # define what sliders we are using from image transformations
         self.sliders = {}

@@ -11,7 +11,7 @@ from PyQt6.QtWidgets import QApplication
 from IQM_VIS.utils import gui_utils, plot_utils
 
 # sub class used by IQM_VIS.main.make_app to control all of the image widgets
-class app_images:
+class images:
     def __init__(self):
         self.image_display_size = (175, 175)
         # self.image_display_size = False
