@@ -3,13 +3,21 @@
 # IQM-VIS
 Image Quality Metric Visualision
 
-Extendable user interface for the assessment of transformations on image metrics. Examples of how to use this package are found in [examples](examples).
+Extendable user interface for the assessment of transformations on image metrics. Examples of how to use this package are found in [examples](IQM_VIS/examples).
 
 ## UI Examples
 Simple UI with single image and image metric
+```
+import IQM_VIS
+IQM_VIS.examples.simple.run()
+```
 ![Alt text](pics/ui-simple.png?raw=true "Simple UI")
 
 Extended UI with multiple images and metrics with metric radar comparison plot.
+```
+import IQM_VIS
+IQM_VIS.examples.multiple.run()
+```
 ![Alt text](pics/ui-multi.png?raw=true "Multi UI")
 
 

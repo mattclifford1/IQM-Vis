@@ -13,7 +13,7 @@ from torchmetrics.functional import universal_image_quality_index as UIQI
 from torchmetrics import SpectralDistortionIndex as SDI
 from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity as LPIPS
 
-from expert.pyramids import LaplacianPyramid
+from IQM_VIS.image_metrics.expert.pyramids import LaplacianPyramid
 
 ''' simple functional format to call a metric (numpy)'''
 def MAE(im_ref, im_comp):
