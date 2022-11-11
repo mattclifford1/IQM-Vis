@@ -8,7 +8,7 @@ import numpy as np
 store image and metric data as well as
 function calls for getting metrics and metric images
 '''
-class holder:
+class data_holder:
     def __init__(self, image: tuple,   # (name, data)
                        metrics: dict,
                        metric_images: dict):

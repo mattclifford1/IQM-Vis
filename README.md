@@ -7,18 +7,18 @@ Extendable user interface for the assessment of transformations on image metrics
 
 ## UI Examples
 Simple UI with single image and image metric
-![Alt text](examples/images/ui-simple.png?raw=true "Simple UI")
+![Alt text](pics/ui-simple.png?raw=true "Simple UI")
 
 Extended UI with multiple images and metrics with metric radar comparison plot.
-![Alt text](examples/images/ui-multi.png?raw=true "Multi UI")
+![Alt text](pics/ui-multi.png?raw=true "Multi UI")
 
 
 # Installation
-The latest stable version can be downloaded via [PyPi](https://pypi.org/project/IQM-VIS/0.1/).
+The latest stable version can be downloaded via [PyPi](https://pypi.org/project/IQM-VIS).
 ```
 $ pip install IQM-VIS
 ```
-Example usage of the package can be found in [examples](examples)
+Example usage of the package can be found in [examples](IQM_VIS/examples)
 ## Dev Setup
 First create a new python venv, eg. using conda
 ```
@@ -43,8 +43,8 @@ $ pip install -e .
 ```
 Run MWEs
 ```
-$ python examples/simple.py
-$ python examples/multiple.py
+$ python IQM_VIS/examples/simple.py
+$ python IQM_VIS/examples/multiple.py
 ```
 
 ## To do - datasets

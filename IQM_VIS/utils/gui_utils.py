@@ -36,12 +36,6 @@ def change_im(widget, im, resize=False):
     widget.setPixmap(pixmap)
     # QApplication.processEvents()   # force to change other UI wont respond
 
-def image_loader(image_path):
-    image = cv2.imread(image_path)
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    return image.astype(np.float32) / 255.0
-
-
 '''
 text utils
 '''
