@@ -1,5 +1,7 @@
+numpy
 opencv-python
 scikit-image
-numpy
 PyQt6
 matplotlib
+torch
+torchmetrics
