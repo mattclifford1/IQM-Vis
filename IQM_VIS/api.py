@@ -1,10 +1,11 @@
 import sys
 import warnings
 
-from PyQt6.QtWidgets import QApplication
-
-from IQM_VIS.UI.main import make_app
-
+try:
+    from PyQt6.QtWidgets import QApplication
+    from IQM_VIS.UI.main import make_app
+except ImportError:
+    warnings.warn('Can not load PyQt6 library - running IQM_VIS package in headless mode')
 
 class make_UI:
     def __init__(self, data_store,
