@@ -5,6 +5,7 @@ try:
     from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
     from matplotlib.figure import Figure
 except ImportError:
+    import warnings
     warnings.warn('Can not load PyQt6 library - running IQM_VIS package in headless mode')
 import numpy as np
 from skimage.util import img_as_ubyte
