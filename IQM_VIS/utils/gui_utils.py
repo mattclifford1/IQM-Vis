@@ -4,9 +4,11 @@ try:
     import matplotlib; matplotlib.use('Qt5Agg')
     from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
     from matplotlib.figure import Figure
+    HEADLESS = False
 except ImportError:
     import warnings
     warnings.warn('Can not load PyQt6 library - running IQM_VIS package in headless mode')
+    HEADLESS = True
 import numpy as np
 from skimage.util import img_as_ubyte
 from skimage.transform import resize
@@ -64,9 +66,10 @@ def get_image_pair_name(image_name):
 '''
 matplotlib widget utils
 '''
-# Get a matplotlib canvas as a Qt Widget
-class MplCanvas(FigureCanvasQTAgg):
-    def __init__(self, parent=None, width=5, height=3, dpi=100, polar=False):
-        self.figure = Figure(figsize=(width, height), dpi=dpi)
-        self.axes = self.figure.add_subplot(111, polar=polar)
-        super(MplCanvas, self).__init__(self.figure)
+if not HEADLESS:
+    # Get a matplotlib canvas as a Qt Widget
+    class MplCanvas(FigureCanvasQTAgg):
+        def __init__(self, parent=None, width=5, height=3, dpi=100, polar=False):
+            self.figure = Figure(figsize=(width, height), dpi=dpi)
+            self.axes = self.figure.add_subplot(111, polar=polar)
+            super(MplCanvas, self).__init__(self.figure)
