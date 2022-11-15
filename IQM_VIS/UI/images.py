@@ -87,15 +87,18 @@ class images:
                     results[i][metric][trans] = []
 
         # compute over all image transformations
-        for i, data_store in enumerate(self.data_stores):
-            for curr_trans in self.sliders.keys():
-                for trans_value in self.sliders[curr_trans]['values']:
-                    trans_im = self.transform_image(data_store.image_data)
+        for i, data_store in enumerate(self.data_stores):  # for each image row
+            for curr_trans in self.sliders.keys():         # loop over all transformations
+                for trans_value in self.sliders[curr_trans]['values']:   # all values of the parameter
+                    trans_im = data_store.image_data                     # initialse image
                     for other_trans in self.sliders.keys():
+                        # fix transformation parameters for all sliders apart from the one we are varying
                         if other_trans != curr_trans:
+                            # keep parameter value fixed from the UI
                             ui_slider_value = self.im_trans_params[other_trans]
                             trans_im = self.sliders[other_trans]['function'](trans_im, ui_slider_value)
                         else:
+                            # apply the parameter variation
                             trans_im = self.sliders[curr_trans]['function'](trans_im, trans_value)
                     metric_scores = data_store.get_metrics(trans_im)
                     for metric in metric_scores.keys():
