@@ -25,12 +25,15 @@ class bar_plotter:
 
 
     def show(self):
+        self.set_style()
+        self.ax.draw()
+
+    def set_style(self):
         if len(self.bar_names) > 1:
             self.ax.axes.legend()
             self.ax.axes.set_xticks([r + self.bar_width for r in range(self.num_vars)], self.var_names)
         self.set_plot_lims()
-        self.ax.fig.tight_layout()
-        self.ax.draw()
+        self.ax.figure.tight_layout()
 
     def set_plot_lims(self):
         y_lims = self.ax.axes.get_ylim()
@@ -58,12 +61,15 @@ class radar_plotter:
 
 
     def show(self):
+        self.set_style()
+        self.ax.draw()
+
+    def set_style(self):
         # self.ax.axes.legend(loc='upper right', bbox_to_anchor=(0.1, 0.1))
         self.ax.axes.legend(fontsize='x-small', loc='upper left')
         self.ax.axes.set_xticks(self.radar_angles[:-1], self.var_names)
         self.set_plot_lims()
         # self.ax.fig.tight_layout()
-        self.ax.draw()
 
     def set_plot_lims(self):
         y_lims = self.ax.axes.get_ylim()
