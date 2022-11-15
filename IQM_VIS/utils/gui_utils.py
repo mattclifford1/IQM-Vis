@@ -2,10 +2,10 @@ import sys
 import matplotlib; matplotlib.use('Qt5Agg')
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
-
-from PyQt6.QtGui import QPixmap, QImage
-# from PyQt5.QtWidgets import qApp
-# from PyQt6.QtWidgets import QApplication
+try:
+    from PyQt6.QtGui import QPixmap, QImage
+except ImportError:
+    warnings.warn('Can not load PyQt6 library - running IQM_VIS package in headless mode')
 import numpy as np
 from skimage.util import img_as_ubyte
 from skimage.transform import resize
