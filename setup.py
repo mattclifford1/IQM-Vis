@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 # import IQM_VIS
 
 setup(name='IQM-VIS',
-      version='0.2.5.5',
+      version='0.2.5.6',
       packages=find_packages(),
       install_requires=['numpy',
                         'opencv-python',

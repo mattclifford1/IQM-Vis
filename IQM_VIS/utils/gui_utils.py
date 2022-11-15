@@ -1,9 +1,9 @@
 import sys
-import matplotlib; matplotlib.use('Qt5Agg')
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
-from matplotlib.figure import Figure
 try:
     from PyQt6.QtGui import QPixmap, QImage
+    import matplotlib; matplotlib.use('Qt5Agg')
+    from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
+    from matplotlib.figure import Figure
 except ImportError:
     warnings.warn('Can not load PyQt6 library - running IQM_VIS package in headless mode')
 import numpy as np
