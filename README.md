@@ -3,7 +3,7 @@
 # IQM-VIS
 Image Quality Metric Visualision
 
-Extendable user interface for the assessment of transformations on image metrics. Examples of how to use this package are found in [examples](IQM_VIS/examples).
+Extendable user interface for the assessment of transformations on image metrics. Examples of how to use this package are found in [examples](https://github.com/mattclifford1/IQM-VIS/IQM_VIS/examples).
 
 ## UI Examples
 Simple UI with single image and image metric
@@ -11,22 +11,24 @@ Simple UI with single image and image metric
 import IQM_VIS
 IQM_VIS.examples.simple.run()
 ```
-![Alt text](pics/ui-simple.png?raw=true "Simple UI")
+![Alt text](https://github.com/mattclifford1/IQM-VIS/pics/ui-simple.png?raw=true "Simple UI")
 
 Extended UI with multiple images and metrics with metric radar comparison plot.
 ```
 import IQM_VIS
 IQM_VIS.examples.multiple.run()
 ```
-![Alt text](pics/ui-multi.png?raw=true "Multi UI")
+![Alt text](https://github.com/mattclifford1/IQM-VIS/pics/ui-multi.png?raw=true "Multi UI")
 
+# Quick Testing
+To use a stripped down version of the application, feel free to first use our [web version](https://huggingface.co/spaces/mattclifford1/IQM-VIS). Here you can upload your own image and choose from a selection of transformations and metrics. 
 
 # Installation
 The latest stable version can be downloaded via [PyPi](https://pypi.org/project/IQM-VIS).
 ```
 $ pip install IQM-VIS
 ```
-Example usage of the package can be found in [examples](IQM_VIS/examples)
+Example usage of the package can be found in [examples](https://github.com/mattclifford1/IQM-VIS/IQM_VIS/examples)
 ## Dev Setup
 First create a new python venv, eg. using conda
 ```
