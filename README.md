@@ -3,7 +3,7 @@
 # IQM-VIS
 Image Quality Metric Visualision
 
-Extendable user interface for the assessment of transformations on image metrics. Examples of how to use this package are found in [examples](https://github.com/mattclifford1/IQM-VIS/tree/main/IQM_VIS/examples).
+Extendable user interface for the assessment of transformations on image metrics. Examples of how to use this package are found in [here](https://github.com/mattclifford1/IQM-VIS/tree/main/IQM_VIS/examples) or use our [web version](https://huggingface.co/spaces/mattclifford1/IQM-VIS).
 
 ## UI Examples
 Simple UI with single image and image metric
