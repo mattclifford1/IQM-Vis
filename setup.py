@@ -1,10 +1,15 @@
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
-
 from setuptools import setup, find_packages
-# import IQM_VIS
+
+
+def get_long_description():
+    with open('README.md', encoding="utf-8") as f:
+        text = f.read()
+    return text
+
 
 setup(name='IQM-VIS',
-      version='0.2.5.8',
+      version='0.2.5.9',
       packages=find_packages(),
       install_requires=['numpy',
                         'opencv-python',
@@ -15,4 +20,7 @@ setup(name='IQM-VIS',
                         'torchmetrics'],
       author="Matt Clifford",
       author_email="matt.clifford@bristol.ac.uk",
-      description="Extendable user interface for the assessment of transformations on image metrics.")
+      description="Extendable user interface for the assessment of transformations on image metrics.",
+      long_description=get_long_description(),
+      long_description_content_type='text/markdown',
+      )
