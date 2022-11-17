@@ -2,8 +2,6 @@
 UI create widgets
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
-
-
 from functools import partial
 
 import numpy as np
@@ -15,7 +13,7 @@ from IQM_VIS.utils import gui_utils
 # sub class used by IQM_VIS.main.make_app to initialise widgets and general UI functions for widgets
 class widgets():
     def _init_transforms(self):
-        # define what sliders we are using from image transformations
+        ''' define what sliders we are using from image transformations '''
         self.sliders = {}
         for key in self.transformations.keys():
             self.sliders[key] = {}

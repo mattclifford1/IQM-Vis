@@ -1,3 +1,7 @@
+'''
+Utils for PyQt6 image, text and graph widgets
+'''
+# Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 import sys
 try:
     from PyQt6.QtGui import QPixmap, QImage

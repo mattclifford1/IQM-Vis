@@ -1,3 +1,8 @@
+'''
+API to access making the PyQt6 UI for IQM-VIS
+TODO: write docs on example usage/ what inputs etc. and what attributes that the data_store class needs
+'''
+# Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 import sys
 import warnings
 
