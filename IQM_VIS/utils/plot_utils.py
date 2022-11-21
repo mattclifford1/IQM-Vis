@@ -28,7 +28,6 @@ class bar_plotter:
         else:
             self.ax.axes.bar(self.var_names, var_values)
 
-
     def show(self):
         self.set_style()
         self.ax.draw()
@@ -46,7 +45,34 @@ class bar_plotter:
         self.ax.axes.set_ylim(top= max(1, y_lims[1]))
 
 '''
-plot radar chart on matplotlib qt
+line plot of matplotlib qt widget
+'''
+class line_plotter:
+    def __init__(self, ax, x_label, y_label):
+        self.ax = ax
+        self.x_label = x_label
+        self.y_label = y_label
+
+    def plot(self, x, y, label):
+        self.ax.axes.plot(x, y, label=label)
+
+    def show(self):
+        self.set_style()
+        self.ax.draw()
+
+    def set_style(self):
+        self.ax.axes.legend()
+        # self.ax.axes.set_xticks([r + self.bar_width for r in range(self.num_vars)], self.var_names)
+        self.set_plot_lims()
+        self.ax.figure.tight_layout()
+
+    def set_plot_lims(self):
+        y_lims = self.ax.axes.get_ylim()
+        # self.ax.axes.set_ylim(min(0, y_lims[0], max(1, y_lims[1])))
+        self.ax.axes.set_ylim(top= max(1, y_lims[1]))
+
+'''
+plot radar chart on matplotlib qt widget
 '''
 class radar_plotter:
     def __init__(self, radar_names, var_names, ax):
@@ -64,7 +90,6 @@ class radar_plotter:
         p = self.ax.axes.plot(self.radar_angles, var_values, linewidth=1, linestyle='solid', label=radar_name)
         self.ax.axes.fill(self.radar_angles, var_values, color=p[0].get_color(), alpha=0.1)
 
-
     def show(self):
         self.set_style()
         self.ax.draw()
@@ -80,6 +105,7 @@ class radar_plotter:
         y_lims = self.ax.axes.get_ylim()
         # self.ax.axes.set_ylim(min(0, y_lims[0], max(1, y_lims[1])))
         self.ax.axes.set_ylim(top= max(1, y_lims[1]))
+
 
 '''
 metric averaging functions to get metric values over a range of transformation
@@ -108,6 +134,7 @@ def compute_metrics_over_range(data_store, transforms, transform_values):
         results[metric] = {}
         for tran in transforms.keys():
             results[metric][tran] = []
+            results[metric][tran+'_range_values'] = []
 
     # compute over all image transformations
     for curr_trans in transforms.keys():         # loop over all transformations
@@ -124,14 +151,14 @@ def compute_metrics_over_range(data_store, transforms, transform_values):
             metric_scores = data_store.get_metrics(trans_im)
             for metric in metric_scores.keys():
                 results[metric][curr_trans].append(float(metric_scores[metric]))
+                # and store the input trans values for plotting
+                results[metric][curr_trans+'_range_values'] = get_all_slider_values(transforms[curr_trans])
     return results
 
-# fig = plt.Figure()
-# axes = fig.add_subplot(111, polar=True)
-
-# return fig
-
 def get_radar_plots_avg(results, metrics_names, transformation_names, axes):
+    '''
+    plot results on a polar axes -> radar/spider plot
+    '''
     radar_plt = radar_plotter(radar_names=metrics_names,
                                     var_names=transformation_names,
                                     ax=axes)
@@ -147,8 +174,11 @@ def get_radar_plots_avg(results, metrics_names, transformation_names, axes):
     radar_plt.set_style()
     return radar_plt
 
-def get_transform_plots(results, ):
+def get_transform_range_plots(results, transform, axes):
     '''
-    plot a single graph of
+    plot a single transform range graph of all metrics
     '''
-    return 1
+    plot = line_plotter(axes, 'x', 'y')
+    for metric in results.keys():
+        plot.plot(results[metric][transform+'_range_values'], results[metric][transform], metric)
+    return plot

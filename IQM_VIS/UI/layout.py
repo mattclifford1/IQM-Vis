@@ -54,6 +54,11 @@ class layout(QMainWindow):
                 self.layout.addWidget(self.widget_row[i]['metrics']['avg']['label'], start_im-1+im_row*(im_height+button), (im_height+button)*col, button, im_width)
                 self.layout.addWidget(self.widget_row[i]['metrics']['avg']['data'], start_im+im_row*(im_height+button), (im_height+button)*col, im_height, im_width)
                 col += 1
+            if self.metric_range_graph:
+                self.layout.addWidget(self.widget_row[i]['metrics']['range']['label'], start_im-1+im_row*(im_height+button), (im_height+button)*col, button, im_width)
+                self.layout.addWidget(self.widget_row[i]['metrics']['range']['data'], start_im+im_row*(im_height+button), (im_height+button)*col, im_height, im_width)
+                col += 1
+
             im_row += 1
 
 

@@ -92,6 +92,13 @@ class widgets():
                 self.widget_row[i]['metrics']['avg']['label'].setText('Metrics Avg. Graph')
                 self.widget_row[i]['metrics']['avg']['data'] = gui_utils.MplCanvas(self, polar=True)
                 self.widget_row[i]['metrics']['avg']['data'].setToolTip('Mean metric value over the range of each transform.')
+            if self.metric_range_graph:
+                self.widget_row[i]['metrics']['range'] = {}
+                self.widget_row[i]['metrics']['range']['label'] = QLabel(self)
+                self.widget_row[i]['metrics']['range']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                self.widget_row[i]['metrics']['range']['label'].setText('Metrics Range Graph')
+                self.widget_row[i]['metrics']['range']['data'] = gui_utils.MplCanvas(self)
+                self.widget_row[i]['metrics']['range']['data'].setToolTip('Single tranformation value range for all metrics.')
 
         '''buttons'''
         self.widget_sliders = {'button': {}, 'slider':{}}
@@ -144,3 +151,7 @@ class widgets():
         self.display_images()
         if self.metrics_avg_graph:
             self.get_metrics_over_range()
+        if self.metric_range_graph:
+            self.metric_range_graph_num = 0
+            self.get_metric_range_values()
+            self.display_metric_range_plot()

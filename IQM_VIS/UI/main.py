@@ -9,7 +9,8 @@ class make_app(widgets, layout, images):
                 data_stores: list,
                 transformations: dict,
                 metrics_info_format='graph',    # graph or text
-                metrics_avg_graph=False
+                metrics_avg_graph=False,
+                metric_range_graph=True
                 ):
         super().__init__()
         self.app = app
@@ -17,6 +18,7 @@ class make_app(widgets, layout, images):
         self.transformations = transformations
         self.metrics_info_format = metrics_info_format
         self.metrics_avg_graph = metrics_avg_graph
+        self.metric_range_graph = metric_range_graph
 
         self.init_style()     # layout
         self.init_widgets()   # widgets

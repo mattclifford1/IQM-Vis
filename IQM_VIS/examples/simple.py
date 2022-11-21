@@ -13,7 +13,7 @@ def run():
                              metric,
                              metric_im)
     # define the transformations
-    trans = {'brightness': {'min':-1, 'max':1, 'init_value':0, 'function':lambda im, val: np.clip(im + val, 0, 1)}}
+    trans = {'brightness': {'min':-1.0, 'max':1.0, 'init_value':0, 'function':lambda im, val: np.clip(im + val, 0, 1)}}
     # use the API to create the UI
     IQM_VIS.make_UI([data_store],
                 trans,

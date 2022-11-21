@@ -65,6 +65,27 @@ class images:
         self.widget_row[i]['metrics']['info']['data'].setText(text)
 
     '''
+    metric range plot
+    '''
+    def get_metric_range_values(self):
+        self.metric_range_results = []
+        # use the initiased/default values for all sliders
+        init_trans_params = {}
+        for trans in self.transformations.keys():
+            init_trans_params[trans] = self.transformations[trans]['init_value']
+        for i, data_store in enumerate(self.data_stores):
+            results = plot_utils.compute_metrics_over_range(data_store, self.transformations, init_trans_params)
+            self.metric_range_results.append(results)
+
+
+    def display_metric_range_plot(self):
+        trans_to_plot = list(self.transformations.keys())[self.metric_range_graph_num]
+        for i, data_store in enumerate(self.data_stores):
+            axes = self.widget_row[i]['metrics']['range']['data']
+            plot = plot_utils.get_transform_range_plots(self.metric_range_results[i], trans_to_plot, axes)
+            plot.show()
+
+    '''
     metric image updaters
     '''
     def display_metric_images(self, metric_images, i):
