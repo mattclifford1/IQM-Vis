@@ -94,7 +94,11 @@ def get_all_slider_values(transforms, num_steps=10):
     values.append(max)
     return values
 
+<<<<<<< HEAD
 def compute_metrics_over_range(data_store, transforms, transform_values):
+=======
+def get_metrics_over_range(data_store, transforms, transform_values):
+>>>>>>> f974cab4bad7a3a4d18803ddcba0ca0404ba0905
     '''
     compute metrics over a range of trans
         data_store: object containing metrics and image

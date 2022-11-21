@@ -77,7 +77,7 @@ class images:
     '''
     def get_metrics_over_range(self):
         for i, data_store in enumerate(self.data_stores):
-            results = plot_utils.get_metrics_over_range(data_store, self.transformations, self.im_trans_params)
+            results = plot_utils.compute_metrics_over_range(data_store, self.transformations, self.im_trans_params)
             self.plot_metrics_graphs(results, i)
 
     def plot_metrics_graphs(self, results, i):
