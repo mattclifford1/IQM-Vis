@@ -62,7 +62,7 @@ class line_plotter:
 
     def set_style(self):
         self.ax.axes.legend()
-        # self.ax.axes.set_xticks([r + self.bar_width for r in range(self.num_vars)], self.var_names)
+        self.ax.axes.set_xlabel(self.x_label)
         self.set_plot_lims()
         self.ax.figure.tight_layout()
 
@@ -178,7 +178,7 @@ def get_transform_range_plots(results, transform, axes):
     '''
     plot a single transform range graph of all metrics
     '''
-    plot = line_plotter(axes, 'x', 'y')
+    plot = line_plotter(axes, transform, 'Values')
     for metric in results.keys():
         plot.plot(results[metric][transform+'_range_values'], results[metric][transform], metric)
     return plot
