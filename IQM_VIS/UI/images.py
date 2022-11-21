@@ -76,46 +76,13 @@ class images:
     metric averaging plots
     '''
     def get_metrics_over_range(self):
-        # compute all metrics over their range of params and get avg/std
-        results = {}
-        # initialise results
         for i, data_store in enumerate(self.data_stores):
-            results[i] = {}
-            for metric in data_store.metrics.keys():
-                results[i][metric] = {}
-                for trans in self.sliders.keys():
-                    results[i][metric][trans] = []
+            results = plot_utils.get_metrics_over_range(data_store, self.transformations, self.im_trans_params)
+            self.plot_metrics_graphs(results, i)
 
-        # compute over all image transformations
-        for i, data_store in enumerate(self.data_stores):  # for each image row
-            for curr_trans in self.sliders.keys():         # loop over all transformations
-                for trans_value in self.sliders[curr_trans]['values']:   # all values of the parameter
-                    trans_im = data_store.image_data                     # initialse image
-                    for other_trans in self.sliders.keys():
-                        # fix transformation parameters for all sliders apart from the one we are varying
-                        if other_trans != curr_trans:
-                            # keep parameter value fixed from the UI
-                            ui_slider_value = self.im_trans_params[other_trans]
-                            trans_im = self.sliders[other_trans]['function'](trans_im, ui_slider_value)
-                        else:
-                            # apply the parameter variation
-                            trans_im = self.sliders[curr_trans]['function'](trans_im, trans_value)
-                    metric_scores = data_store.get_metrics(trans_im)
-                    for metric in metric_scores.keys():
-                        results[i][metric][curr_trans].append(float(metric_scores[metric]))
-            self.plot_metrics_graphs(results, i, list(data_store.metrics.keys()))
-
-    def plot_metrics_graphs(self, results, i, metrics_names):
-        radar_plotter = plot_utils.radar_plotter(radar_names=metrics_names,
-                                        var_names=list(self.sliders.keys()),
-                                        ax=self.widget_row[i]['metrics']['avg']['data'])
-        for metric in metrics_names:
-            mean_value = []
-            # std_value = []
-            transform = []
-            for trans in self.sliders.keys():
-                transform.append(trans)
-                mean_value.append(np.mean(results[i][metric][trans]))
-                # std_value.append(np.std(results[i][metric][trans]))
-            radar_plotter.plot(metric, mean_value)
+    def plot_metrics_graphs(self, results, i):
+        metrics_names = list(self.data_stores[i].metrics.keys())
+        transformation_names = list(self.sliders.keys())
+        axes = self.widget_row[i]['metrics']['avg']['data']
+        radar_plotter = plot_utils.get_radar_plots_avg(results, metrics_names, transformation_names, axes)
         radar_plotter.show()
