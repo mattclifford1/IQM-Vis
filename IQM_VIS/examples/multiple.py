@@ -27,7 +27,7 @@ def run():
     transformations = {
                'rotation':{'min':-180, 'max':180, 'function':IQM_VIS.transforms.rotation},    # normal input
                'blur':{'min':1, 'max':41, 'normalise':'odd', 'function':IQM_VIS.transforms.blur},  # only odd ints
-               'brightness':{'min':-1, 'max':1, 'function':IQM_VIS.transforms.brightness},   # normal but with float
+               'brightness':{'min':-1.0, 'max':1.0, 'function':IQM_VIS.transforms.brightness},   # normal but with float
                }
 
     # use the API to create the UI

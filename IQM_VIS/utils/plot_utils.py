@@ -80,3 +80,75 @@ class radar_plotter:
         y_lims = self.ax.axes.get_ylim()
         # self.ax.axes.set_ylim(min(0, y_lims[0], max(1, y_lims[1])))
         self.ax.axes.set_ylim(top= max(1, y_lims[1]))
+
+'''
+metric averaging functions to get metric values over a range of transformation
+'''
+def get_all_slider_values(transforms, num_steps=10):
+    min = transforms['min']
+    max = transforms['max']
+    steps = (max - min)/num_steps
+    if type(transforms['min']) == int:
+        steps = int(steps)
+    values = list(np.arange(start=min, stop=max, step=steps))
+    values.append(max)
+    return values
+
+def get_metrics_over_range(data_store, transforms, transform_values):
+    '''
+    compute metrics over a range of trans
+        data_store: object containing metrics and image
+        transforms: dict containing trans functions and min/max/initial values
+        transform_values: dict containing the fixed current transform parameter values
+    '''
+    # compute all metrics over their range of params and get avg/std
+    results = {}
+    # initialise results
+    for metric in data_store.metrics.keys():
+        results[metric] = {}
+        for tran in transforms.keys():
+            results[metric][tran] = []
+
+    # compute over all image transformations
+    for curr_trans in transforms.keys():         # loop over all transformations
+        for trans_value in get_all_slider_values(transforms[curr_trans]):   # all values of the parameter
+            trans_im = data_store.image_data                     # initialse image
+            for other_trans in transforms.keys():
+                # fix transformation parameters for all sliders apart from the one we are varying
+                if other_trans != curr_trans:
+                    # keep parameter value fixed from the UI
+                    trans_im = transforms[other_trans]['function'](trans_im, transform_values[other_trans])
+                else:
+                    # apply the parameter variation
+                    trans_im = transforms[other_trans]['function'](trans_im, trans_value)
+            metric_scores = data_store.get_metrics(trans_im)
+            for metric in metric_scores.keys():
+                results[metric][curr_trans].append(float(metric_scores[metric]))
+    return results
+
+# fig = plt.Figure()
+# axes = fig.add_subplot(111, polar=True)
+
+# return fig
+
+def get_radar_plots_avg(results, metrics_names, transformation_names, axes):
+    radar_plt = radar_plotter(radar_names=metrics_names,
+                                    var_names=transformation_names,
+                                    ax=axes)
+    for metric in metrics_names:
+        mean_value = []
+        # std_value = []
+        transform = []
+        for tran in transformation_names:
+            transform.append(tran)
+            mean_value.append(np.mean(results[metric][tran]))
+            # std_value.append(np.std(results[metric][tran]))
+        radar_plt.plot(metric, mean_value)
+    radar_plt.set_style()
+    return radar_plt
+
+def get_transform_plots(results, ):
+    '''
+    plot a single graph of
+    '''
+    return 1
