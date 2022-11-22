@@ -65,9 +65,3 @@ Run MWEs
 python IQM_VIS/examples/simple.py
 python IQM_VIS/examples/multiple.py
 ```
-
-## To do - datasets
-Need to 'scroll' through dataset:
-  - directory of images?
-  - image paths in list?
-  - image paths in csv file?
