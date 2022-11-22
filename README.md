@@ -34,35 +34,36 @@ To use a stripped down version of the application, feel free to first use our [w
 # Installation
 The latest stable version can be downloaded via [PyPi](https://pypi.org/project/IQM-VIS).
 ```
-$ pip install IQM-VIS
+pip install IQM-VIS
 ```
 Example usage of the package can be found in [examples](https://github.com/mattclifford1/IQM-VIS/tree/main/IQM_VIS/examples)
-## Dev Setup
+
+# Dev Setup
 First create a new python venv, eg. using conda
 ```
-$ conda create -n iqm_vis python=3.9
+conda create -n iqm_vis python=3.9
 ```
 Activate env:
 ```
-$ conda activate iqm_vis
+conda activate iqm_vis
 ```
 Clone repo
 ```
-$ git clone git@github.com:mattclifford1/IQA_GUI.git
-$ cd IQA_GUI
+git clone git@github.com:mattclifford1/IQA_GUI.git
+cd IQA_GUI
 ```
 Install requirements
 ```
-$ pip install -r requirements-dev.txt
+pip install -r requirements-dev.txt
 ```
 Install package in editable mode
 ```
-$ pip install -e .
+pip install -e .
 ```
 Run MWEs
 ```
-$ python IQM_VIS/examples/simple.py
-$ python IQM_VIS/examples/multiple.py
+python IQM_VIS/examples/simple.py
+python IQM_VIS/examples/multiple.py
 ```
 
 ## To do - datasets
