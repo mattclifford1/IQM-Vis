@@ -20,6 +20,7 @@ class make_app(widgets, layout, images):
         self.metrics_avg_graph = metrics_avg_graph
         self.metric_range_graph = metric_range_graph
         self.dataset = self._single_image_or_dataset()
+        self.setWindowTitle('IQM-VIS')
 
         self.init_style()     # layout
         self.init_widgets()   # widgets

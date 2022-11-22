@@ -56,6 +56,7 @@ class images:
             except:
                 pass # some datasets will be shorter than others - this is fine though
         self.display_images()
+        self.set_image_name_text()
 
     '''
     metric updaters

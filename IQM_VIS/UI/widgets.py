@@ -96,7 +96,7 @@ class widgets():
 
 
         '''buttons'''
-        self.widget_sliders = {'button': {}, 'slider':{}}
+        self.widget_sliders = {'button': {}, 'slider':{}, 'label':{}}
         self.widget_sliders['button']['reset_sliders'] = QPushButton('Reset', self)
         self.widget_sliders['button']['reset_sliders'].clicked.connect(self.reset_sliders)
         if self.metrics_avg_graph:
@@ -116,8 +116,8 @@ class widgets():
             self.widget_sliders['button']['next_data'].clicked.connect(partial(self.change_data, 1))
             self.widget_sliders['button']['prev_data'] = QPushButton('<-', self)
             self.widget_sliders['button']['prev_data'].clicked.connect(partial(self.change_data, -1))
-
-
+            self.widget_sliders['label']['data'] = QLabel(self)
+            self.widget_sliders['label']['data'].setText('Dataset Scroll:')
 
 
         '''sliders'''

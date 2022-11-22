@@ -13,7 +13,15 @@ IQM_VIS.examples.simple.run()
 ```
 ![Alt text](https://github.com/mattclifford1/IQM-VIS/blob/main/pics/ui-simple.png?raw=true "Simple UI")
 
-Extended UI with multiple images and metrics with metric radar comparison plot.
+### Extensions
+Link to a dataset so you can scroll through and assess many images
+```
+import IQM_VIS
+IQM_VIS.examples.dataset.run()
+```
+![Alt text](https://github.com/mattclifford1/IQM-VIS/blob/main/pics/ui-dataset.png?raw=true "Dataset UI")
+
+Extend with multiple image rows to compare multiple images at once.
 ```
 import IQM_VIS
 IQM_VIS.examples.multiple.run()

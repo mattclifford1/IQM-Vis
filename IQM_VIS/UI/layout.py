@@ -71,8 +71,10 @@ class layout(QMainWindow):
             self.layout.addWidget(self.widget_sliders['button']['prev_metric_graph'], button*i, (im_height+button)*metrics_range_col,               button, (im_height/2))
             self.layout.addWidget(self.widget_sliders['button']['next_metric_graph'], button*i, (im_height+button)*metrics_range_col+(im_height/2), button, (im_height/2))
         if self.dataset:
-            self.layout.addWidget(self.widget_sliders['button']['prev_data'], button*i, start_im,               button, (im_height/2))
-            self.layout.addWidget(self.widget_sliders['button']['next_data'], button*i, start_im+(im_height/2), button, (im_height/2))
+            start = 0
+            self.layout.addWidget(self.widget_sliders['label']['data'],       button*i, start,                      button, button)
+            self.layout.addWidget(self.widget_sliders['button']['prev_data'], button*i, start+button,               button, button)
+            self.layout.addWidget(self.widget_sliders['button']['next_data'], button*i, start+button*2, button, button)
             i += 1
         # transform sliders
         for key in self.sliders.keys():
