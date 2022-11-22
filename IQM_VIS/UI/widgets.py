@@ -100,6 +100,8 @@ class widgets():
                 self.widget_row[i]['metrics']['range']['data'] = gui_utils.MplCanvas(self)
                 self.widget_row[i]['metrics']['range']['data'].setToolTip('Single tranformation value range for all metrics.')
 
+
+
         '''buttons'''
         self.widget_sliders = {'button': {}, 'slider':{}}
         self.widget_sliders['button']['reset_sliders'] = QPushButton('Reset', self)
@@ -109,6 +111,14 @@ class widgets():
             self.widget_sliders['button']['force_update'].setToolTip('Update metrics average plot using the current slider values.')
             self.widget_sliders['button']['force_update'].clicked.connect(self.display_images)
             self.widget_sliders['button']['force_update'].clicked.connect(self.get_metrics_over_range)
+        if self.metric_range_graph:
+            # buttons to control which graph to show
+            self.widget_sliders['button']['next_metric_graph'] = QPushButton('->', self)
+            self.widget_sliders['button']['next_metric_graph'].clicked.connect(partial(self.change_metric_range_graph, 1))
+            self.widget_sliders['button']['prev_metric_graph'] = QPushButton('<-', self)
+            self.widget_sliders['button']['prev_metric_graph'].clicked.connect(partial(self.change_metric_range_graph, -1))
+
+
 
         '''sliders'''
         self.im_trans_params = {}

@@ -85,6 +85,15 @@ class images:
             plot = plot_utils.get_transform_range_plots(self.metric_range_results[i], trans_to_plot, axes)
             plot.show()
 
+    def change_metric_range_graph(self, add=1):
+        max_graph_num = len(list(self.transformations.keys()))
+        self.metric_range_graph_num += add
+        if self.metric_range_graph_num >= max_graph_num:
+            self.metric_range_graph_num = max_graph_num - 1
+        elif self.metric_range_graph_num < 0:
+            self.metric_range_graph_num = 0
+        self.display_metric_range_plot()
+
     '''
     metric image updaters
     '''

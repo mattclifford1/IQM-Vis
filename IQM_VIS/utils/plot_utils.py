@@ -50,6 +50,7 @@ line plot of matplotlib qt widget
 class line_plotter:
     def __init__(self, ax, x_label, y_label):
         self.ax = ax
+        self.ax.axes.clear()
         self.x_label = x_label
         self.y_label = y_label
 
