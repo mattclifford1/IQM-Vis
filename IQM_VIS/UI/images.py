@@ -25,9 +25,9 @@ class images:
 
     def display_images(self):
         for i, data_store in enumerate(self.data_stores):
-            gui_utils.change_im(self.widget_row[i]['images'][data_store.image_name]['data'], data_store.image_data, resize=self.image_display_size)
+            gui_utils.change_im(self.widget_row[i]['images']['original']['data'], data_store.image_data, resize=self.image_display_size)
             trans_im = self.transform_image(data_store.image_data)
-            gui_utils.change_im(self.widget_row[i]['images'][gui_utils.get_transformed_image_name(data_store.image_name)]['data'], trans_im, resize=self.image_display_size)
+            gui_utils.change_im(self.widget_row[i]['images']['transformed']['data'], trans_im, resize=self.image_display_size)
 
             metrics = data_store.get_metrics(trans_im)
             self.display_metrics(metrics, i)
@@ -40,6 +40,22 @@ class images:
         # display images
         for i in self.widget_row.keys():
             gui_utils.change_im(self.widgets['image'][key], self.image_data[key], resize=self.image_display_size)
+    '''
+    change image in dataset
+    '''
+    def change_data(self, i):
+        self.data_num += i
+        # check the num is legal
+        if self.data_num < 0:
+            self.data_num = 0
+        if self.data_num > self.max_data_ind:
+            self.data_num = self.max_data_ind
+        for data_store in self.data_stores:
+            try:
+                data_store[self.data_num]
+            except:
+                pass # some datasets will be shorter than others - this is fine though
+        self.display_images()
 
     '''
     metric updaters

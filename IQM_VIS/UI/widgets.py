@@ -44,14 +44,9 @@ class widgets():
 
         self.widget_row = {}
         for i, data_store in enumerate(self.data_stores):   # create each row of the widgets
-            '''
-            follow the below dict structure!!!!
-            '''
             self.widget_row[i] = {'images':{}, 'metrics':{}, 'metric_images':{}}
-
             '''image and transformed image'''
-            for image_name in [data_store.image_name,
-                               gui_utils.get_transformed_image_name(data_store.image_name)]:
+            for image_name in ['original', 'transformed']:
                 self.widget_row[i]['images'][image_name] = {}
                 # image widget
                 self.widget_row[i]['images'][image_name]['data'] = QLabel(self)
@@ -67,10 +62,8 @@ class widgets():
                 self.widget_row[i]['metric_images'][key]['data'] = QLabel(self)
                 self.widget_row[i]['metric_images'][key]['data'].setAlignment(Qt.AlignmentFlag.AlignCenter)
                 # image label
-                metric_name = gui_utils.get_metric_image_name(key, data_store.image_name)
                 self.widget_row[i]['metric_images'][key]['label'] = QLabel(self)
                 self.widget_row[i]['metric_images'][key]['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-                self.widget_row[i]['metric_images'][key]['label'].setText(metric_name)
 
             '''metrics graphs'''
             im_pair_name = gui_utils.get_image_pair_name(data_store.image_name)
@@ -117,6 +110,13 @@ class widgets():
             self.widget_sliders['button']['next_metric_graph'].clicked.connect(partial(self.change_metric_range_graph, 1))
             self.widget_sliders['button']['prev_metric_graph'] = QPushButton('<-', self)
             self.widget_sliders['button']['prev_metric_graph'].clicked.connect(partial(self.change_metric_range_graph, -1))
+        if self.dataset:
+            # control what image is used from the dataset
+            self.widget_sliders['button']['next_data'] = QPushButton('->', self)
+            self.widget_sliders['button']['next_data'].clicked.connect(partial(self.change_data, 1))
+            self.widget_sliders['button']['prev_data'] = QPushButton('<-', self)
+            self.widget_sliders['button']['prev_data'].clicked.connect(partial(self.change_data, -1))
+
 
 
 
@@ -138,6 +138,8 @@ class widgets():
             self.widget_sliders['slider'][key]['value'] = QLabel(self)
             self.widget_sliders['slider'][key]['value'].setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.widget_sliders['slider'][key]['value'].setText(str(self.im_trans_params[key]))
+
+        self.set_image_name_text()
 
 
     '''
@@ -165,3 +167,13 @@ class widgets():
             self.metric_range_graph_num = 0
             self.get_metric_range_values()
             self.display_metric_range_plot()
+
+    def set_image_name_text(self):
+        for i, data_store in enumerate(self.data_stores):
+            self.widget_row[i]['images']['original']['label'].setText(data_store.image_name)
+            self.widget_row[i]['images']['transformed']['label'].setText(gui_utils.get_transformed_image_name(data_store.image_name))
+            for key in data_store.metric_images.keys():
+                metric_name = gui_utils.get_metric_image_name(key, data_store.image_name)
+                if len(metric_name) > 20:
+                    metric_name = key
+                self.widget_row[i]['metric_images'][key]['label'].setText(metric_name)

@@ -16,9 +16,13 @@ def run():
                      'SSIM': IQM_VIS.metrics.SSIM_image()}
 
     # first row of images
-    data = IQM_VIS.data_holder(('X1', IQM_VIS.utils.load_image(os.path.join(file_path, 'images', 'wave3.jpeg'))),
-                             metric,
-                             metric_images)
+    dataset = [os.path.join(file_path, 'images', 'waves1.jpeg'),
+               os.path.join(file_path, 'images', 'waves2.jpeg'),
+               os.path.join(file_path, 'images', 'wave3.jpeg')]
+    data = IQM_VIS.dataset_holder(dataset,
+                                  IQM_VIS.utils.load_image,
+                                  metric,
+                                  metric_images)
     # second row of images
     # define the transformations
     transformations = {

@@ -66,9 +66,15 @@ class layout(QMainWindow):
         '''bottom of the UI showing the image transform sliders'''
         end_of_ims_row = (im_height+button)*im_row+button+start_im
         i = end_of_ims_row
+        # prev/next buttons
         if self.metric_range_graph:
-            self.layout.addWidget(self.widget_sliders['button']['prev_metric_graph'], button*i, (im_height+button)*metrics_range_col, button, (im_height/2))
+            self.layout.addWidget(self.widget_sliders['button']['prev_metric_graph'], button*i, (im_height+button)*metrics_range_col,               button, (im_height/2))
             self.layout.addWidget(self.widget_sliders['button']['next_metric_graph'], button*i, (im_height+button)*metrics_range_col+(im_height/2), button, (im_height/2))
+        if self.dataset:
+            self.layout.addWidget(self.widget_sliders['button']['prev_data'], button*i, start_im,               button, (im_height/2))
+            self.layout.addWidget(self.widget_sliders['button']['next_data'], button*i, start_im+(im_height/2), button, (im_height/2))
+            i += 1
+        # transform sliders
         for key in self.sliders.keys():
             self.layout.addWidget(self.widget_sliders['slider'][key]['label'], button*i, start_controls,                     button, button)
             self.layout.addWidget(self.widget_sliders['slider'][key]['data'],  button*i, start_controls+button,              button, slider_width)
