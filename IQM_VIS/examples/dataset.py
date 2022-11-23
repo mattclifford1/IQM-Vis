@@ -32,7 +32,7 @@ def run():
                }
 
     # use the API to create the UI
-    IQM_VIS.api.make_UI(data,
+    IQM_VIS.make_UI(data,
                 transformations,
                 metrics_avg_graph=True)
 
