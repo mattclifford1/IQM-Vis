@@ -18,7 +18,7 @@ setup(name='IQM-VIS',
                         'matplotlib',
                         'torch',
                         'torchmetrics'],
-      data_files=[('/IQM_VIS/UI/', ['style.css'])],
+      data_files=[('/', ['IQM_VIS/UI/style.css'])], ## todo fix how to upload this
       author="Matt Clifford",
       author_email="matt.clifford@bristol.ac.uk",
       description="Extendable user interface for the assessment of transformations on image metrics.",
