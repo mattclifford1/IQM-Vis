@@ -31,7 +31,7 @@ def run():
                }
 
     # use the API to create the UI
-    IQM_VIS.api.make_UI([row_1, row_2],
+    IQM_VIS.make_UI([row_1, row_2],
                 transformations,
                 metrics_avg_graph=True)
 
