@@ -17,10 +17,12 @@ def run():
 
     # first row of images
     row_1 = IQM_VIS.data_holder(('X1', IQM_VIS.utils.load_image(os.path.join(file_path, 'images', 'wave3.jpeg'))),
+                             ('X1', IQM_VIS.utils.load_image(os.path.join(file_path, 'images', 'wave3.jpeg'))),
                              metric,
                              metric_images)
     # second row of images
-    row_2 = IQM_VIS.data_holder(('X2', IQM_VIS.utils.load_image(os.path.join(file_path, 'images', 'waves1.jpeg'))),
+    row_2 = IQM_VIS.data_holder(('X1', IQM_VIS.utils.load_image(os.path.join(file_path, 'images', 'wave3.jpeg'))),
+                            ('X2', IQM_VIS.utils.load_image(os.path.join(file_path, 'images', 'waves1.jpeg'))),
                              metric,
                              metric_images)
     # define the transformations

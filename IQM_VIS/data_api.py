@@ -11,13 +11,12 @@ store image and metric data as well as
 function calls for getting metrics and metric images
 '''
 class data_holder:
-    def __init__(self, image_data: tuple, # (name, np data)
+    def __init__(self, image_reference: tuple, # (name, np data)
+                       image_to_transform: tuple, # (name, np data)
                        metrics: dict,
                        metric_images: dict):
-        self.image_reference = image_data
-        self.image_to_transform = image_data
-        self.image_name = image[0]
-        self.image_data = image[1]
+        self.image_reference = image_reference
+        self.image_to_transform = image_to_transform
         self.metrics = metrics
         self.metric_images = metric_images
         self._check_inputs()
