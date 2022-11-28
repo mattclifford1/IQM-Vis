@@ -10,6 +10,7 @@ def run():
     metric_im = {'MAE': lambda im1, im2: np.abs(im1 - im2)}
     # add numpy image and the metrics to the data handler
     data_store = IQM_VIS.data_holder(('X', IQM_VIS.utils.load_image(os.path.join(file_path, 'images', 'wave3.jpeg'))),
+                             ('X', IQM_VIS.utils.load_image(os.path.join(file_path, 'images', 'wave3.jpeg'))),
                              metric,
                              metric_im)
     # define the transformations
