@@ -140,7 +140,7 @@ def compute_metrics_over_range(data_store, transforms, transform_values):
     # compute over all image transformations
     for curr_trans in transforms.keys():         # loop over all transformations
         for trans_value in get_all_slider_values(transforms[curr_trans]):   # all values of the parameter
-            trans_im = data_store.image_data                     # initialse image
+            trans_im = data_store.get_transform_image()     # initialse image
             for other_trans in transforms.keys():
                 # fix transformation parameters for all sliders apart from the one we are varying
                 if other_trans != curr_trans:

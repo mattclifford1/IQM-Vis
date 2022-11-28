@@ -65,12 +65,14 @@ def test_datastore_attributes(data_store):
     '''get the data handler class to make sure its properties are correct'''
     obj_name = data_store.__class__.__name__
     attributes = [
-    ('image_name', 'describes the name of the input image', str),
-    ('image_data', 'is the input image numpy array data', np.ndarray),
+    ('get_reference_image', 'gets the input reference image', types.MethodType),
+    ('get_reference_image_name', 'gets the name of the input reference image', types.MethodType),
+    ('get_transform_image', 'gets the input image to transform', types.MethodType),
+    ('get_transform_image_name', 'gets the name of the input image to transform', types.MethodType),
     ('metrics', 'is a dict of all metric functions', dict),
     ('metric_images','is a dict of all metric image functions', dict),
     ('get_metrics', 'is a function that returns a dict of all metrics results', types.MethodType),
-    ('get_metric_images', 'is a function that returns a dict of all metric image results', types.MethodType)
+    ('get_metric_images', 'is a function that returns a dict of all metric image results', types.MethodType),
     ]
     for att in attributes:
         if hasattr(data_store,  att[0]):
@@ -79,3 +81,21 @@ def test_datastore_attributes(data_store):
                 raise TypeError(f"{obj_name} attribute '{att[0]}' needs to be type '{att[2]}' instead of {type(attr)}")
         else:
             raise AttributeError(f"{obj_name} needs to have attribute '{att[0]}' which {att[1]}")
+
+    # now test returned types are correct
+    method_return_types = [
+    ('get_reference_image', np.ndarray),
+    ('get_reference_image_name', str),
+    ('get_reference_image', np.ndarray),
+    ('get_transform_image_name', str),
+    ('get_metrics', dict, data_store.get_transform_image()),
+    ('get_metric_images', dict, data_store.get_transform_image()),
+    ]
+    for meth in method_return_types:
+        method = getattr(data_store,  meth[0])
+        if len(meth) < 3:
+            ret = method()
+        elif len(meth) == 3:
+            ret = method(meth[2])
+        if type(ret) != meth[1]:
+            raise TypeError(f"{obj_name} method '{meth[0]}' needs to return type '{att[2]}' instead of {type(attr)}")

@@ -14,6 +14,7 @@ from IQM_VIS.utils import gui_utils, plot_utils
 class images:
     def __init__(self):
         self.image_display_size = (175, 175)
+        self.metric_range_graph_num = 0
         # self.image_display_size = False
     '''
     image updaters
@@ -25,12 +26,16 @@ class images:
 
     def display_images(self):
         for i, data_store in enumerate(self.data_stores):
-            gui_utils.change_im(self.widget_row[i]['images']['original']['data'], data_store.image_data, resize=self.image_display_size)
-            trans_im = self.transform_image(data_store.image_data)
+            # reference image
+            reference_image = data_store.get_reference_image()
+            gui_utils.change_im(self.widget_row[i]['images']['original']['data'], reference_image, resize=self.image_display_size)
+            # tranform image
+            trans_im = self.transform_image(data_store.get_transform_image())
             gui_utils.change_im(self.widget_row[i]['images']['transformed']['data'], trans_im, resize=self.image_display_size)
-
+            # metrics
             metrics = data_store.get_metrics(trans_im)
             self.display_metrics(metrics, i)
+            # metric images
             metric_images = data_store.get_metric_images(trans_im)
             self.display_metric_images(metric_images, i)
 
@@ -40,6 +45,15 @@ class images:
         # display images
         for i in self.widget_row.keys():
             gui_utils.change_im(self.widgets['image'][key], self.image_data[key], resize=self.image_display_size)
+    '''
+    metric graph updaters
+    '''
+    def redo_plots(self):
+        if self.metrics_avg_graph:
+            self.get_metrics_over_range()
+        if self.metric_range_graph:
+            self.get_metric_range_values()
+            self.display_metric_range_plot()
     '''
     change image in dataset
     '''
@@ -57,6 +71,7 @@ class images:
                 pass # some datasets will be shorter than others - this is fine though
         self.display_images()
         self.set_image_name_text()
+        self.redo_plots()
 
     '''
     metric updaters

@@ -1,5 +1,6 @@
 '''
 generic image and metric data class constructor
+both use the same image for reference and transformed
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 import os
@@ -10,30 +11,44 @@ store image and metric data as well as
 function calls for getting metrics and metric images
 '''
 class data_holder:
-    def __init__(self, image: tuple,   # (name, data)
+    def __init__(self, image_data: tuple, # (name, np data)
                        metrics: dict,
                        metric_images: dict):
+        self.image_reference = image_data
+        self.image_to_transform = image_data
         self.image_name = image[0]
         self.image_data = image[1]
         self.metrics = metrics
         self.metric_images = metric_images
         self._check_inputs()
 
+    def get_reference_image_name(self):
+        return self.image_reference[0]
+
+    def get_reference_image(self):
+        return self.image_reference[1]
+
+    def get_transform_image_name(self):
+        return self.image_to_transform[0]
+
+    def get_transform_image(self):
+        return self.image_to_transform[1]
+
     def get_metrics(self, transformed_image):
         results = {}
         for metric in self.metrics.keys():
-            results[metric] = self.metrics[metric](self.image_data, transformed_image)
+            results[metric] = self.metrics[metric](self.get_reference_image(), transformed_image)
         return results
 
     def get_metric_images(self, transformed_image):
         results = {}
         for metric in self.metric_images.keys():
-            results[metric] = self.metric_images[metric](self.image_data, transformed_image)
+            results[metric] = self.metric_images[metric](self.get_reference_image(), transformed_image)
         return results
 
     def _check_inputs(self):
-        input_types = [(self.image_name, str),
-                       (self.image_data, np.ndarray),
+        input_types = [(self.image_reference[0], str),
+                       (self.image_reference[1], np.ndarray),
                        (self.metrics, dict),
                        (self.metric_images, dict)]
         for item in input_types:
@@ -59,8 +74,10 @@ class dataset_holder:
 
     def _load_image_data(self, i):
         current_file = self.image_list[i]
-        self.image_name = os.path.splitext(os.path.basename(current_file))[0]
-        self.image_data = self.image_loader(current_file)
+        image_name = os.path.splitext(os.path.basename(current_file))[0]
+        image_data = self.image_loader(current_file)
+        self.image_reference = (image_name, image_data)
+        self.image_to_transform = (image_name, image_data)
 
     def __len__(self):
         return len(self.image_list)
@@ -68,21 +85,33 @@ class dataset_holder:
     def __getitem__(self, i):
         self._load_image_data(i)
 
+    def get_reference_image_name(self):
+        return self.image_reference[0]
+
+    def get_reference_image(self):
+        return self.image_reference[1]
+
+    def get_transform_image_name(self):
+        return self.image_to_transform[0]
+
+    def get_transform_image(self):
+        return self.image_to_transform[1]
+
     def get_metrics(self, transformed_image):
         results = {}
         for metric in self.metrics.keys():
-            results[metric] = self.metrics[metric](self.image_data, transformed_image)
+            results[metric] = self.metrics[metric](self.get_reference_image(), transformed_image)
         return results
 
     def get_metric_images(self, transformed_image):
         results = {}
         for metric in self.metric_images.keys():
-            results[metric] = self.metric_images[metric](self.image_data, transformed_image)
+            results[metric] = self.metric_images[metric](self.get_reference_image(), transformed_image)
         return results
 
     def _check_inputs(self):
-        input_types = [(self.image_name, str),
-                       (self.image_data, np.ndarray),
+        input_types = [(self.image_reference[0], str),
+                       (self.image_reference[1], np.ndarray),
                        (self.metrics, dict),
                        (self.metric_images, dict)]
         for item in input_types:
