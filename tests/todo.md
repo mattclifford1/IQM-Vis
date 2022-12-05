@@ -1,15 +1,5 @@
 write docs / guided examples
 
-
-========
-make class that has specific calls:
-  - (maybe put on the UI class) how to display images (e.g. what colour space)
-
-========
-
-
-
-
 docs:
 
 transforms run top to bottom of the sliders
@@ -18,3 +8,8 @@ transforms run top to bottom of the sliders
 
 know issues:
    sliders on wayland display server as less responsive
+
+
+============
+option for re calculation of metrics avg graph/range plots for current slider values
+(avg graph current button ----> change to menu drop down?)
