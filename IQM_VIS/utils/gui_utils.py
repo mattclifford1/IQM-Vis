@@ -38,10 +38,8 @@ def change_im(widget, im, resize=False):
                     im.shape[0],
                     im.shape[1]*im.shape[2],
                     QImage.Format.Format_RGB888)
-                    # QImage.Format_RGB888)  # PyQt5
     pixmap = QPixmap(qimage)
     widget.setPixmap(pixmap)
-    # QApplication.processEvents()   # force to change other UI wont respond
 
 '''
 text utils
