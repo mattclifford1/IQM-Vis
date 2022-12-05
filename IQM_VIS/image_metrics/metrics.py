@@ -20,11 +20,13 @@ from IQM_VIS.image_metrics.expert.pyramids import LaplacianPyramid
 
 ''' simple functional format to call a metric (numpy)'''
 def MAE(im_ref, im_comp):
+    check_shapes(im_ref, im_comp)
     L1 = np.abs(im_ref - im_comp)
     return L1.mean()
 
 ''' functional (using torch)'''
 def MSE(im_ref, im_comp):
+    check_shapes(im_ref, im_comp)
     metric = nn.MSELoss()
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     im_ref = preprocess_numpy_image(im_ref).to(device=device, dtype=torch.float)
@@ -43,6 +45,7 @@ class ssim:
         self.preproccess_function = preprocess_numpy_image
 
     def __call__(self, im_ref, im_comp):
+        check_shapes(im_ref, im_comp)
         im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
         im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)
         _score = self.metric(im_ref, im_comp)
@@ -53,6 +56,7 @@ class ssim:
 
 '''Example of metric image produced to display (using numpy)'''
 def MSE_image(im_ref, im_comp):
+    check_shapes(im_ref, im_comp)
     L2 = (im_ref - im_comp)**2
     return L2
 
@@ -67,6 +71,7 @@ class SSIM_image:
         self.preproccess_function = preprocess_numpy_image
 
     def __call__(self, im_ref, im_comp):
+        check_shapes(im_ref, im_comp)
         im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
         im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)
         _, ssim_full_im = self.metric_image(im_ref, im_comp)
@@ -88,3 +93,10 @@ def preprocess_numpy_image(image):
     image = np.expand_dims(image, axis=0)   # make into batch one 1
     image = torch.from_numpy(image)
     return image
+
+def check_shapes(im_ref, im_comp):
+    '''
+    make sure both images have the same dimensions
+    '''
+    if im_ref.shape != im_comp.shape:
+        raise ValueError(f'Refence and transformed images need to have the same shape not: {im_ref.shape} and {im_comp.shape}')
