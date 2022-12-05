@@ -18,11 +18,10 @@ def load_image(image_path):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     return image.astype(np.float32) / 255.0
 
-def load_and_resize_image(image_path, side=128):
+def resize_to_longest_side(im, side=128):
     '''
     resize image to longest side
     '''
-    im = load_image(image_path)
     shape = im.shape
     if shape[0] > shape[1]:
         scale = shape[0]/side
@@ -33,11 +32,10 @@ def load_and_resize_image(image_path, side=128):
     im = resize(im, size)
     return im
 
-def load_and_resize_square_image(image_path, size=128):
+def resize_image(im, size=128):
     '''
-    resize image to longest side
+    resize image to square or specified size
     '''
-    im = load_image(image_path)
     if type(size) != tuple or type(size) != list:
         size = (size, size)
     im = resize(im, size)
