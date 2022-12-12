@@ -41,6 +41,8 @@ def translate_image(image, x_shift, y_shift):
     canvas = np.zeros(original_size, dtype=image.dtype)
     prop_x = int(original_size[1]*abs(x_shift))
     prop_y = int(original_size[0]*abs(y_shift))
+    if original_size[1] - prop_x < 1 or original_size[0] - prop_y < 1: # make sure we dont go off the canvas
+        return canvas
     if y_shift >= 0 and x_shift >= 0:
         canvas[prop_y:,prop_x:,:] = image[:original_size[0]-prop_y,:original_size[1]-prop_x,:]
     elif y_shift < 0 and x_shift >= 0:
