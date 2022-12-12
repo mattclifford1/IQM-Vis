@@ -30,6 +30,9 @@ def change_im(widget, im, resize=False):
     '''
     given a numpy image, changes the given widget Frame
     '''
+    # first convert to three channel
+    if len(image.shape) == 2:
+        image = image[..., np.newaxis]
     if im.shape[2] == 1:
         im = np.concatenate([im, im, im], axis=2)
     if resize:

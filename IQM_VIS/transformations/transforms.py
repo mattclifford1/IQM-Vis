@@ -85,6 +85,8 @@ def binary_threshold(image, param):
         if image.shape[2] == 3:
             image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
     image = cv2.adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, int(param))
+    if len(image.shape) == 2:
+        image = image[..., np.newaxis]
     return image.astype(np.float32) / 255.0
 
 def jpeg_compression(image, param=90):
