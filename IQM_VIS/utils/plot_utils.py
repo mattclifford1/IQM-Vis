@@ -112,13 +112,13 @@ class radar_plotter:
 metric averaging functions to get metric values over a range of transformation
 '''
 def get_all_slider_values(transforms, num_steps=10):
-    min = transforms['min']
-    max = transforms['max']
-    steps = (max - min)/num_steps
+    range = transforms['max'] - transforms['min']
+    num_steps = min(range, num_steps)
+    steps = range/num_steps
     if type(transforms['min']) == int:
         steps = int(steps)
-    values = list(np.arange(start=min, stop=max, step=steps))
-    values.append(max)
+    values = list(np.arange(start=transforms['min'], stop=transforms['max'], step=steps))
+    values.append(transforms['max'])
     return values
 
 def compute_metrics_over_range(data_store, transforms, transform_values):

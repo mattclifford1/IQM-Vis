@@ -3,6 +3,7 @@ Sample image transformations to get the user started with
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 from skimage.transform import resize, rotate
+from skimage.util import img_as_ubyte
 import cv2
 import numpy as np
 
@@ -75,3 +76,48 @@ def zoom_image(image, factor):
         image = zoomed_out
 
     return resize(image, original_size)
+
+def binary_threshold(image, param):
+    image = img_as_ubyte(image)
+    image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+    image = cv2.adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, int(param))
+    return image.astype(np.float32) / 255.0
+
+def jpeg_compression(image, param=90):
+    '''encode image using jpeg then decode
+    - param: amount of compression
+              100 returns identity image?
+    '''
+    encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), int(param)]
+    encoder = '.jpg'
+    return _encode_compression(image, encoder, encode_param)
+
+def png_compression(image, param=9):
+    '''encode image using png then decode (note png is lossless compression)
+    - param: amount of compression
+    '''
+    encode_param = [int(cv2.IMWRITE_PNG_COMPRESSION), int(param)]
+    encoder = '.png'
+    return _encode_compression(image, encoder, encode_param)
+
+def _encode_compression(image, encoder, encode_param, uint=True):
+    '''
+        generic image encoder for jpeg, png etc
+        using https://docs.opencv.org/3.4/d4/da8/group__imgcodecs.html to encode/decode
+        for encode types: https://docs.opencv.org/3.4/d6/d87/imgcodecs_8hpp.html
+    '''
+    original_size = image.shape
+    if uint == True:
+        # jpeg/png encoder needs uint images not float
+        image = img_as_ubyte(image)
+    # encode image
+    result, encoded_image = cv2.imencode(encoder, image, encode_param)
+    # decode image
+    decoded_image = cv2.imdecode(encoded_image, 1)
+    if uint == True:
+        # return to float type
+        image = decoded_image.astype(np.float32) / 255.0
+    # have to resize as jpeg can sometimes change the size of an image
+    if image.shape != original_size:
+        image = resize(image, original_size)
+    return image
