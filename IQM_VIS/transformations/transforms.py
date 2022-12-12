@@ -81,7 +81,9 @@ def zoom_image(image, factor):
 
 def binary_threshold(image, param):
     image = img_as_ubyte(image)
-    image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+    if len(image.shape) > 2:
+        if image.shape[2] == 3:
+            image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
     image = cv2.adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, int(param))
     return image.astype(np.float32) / 255.0
 
