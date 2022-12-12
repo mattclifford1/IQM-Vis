@@ -72,11 +72,11 @@ class dataset_holder:
         self._check_inputs()
 
     def _load_image_data(self, i):
-        current_file = self.image_list[i]
-        image_name = os.path.splitext(os.path.basename(current_file))[0]
-        image_data = self.image_loader(current_file)
-        self.image_reference = (image_name, image_data)
-        self.image_to_transform = (image_name, image_data)
+        self.current_file = self.image_list[i]
+        self.image_name = os.path.splitext(os.path.basename(self.current_file))[0]
+        image_data = self.image_loader(self.current_file)
+        self.image_reference = (self.image_name, image_data)
+        self.image_to_transform = (self.image_name, image_data)
 
     def __len__(self):
         return len(self.image_list)
