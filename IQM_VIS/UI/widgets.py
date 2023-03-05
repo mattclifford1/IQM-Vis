@@ -12,35 +12,14 @@ from IQM_VIS.utils import gui_utils
 
 # sub class used by IQM_VIS.main.make_app to initialise widgets and general UI functions for widgets
 class widgets():
-    def _init_transforms(self):
-        ''' define what sliders we are using from image transformations '''
-        self.sliders = {}
-        for key in self.transformations.keys():
-            self.sliders[key] = {}
-            self.sliders[key]['release'] = [self.display_images]
-            self.sliders[key]['value_change'] = [partial(self.generic_value_change, key), self.display_images]
-            self.sliders[key]['function'] = self.transformations[key]['function']
-            if 'init_value' not in self.transformations[key].keys():
-                self.transformations[key]['init_value'] = 0
-            if 'values' in self.transformations[key].keys():
-                self.sliders[key]['values'] = self.transformations[key]['values']
-            else:
-                if 'num_values' not in self.transformations[key].keys():
-                    self.transformations[key]['num_values'] = 21   # make default value for steps in slider range
-                self.sliders[key]['values'] = np.linspace(self.transformations[key]['min'], self.transformations[key]['max'], self.transformations[key]['num_values'])
-                # see if we need to make odd numbers (for use with kernel sizes)
-                if 'normalise' in self.transformations[key].keys():
-                    if self.transformations[key]['normalise'] == 'odd':
-                        self.sliders[key]['values'] = self.sliders[key]['values'][self.sliders[key]['values']%2 == 1]
-                        self.transformations[key]['num_values'] = len(self.sliders[key]['values'])
-            # get ind of the initial value to set the slider at
-            self.sliders[key]['init_ind'] = np.searchsorted(self.sliders[key]['values'], self.transformations[key]['init_value'], side='left')
-
     def init_widgets(self):
         '''
         create all the widgets we need and init params
         '''
-        self._init_transforms() # first setup the slider data
+        # first setup the slider data
+        self.sliders = {'transforms': {}, 'metric_params': {}}
+        self._init_sliders(self.sliders['transforms'], self.transformations, param_group='transforms')
+        self._init_sliders(self.sliders['metric_params'], self.metric_params, param_group='metric_params')
 
         self.widget_row = {}
         for i, data_store in enumerate(self.data_stores):   # create each row of the widgets
@@ -93,73 +72,104 @@ class widgets():
                 self.widget_row[i]['metrics']['range']['data'] = gui_utils.MplCanvas(self)
                 self.widget_row[i]['metrics']['range']['data'].setToolTip('Single tranformation value range for all metrics.')
 
-
-
         '''buttons'''
-        self.widget_sliders = {'button': {}, 'slider':{}, 'label':{}}
-        self.widget_sliders['button']['reset_sliders'] = QPushButton('Reset', self)
-        self.widget_sliders['button']['reset_sliders'].clicked.connect(self.reset_sliders)
+        self.widget_controls = {'button': {}, 'slider':{}, 'label':{}}
+        self.widget_controls['button']['reset_sliders'] = QPushButton('Reset', self)
+        self.widget_controls['button']['reset_sliders'].clicked.connect(self.reset_sliders)
         if self.metrics_avg_graph:
-            self.widget_sliders['button']['force_update'] = QPushButton('Calc. Avg.', self)
-            self.widget_sliders['button']['force_update'].setToolTip('Update metrics average plot using the current slider values.')
-            self.widget_sliders['button']['force_update'].clicked.connect(self.display_images)
-            self.widget_sliders['button']['force_update'].clicked.connect(self.get_metrics_over_range)
+            self.widget_controls['button']['force_update'] = QPushButton('Calc. Avg.', self)
+            self.widget_controls['button']['force_update'].setToolTip('Update metrics average plot using the current slider values.')
+            self.widget_controls['button']['force_update'].clicked.connect(self.display_images)
+            self.widget_controls['button']['force_update'].clicked.connect(self.get_metrics_over_range)
         if self.metric_range_graph:
             # buttons to control which graph to show
-            self.widget_sliders['button']['next_metric_graph'] = QPushButton('->', self)
-            self.widget_sliders['button']['next_metric_graph'].clicked.connect(partial(self.change_metric_range_graph, 1))
-            self.widget_sliders['button']['prev_metric_graph'] = QPushButton('<-', self)
-            self.widget_sliders['button']['prev_metric_graph'].clicked.connect(partial(self.change_metric_range_graph, -1))
+            self.widget_controls['button']['next_metric_graph'] = QPushButton('->', self)
+            self.widget_controls['button']['next_metric_graph'].clicked.connect(partial(self.change_metric_range_graph, 1))
+            self.widget_controls['button']['prev_metric_graph'] = QPushButton('<-', self)
+            self.widget_controls['button']['prev_metric_graph'].clicked.connect(partial(self.change_metric_range_graph, -1))
         if self.dataset:
             # control what image is used from the dataset
-            self.widget_sliders['button']['next_data'] = QPushButton('->', self)
-            self.widget_sliders['button']['next_data'].clicked.connect(partial(self.change_data, 1))
-            self.widget_sliders['button']['prev_data'] = QPushButton('<-', self)
-            self.widget_sliders['button']['prev_data'].clicked.connect(partial(self.change_data, -1))
-            self.widget_sliders['label']['data'] = QLabel(self)
-            self.widget_sliders['label']['data'].setText('Dataset Scroll:')
+            self.widget_controls['button']['next_data'] = QPushButton('->', self)
+            self.widget_controls['button']['next_data'].clicked.connect(partial(self.change_data, 1))
+            self.widget_controls['button']['prev_data'] = QPushButton('<-', self)
+            self.widget_controls['button']['prev_data'].clicked.connect(partial(self.change_data, -1))
+            self.widget_controls['label']['data'] = QLabel(self)
+            self.widget_controls['label']['data'].setText('Dataset Scroll:')
 
 
         '''sliders'''
-        self.im_trans_params = {}
-        for key in self.sliders.keys():
-            self.widget_sliders['slider'][key] = {}
-            self.widget_sliders['slider'][key]['data'] = QSlider(Qt.Orientation.Horizontal)
-            self.widget_sliders['slider'][key]['data'].setMinimum(0)
-            self.widget_sliders['slider'][key]['data'].setMaximum(len(self.sliders[key]['values'])-1)
-            for func in self.sliders[key]['value_change']:
-                self.widget_sliders['slider'][key]['data'].valueChanged.connect(func)
-            for func in self.sliders[key]['release']:
-                self.widget_sliders['slider'][key]['data'].sliderReleased.connect(func)
-            self.im_trans_params[key] = self.sliders[key]['init_ind']
-            self.widget_sliders['slider'][key]['label'] = QLabel(self)
-            self.widget_sliders['slider'][key]['label'].setAlignment(Qt.AlignmentFlag.AlignRight)
-            self.widget_sliders['slider'][key]['label'].setText(key+':')
-            self.widget_sliders['slider'][key]['value'] = QLabel(self)
-            self.widget_sliders['slider'][key]['value'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-            self.widget_sliders['slider'][key]['value'].setText(str(self.im_trans_params[key]))
+        self.params_from_sliders = {}
+        for param_group, slider_group in self.sliders.items():
+            self.params_from_sliders[param_group] = {}
+            for key, item_sliders in slider_group.items():
+                self.widget_controls['slider'][key] = {}
+                self.widget_controls['slider'][key]['data'] = QSlider(Qt.Orientation.Horizontal)
+                self.widget_controls['slider'][key]['data'].setMinimum(0)
+                self.widget_controls['slider'][key]['data'].setMaximum(len(item_sliders['values'])-1)
+                for func in item_sliders['value_change']:
+                    self.widget_controls['slider'][key]['data'].valueChanged.connect(func)
+                for func in item_sliders['release']:
+                    self.widget_controls['slider'][key]['data'].sliderReleased.connect(func)
+                self.params_from_sliders['transforms'][key] = item_sliders['init_ind']
+                self.widget_controls['slider'][key]['label'] = QLabel(self)
+                self.widget_controls['slider'][key]['label'].setAlignment(Qt.AlignmentFlag.AlignRight)
+                self.widget_controls['slider'][key]['label'].setText(key+':')
+                self.widget_controls['slider'][key]['value'] = QLabel(self)
+                self.widget_controls['slider'][key]['value'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                self.widget_controls['slider'][key]['value'].setText(str(self.params_from_sliders['transforms'][key]))
 
         self.set_image_name_text()
 
+    '''
+    setup/helper functions
+    '''
+    def _init_sliders(self, sliders_dict, info_dict, param_group):
+        '''
+        generic initialiser of sliders (will change the dicts input rather than returning - like C++ pointers &)
+            sliders_dict: holds the slider widgets
+            info_dict: info to initialise the sliders
+        '''
+        for key, info_item in info_dict.items():
+            sliders_dict[key] = {}
+            sliders_dict[key]['release'] = [self.display_images]
+            sliders_dict[key]['value_change'] = [partial(self.generic_value_change, key, param_group), self.display_images]
+            if 'function' in info_item.keys():
+                sliders_dict[key]['function'] = info_item['function']
+            if 'init_value' not in info_item.keys():
+                info_item['init_value'] = 0
+            if 'values' in info_item.keys():
+                sliders_dict[key]['values'] = info_item['values']
+            else:
+                if 'num_values' not in info_item.keys():
+                    info_item['num_values'] = 21   # make default value for steps in slider range
+                sliders_dict[key]['values'] = np.linspace(info_item['min'], info_item['max'], info_item['num_values'])
+                # see if we need to make odd numbers (for use with kernel sizes)
+                if 'normalise' in info_item.keys():
+                    if info_item['normalise'] == 'odd':
+                        sliders_dict[key]['values'] = sliders_dict[key]['values'][sliders_dict[key]['values']%2 == 1]
+                        info_item['num_values'] = len(sliders_dict[key]['values'])
+            # get ind of the initial value to set the slider at
+            sliders_dict[key]['init_ind'] = np.searchsorted(sliders_dict[key]['values'], info_item['init_value'], side='left')
 
     '''
     ==================== functions to bind to sliders/widgets ====================
     '''
     # sliders value changes
-    def generic_value_change(self, key):
-        index = self.widget_sliders['slider'][key]['data'].value()
-        self.im_trans_params[key] = self.sliders[key]['values'][index]
-        self.display_slider_num(key) # display the new value ont UI
+    def generic_value_change(self, key, param_group):
+        index = self.widget_controls['slider'][key]['data'].value()
+        self.params_from_sliders[param_group][key] = self.sliders[param_group][key]['values'][index]
+        self.display_slider_num(key, param_group) # display the new value ont UI
 
-    def display_slider_num(self, key, disp_len=5):
+    def display_slider_num(self, key, param_group, disp_len=5):
         # display the updated value
-        value_str = str(self.im_trans_params[key])
+        value_str = str(self.params_from_sliders[param_group][key])
         value_str = gui_utils.str_to_len(value_str, disp_len, '0', plus=True)
-        self.widget_sliders['slider'][key]['value'].setText(value_str)
+        self.widget_controls['slider'][key]['value'].setText(value_str)
 
     def reset_sliders(self):
-        for key in self.sliders.keys():
-            self.widget_sliders['slider'][key]['data'].setValue(self.sliders[key]['init_ind'])
+        for _, slider_group in self.sliders.items():
+            for key, item_sliders in slider_group.items():
+                self.widget_controls['slider'][key]['data'].setValue(item_sliders['init_ind'])
         self.display_images()
         self.redo_plots()
 

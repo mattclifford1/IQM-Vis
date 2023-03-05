@@ -18,11 +18,13 @@ class make_UI:
     def __init__(self, data_store,
                        transformations: dict,
                        metrics_info_format: str='graph',
-                       metrics_avg_graph: bool=False):
+                       metrics_avg_graph: bool=False,
+                       metric_params: dict={}):
         self.data_store = data_store
         self.transformations = transformations
         self.metrics_info_format = metrics_info_format
         self.metrics_avg_graph = metrics_avg_graph
+        self.metric_params = metric_params
         self.show()
 
     def show(self):
@@ -32,7 +34,8 @@ class make_UI:
                           self.data_store,
                           self.transformations,
                           metrics_info_format=self.metrics_info_format,
-                          metrics_avg_graph=self.metrics_avg_graph)
+                          metrics_avg_graph=self.metrics_avg_graph,
+                          metric_params=self.metric_params)
         sys.exit(app.exec())
 
     def _check_inputs(self):
@@ -43,7 +46,7 @@ class make_UI:
             test_datastore_attributes(item)
 
         '''input items that should be dictionaries'''
-        should_be_dict = [self.transformations]
+        should_be_dict = [self.transformations, self.metric_params]
         for item in should_be_dict:
             if type(item) != dict:
                 var_name = f'{item=}'.split('=')[0]

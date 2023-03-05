@@ -44,11 +44,11 @@ class ssim:
         self.metric.to(self.device)
         self.preproccess_function = preprocess_numpy_image
 
-    def __call__(self, im_ref, im_comp):
+    def __call__(self, im_ref, im_comp, **kwargs):
         check_shapes(im_ref, im_comp)
         im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
         im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)
-        _score = self.metric(im_ref, im_comp)
+        _score = self.metric(im_ref, im_comp, **kwargs)
         score = 1 - _score.cpu().detach().numpy()
         self.metric.reset()
         return score
@@ -70,11 +70,11 @@ class SSIM_image:
         self.metric_image.to(self.device)
         self.preproccess_function = preprocess_numpy_image
 
-    def __call__(self, im_ref, im_comp):
+    def __call__(self, im_ref, im_comp, **kwargs):
         check_shapes(im_ref, im_comp)
         im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
         im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)
-        _, ssim_full_im = self.metric_image(im_ref, im_comp)
+        _, ssim_full_im = self.metric_image(im_ref, im_comp, **kwargs)
         ssim_full_im = torch.squeeze(ssim_full_im, axis=0)
         ssim_full_im = ssim_full_im.permute(1, 2, 0)
         ssim_full_im = torch.clip(ssim_full_im, 0, 1)

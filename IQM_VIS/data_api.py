@@ -33,16 +33,16 @@ class data_holder:
     def get_transform_image(self):
         return self.image_to_transform[1]
 
-    def get_metrics(self, transformed_image):
+    def get_metrics(self, transformed_image, **kwargs):
         results = {}
-        for metric in self.metrics.keys():
-            results[metric] = self.metrics[metric](self.get_reference_image(), transformed_image)
+        for metric_key in self.metrics:
+            results[metric_key] = self.metrics[metric_key](self.get_reference_image(), transformed_image, **kwargs)
         return results
 
-    def get_metric_images(self, transformed_image):
+    def get_metric_images(self, transformed_image, **kwargs):
         results = {}
-        for metric in self.metric_images.keys():
-            results[metric] = self.metric_images[metric](self.get_reference_image(), transformed_image)
+        for metric_key in self.metric_images:
+            results[metric_key] = self.metric_images[metric_key](self.get_reference_image(), transformed_image, **kwargs)
         return results
 
     def _check_inputs(self):
@@ -53,7 +53,7 @@ class data_holder:
         for item in input_types:
             if type(item[0]) != item[1]:
                 var_name = f'{item[0]=}'.split('=')[0]
-                raise TypeError('holder input: '+var_name+' should be a '+str(item[1])+' not '+str(type(item[0])))
+                raise TypeError(f'holder input: {var_name} should be a {item[1]} not {type(item[0])}')
 
 
 '''
@@ -96,16 +96,16 @@ class dataset_holder:
     def get_transform_image(self):
         return self.image_to_transform[1]
 
-    def get_metrics(self, transformed_image):
+    def get_metrics(self, transformed_image, **kwargs):
         results = {}
-        for metric in self.metrics.keys():
-            results[metric] = self.metrics[metric](self.get_reference_image(), transformed_image)
+        for metric_key in self.metrics:
+            results[metric_key] = self.metrics[metric_key](self.get_reference_image(), transformed_image, **kwargs)
         return results
 
-    def get_metric_images(self, transformed_image):
+    def get_metric_images(self, transformed_image, **kwargs):
         results = {}
-        for metric in self.metric_images.keys():
-            results[metric] = self.metric_images[metric](self.get_reference_image(), transformed_image)
+        for metric_key in self.metric_images:
+            results[metric_key] = self.metric_images[metric_key](self.get_reference_image(), transformed_image, **kwargs)
         return results
 
     def _check_inputs(self):
@@ -116,4 +116,4 @@ class dataset_holder:
         for item in input_types:
             if type(item[0]) != item[1]:
                 var_name = f'{item[0]=}'.split('=')[0]
-                raise TypeError('holder input: '+var_name+' should be a '+str(item[1])+' not '+str(type(item[0])))
+                raise TypeError(f'holder input: {var_name} should be a {item[1]} not {type(item[0])}')

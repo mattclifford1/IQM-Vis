@@ -11,6 +11,7 @@ class make_app(widgets, layout, images):
                 metrics_info_format='graph',    # graph or text
                 metrics_avg_graph=False,
                 metric_range_graph=True,
+                metric_params: dict={},
                 image_display_size=175):
         super().__init__()
         self.app = app
@@ -20,6 +21,7 @@ class make_app(widgets, layout, images):
         self.metrics_avg_graph = metrics_avg_graph
         self.metric_range_graph = metric_range_graph
         self.image_display_size = image_display_size
+        self.metric_params = metric_params
         self.dataset = self._single_image_or_dataset()
         self.setWindowTitle('IQM-VIS')
 

@@ -34,15 +34,15 @@ class layout(QMainWindow):
 
         '''image rows displaying image, metric graphs and metric images'''
         im_row = 0
-        for i in self.widget_row.keys():
+        for i in self.widget_row:
             col = 0
             '''image and transformed image'''
-            for image_name in self.widget_row[i]['images'].keys():
+            for image_name in self.widget_row[i]['images']:
                 self.layout.addWidget(self.widget_row[i]['images'][image_name]['label'], start_im-1+im_row*(im_height+button), (im_height+button)*col, button, im_width)
                 self.layout.addWidget(self.widget_row[i]['images'][image_name]['data'], start_im+im_row*(im_height+button), (im_height+button)*col,   im_height, im_width)
                 col += 1
             '''metric images'''
-            for metric_name in self.widget_row[i]['metric_images'].keys():
+            for metric_name in self.widget_row[i]['metric_images']:
                 self.layout.addWidget(self.widget_row[i]['metric_images'][metric_name]['label'], start_im-1+im_row*(im_height+button), (im_height+button)*col, button, im_width)
                 self.layout.addWidget(self.widget_row[i]['metric_images'][metric_name]['data'], start_im+im_row*(im_height+button), (im_height+button)*col, im_height, im_width)
                 col += 1
@@ -68,28 +68,36 @@ class layout(QMainWindow):
         i = end_of_ims_row
         # prev/next buttons
         if self.metric_range_graph:
-            self.layout.addWidget(self.widget_sliders['button']['prev_metric_graph'], button*i, (im_height+button)*metrics_range_col,               button, (im_height/2))
-            self.layout.addWidget(self.widget_sliders['button']['next_metric_graph'], button*i, (im_height+button)*metrics_range_col+(im_height/2), button, (im_height/2))
+            self.layout.addWidget(self.widget_controls['button']['prev_metric_graph'], button*i, (im_height+button)*metrics_range_col,               button, (im_height/2))
+            self.layout.addWidget(self.widget_controls['button']['next_metric_graph'], button*i, (im_height+button)*metrics_range_col+(im_height/2), button, (im_height/2))
         if self.dataset:
             start = 0
-            self.layout.addWidget(self.widget_sliders['label']['data'],       button*i, start,                      button, button)
-            self.layout.addWidget(self.widget_sliders['button']['prev_data'], button*i, start+button,               button, button)
-            self.layout.addWidget(self.widget_sliders['button']['next_data'], button*i, start+button*2, button, button)
+            self.layout.addWidget(self.widget_controls['label']['data'],       button*i, start,                      button, button)
+            self.layout.addWidget(self.widget_controls['button']['prev_data'], button*i, start+button,               button, button)
+            self.layout.addWidget(self.widget_controls['button']['next_data'], button*i, start+button*2, button, button)
             i += 1
         # transform sliders
-        for key in self.sliders.keys():
-            self.layout.addWidget(self.widget_sliders['slider'][key]['label'], button*i, start_controls,                     button, button)
-            self.layout.addWidget(self.widget_sliders['slider'][key]['data'],  button*i, start_controls+button,              button, slider_width)
-            self.layout.addWidget(self.widget_sliders['slider'][key]['value'], button*i, start_controls+button+slider_width, button, button)
+        col = 0
+        for key in self.sliders['transforms']:
+            self.layout.addWidget(self.widget_controls['slider'][key]['label'], button*i, (im_height+button)*col,                     button, button)
+            self.layout.addWidget(self.widget_controls['slider'][key]['data'],  button*i, (im_height+button)*col+button,              button, slider_width)
+            self.layout.addWidget(self.widget_controls['slider'][key]['value'], button*i, (im_height+button)*col+button+slider_width, button, button)
             i += 1
-
         # reset sliders button
-        self.layout.addWidget(self.widget_sliders['button']['reset_sliders'], button*i, start_controls, button, button)
+        self.layout.addWidget(self.widget_controls['button']['reset_sliders'], button*i, (im_height+button)*col, button, button)
         # calculate metric avg graph
         if self.metrics_avg_graph:
-            self.layout.addWidget(self.widget_sliders['button']['force_update'], button*i, start_controls+button, button, button)
-
+            self.layout.addWidget(self.widget_controls['button']['force_update'], button*i, (im_height+button)*col+button, button, button)
         i += 1
+
+        # metric_param sliders
+        i = end_of_ims_row
+        col = 1
+        for key in self.sliders['metric_params']:
+            self.layout.addWidget(self.widget_controls['slider'][key]['label'], button*i, (im_height+button)*col+button+slider_width,                     button, button)
+            self.layout.addWidget(self.widget_controls['slider'][key]['data'],  button*i, (im_height+button)*col+button+button+slider_width,              button, slider_width)
+            self.layout.addWidget(self.widget_controls['slider'][key]['value'], button*i, (im_height+button)*col+button+slider_width+button+slider_width, button, button)
+            i += 1
 
         # init it!
         self.show()

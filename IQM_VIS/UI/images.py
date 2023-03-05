@@ -18,8 +18,8 @@ class images:
     image updaters
     '''
     def transform_image(self, image):
-        for key in self.sliders.keys():
-            image = self.sliders[key]['function'](image, self.im_trans_params[key])
+        for key in self.sliders['transforms']:
+            image = self.sliders['transforms'][key]['function'](image, self.params_from_sliders['transforms'][key])
         return image
 
     def display_images(self):
@@ -41,7 +41,7 @@ class images:
 
     def update_image_widgets(self):
         # display images
-        for i in self.widget_row.keys():
+        for i in self.widget_row:
             gui_utils.change_im(self.widgets['image'][key], self.image_data[key], resize=self.image_display_size)
     '''
     metric graph updaters
@@ -137,12 +137,12 @@ class images:
     '''
     def get_metrics_over_range(self):
         for i, data_store in enumerate(self.data_stores):
-            results = plot_utils.compute_metrics_over_range(data_store, self.transformations, self.im_trans_params)
+            results = plot_utils.compute_metrics_over_range(data_store, self.transformations, self.params_from_sliders['transforms'])
             self.plot_metrics_graphs(results, i)
 
     def plot_metrics_graphs(self, results, i):
         metrics_names = list(self.data_stores[i].metrics.keys())
-        transformation_names = list(self.sliders.keys())
+        transformation_names = list(self.sliders['transforms'].keys())
         axes = self.widget_row[i]['metrics']['avg']['data']
         radar_plotter = plot_utils.get_radar_plots_avg(results, metrics_names, transformation_names, axes)
         radar_plotter.show()
