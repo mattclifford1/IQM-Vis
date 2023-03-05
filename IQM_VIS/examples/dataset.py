@@ -5,10 +5,10 @@ import IQM_VIS
 
 def run():
     # define any parameters that the metrics need
-    ssim_params = {'sigma': {'min':0.0, 'max':5.0, 'init_value': 1.5},
-                   'kernel_size': {'min':1, 'max':41, 'normalise':'odd', 'init_value': 11},
-                   'k1': {'min':0.0, 'max':0.2, 'init_value': 0.01},
-                   'k2': {'min':0.0, 'max':0.2, 'init_value': 0.03}}
+    ssim_params = {'sigma': {'min':0.25, 'max':5.25, 'init_value': 1.5},  # for the guassian kernel
+                   # 'kernel_size': {'min':1, 'max':41, 'normalise':'odd', 'init_value': 11},  # ignored if guassian kernel used
+                   'k1': {'min':0.01, 'max':0.21, 'init_value': 0.01},
+                   'k2': {'min':0.01, 'max':0.21, 'init_value': 0.03}}
     # metrics functions must return a single value
     metric = {'MAE': IQM_VIS.metrics.MAE,
               'MSE': IQM_VIS.metrics.MSE,

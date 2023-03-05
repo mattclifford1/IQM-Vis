@@ -19,13 +19,13 @@ from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity as LPI
 from IQM_VIS.image_metrics.expert.pyramids import LaplacianPyramid
 
 ''' simple functional format to call a metric (numpy)'''
-def MAE(im_ref, im_comp):
+def MAE(im_ref, im_comp, **kwargs):
     check_shapes(im_ref, im_comp)
     L1 = np.abs(im_ref - im_comp)
     return L1.mean()
 
 ''' functional (using torch)'''
-def MSE(im_ref, im_comp):
+def MSE(im_ref, im_comp, **kwargs):
     check_shapes(im_ref, im_comp)
     metric = nn.MSELoss()
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -37,25 +37,27 @@ def MSE(im_ref, im_comp):
 ''' can also call as a class to input default args (using torch)'''
 class ssim:
     def __init__(self):
-        with warnings.catch_warnings():    # we don't care about the warnings these give
-            warnings.simplefilter("ignore")
-            self.metric = SSIM()
+        self.metric = SSIM
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.metric.to(self.device)
         self.preproccess_function = preprocess_numpy_image
 
     def __call__(self, im_ref, im_comp, **kwargs):
         check_shapes(im_ref, im_comp)
         im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
         im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)
-        _score = self.metric(im_ref, im_comp, **kwargs)
+        # set up metric
+        with warnings.catch_warnings():    # we don't care about the warnings these give
+            warnings.simplefilter("ignore")
+            _metric = self.metric(**kwargs)
+            _metric.to(self.device)
+        _score = _metric(im_ref, im_comp)
         score = 1 - _score.cpu().detach().numpy()
-        self.metric.reset()
+        _metric.reset()
         return score
 
 
 '''Example of metric image produced to display (using numpy)'''
-def MSE_image(im_ref, im_comp):
+def MSE_image(im_ref, im_comp, **kwargs):
     check_shapes(im_ref, im_comp)
     L2 = (im_ref - im_comp)**2
     return L2

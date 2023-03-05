@@ -48,12 +48,12 @@ class make_UI:
         '''input items that should be dictionaries'''
         should_be_dict = [self.transformations, self.metric_params]
         for item in should_be_dict:
-            if type(item) != dict:
+            if not isinstance(item, dict):
                 var_name = f'{item=}'.split('=')[0]
                 raise TypeError('make_UI input: '+var_name+' should be a dictionary not '+str(type(item)))
-            elif len(item.keys()) == 0:
-                var_name = f'{item=}'.split('=')[0]
-                warnings.warn('make_UI input: '+var_name+' is empty')
+            # elif len(item.keys()) == 0:
+            #     var_name = f'{item=}'.split('=')[0]
+            #     warnings.warn(f'make_UI input: {var_name} is empty')
 
         '''extra input option checks'''
         if type(self.metrics_info_format) != str:

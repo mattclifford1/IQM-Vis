@@ -31,7 +31,7 @@ class images:
             trans_im = self.transform_image(data_store.get_transform_image())
             gui_utils.change_im(self.widget_row[i]['images']['transformed']['data'], trans_im, resize=self.image_display_size)
             # metrics
-            metrics = data_store.get_metrics(trans_im)
+            metrics = data_store.get_metrics(trans_im, **self.params_from_sliders['metric_params'])
             self.display_metrics(metrics, i)
             # metric images
             metric_images = data_store.get_metric_images(trans_im)
