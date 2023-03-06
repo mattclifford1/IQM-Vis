@@ -1,0 +1,7 @@
+Needs doing:
+
+Calibrated images
+Option to change image display size
+
+
+TABs to switch between graphs? (if over a certain number) using stacked layout
