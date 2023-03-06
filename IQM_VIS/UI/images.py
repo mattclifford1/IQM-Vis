@@ -43,6 +43,7 @@ class images:
         # display images
         for i in self.widget_row:
             gui_utils.change_im(self.widgets['image'][key], self.image_data[key], resize=self.image_display_size)
+            
     '''
     metric graph updaters
     '''
@@ -52,6 +53,7 @@ class images:
         if self.metric_range_graph:
             self.get_metric_range_values()
             self.display_metric_range_plot()
+
     '''
     change image in dataset
     '''
@@ -89,7 +91,7 @@ class images:
 
     def display_metrics_text(self, metrics, i, disp_len=5):
         text = ''
-        for key in metrics.keys():
+        for key in metrics:
             metric = gui_utils.str_to_len(str(metrics[key]), disp_len, '0')
             text += key + ': ' + metric + '\n'
         self.widget_row[i]['metrics']['info']['data'].setText(text)
@@ -101,10 +103,13 @@ class images:
         self.metric_range_results = []
         # use the initiased/default values for all sliders
         init_trans_params = {}
-        for trans in self.transformations.keys():
+        for trans in self.transformations:
             init_trans_params[trans] = self.transformations[trans]['init_value']
         for i, data_store in enumerate(self.data_stores):
-            results = plot_utils.compute_metrics_over_range(data_store, self.transformations, init_trans_params)
+            results = plot_utils.compute_metrics_over_range(data_store,
+                                                            self.transformations,
+                                                            init_trans_params,
+                                                            self.params_from_sliders['metric_params'])
             self.metric_range_results.append(results)
 
 
@@ -128,7 +133,7 @@ class images:
     metric image updaters
     '''
     def display_metric_images(self, metric_images, i):
-        for key in metric_images.keys():
+        for key in metric_images:
             widget = self.widget_row[i]['metric_images'][key]['data']
             gui_utils.change_im(widget, metric_images[key], resize=self.image_display_size)
 
@@ -137,7 +142,10 @@ class images:
     '''
     def get_metrics_over_range(self):
         for i, data_store in enumerate(self.data_stores):
-            results = plot_utils.compute_metrics_over_range(data_store, self.transformations, self.params_from_sliders['transforms'])
+            results = plot_utils.compute_metrics_over_range(data_store,
+                                                            self.transformations,
+                                                            self.params_from_sliders['transforms'],
+                                                            self.params_from_sliders['metric_params'])
             self.plot_metrics_graphs(results, i)
 
     def plot_metrics_graphs(self, results, i):

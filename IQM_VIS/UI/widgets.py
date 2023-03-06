@@ -77,10 +77,10 @@ class widgets():
         self.widget_controls['button']['reset_sliders'] = QPushButton('Reset', self)
         self.widget_controls['button']['reset_sliders'].clicked.connect(self.reset_sliders)
         if self.metrics_avg_graph:
-            self.widget_controls['button']['force_update'] = QPushButton('Calc. Avg.', self)
-            self.widget_controls['button']['force_update'].setToolTip('Update metrics average plot using the current slider values.')
+            self.widget_controls['button']['force_update'] = QPushButton('Update Graphs', self)
+            self.widget_controls['button']['force_update'].setToolTip('Update graphs using all the current slider values.')
             self.widget_controls['button']['force_update'].clicked.connect(self.display_images)
-            self.widget_controls['button']['force_update'].clicked.connect(self.get_metrics_over_range)
+            self.widget_controls['button']['force_update'].clicked.connect(self.redo_plots)
         if self.metric_range_graph:
             # buttons to control which graph to show
             self.widget_controls['button']['next_metric_graph'] = QPushButton('->', self)
@@ -177,7 +177,7 @@ class widgets():
         for i, data_store in enumerate(self.data_stores):
             self.widget_row[i]['images']['original']['label'].setText(data_store.get_reference_image_name())
             self.widget_row[i]['images']['transformed']['label'].setText(gui_utils.get_transformed_image_name(data_store))
-            for key in data_store.metric_images.keys():
+            for key in data_store.metric_images:
                 metric_name = gui_utils.get_metric_image_name(key, data_store)
                 if len(metric_name) > 20:
                     metric_name = key

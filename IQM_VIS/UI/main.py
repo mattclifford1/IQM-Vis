@@ -22,6 +22,7 @@ class make_app(widgets, layout, images):
         self.metric_range_graph = metric_range_graph
         self.image_display_size = image_display_size
         self.metric_params = metric_params
+
         self.dataset = self._single_image_or_dataset()
         self.setWindowTitle('IQM-VIS')
 

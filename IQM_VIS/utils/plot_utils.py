@@ -121,7 +121,7 @@ def get_all_slider_values(transforms, num_steps=10):
     values.append(transforms['max'])
     return values
 
-def compute_metrics_over_range(data_store, transforms, transform_values):
+def compute_metrics_over_range(data_store, transforms, transform_values, metric_params):
     '''
     compute metrics over a range of trans
         data_store: object containing metrics and image
@@ -131,17 +131,17 @@ def compute_metrics_over_range(data_store, transforms, transform_values):
     # compute all metrics over their range of params and get avg/std
     results = {}
     # initialise results
-    for metric in data_store.metrics.keys():
+    for metric in data_store.metrics:
         results[metric] = {}
-        for tran in transforms.keys():
+        for tran in transforms:
             results[metric][tran] = []
             results[metric][tran+'_range_values'] = []
 
     # compute over all image transformations
-    for curr_trans in transforms.keys():         # loop over all transformations
+    for curr_trans in transforms:         # loop over all transformations
         for trans_value in get_all_slider_values(transforms[curr_trans]):   # all values of the parameter
             trans_im = data_store.get_transform_image()     # initialse image
-            for other_trans in transforms.keys():
+            for other_trans in transforms:
                 # fix transformation parameters for all sliders apart from the one we are varying
                 if other_trans != curr_trans:
                     # keep parameter value fixed from the UI
@@ -149,8 +149,8 @@ def compute_metrics_over_range(data_store, transforms, transform_values):
                 else:
                     # apply the parameter variation
                     trans_im = transforms[other_trans]['function'](trans_im, trans_value)
-            metric_scores = data_store.get_metrics(trans_im)
-            for metric in metric_scores.keys():
+            metric_scores = data_store.get_metrics(trans_im, **metric_params)
+            for metric in metric_scores:
                 results[metric][curr_trans].append(float(metric_scores[metric]))
                 # and store the input trans values for plotting
                 results[metric][curr_trans+'_range_values'] = get_all_slider_values(transforms[curr_trans])
@@ -180,6 +180,6 @@ def get_transform_range_plots(results, transform, axes):
     plot a single transform range graph of all metrics
     '''
     plot = line_plotter(axes, transform, 'Values')
-    for metric in results.keys():
+    for metric in results:
         plot.plot(results[metric][transform+'_range_values'], results[metric][transform], metric)
     return plot
