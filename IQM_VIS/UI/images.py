@@ -34,10 +34,10 @@ class images:
             metrics = data_store.get_metrics(trans_im, **self.params_from_sliders['metric_params'])
             self.display_metrics(metrics, i)
             # metric images
-            metric_images = data_store.get_metric_images(trans_im)
+            metric_images = data_store.get_metric_images(trans_im, **self.params_from_sliders['metric_params'])
             self.display_metric_images(metric_images, i)
 
-            QApplication.processEvents()   # force to change other UI wont respond
+            QApplication.processEvents()   # force to change otherwise the UI wont respond
 
     def update_image_widgets(self):
         # display images

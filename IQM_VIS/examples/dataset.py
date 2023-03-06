@@ -4,16 +4,10 @@ import IQM_VIS
 
 
 def run():
-    # define any parameters that the metrics need
-    ssim_params = {'sigma': {'min':0.25, 'max':5.25, 'init_value': 1.5},  # for the guassian kernel
-                   # 'kernel_size': {'min':1, 'max':41, 'normalise':'odd', 'init_value': 11},  # ignored if guassian kernel used
-                   'k1': {'min':0.01, 'max':0.21, 'init_value': 0.01},
-                   'k2': {'min':0.01, 'max':0.21, 'init_value': 0.03}}
     # metrics functions must return a single value
     metric = {'MAE': IQM_VIS.metrics.MAE,
               'MSE': IQM_VIS.metrics.MSE,
               '1-SSIM': IQM_VIS.metrics.ssim()}
-
 
     # metrics images return a numpy image
     metric_images = {'MSE': IQM_VIS.metrics.MSE_image,
@@ -28,6 +22,7 @@ def run():
                                   IQM_VIS.utils.load_image,
                                   metric,
                                   metric_images)
+
     # define the transformations
     transformations = {
                'rotation':{'min':-180, 'max':180, 'function':IQM_VIS.transforms.rotation},    # normal input
@@ -36,6 +31,11 @@ def run():
                # 'threshold':{'min':-40, 'max':40, 'function':IQM_VIS.transforms.binary_threshold},
                'jpeg compression':{'init_value':100, 'min':1, 'max':100, 'function':IQM_VIS.transforms.jpeg_compression},
                }
+    # define any parameters that the metrics need (names shared across both metrics and metric_images)
+    ssim_params = {'sigma': {'min':0.25, 'max':5.25, 'init_value': 1.5},  # for the guassian kernel
+                   # 'kernel_size': {'min':1, 'max':41, 'normalise':'odd', 'init_value': 11},  # ignored if guassian kernel used
+                   'k1': {'min':0.01, 'max':0.21, 'init_value': 0.01},
+                   'k2': {'min':0.01, 'max':0.21, 'init_value': 0.03}}
 
     # use the API to create the UI
     IQM_VIS.make_UI(data,
