@@ -12,7 +12,7 @@ class make_app(widgets, layout, images):
                 metrics_avg_graph=False,
                 metric_range_graph=True,
                 metric_params: dict={},
-                image_display_size=175):
+                image_display_size=150):
         super().__init__()
         self.app = app
         self.data_stores = data_stores
