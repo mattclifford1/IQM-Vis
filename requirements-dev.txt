@@ -7,3 +7,4 @@ torch
 torchmetrics
 twine
 pytest
+dists-pytorch

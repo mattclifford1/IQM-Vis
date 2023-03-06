@@ -59,9 +59,7 @@ class layout(QMainWindow):
                 self.layout.addWidget(self.widget_row[i]['metrics']['range']['data'], start_im+im_row*(im_height+button), (im_height+button)*col, im_height, im_width)
                 metrics_range_col = col
                 col += 1
-
             im_row += 1
-
 
         '''bottom of the UI showing the image transform sliders'''
         end_of_ims_row = (im_height+button)*im_row+button+start_im
@@ -90,13 +88,14 @@ class layout(QMainWindow):
             self.layout.addWidget(self.widget_controls['button']['force_update'], button*i, (im_height+button)*col+button, button, button)
         i += 1
 
-        # metric_param sliders
+        '''metric_param sliders'''
         i = end_of_ims_row
+        j = (im_height+button)*2
         col = 1
         for key in self.sliders['metric_params']:
-            self.layout.addWidget(self.widget_controls['slider'][key]['label'], button*i, (im_height+button)*col+button+slider_width,                     button, button)
-            self.layout.addWidget(self.widget_controls['slider'][key]['data'],  button*i, (im_height+button)*col+button+button+slider_width,              button, slider_width)
-            self.layout.addWidget(self.widget_controls['slider'][key]['value'], button*i, (im_height+button)*col+button+slider_width+button+slider_width, button, button)
+            self.layout.addWidget(self.widget_controls['slider'][key]['label'], button*i, j,                     button, button)
+            self.layout.addWidget(self.widget_controls['slider'][key]['data'],  button*i, j+button,              button, slider_width)
+            self.layout.addWidget(self.widget_controls['slider'][key]['value'], button*i, j+button+slider_width, button, button)
             i += 1
 
         # init it!
