@@ -5,12 +5,12 @@ both use the same image for reference and transformed
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 import os
 import numpy as np
-
+from IQM_VIS.image_loaders import base_dataloader, base_dataset_loader
 '''
 store image and metric data as well as
 function calls for getting metrics and metric images
 '''
-class data_holder:
+class data_holder(base_dataloader):
     def __init__(self, image_reference: tuple, # (name, np data)
                        image_to_transform: tuple, # (name, np data)
                        metrics: dict,
@@ -59,7 +59,7 @@ class data_holder:
 '''
 extension of data_holder that allows to iterate through a dataset
 '''
-class dataset_holder:
+class dataset_holder(base_dataset_loader):
     def __init__(self, image_list: list, # list of image file names
                        image_loader,     # function to load image files
                        metrics: dict,
