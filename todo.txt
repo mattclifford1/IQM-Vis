@@ -1,10 +1,12 @@
 Needs doing:
-  - post processing on images (affter transforms)
+  - post processing on images (after transforms)
     - this will allow for better rotation and translation
 
-TABs to switch between graphs? (if over a certain number) using stacked layout
-  - https://www.pythonguis.com/tutorials/pyqt-layouts/
-  - https://realpython.com/python-pyqt-layout/
+
+Layout:
+  - tab Graphs
+  - dataset Scroll
+  - reset buttons
 
 
 minor:

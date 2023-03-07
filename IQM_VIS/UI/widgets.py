@@ -94,7 +94,7 @@ class widgets():
             self.widget_controls['button']['prev_data'] = QPushButton('<-', self)
             self.widget_controls['button']['prev_data'].clicked.connect(partial(self.change_data, -1))
             self.widget_controls['label']['data'] = QLabel(self)
-            self.widget_controls['label']['data'].setText('Dataset Scroll:')
+            self.widget_controls['label']['data'].setText('Change Image:')
 
 
         '''sliders'''
