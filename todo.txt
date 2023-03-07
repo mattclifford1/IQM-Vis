@@ -1,4 +1,6 @@
 Needs doing:
+  - post processing on images (affter transforms)
+    - this will allow for better rotation and translation
 
 TABs to switch between graphs? (if over a certain number) using stacked layout
   - https://www.pythonguis.com/tutorials/pyqt-layouts/
@@ -6,6 +8,6 @@ TABs to switch between graphs? (if over a certain number) using stacked layout
 
 
 minor:
-  - fix muliple row layout
+  - fix metric images being stretched
   - only calc range plots when arrow pressed
   - Option to change image display size

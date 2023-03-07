@@ -29,6 +29,9 @@ class layout(QWidget):
         start_controls = 0 # im_width*2+button
 
         '''image rows displaying image, metric graphs and metric images'''
+        image_layouts = QVBoxLayout()
+        metric_layouts = QVBoxLayout()
+        graph_layouts = QVBoxLayout()
         for i in self.widget_row:
             '''image and transformed image'''
             image_layout = QHBoxLayout()
@@ -37,6 +40,8 @@ class layout(QWidget):
                 single_image.addWidget(self.widget_row[i]['images'][image_name]['label'])
                 single_image.addWidget(self.widget_row[i]['images'][image_name]['data'])
                 image_layout.addLayout(single_image)
+            image_layouts.addLayout(image_layout)
+            image_layouts.addStretch()
             '''metric images'''
             metric_layout = QHBoxLayout()
             for metric_name in self.widget_row[i]['metric_images']:
@@ -44,11 +49,14 @@ class layout(QWidget):
                 single_metric.addWidget(self.widget_row[i]['metric_images'][metric_name]['label'])
                 single_metric.addWidget(self.widget_row[i]['metric_images'][metric_name]['data'])
                 metric_layout.addLayout(single_metric)
+                metric_layout.addStretch()
             '''metrics graphs'''
             single_metric = QVBoxLayout()
             single_metric.addWidget(self.widget_row[i]['metrics']['info']['label'])
             single_metric.addWidget(self.widget_row[i]['metrics']['info']['data'])
             metric_layout.addLayout(single_metric)
+            metric_layouts.addLayout(metric_layout)
+            metric_layouts.addStretch()
             '''graphs'''
             graph_layout = QHBoxLayout()
             if self.metrics_avg_graph:
@@ -65,13 +73,16 @@ class layout(QWidget):
                 graph = QGridLayout()
                 graph.addWidget(self.widget_row[i]['metrics']['range']['data'], 0, 0, im_height, im_width)
                 single_graph.addLayout(graph)
-                '''graph controls'''
-                graph_controls = QHBoxLayout()
-                graph_controls.addWidget(self.widget_controls['button']['prev_metric_graph'])
-                graph_controls.addWidget(self.widget_controls['button']['next_metric_graph'])
-                single_graph.addLayout(graph_controls)
+                if i == len(self.widget_row) - 1:
+                    '''graph controls'''
+                    graph_controls = QHBoxLayout()
+                    graph_controls.addWidget(self.widget_controls['button']['prev_metric_graph'])
+                    graph_controls.addWidget(self.widget_controls['button']['next_metric_graph'])
+                    single_graph.addLayout(graph_controls)
                 single_graph.addStretch()
                 graph_layout.addLayout(single_graph)
+            graph_layouts.addLayout(graph_layout)
+            graph_layouts.addStretch()
 
         '''image controls'''
         image_controls = QVBoxLayout()
@@ -118,9 +129,9 @@ class layout(QWidget):
         # self.main_widget.setLayout(main_layout)
         # self.setCentralWidget(self.main_widget)
 
-        main_layout.addLayout(image_layout,  0, 0, 1, 1)
-        main_layout.addLayout(metric_layout, 0, 1, 1, 1)
-        main_layout.addLayout(graph_layout,  0, 2, 2, 1)
+        main_layout.addLayout(image_layouts,  0, 0, 1, 1)
+        main_layout.addLayout(metric_layouts, 0, 1, 1, 1)
+        main_layout.addLayout(graph_layouts,  0, 2, 2, 1)
 
         main_layout.addLayout(image_controls, 1, 0, 1, 1)
         main_layout.addLayout(metric_controls, 1, 1, 1, 1)
