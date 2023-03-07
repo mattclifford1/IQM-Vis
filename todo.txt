@@ -1,12 +1,11 @@
 Needs doing:
 
-Calibrated images
-Option to change image display size
-
-
 TABs to switch between graphs? (if over a certain number) using stacked layout
   - https://www.pythonguis.com/tutorials/pyqt-layouts/
   - https://realpython.com/python-pyqt-layout/
 
 
-fix muliple row layout
+minor:
+  - fix muliple row layout
+  - only calc range plots when arrow pressed
+  - Option to change image display size
