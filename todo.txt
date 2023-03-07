@@ -1,15 +1,14 @@
 Needs doing:
-  - post processing on images (after transforms)
+  - post processing on images (after transforms - e.g. zoom after for both ref and trans)
     - this will allow for better rotation and translation
 
 
-Layout:
-  - tab Graphs
-  - dataset Scroll
-  - reset buttons
+UI
+  - status bar for graph updates
 
 
 minor:
-  - fix metric images being stretched
+  - fix metric images being stretched (muliptle rows)
   - only calc range plots when arrow pressed
   - Option to change image display size
+  - Option to change screen calibration

@@ -54,8 +54,11 @@ class layout(QWidget):
                 single_metric = QVBoxLayout()
                 single_metric.addWidget(self.widget_row[i]['metric_images'][metric_name]['label'])
                 single_metric.addWidget(self.widget_row[i]['metric_images'][metric_name]['data'])
+                single_metric.addStretch()
                 metric_layout.addLayout(single_metric)
                 metric_layout.addStretch()
+            metric_layouts.addLayout(metric_layout)
+            metric_layouts.addStretch()
 
             '''graphs'''
             graph_tabs = QTabWidget()
@@ -77,13 +80,14 @@ class layout(QWidget):
                 graph = QGridLayout()
                 graph.addWidget(self.widget_row[i]['metrics']['range']['data'], 0, 0, im_height, im_width)
                 range_graph.addLayout(graph)  # need for matplotlib? - test this...    (grid)
-                if i == len(self.widget_row) - 1:
-                    '''graph controls'''
-                    graph_controls = QHBoxLayout()
-                    graph_controls.addWidget(self.widget_controls['button']['prev_metric_graph'])
-                    graph_controls.addWidget(self.widget_controls['button']['next_metric_graph'])
-                    range_graph.addLayout(graph_controls)
+                '''graph controls''' # will add to last one since there is one widget to control all
+                graph_controls = QHBoxLayout()
+                graph_controls.addWidget(self.widget_controls['button']['prev_metric_graph'])
+                graph_controls.addWidget(self.widget_controls['button']['next_metric_graph'])
+                range_graph.addLayout(graph_controls)
                 add_layout_to_tab(graph_tabs, range_graph, 'Range')
+            graph_layouts.addWidget(graph_tabs)
+            graph_layouts.addStretch()
 
         '''dataset controls'''
         # prev/next buttons
@@ -101,6 +105,7 @@ class layout(QWidget):
             tran_layout.addWidget(self.widget_controls['slider'][key]['data'])
             tran_layout.addWidget(self.widget_controls['slider'][key]['value'])
             image_controls.addLayout(tran_layout)
+            image_controls.addStretch()
 
         '''metric_param controls'''
         metric_controls = QVBoxLayout()
@@ -111,6 +116,11 @@ class layout(QWidget):
             inner_metric_layout.addWidget(self.widget_controls['slider'][key]['value'])
             metric_controls.addLayout(inner_metric_layout)
         metric_controls.addStretch()
+
+        ''' parameter controls tab'''
+        slider_tabs = QTabWidget()
+        for tab_layout, tab_name in zip([image_controls, metric_controls], ['transforms', 'metric params']):
+            add_layout_to_tab(slider_tabs, tab_layout, tab_name)
 
         ''' reset sliders button'''
         # reset sliders button
@@ -128,25 +138,22 @@ class layout(QWidget):
         # outerLayout = QHBoxLayout()
         # self.setLayout(outerLayout)
 
-        # make main widget inside the QMainWindow
-        main_layout = QGridLayout()
-        # self.main_widget = QWidget()
-        # self.main_widget.setLayout(main_layout)
-        # self.setCentralWidget(self.main_widget)
+        ''' put the whole layout together '''
+        image_left_side = QVBoxLayout()
+        image_left_side.addLayout(image_layouts)
+        image_left_side.addLayout(dataset_layout)
+        image_left_side.addWidget(slider_tabs)
+        image_left_side.addLayout(reset_button)
+        image_middle = QVBoxLayout()
+        image_middle.addLayout(metric_layouts)
+        graph_right = QVBoxLayout()
+        graph_right.addLayout(graph_layouts)
+        graph_right.addLayout(graph_button)
 
-        main_layout.addLayout(image_layouts,  0, 0, 1, 1)
-        main_layout.addLayout(dataset_layout, 1, 0, 1, 1)
-        main_layout.addLayout(metric_layouts, 0, 1, 1, 1)
-        main_layout.addWidget(graph_tabs,  0, 2, 1, 1)
-
-        ''' parameter controls tab'''
-        slider_tabs = QTabWidget()
-        for tab_layout, tab_name in zip([image_controls, metric_controls], ['transforms', 'metric params']):
-            add_layout_to_tab(slider_tabs, tab_layout, tab_name)
-
-        main_layout.addWidget(slider_tabs, 2, 0, 1, 1)
-        main_layout.addLayout(reset_button, 3, 0, 1, 1)
-        main_layout.addLayout(graph_button, 1, 2, 1, 1)
+        main_layout = QHBoxLayout()
+        main_layout.addLayout(image_left_side)
+        main_layout.addLayout(image_middle)
+        main_layout.addLayout(graph_right)
 
         # main_layout.setColumnStretch(1, 1)
         # main_layout.setSpacing(0)
