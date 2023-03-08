@@ -61,14 +61,14 @@ class widgets():
                 self.widget_row[i]['metrics']['avg'] = {}
                 self.widget_row[i]['metrics']['avg']['label'] = QLabel(self)
                 self.widget_row[i]['metrics']['avg']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-                self.widget_row[i]['metrics']['avg']['label'].setText('Metrics Avg. Graph')
+                self.widget_row[i]['metrics']['avg']['label'].setText('IQM Averages')
                 self.widget_row[i]['metrics']['avg']['data'] = gui_utils.MplCanvas(self, polar=True)
                 self.widget_row[i]['metrics']['avg']['data'].setToolTip('Mean metric value over the range of each transform.')
             if self.metric_range_graph:
                 self.widget_row[i]['metrics']['range'] = {}
                 self.widget_row[i]['metrics']['range']['label'] = QLabel(self)
                 self.widget_row[i]['metrics']['range']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-                self.widget_row[i]['metrics']['range']['label'].setText('Metrics Range Graph')
+                self.widget_row[i]['metrics']['range']['label'].setText('Response Profiles')
                 self.widget_row[i]['metrics']['range']['data'] = gui_utils.MplCanvas(self)
                 self.widget_row[i]['metrics']['range']['data'].setToolTip('Single tranformation value range for all metrics.')
 
