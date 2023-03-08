@@ -4,7 +4,10 @@ Needs doing:
 
 
 UI
-  - status bar for graph updates
+  - Export images
+  - Tool bar
+     - image display size
+     - calibration
 
 
 minor:

@@ -121,7 +121,7 @@ def get_all_slider_values(transforms, num_steps=10):
     values.append(transforms['max'])
     return values
 
-def compute_metrics_over_range(data_store, transforms, transform_values, metric_params):
+def compute_metrics_over_range(data_store, transforms, transform_values, metric_params, pbar=None):
     '''
     compute metrics over a range of trans
         data_store: object containing metrics and image
@@ -138,7 +138,8 @@ def compute_metrics_over_range(data_store, transforms, transform_values, metric_
             results[metric][tran+'_range_values'] = []
 
     # compute over all image transformations
-    for curr_trans in transforms:         # loop over all transformations
+    len_loop = len(transforms)
+    for i, curr_trans in enumerate(transforms):         # loop over all transformations
         for trans_value in get_all_slider_values(transforms[curr_trans]):   # all values of the parameter
             trans_im = data_store.get_transform_image()     # initialse image
             for other_trans in transforms:
@@ -154,6 +155,10 @@ def compute_metrics_over_range(data_store, transforms, transform_values, metric_
                 results[metric][curr_trans].append(float(metric_scores[metric]))
                 # and store the input trans values for plotting
                 results[metric][curr_trans+'_range_values'] = get_all_slider_values(transforms[curr_trans])
+        if pbar != None:
+            pbar.setValue(int(((i+1)/len_loop)*100))
+            if i+1 == len_loop:
+                pbar.setValue(0)
     return results
 
 def get_radar_plots_avg(results, metrics_names, transformation_names, axes):

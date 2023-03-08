@@ -2,7 +2,9 @@
 main entry point to initialise the UI
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
-from IQM_VIS.UI import layout, widgets, images
+from PyQt6.QtWidgets import QLabel, QApplication
+from PyQt6.QtGui import QIcon, QAction
+from IQM_VIS.UI import layout, widgets, images, ProgressBar
 
 class make_app(widgets, layout, images):
     def __init__(self, app,
@@ -26,11 +28,39 @@ class make_app(widgets, layout, images):
         self.dataset = self._single_image_or_dataset()
         self.setWindowTitle('IQM-VIS')
 
+        self.make_status_bar()
+        self.make_menu()
+
         self.init_style()     # layout
         self.init_widgets()   # widgets
         self.init_layout()    # layout
         self.display_images() # images
         self.reset_sliders()  # widgets
+
+    def make_menu(self):
+        self.menu_bar = self.menuBar()
+        self.file_menu = self.menu_bar.addMenu('&File')
+
+        quit_action = QAction(QIcon(), '&Quit', self)
+        quit_action.setShortcut('Ctrl+Q')
+        quit_action.setStatusTip('Exit application')
+        quit_action.triggered.connect(QApplication.instance().quit)
+
+        reload_action = QAction(QIcon(), '&Redo Graphs', self)
+        reload_action.setShortcut('Ctrl+R')
+        reload_action.setStatusTip('')
+        reload_action.triggered.connect(self.display_images)
+        reload_action.triggered.connect(self.redo_plots)
+
+        self.file_menu.addAction(reload_action)
+        self.file_menu.addAction(quit_action)
+
+    def make_status_bar(self):
+        self.status_bar = self.statusBar()
+        self.pbar = ProgressBar(self, minimum=0, maximum=100, textVisible=False,
+                        objectName="GreenProgressBar")
+        self.pbar.setValue(0)
+        self.status_bar.addPermanentWidget(self.pbar)
 
     def _single_image_or_dataset(self):
         '''set whether dataset or single image used for data_store'''

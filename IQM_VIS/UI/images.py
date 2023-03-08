@@ -43,7 +43,7 @@ class images:
         # display images
         for i in self.widget_row:
             gui_utils.change_im(self.widgets['image'][key], self.image_data[key], resize=self.image_display_size)
-            
+
     '''
     metric graph updaters
     '''
@@ -105,12 +105,16 @@ class images:
         init_trans_params = {}
         for trans in self.transformations:
             init_trans_params[trans] = self.transformations[trans]['init_value']
+        self.status_bar.showMessage('Getting Range plot Values')
+        QApplication.processEvents()
         for i, data_store in enumerate(self.data_stores):
             results = plot_utils.compute_metrics_over_range(data_store,
                                                             self.transformations,
                                                             init_trans_params,
-                                                            self.params_from_sliders['metric_params'])
+                                                            self.params_from_sliders['metric_params'],
+                                                            pbar=self.pbar)
             self.metric_range_results.append(results)
+        self.status_bar.showMessage('Done', 3000)
 
 
     def display_metric_range_plot(self):
@@ -141,12 +145,16 @@ class images:
     metric averaging plots
     '''
     def get_metrics_over_range(self):
+        self.status_bar.showMessage('Getting avg. values')
+        QApplication.processEvents()
         for i, data_store in enumerate(self.data_stores):
             results = plot_utils.compute_metrics_over_range(data_store,
                                                             self.transformations,
                                                             self.params_from_sliders['transforms'],
-                                                            self.params_from_sliders['metric_params'])
+                                                            self.params_from_sliders['metric_params'],
+                                                            pbar=self.pbar)
             self.plot_metrics_graphs(results, i)
+        self.status_bar.showMessage('Done', 3000)
 
     def plot_metrics_graphs(self, results, i):
         metrics_names = list(self.data_stores[i].metrics.keys())

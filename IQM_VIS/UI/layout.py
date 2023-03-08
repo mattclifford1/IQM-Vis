@@ -10,13 +10,14 @@ from PyQt6.QtWidgets import (QWidget,
                              QHBoxLayout,
                              QVBoxLayout,
                              QStackedLayout,
-                             QTabWidget)
+                             QTabWidget,
+                             QWidget)
 
 
 # sub class used by IQM_VIS.main.make_app to initialise layout of the UI
 # uses widgets from IQM_VIS.widgets.app_widgets
 # class layout(QMainWindow):
-class layout(QWidget):
+class layout(QMainWindow):
     def __init__(self):
         super().__init__()
 
@@ -134,10 +135,6 @@ class layout(QWidget):
             graph_button.addWidget(self.widget_controls['button']['force_update'])
             graph_button.addStretch()
 
-        # now set sub layouts to the main layout and init it!
-        # outerLayout = QHBoxLayout()
-        # self.setLayout(outerLayout)
-
         ''' put the whole layout together '''
         image_left_side = QVBoxLayout()
         image_left_side.addLayout(image_layouts)
@@ -158,7 +155,12 @@ class layout(QWidget):
         # main_layout.setColumnStretch(1, 1)
         # main_layout.setSpacing(0)
         # main_layout.setContentsMargins(0, 0, 0, 0)
-        self.setLayout(main_layout)
+
+        # self.setLayout(main_layout)
+
+        main_widget = QWidget()
+        main_widget.setLayout(main_layout)
+        self.setCentralWidget(main_widget)
         self.show()
 
     def init_style(self, css_file=None):
