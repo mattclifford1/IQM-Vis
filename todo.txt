@@ -1,13 +1,14 @@
 Needs doing:
-  - post processing on images (after transforms - e.g. zoom after for both ref and trans)
-    - this will allow for better rotation and translation
-
+  - add LPIPS to DISTS
+  - add MSSIM
 
 UI
   - Export images
   - Tool bar
      - image display size
      - calibration
+    - Progress bar force update
+    - kill avg plot graph calc when next images press to make more responsive UI
 
 
 minor:

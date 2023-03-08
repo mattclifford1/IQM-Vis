@@ -4,6 +4,7 @@ TODO: write docs how to use these (currently just have to look at the UI code)
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 import numpy as np
+from IQM_VIS.utils import image_utils
 
 '''
 plot bar chart on matplotlib qt qidget
@@ -139,25 +140,19 @@ def compute_metrics_over_range(data_store, transforms, transform_values, metric_
 
     # compute over all image transformations
     len_loop = len(transforms)
-    for i, curr_trans in enumerate(transforms):         # loop over all transformations
+    for i, curr_trans in enumerate(transforms):  # loop over all transformations
         for trans_value in get_all_slider_values(transforms[curr_trans]):   # all values of the parameter
-            trans_im = data_store.get_transform_image()     # initialse image
-            for other_trans in transforms:
-                # fix transformation parameters for all sliders apart from the one we are varying
-                if other_trans != curr_trans:
-                    # keep parameter value fixed from the UI
-                    trans_im = transforms[other_trans]['function'](trans_im, transform_values[other_trans])
-                else:
-                    # apply the parameter variation
-                    trans_im = transforms[other_trans]['function'](trans_im, trans_value)
+            vary_one_value = transform_values.copy()
+            vary_one_value[curr_trans] = trans_value   # set to the varying value in this range loop
+            trans_im = image_utils.get_transform_image(data_store, transforms, vary_one_value)     # initialse image
             metric_scores = data_store.get_metrics(trans_im, **metric_params)
             for metric in metric_scores:
                 results[metric][curr_trans].append(float(metric_scores[metric]))
                 # and store the input trans values for plotting
                 results[metric][curr_trans+'_range_values'] = get_all_slider_values(transforms[curr_trans])
         if pbar != None:
-            pbar.setValue(int(((i+1)/len_loop)*100))
-            if i+1 == len_loop:
+            pbar.setValue(int(((i+2)/len_loop)*100))
+            if i + 1 == len_loop:
                 pbar.setValue(0)
     return results
 

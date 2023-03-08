@@ -27,8 +27,8 @@ class images:
             # reference image
             reference_image = data_store.get_reference_image()
             gui_utils.change_im(self.widget_row[i]['images']['original']['data'], reference_image, resize=self.image_display_size)
-            # tranform image
-            trans_im = self.transform_image(data_store.get_transform_image())
+            # transform image
+            trans_im = image_utils.get_transform_image(data_store, self.sliders['transforms'], self.params_from_sliders['transforms'])
             gui_utils.change_im(self.widget_row[i]['images']['transformed']['data'], trans_im, resize=self.image_display_size)
             # metrics
             metrics = data_store.get_metrics(trans_im, **self.params_from_sliders['metric_params'])

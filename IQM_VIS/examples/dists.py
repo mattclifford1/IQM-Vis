@@ -91,6 +91,10 @@ def correct(img, meta_dict, greycale=True):
     II = np.reshape(np.reshape(II, (np.prod(II.shape[0:2]), 3), order='F')@T.T, (II.shape), order='F')
     return II
 
+'''post processing to allow better image rotations by cropping'''
+def crop_centre(im):
+    return IQM_VIS.transforms.zoom_image(im, 2)
+
 def run():
     # metrics functions must return a single value
     metric = {'DISTS': dists_wrapper(),
@@ -105,14 +109,15 @@ def run():
     data = IQM_VIS.dataset_holder(files,
                                   load_and_calibrate_image,
                                   metric,
-                                  metric_images)
+                                  metric_images,
+                                  image_post_processing=crop_centre)
 
     # define the transformations
     transformations = {
                'rotation':{'min':-180, 'max':180, 'function':IQM_VIS.transforms.rotation},    # normal input
                'x_shift': {'min':-0.1, 'max':0.1, 'function':IQM_VIS.transforms.x_shift, 'init_value': 0.0},
                'y_shift': {'min':-0.1, 'max':0.1, 'function':IQM_VIS.transforms.y_shift, 'init_value': 0.0},
-               'zoom':    {'min': 0.8, 'max':1.2, 'function':IQM_VIS.transforms.zoom_image, 'init_value': 1.0, 'num_values':21},  # requires non standard slider params
+               # 'zoom':    {'min': 0.8, 'max':1.2, 'function':IQM_VIS.transforms.zoom_image, 'init_value': 1.0, 'num_values':21},  # requires non standard slider params
                # 'blur':{'min':1, 'max':41, 'normalise':'odd', 'function':IQM_VIS.transforms.blur},  # only odd ints
                # 'brightness':{'min':-1.0, 'max':1.0, 'function':IQM_VIS.transforms.brightness},   # normal but with float
                # 'threshold':{'min':-40, 'max':40, 'function':IQM_VIS.transforms.binary_threshold},

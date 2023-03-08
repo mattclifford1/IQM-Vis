@@ -13,11 +13,11 @@ class base_dataloader(ABC):
         pass
 
     @abstractmethod
-    def get_transform_image_name(self):
+    def get_image_to_transform_name(self):
         pass
 
     @abstractmethod
-    def get_transform_image(self):
+    def get_image_to_transform(self):
         pass
 
     @abstractmethod
@@ -27,6 +27,7 @@ class base_dataloader(ABC):
     @abstractmethod
     def get_metric_images(self):
         pass
+
 
 class base_dataset_loader(base_dataloader):
     @abstractmethod

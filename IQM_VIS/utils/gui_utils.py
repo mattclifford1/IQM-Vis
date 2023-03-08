@@ -64,7 +64,7 @@ def get_metric_image_name(metric, data_store):
     return metric+get_image_pair_name(data_store)
 
 def get_transformed_image_name(data_store):
-    return 'T('+data_store.get_transform_image_name()+')'
+    return 'T('+data_store.get_image_to_transform_name()+')'
 
 def get_image_pair_name(data_store):
     return str((data_store.get_reference_image_name(), get_transformed_image_name(data_store)))

@@ -13,8 +13,8 @@ function calls for getting metrics and metric images
 class data_holder(base_dataloader):
     def __init__(self, image_reference: tuple, # (name, np data)
                        image_to_transform: tuple, # (name, np data)
-                       metrics: dict,
-                       metric_images: dict):
+                       metrics: dict={},
+                       metric_images: dict={}):
         self.image_reference = image_reference
         self.image_to_transform = image_to_transform
         self.metrics = metrics
@@ -27,10 +27,10 @@ class data_holder(base_dataloader):
     def get_reference_image(self):
         return self.image_reference[1]
 
-    def get_transform_image_name(self):
+    def get_image_to_transform_name(self):
         return self.image_to_transform[0]
 
-    def get_transform_image(self):
+    def get_image_to_transform(self):
         return self.image_to_transform[1]
 
     def get_metrics(self, transformed_image, **kwargs):
@@ -62,13 +62,16 @@ extension of data_holder that allows to iterate through a dataset
 class dataset_holder(base_dataset_loader):
     def __init__(self, image_list: list, # list of image file names
                        image_loader,     # function to load image files
-                       metrics: dict,
-                       metric_images: dict):
+                       metrics: dict={},
+                       metric_images: dict={},
+                       image_post_processing=None,  # apply a function to the image after transformations (e.g. zoom to help with black boarders on rotation)
+                       ):
         self.image_list = image_list
         self.image_loader = image_loader
         self._load_image_data(0)   # load the first image
         self.metrics = metrics
         self.metric_images = metric_images
+        self.image_post_processing = image_post_processing
         self._check_inputs()
 
     def _load_image_data(self, i):
@@ -88,12 +91,15 @@ class dataset_holder(base_dataset_loader):
         return self.image_reference[0]
 
     def get_reference_image(self):
-        return self.image_reference[1]
+        im = self.image_reference[1]
+        if self.image_post_processing is not None:
+            im = self.image_post_processing(im)
+        return im
 
-    def get_transform_image_name(self):
+    def get_image_to_transform_name(self):
         return self.image_to_transform[0]
 
-    def get_transform_image(self):
+    def get_image_to_transform(self):
         return self.image_to_transform[1]
 
     def get_metrics(self, transformed_image, **kwargs):

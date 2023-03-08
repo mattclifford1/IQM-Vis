@@ -70,8 +70,8 @@ def test_datastore_attributes(data_store):
     attributes = [
     ('get_reference_image', 'gets the input reference image', types.MethodType),
     ('get_reference_image_name', 'gets the name of the input reference image', types.MethodType),
-    ('get_transform_image', 'gets the input image to transform', types.MethodType),
-    ('get_transform_image_name', 'gets the name of the input image to transform', types.MethodType),
+    ('get_image_to_transform', 'gets the input image to transform', types.MethodType),
+    ('get_image_to_transform_name', 'gets the name of the input image to transform', types.MethodType),
     ('metrics', 'is a dict of all metric functions', dict),
     ('metric_images','is a dict of all metric image functions', dict),
     ('get_metrics', 'is a function that returns a dict of all metrics results', types.MethodType),
@@ -90,9 +90,9 @@ def test_datastore_attributes(data_store):
     ('get_reference_image', np.ndarray),
     ('get_reference_image_name', str),
     ('get_reference_image', np.ndarray),
-    ('get_transform_image_name', str),
-    ('get_metrics', dict, data_store.get_transform_image()),
-    ('get_metric_images', dict, data_store.get_transform_image()),
+    ('get_image_to_transform_name', str),
+    ('get_metrics', dict, data_store.get_image_to_transform()),
+    ('get_metric_images', dict, data_store.get_image_to_transform()),
     ]
     for meth in method_return_types:
         method = getattr(data_store,  meth[0])
