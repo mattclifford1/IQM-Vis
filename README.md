@@ -44,7 +44,13 @@ import IQM_Vis
 data = IQM_Vis.dataset_holder(image_list=images,
                               metrics=metrics)
 ```
+Then we need to create the UI
+```
 
+IQM_Vis.make_UI(data,
+              transformations,
+              metrics_avg_graph=True)
+```
 
 ## UI Examples (section needs pictures updating)
 Simple UI with single image and image metric
