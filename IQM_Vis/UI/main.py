@@ -4,7 +4,7 @@ main entry point to initialise the UI
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 from PyQt6.QtWidgets import QLabel, QApplication
 from PyQt6.QtGui import QIcon, QAction
-from IQM_VIS.UI import layout, widgets, images, ProgressBar
+from IQM_Vis.UI import layout, widgets, images, ProgressBar
 
 class make_app(widgets, layout, images):
     def __init__(self, app,

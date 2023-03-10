@@ -11,7 +11,7 @@ def get_transform_image(data_store, transform_functions, transform_params):
     '''
     transform image with image post processing
     inputs:
-        - data_store: IQM_VIS data_api
+        - data_store: IQM_Vis data_api
         - transform_functions: dict holding transforms
                                (each key is the name of transform, items have key 'function')
         - transform_params:  dict holding the parameters for transforms (corresponding to keys in transform_functions)

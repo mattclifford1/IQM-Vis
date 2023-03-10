@@ -11,13 +11,13 @@ try:
     HEADLESS = False
 except ImportError:
     import warnings
-    warnings.warn('Can not load PyQt6 library - running IQM_VIS package in headless mode')
+    warnings.warn('Can not load PyQt6 library - running IQM_Vis package in headless mode')
     HEADLESS = True
 import numpy as np
 from skimage.util import img_as_ubyte
 from skimage.transform import resize
 import cv2
-from IQM_VIS.utils.image_utils import resize_to_longest_side
+from IQM_Vis.utils.image_utils import resize_to_longest_side
 
 '''
 image helper functions

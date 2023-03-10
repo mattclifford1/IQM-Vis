@@ -2,7 +2,7 @@ import os
 import glob
 import numpy as np
 import torch
-import IQM_VIS
+import IQM_Vis
 from DISTS_pytorch import DISTS
 
 from PIL import Image
@@ -15,10 +15,10 @@ class dists_wrapper:
         self.metric = DISTS()
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.metric.to(self.device)
-        self.preproccess_function = IQM_VIS.metrics.preprocess_numpy_image
+        self.preproccess_function = IQM_Vis.metrics.preprocess_numpy_image
 
     def __call__(self, im_ref, im_comp, **kwargs):
-        IQM_VIS.metrics.check_shapes(im_ref, im_comp)
+        IQM_Vis.metrics.check_shapes(im_ref, im_comp)
         im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
         im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)
         _score = self.metric(im_ref, im_comp)
@@ -54,7 +54,7 @@ def load_and_calibrate_image(file, max_luminance=200, size=256):
 
     # Convert XYZ -> RGB
     rgb_corrected = np.clip(xyz_corrected @ Mxyz2ng.T, 0.0, 1.0)
-    rgb_small = IQM_VIS.utils.resize_to_longest_side(rgb_corrected, side=size)
+    rgb_small = IQM_Vis.utils.resize_to_longest_side(rgb_corrected, side=size)
     return rgb_small
 
 ''' util for calibrating images'''
@@ -93,20 +93,20 @@ def correct(img, meta_dict, greycale=True):
 
 '''post processing to allow better image rotations by cropping'''
 def crop_centre(im):
-    return IQM_VIS.transforms.zoom_image(im, 2)
+    return IQM_Vis.transforms.zoom_image(im, 2)
 
 def run():
     # metrics functions must return a single value
     metric = {'DISTS': dists_wrapper(),
-              'MAE': IQM_VIS.metrics.MAE,
-              '1-SSIM': IQM_VIS.metrics.ssim()}
+              'MAE': IQM_Vis.metrics.MAE,
+              '1-SSIM': IQM_Vis.metrics.ssim()}
 
     # metrics images return a numpy image - dont include any for this example
     metric_images = {}
 
     # make dataset list of images
     files = glob.glob('/home/matt/datasets/Textures/*')
-    data = IQM_VIS.dataset_holder(files,
+    data = IQM_Vis.dataset_holder(files,
                                   load_and_calibrate_image,
                                   metric,
                                   metric_images,
@@ -114,14 +114,14 @@ def run():
 
     # define the transformations
     transformations = {
-               'rotation':{'min':-180, 'max':180, 'function':IQM_VIS.transforms.rotation},    # normal input
-               'x_shift': {'min':-0.1, 'max':0.1, 'function':IQM_VIS.transforms.x_shift, 'init_value': 0.0},
-               'y_shift': {'min':-0.1, 'max':0.1, 'function':IQM_VIS.transforms.y_shift, 'init_value': 0.0},
-               # 'zoom':    {'min': 0.8, 'max':1.2, 'function':IQM_VIS.transforms.zoom_image, 'init_value': 1.0, 'num_values':21},  # requires non standard slider params
-               # 'blur':{'min':1, 'max':41, 'normalise':'odd', 'function':IQM_VIS.transforms.blur},  # only odd ints
-               # 'brightness':{'min':-1.0, 'max':1.0, 'function':IQM_VIS.transforms.brightness},   # normal but with float
-               # 'threshold':{'min':-40, 'max':40, 'function':IQM_VIS.transforms.binary_threshold},
-               # 'jpeg compression':{'init_value':100, 'min':1, 'max':100, 'function':IQM_VIS.transforms.jpeg_compression},
+               'rotation':{'min':-180, 'max':180, 'function':IQM_Vis.transforms.rotation},    # normal input
+               'x_shift': {'min':-0.1, 'max':0.1, 'function':IQM_Vis.transforms.x_shift, 'init_value': 0.0},
+               'y_shift': {'min':-0.1, 'max':0.1, 'function':IQM_Vis.transforms.y_shift, 'init_value': 0.0},
+               # 'zoom':    {'min': 0.8, 'max':1.2, 'function':IQM_Vis.transforms.zoom_image, 'init_value': 1.0, 'num_values':21},  # requires non standard slider params
+               # 'blur':{'min':1, 'max':41, 'normalise':'odd', 'function':IQM_Vis.transforms.blur},  # only odd ints
+               # 'brightness':{'min':-1.0, 'max':1.0, 'function':IQM_Vis.transforms.brightness},   # normal but with float
+               # 'threshold':{'min':-40, 'max':40, 'function':IQM_Vis.transforms.binary_threshold},
+               # 'jpeg compression':{'init_value':100, 'min':1, 'max':100, 'function':IQM_Vis.transforms.jpeg_compression},
                }
     # define any parameters that the metrics need (names shared across both metrics and metric_images)
     ssim_params = {'sigma': {'min':0.25, 'max':5.25, 'init_value': 1.5},  # for the guassian kernel
@@ -130,7 +130,7 @@ def run():
                    'k2': {'min':0.01, 'max':0.21, 'init_value': 0.03}}
 
     # use the API to create the UI
-    IQM_VIS.make_UI(data,
+    IQM_Vis.make_UI(data,
                 transformations,
                 metrics_avg_graph=True,
                 metric_params=ssim_params)

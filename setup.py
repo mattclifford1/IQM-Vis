@@ -8,8 +8,8 @@ def get_long_description():
     return text
 
 
-setup(name='IQM-VIS',
-      version='0.2.5.34',
+setup(name='IQM_Vis',
+      version='0.1',
       packages=find_packages(),
       install_requires=['numpy',
                         'opencv-python',
@@ -18,7 +18,7 @@ setup(name='IQM-VIS',
                         'matplotlib',
                         'torch',
                         'torchmetrics'],
-      # data_files=[('/', ['IQM_VIS/UI/style.css'])], # include non .py files needed
+      # data_files=[('/', ['IQM_Vis/UI/style.css'])], # include non .py files needed
       author="Matt Clifford",
       author_email="matt.clifford@bristol.ac.uk",
       description="Extendable user interface for the assessment of transformations on image metrics.",

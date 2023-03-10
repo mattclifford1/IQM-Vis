@@ -1,35 +1,35 @@
 import os
 import numpy as np
-import IQM_VIS
+import IQM_Vis
 
 
 def run():
     # metrics functions must return a single value
-    metric = {'MAE': IQM_VIS.metrics.MAE,
-              'MSE': IQM_VIS.metrics.MSE,
-              '1-SSIM': IQM_VIS.metrics.ssim()}
+    metric = {'MAE': IQM_Vis.metrics.MAE,
+              'MSE': IQM_Vis.metrics.MSE,
+              '1-SSIM': IQM_Vis.metrics.ssim()}
 
     # metrics images return a numpy image
-    metric_images = {'MSE': IQM_VIS.metrics.MSE_image,
-                     'SSIM': IQM_VIS.metrics.SSIM_image()}
+    metric_images = {'MSE': IQM_Vis.metrics.MSE_image,
+                     'SSIM': IQM_Vis.metrics.SSIM_image()}
 
     # make dataset list of images
     file_path = os.path.dirname(os.path.abspath(__file__))
     dataset = [os.path.join(file_path, 'images', 'waves1.jpeg'),
                os.path.join(file_path, 'images', 'waves2.jpeg'),
                os.path.join(file_path, 'images', 'wave3.jpeg')]
-    data = IQM_VIS.dataset_holder(dataset,
-                                  IQM_VIS.utils.load_image,
+    data = IQM_Vis.dataset_holder(dataset,
+                                  IQM_Vis.utils.load_image,
                                   metric,
                                   metric_images)
 
     # define the transformations
     transformations = {
-               'rotation':{'min':-180, 'max':180, 'function':IQM_VIS.transforms.rotation},    # normal input
-               'blur':{'min':1, 'max':41, 'normalise':'odd', 'function':IQM_VIS.transforms.blur},  # only odd ints
-               'brightness':{'min':-1.0, 'max':1.0, 'function':IQM_VIS.transforms.brightness},   # normal but with float
-               # 'threshold':{'min':-40, 'max':40, 'function':IQM_VIS.transforms.binary_threshold},
-               'jpg comp.':{'init_value':100, 'min':1, 'max':100, 'function':IQM_VIS.transforms.jpeg_compression},
+               'rotation':{'min':-180, 'max':180, 'function':IQM_Vis.transforms.rotation},    # normal input
+               'blur':{'min':1, 'max':41, 'normalise':'odd', 'function':IQM_Vis.transforms.blur},  # only odd ints
+               'brightness':{'min':-1.0, 'max':1.0, 'function':IQM_Vis.transforms.brightness},   # normal but with float
+               # 'threshold':{'min':-40, 'max':40, 'function':IQM_Vis.transforms.binary_threshold},
+               'jpg comp.':{'init_value':100, 'min':1, 'max':100, 'function':IQM_Vis.transforms.jpeg_compression},
                }
     # define any parameters that the metrics need (names shared across both metrics and metric_images)
     ssim_params = {'sigma': {'min':0.25, 'max':5.25, 'init_value': 1.5},  # for the guassian kernel
@@ -38,7 +38,7 @@ def run():
                    'k2': {'min':0.01, 'max':0.21, 'init_value': 0.03}}
 
     # use the API to create the UI
-    IQM_VIS.make_UI(data,
+    IQM_Vis.make_UI(data,
                 transformations,
                 metrics_avg_graph=True,
                 metric_params=ssim_params)

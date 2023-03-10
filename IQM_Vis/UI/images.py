@@ -8,9 +8,9 @@ import os
 import numpy as np
 from PyQt6.QtWidgets import QApplication
 
-from IQM_VIS.utils import gui_utils, plot_utils, image_utils
+from IQM_Vis.utils import gui_utils, plot_utils, image_utils
 
-# sub class used by IQM_VIS.main.make_app to control all of the image widgets
+# sub class used by IQM_Vis.main.make_app to control all of the image widgets
 class images:
     def __init__(self):
         self.metric_range_graph_num = 0

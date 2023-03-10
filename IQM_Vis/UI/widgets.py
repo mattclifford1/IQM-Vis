@@ -8,9 +8,9 @@ import numpy as np
 from PyQt6.QtWidgets import QPushButton, QLabel, QSlider
 from PyQt6.QtCore import Qt
 
-from IQM_VIS.utils import gui_utils
+from IQM_Vis.utils import gui_utils
 
-# sub class used by IQM_VIS.main.make_app to initialise widgets and general UI functions for widgets
+# sub class used by IQM_Vis.main.make_app to initialise widgets and general UI functions for widgets
 class widgets():
     def init_widgets(self):
         '''

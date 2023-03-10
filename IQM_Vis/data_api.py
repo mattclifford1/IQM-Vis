@@ -5,7 +5,7 @@ both use the same image for reference and transformed
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 import os
 import numpy as np
-from IQM_VIS.image_loaders import base_dataloader, base_dataset_loader
+from IQM_Vis.image_loaders import base_dataloader, base_dataset_loader
 '''
 store image and metric data as well as
 function calls for getting metrics and metric images

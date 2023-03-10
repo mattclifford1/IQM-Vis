@@ -10,9 +10,9 @@ import numpy as np
 
 try:
     from PyQt6.QtWidgets import QApplication
-    from IQM_VIS.UI.main import make_app
+    from IQM_Vis.UI.main import make_app
 except ImportError:
-    warnings.warn('Cannot load PyQt6 library - running IQM_VIS package in headless mode')
+    warnings.warn('Cannot load PyQt6 library - running IQM_Vis package in headless mode')
 
 class make_UI:
     def __init__(self, data_store,

@@ -4,7 +4,7 @@ TODO: write docs how to use these (currently just have to look at the UI code)
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 import numpy as np
-from IQM_VIS.utils import image_utils
+from IQM_Vis.utils import image_utils
 
 '''
 plot bar chart on matplotlib qt qidget

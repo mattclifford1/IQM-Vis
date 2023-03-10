@@ -14,8 +14,8 @@ from PyQt6.QtWidgets import (QWidget,
                              QWidget)
 
 
-# sub class used by IQM_VIS.main.make_app to initialise layout of the UI
-# uses widgets from IQM_VIS.widgets.app_widgets
+# sub class used by IQM_Vis.main.make_app to initialise layout of the UI
+# uses widgets from IQM_Vis.widgets.app_widgets
 # class layout(QMainWindow):
 class layout(QMainWindow):
     def __init__(self):

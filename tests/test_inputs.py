@@ -5,7 +5,7 @@ test invalid input to api throws an error
 import pytest
 import numpy as np
 
-from IQM_VIS import api
+from IQM_Vis import api
 
 def test_not_dict():
     with pytest.raises(TypeError) as val_error:
