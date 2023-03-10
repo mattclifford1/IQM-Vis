@@ -107,9 +107,9 @@ def run():
     # make dataset list of images
     files = glob.glob('/home/matt/datasets/Textures/*')
     data = IQM_Vis.dataset_holder(files,
-                                  load_and_calibrate_image,
                                   metric,
                                   metric_images,
+                                  load_and_calibrate_image,
                                   image_post_processing=crop_centre)
 
     # define the transformations

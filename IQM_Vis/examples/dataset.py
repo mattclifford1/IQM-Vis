@@ -19,9 +19,10 @@ def run():
                os.path.join(file_path, 'images', 'waves2.jpeg'),
                os.path.join(file_path, 'images', 'wave3.jpeg')]
     data = IQM_Vis.dataset_holder(dataset,
-                                  IQM_Vis.utils.load_image,
                                   metric,
-                                  metric_images)
+                                  metric_images,
+                                  IQM_Vis.utils.load_image,
+                                  )
 
     # define the transformations
     transformations = {
