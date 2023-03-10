@@ -8,7 +8,7 @@ def get_long_description():
     return text
 
 
-setup(name='IQM_Vis',
+setup(name='IQM-Vis',
       version='0.1',
       packages=find_packages(),
       install_requires=['numpy',
