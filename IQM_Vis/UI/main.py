@@ -26,7 +26,7 @@ class make_app(widgets, layout, images):
         self.metric_params = metric_params
 
         self.dataset = self._single_image_or_dataset()
-        self.setWindowTitle('IQM-VIS')
+        self.setWindowTitle('IQM-Vis')
 
         self.make_status_bar()
         self.make_menu()
