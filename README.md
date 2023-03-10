@@ -12,7 +12,41 @@ pip install IQM-Vis
 ```
 Example usage of the package can be found in [examples](https://github.com/mattclifford1/IQM-Vis/tree/main/IQM_Vis/examples)
 
-## UI Examples
+# Usage
+To create the UI you need to define 3 things minimum:
+  - metrics
+  - images
+  - transformations
+
+### Metrics
+A dictionary containing the metric names and callable function/class:
+```
+metrics = {'my_metric': my_metric_function}
+```
+`my_metric_function` expects to take arguments `image_reference`, `image_comparison`, `**kwargs`
+
+### Images
+A list of image files to use:
+```
+images = ['/file/path/to/my_image.jpg']
+```
+
+### Transformations
+A dictionary containing the transformation names, with corresponding function and parameter values:
+```
+transformations = {'my_trans': {'function': my_trans_function, 'min':-1.0, 'max':'1.0'}}
+```
+`my_trans_function` expects to take arguments `image`, `parameter`
+## Making the UI
+First you need to make a dataset and metric object:
+```
+import IQM_Vis
+data = IQM_Vis.dataset_holder(image_list=images,
+                              metrics=metrics)
+```
+
+
+## UI Examples (section needs pictures updating)
 Simple UI with single image and image metric
 ```
 import IQM_Vis

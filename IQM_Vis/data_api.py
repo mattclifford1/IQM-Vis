@@ -5,6 +5,7 @@ both use the same image for reference and transformed
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 import os
 import numpy as np
+import IQM_Vis
 from IQM_Vis.image_loaders import base_dataloader, base_dataset_loader
 '''
 store image and metric data as well as
@@ -61,9 +62,9 @@ extension of data_holder that allows to iterate through a dataset
 '''
 class dataset_holder(base_dataset_loader):
     def __init__(self, image_list: list, # list of image file names
-                       image_loader,     # function to load image files
                        metrics: dict={},
                        metric_images: dict={},
+                       image_loader=IQM_Vis.utils.load_image,     # function to load image files
                        image_post_processing=None,  # apply a function to the image after transformations (e.g. zoom to help with black boarders on rotation)
                        ):
         self.image_list = image_list
