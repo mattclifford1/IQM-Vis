@@ -39,9 +39,10 @@ jobs:
 
       - name: Sphinx build
         run: |
-          mkdir _docs
+          rm docs/IQM_Vis.*
           sphinx-apidoc -o _docs IQM_Vis
-          cd _docs
+          cd docs
+          make clean html
           make html
 
       - name: Deploy
@@ -49,4 +50,4 @@ jobs:
         with:
           publish_branch: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: _docs/
+          publish_dir: docs/
