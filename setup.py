@@ -9,7 +9,7 @@ def get_long_description():
 
 
 setup(name='IQM-Vis',
-      version='0.2.5.37',
+      version='0.2.5.38',
       packages=find_packages(),
       install_requires=['numpy',
                         'opencv-python',
