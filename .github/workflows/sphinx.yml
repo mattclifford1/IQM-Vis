@@ -35,7 +35,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install sphinx sphinx_rtd_theme Pallets-Sphinx-Themes
+          pip install -r requirements-dev.txt
+          pip install .
 
       - name: Sphinx build
         run: |
