@@ -35,16 +35,19 @@ jobs:
           
       - name: Install dependencies
         run: |
-          pip install -r ./requirements-dev.txt
-          pip install .
+          pip install sphinx sphinx_rtd_theme Pallets-Sphinx-Themes
           
       - name: Sphinx build
         run: |
-          sphinx-build docs _build
+          mkdir _docs
+          sphinx-apidoc -o _docs IQM_Vis
+          cd _docs
+          make clean html
+          make html
           
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           publish_branch: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: _build/
+          publish_dir: _docs/
