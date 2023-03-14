@@ -6,6 +6,14 @@ Image Quality Metric Visualision
 Extendable user interface for the assessment of transformations on image metrics. Examples of how to use this package are found in [here](https://github.com/mattclifford1/IQM-Vis/tree/main/IQM_Vis/examples) or use our [web version](https://huggingface.co/spaces/mattclifford1/IQM-Vis).
 
 # Installation
+First create a new python venv, eg. using conda
+```
+conda create -n IQM_Vis python=3.9
+```
+Activate env:
+```
+conda activate IQM_Vis
+```
 The latest stable version can be downloaded via [PyPi](https://pypi.org/project/IQM-Vis).
 ```
 pip install IQM-Vis
