@@ -11,3 +11,4 @@ dists-pytorch
 torchvision
 sphinx
 sphinx_rtd_theme
+Pallets-Sphinx-Themes
