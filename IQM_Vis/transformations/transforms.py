@@ -8,8 +8,18 @@ import cv2
 import numpy as np
 
 
-def rotation(image, param):
-    return rotate(image, param)
+def rotation(image, angle):
+    '''Rotate an image around its centre. Uses skimage.transform.rotate. Areas
+    that are rotated beyond the image are filled in with black pixel values
+
+    Args:
+        image: image to be rotated (numpy array)
+        angle: amount of rotation in degrees
+
+    Returns:
+        image: rotated image (numpy array)
+    '''
+    return rotate(image, angle)
 
 def blur(image, param):
     if param == 1:

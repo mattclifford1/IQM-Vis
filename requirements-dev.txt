@@ -9,3 +9,5 @@ twine
 pytest
 dists-pytorch
 torchvision
+sphinx
+sphinx_rtd_theme
