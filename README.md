@@ -97,8 +97,8 @@ conda activate IQM_Vis
 ```
 Clone repo
 ```
-git clone git@github.com:mattclifford1/IQA_GUI.git
-cd IQA_GUI
+git clone git@github.com:mattclifford1/IQM_Vis.git
+cd IQM_Vis
 ```
 Install requirements
 ```
