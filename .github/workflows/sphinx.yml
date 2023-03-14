@@ -29,14 +29,14 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ steps.pip-cache.outputs.dir }}
-          key: ${{ runner.os }}-pip-${{ hashFiles('./requirements.txt') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('./requirements-dev.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
           
       - name: Install dependencies
         run: |
-          pip install sphinx sphinx_rtd_theme
-          pip install -e .
+          pip install ./requirements-dev.txt
+          pip install .
           
       - name: Sphinx build
         run: |
@@ -44,7 +44,6 @@ jobs:
           
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         with:
           publish_branch: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
