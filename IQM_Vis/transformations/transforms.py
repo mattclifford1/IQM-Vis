@@ -99,20 +99,31 @@ def binary_threshold(image, param):
         image = image[..., np.newaxis]
     return image.astype(np.float32) / 255.0
 
-def jpeg_compression(image, param=90):
+def jpeg_compression(image, compression=90):
     '''encode image using jpeg then decode
-    - param: amount of compression
-              100 returns identity image?
+
+    Args:
+        image: image to be rotated (numpy array)
+        compression: amount of jpeg compression (100 returns identity image)
+
+    Returns:
+        image: rotated image (numpy array)
     '''
-    encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), int(param)]
+    encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), int(compression)]
     encoder = '.jpg'
     return _encode_compression(image, encoder, encode_param)
 
-def png_compression(image, param=9):
+def png_compression(image, compression=9):
     '''encode image using png then decode (note png is lossless compression)
-    - param: amount of compression
+
+    Args:
+        image: image to be rotated (numpy array)
+        compression: amount of png compression
+
+    Returns:
+        image: rotated image (numpy array)
     '''
-    encode_param = [int(cv2.IMWRITE_PNG_COMPRESSION), int(param)]
+    encode_param = [int(cv2.IMWRITE_PNG_COMPRESSION), int(compression)]
     encoder = '.png'
     return _encode_compression(image, encoder, encode_param)
 

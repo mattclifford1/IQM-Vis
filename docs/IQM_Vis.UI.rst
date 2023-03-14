@@ -36,14 +36,6 @@ IQM\_Vis.UI.main module
    :undoc-members:
    :show-inheritance:
 
-IQM\_Vis.UI.style module
-------------------------
-
-.. automodule:: IQM_Vis.UI.style
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 IQM\_Vis.UI.widgets module
 --------------------------
 

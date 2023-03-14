@@ -9,8 +9,9 @@ def get_long_description():
 
 
 setup(name='IQM-Vis',
-      version='0.2.5.38',
+      version='0.2.5.39',
       packages=find_packages(),
+      include_package_data=True,
       install_requires=['numpy',
                         'opencv-python',
                         'scikit-image',

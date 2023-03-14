@@ -1,14 +1,6 @@
 IQM\_Vis.image\_metrics package
 ===============================
 
-Subpackages
------------
-
-.. toctree::
-   :maxdepth: 4
-
-   IQM_Vis.image_metrics.expert
-
 Submodules
 ----------
 

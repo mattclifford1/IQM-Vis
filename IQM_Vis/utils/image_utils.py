@@ -8,13 +8,16 @@ import numpy as np
 from skimage.transform import resize
 
 def get_transform_image(data_store, transform_functions, transform_params):
-    '''
-    transform image with image post processing
-    inputs:
+    '''transform image with image post processing
+
+    Args:
         - data_store: IQM_Vis data_api
         - transform_functions: dict holding transforms
                                (each key is the name of transform, items have key 'function')
         - transform_params:  dict holding the parameters for transforms (corresponding to keys in transform_functions)
+
+    Return:
+        - image: processed numpy image
     '''
     image = data_store.get_image_to_transform()
     for key in transform_functions:

@@ -167,7 +167,7 @@ class layout(QMainWindow):
         if css_file == None:
             dir = os.path.dirname(os.path.abspath(__file__))
             # css_file = os.path.join(dir, 'style.css')
-            css_file = os.path.join(dir, 'style.py')  # should be css but work around to include file with  pypi
+            css_file = os.path.join(dir, 'style.css')
         if os.path.isfile(css_file):
             with open(css_file, 'r') as file:
                 self.app.setStyleSheet(file.read())
