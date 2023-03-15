@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IQM_Vis.UI.main &#8212; IQM-Vis 0.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for IQM_Vis.UI.main</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">main entry point to initialise the UI</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="c1"># Author: Matt Clifford &lt;matt.clifford@bristol.ac.uk&gt;</span>
+<span class="kn">from</span> <span class="nn">PyQt6.QtWidgets</span> <span class="kn">import</span> <span class="n">QLabel</span><span class="p">,</span> <span class="n">QApplication</span>
+<span class="kn">from</span> <span class="nn">PyQt6.QtGui</span> <span class="kn">import</span> <span class="n">QIcon</span><span class="p">,</span> <span class="n">QAction</span>
+<span class="kn">from</span> <span class="nn">IQM_Vis.UI</span> <span class="kn">import</span> <span class="n">layout</span><span class="p">,</span> <span class="n">widgets</span><span class="p">,</span> <span class="n">images</span><span class="p">,</span> <span class="n">ProgressBar</span>
+
+<div class="viewcode-block" id="make_app"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.main.make_app">[docs]</a><span class="k">class</span> <span class="nc">make_app</span><span class="p">(</span><span class="n">widgets</span><span class="p">,</span> <span class="n">layout</span><span class="p">,</span> <span class="n">images</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span>
+                <span class="n">data_stores</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+                <span class="n">transformations</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+                <span class="n">metrics_info_format</span><span class="o">=</span><span class="s1">&#39;graph&#39;</span><span class="p">,</span>    <span class="c1"># graph or text</span>
+                <span class="n">metrics_avg_graph</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">metric_range_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">metric_params</span><span class="p">:</span> <span class="nb">dict</span><span class="o">=</span><span class="p">{},</span>
+                <span class="n">image_display_size</span><span class="o">=</span><span class="mi">150</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">app</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span> <span class="o">=</span> <span class="n">data_stores</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span> <span class="o">=</span> <span class="n">transformations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metrics_info_format</span> <span class="o">=</span> <span class="n">metrics_info_format</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metrics_avg_graph</span> <span class="o">=</span> <span class="n">metrics_avg_graph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metric_range_graph</span> <span class="o">=</span> <span class="n">metric_range_graph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_display_size</span> <span class="o">=</span> <span class="n">image_display_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metric_params</span> <span class="o">=</span> <span class="n">metric_params</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_single_image_or_dataset</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s1">&#39;IQM-Vis&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">make_status_bar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">make_menu</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_style</span><span class="p">()</span>     <span class="c1"># layout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_widgets</span><span class="p">()</span>   <span class="c1"># widgets</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_layout</span><span class="p">()</span>    <span class="c1"># layout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display_images</span><span class="p">()</span> <span class="c1"># images</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset_sliders</span><span class="p">()</span>  <span class="c1"># widgets</span>
+
+<div class="viewcode-block" id="make_app.make_menu"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.main.make_app.make_menu">[docs]</a>    <span class="k">def</span> <span class="nf">make_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu_bar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">menuBar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_menu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu_bar</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="s1">&#39;&amp;File&#39;</span><span class="p">)</span>
+
+        <span class="n">quit_action</span> <span class="o">=</span> <span class="n">QAction</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(),</span> <span class="s1">&#39;&amp;Quit&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="n">quit_action</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="s1">&#39;Ctrl+Q&#39;</span><span class="p">)</span>
+        <span class="n">quit_action</span><span class="o">.</span><span class="n">setStatusTip</span><span class="p">(</span><span class="s1">&#39;Exit application&#39;</span><span class="p">)</span>
+        <span class="n">quit_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">quit</span><span class="p">)</span>
+
+        <span class="n">reload_action</span> <span class="o">=</span> <span class="n">QAction</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(),</span> <span class="s1">&#39;&amp;Redo Graphs&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="n">reload_action</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="s1">&#39;Ctrl+R&#39;</span><span class="p">)</span>
+        <span class="n">reload_action</span><span class="o">.</span><span class="n">setStatusTip</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">reload_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">display_images</span><span class="p">)</span>
+        <span class="n">reload_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">redo_plots</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">reload_action</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">quit_action</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="make_app.make_status_bar"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.main.make_app.make_status_bar">[docs]</a>    <span class="k">def</span> <span class="nf">make_status_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_bar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">statusBar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span> <span class="o">=</span> <span class="n">ProgressBar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minimum</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">maximum</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">textVisible</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">objectName</span><span class="o">=</span><span class="s2">&quot;GreenProgressBar&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_bar</span><span class="o">.</span><span class="n">addPermanentWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pbar</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_single_image_or_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;set whether dataset or single image used for data_store&#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">data_store</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">data_store</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">dataset_found</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data_num</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">data_store</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_num</span><span class="p">]</span>  <span class="c1"># return to initial image</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># calc what is the last data point in all the datasets</span>
+        <span class="n">max_length</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">data_store</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_store</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">length</span> <span class="o">&gt;</span> <span class="n">max_length</span><span class="p">:</span>
+                    <span class="n">max_length</span> <span class="o">=</span> <span class="n">length</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">obj_name</span> <span class="o">=</span> <span class="n">data_store</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+                <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">obj_name</span><span class="si">}</span><span class="s1"> needs to have __len__ attribute to be a dataset&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_data_ind</span> <span class="o">=</span> <span class="n">max_length</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">dataset_found</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">IQM-Vis</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.image_metrics.html">IQM_Vis.image_metrics package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Matt Clifford.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 6.1.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

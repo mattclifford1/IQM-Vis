@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IQM_Vis.UI.images &#8212; IQM-Vis 0.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for IQM_Vis.UI.images</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">UI image functions</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="c1"># Author: Matt Clifford &lt;matt.clifford@bristol.ac.uk&gt;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">PyQt6.QtWidgets</span> <span class="kn">import</span> <span class="n">QApplication</span>
+
+<span class="kn">from</span> <span class="nn">IQM_Vis.utils</span> <span class="kn">import</span> <span class="n">gui_utils</span><span class="p">,</span> <span class="n">plot_utils</span><span class="p">,</span> <span class="n">image_utils</span>
+
+<span class="c1"># sub class used by IQM_Vis.main.make_app to control all of the image widgets</span>
+<div class="viewcode-block" id="images"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images">[docs]</a><span class="k">class</span> <span class="nc">images</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metric_range_graph_num</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    image updaters</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+<div class="viewcode-block" id="images.transform_image"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.transform_image">[docs]</a>    <span class="k">def</span> <span class="nf">transform_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s1">&#39;transforms&#39;</span><span class="p">]:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s1">&#39;transforms&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;function&#39;</span><span class="p">](</span><span class="n">image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params_from_sliders</span><span class="p">[</span><span class="s1">&#39;transforms&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">image</span></div>
+
+<div class="viewcode-block" id="images.display_images"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.display_images">[docs]</a>    <span class="k">def</span> <span class="nf">display_images</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">data_store</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">):</span>
+            <span class="c1"># reference image</span>
+            <span class="n">reference_image</span> <span class="o">=</span> <span class="n">data_store</span><span class="o">.</span><span class="n">get_reference_image</span><span class="p">()</span>
+            <span class="n">gui_utils</span><span class="o">.</span><span class="n">change_im</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;images&#39;</span><span class="p">][</span><span class="s1">&#39;original&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">],</span> <span class="n">reference_image</span><span class="p">,</span> <span class="n">resize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_display_size</span><span class="p">)</span>
+            <span class="c1"># transform image</span>
+            <span class="n">trans_im</span> <span class="o">=</span> <span class="n">image_utils</span><span class="o">.</span><span class="n">get_transform_image</span><span class="p">(</span><span class="n">data_store</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s1">&#39;transforms&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">params_from_sliders</span><span class="p">[</span><span class="s1">&#39;transforms&#39;</span><span class="p">])</span>
+            <span class="n">gui_utils</span><span class="o">.</span><span class="n">change_im</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;images&#39;</span><span class="p">][</span><span class="s1">&#39;transformed&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">],</span> <span class="n">trans_im</span><span class="p">,</span> <span class="n">resize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_display_size</span><span class="p">)</span>
+            <span class="c1"># metrics</span>
+            <span class="n">metrics</span> <span class="o">=</span> <span class="n">data_store</span><span class="o">.</span><span class="n">get_metrics</span><span class="p">(</span><span class="n">trans_im</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">params_from_sliders</span><span class="p">[</span><span class="s1">&#39;metric_params&#39;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">display_metrics</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+            <span class="c1"># metric images</span>
+            <span class="n">metric_images</span> <span class="o">=</span> <span class="n">data_store</span><span class="o">.</span><span class="n">get_metric_images</span><span class="p">(</span><span class="n">trans_im</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">params_from_sliders</span><span class="p">[</span><span class="s1">&#39;metric_params&#39;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">display_metric_images</span><span class="p">(</span><span class="n">metric_images</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+
+            <span class="n">QApplication</span><span class="o">.</span><span class="n">processEvents</span><span class="p">()</span>   <span class="c1"># force to change otherwise the UI wont respond</span></div>
+
+<div class="viewcode-block" id="images.update_image_widgets"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.update_image_widgets">[docs]</a>    <span class="k">def</span> <span class="nf">update_image_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># display images</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">:</span>
+            <span class="n">gui_utils</span><span class="o">.</span><span class="n">change_im</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_data</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">resize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_display_size</span><span class="p">)</span></div>
+
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    metric graph updaters</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+<div class="viewcode-block" id="images.redo_plots"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.redo_plots">[docs]</a>    <span class="k">def</span> <span class="nf">redo_plots</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics_avg_graph</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_metrics_over_range</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric_range_graph</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_metric_range_values</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">display_metric_range_plot</span><span class="p">()</span></div>
+
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    change image in dataset</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+<div class="viewcode-block" id="images.change_data"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.change_data">[docs]</a>    <span class="k">def</span> <span class="nf">change_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_num</span> <span class="o">+=</span> <span class="n">i</span>
+        <span class="c1"># check the num is legal</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_num</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_num</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_data_ind</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_num</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_data_ind</span>
+        <span class="k">for</span> <span class="n">data_store</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">data_store</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_num</span><span class="p">]</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span> <span class="c1"># some datasets will be shorter than others - this is fine though</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display_images</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_image_name_text</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">redo_plots</span><span class="p">()</span></div>
+
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    metric updaters</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+<div class="viewcode-block" id="images.display_metrics"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.display_metrics">[docs]</a>    <span class="k">def</span> <span class="nf">display_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics_info_format</span> <span class="o">==</span> <span class="s1">&#39;graph&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">display_metrics_graph</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">display_metrics_text</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="images.display_metrics_graph"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.display_metrics_graph">[docs]</a>    <span class="k">def</span> <span class="nf">display_metrics_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="n">bar_plt</span> <span class="o">=</span> <span class="n">plot_utils</span><span class="o">.</span><span class="n">bar_plotter</span><span class="p">(</span><span class="n">bar_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">],</span>
+                                        <span class="n">var_names</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span>
+                                        <span class="n">ax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">][</span><span class="s1">&#39;info&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
+        <span class="n">bar_plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="n">bar_plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="images.display_metrics_text"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.display_metrics_text">[docs]</a>    <span class="k">def</span> <span class="nf">display_metrics_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">disp_len</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">:</span>
+            <span class="n">metric</span> <span class="o">=</span> <span class="n">gui_utils</span><span class="o">.</span><span class="n">str_to_len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">metrics</span><span class="p">[</span><span class="n">key</span><span class="p">]),</span> <span class="n">disp_len</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span>
+            <span class="n">text</span> <span class="o">+=</span> <span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="n">metric</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">][</span><span class="s1">&#39;info&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
+
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    metric range plot</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+<div class="viewcode-block" id="images.get_metric_range_values"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.get_metric_range_values">[docs]</a>    <span class="k">def</span> <span class="nf">get_metric_range_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metric_range_results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># use the initiased/default values for all sliders</span>
+        <span class="n">init_trans_params</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">trans</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span><span class="p">:</span>
+            <span class="n">init_trans_params</span><span class="p">[</span><span class="n">trans</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span><span class="p">[</span><span class="n">trans</span><span class="p">][</span><span class="s1">&#39;init_value&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_bar</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s1">&#39;Getting Range plot Values&#39;</span><span class="p">)</span>
+        <span class="n">QApplication</span><span class="o">.</span><span class="n">processEvents</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">data_store</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">):</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">plot_utils</span><span class="o">.</span><span class="n">compute_metrics_over_range</span><span class="p">(</span><span class="n">data_store</span><span class="p">,</span>
+                                                            <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span><span class="p">,</span>
+                                                            <span class="n">init_trans_params</span><span class="p">,</span>
+                                                            <span class="bp">self</span><span class="o">.</span><span class="n">params_from_sliders</span><span class="p">[</span><span class="s1">&#39;metric_params&#39;</span><span class="p">],</span>
+                                                            <span class="n">pbar</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pbar</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metric_range_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_bar</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s1">&#39;Done&#39;</span><span class="p">,</span> <span class="mi">3000</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="images.display_metric_range_plot"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.display_metric_range_plot">[docs]</a>    <span class="k">def</span> <span class="nf">display_metric_range_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">trans_to_plot</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transformations</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_range_graph_num</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">data_store</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">):</span>
+            <span class="n">axes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">][</span><span class="s1">&#39;range&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]</span>
+            <span class="n">plot</span> <span class="o">=</span> <span class="n">plot_utils</span><span class="o">.</span><span class="n">get_transform_range_plots</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_range_results</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">trans_to_plot</span><span class="p">,</span> <span class="n">axes</span><span class="p">)</span>
+            <span class="n">plot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="images.change_metric_range_graph"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.change_metric_range_graph">[docs]</a>    <span class="k">def</span> <span class="nf">change_metric_range_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">add</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">max_graph_num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transformations</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metric_range_graph_num</span> <span class="o">+=</span> <span class="n">add</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric_range_graph_num</span> <span class="o">&gt;=</span> <span class="n">max_graph_num</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metric_range_graph_num</span> <span class="o">=</span> <span class="n">max_graph_num</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric_range_graph_num</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metric_range_graph_num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display_metric_range_plot</span><span class="p">()</span></div>
+
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    metric image updaters</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+<div class="viewcode-block" id="images.display_metric_images"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.display_metric_images">[docs]</a>    <span class="k">def</span> <span class="nf">display_metric_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_images</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">metric_images</span><span class="p">:</span>
+            <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metric_images&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]</span>
+            <span class="n">gui_utils</span><span class="o">.</span><span class="n">change_im</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">metric_images</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">resize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_display_size</span><span class="p">)</span></div>
+
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    metric averaging plots</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+<div class="viewcode-block" id="images.get_metrics_over_range"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.get_metrics_over_range">[docs]</a>    <span class="k">def</span> <span class="nf">get_metrics_over_range</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_bar</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s1">&#39;Getting avg. values&#39;</span><span class="p">)</span>
+        <span class="n">QApplication</span><span class="o">.</span><span class="n">processEvents</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">data_store</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">):</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">plot_utils</span><span class="o">.</span><span class="n">compute_metrics_over_range</span><span class="p">(</span><span class="n">data_store</span><span class="p">,</span>
+                                                            <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span><span class="p">,</span>
+                                                            <span class="bp">self</span><span class="o">.</span><span class="n">params_from_sliders</span><span class="p">[</span><span class="s1">&#39;transforms&#39;</span><span class="p">],</span>
+                                                            <span class="bp">self</span><span class="o">.</span><span class="n">params_from_sliders</span><span class="p">[</span><span class="s1">&#39;metric_params&#39;</span><span class="p">],</span>
+                                                            <span class="n">pbar</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pbar</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot_metrics_graphs</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_bar</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s1">&#39;Done&#39;</span><span class="p">,</span> <span class="mi">3000</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="images.plot_metrics_graphs"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.plot_metrics_graphs">[docs]</a>    <span class="k">def</span> <span class="nf">plot_metrics_graphs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">results</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="n">metrics_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">transformation_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s1">&#39;transforms&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">axes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">][</span><span class="s1">&#39;avg&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]</span>
+        <span class="n">radar_plotter</span> <span class="o">=</span> <span class="n">plot_utils</span><span class="o">.</span><span class="n">get_radar_plots_avg</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">metrics_names</span><span class="p">,</span> <span class="n">transformation_names</span><span class="p">,</span> <span class="n">axes</span><span class="p">)</span>
+        <span class="n">radar_plotter</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">IQM-Vis</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.image_metrics.html">IQM_Vis.image_metrics package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Matt Clifford.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 6.1.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
