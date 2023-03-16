@@ -9,7 +9,7 @@ jobs:
     - name: Get Version of latest code
       run: |
         pwd
-        ls
+        ls ..
         echo "code_version=$(cat ./VERSION)" >> $GITHUB_ENV
     - name: check code
       if: env.code_version != 'octo-org/octo-repo-prod'
