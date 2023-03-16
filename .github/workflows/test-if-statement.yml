@@ -8,9 +8,9 @@ jobs:
     steps:
     - name: Get Version of latest code
       run: echo "code_version=$(cat VERSION)" >> $GITHUB_ENV
-    if: env.code_version != 'octo-org/octo-repo-prod'
-    steps:
-      - run: echo $code_version
+    - name: check code
+      if: env.code_version != 'octo-org/octo-repo-prod'
+      run: echo $code_version
 
 # jobs:
 #   production-deploy:
