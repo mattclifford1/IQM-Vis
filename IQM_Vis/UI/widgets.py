@@ -5,7 +5,7 @@ UI create widgets
 from functools import partial
 
 import numpy as np
-from PyQt6.QtWidgets import QPushButton, QLabel, QSlider
+from PyQt6.QtWidgets import QPushButton, QLabel, QSlider, QCheckBox
 from PyQt6.QtCore import Qt
 
 from IQM_Vis.utils import gui_utils
@@ -73,14 +73,20 @@ class widgets():
                 self.widget_row[i]['metrics']['range']['data'].setToolTip('Single tranformation value range for all metrics.')
 
         '''buttons'''
-        self.widget_controls = {'button': {}, 'slider':{}, 'label':{}}
+        self.widget_controls = {'button': {}, 'slider': {}, 'label': {}, 'check_box': {}}
         self.widget_controls['button']['reset_sliders'] = QPushButton('Reset', self)
         self.widget_controls['button']['reset_sliders'].clicked.connect(self.reset_sliders)
-        if self.metrics_avg_graph:
+        if self.metrics_avg_graph or self.metric_range_graph:
+            # Update graphs
             self.widget_controls['button']['force_update'] = QPushButton('Update Graphs', self)
             self.widget_controls['button']['force_update'].setToolTip('Update graphs using all the current slider values.')
             self.widget_controls['button']['force_update'].clicked.connect(self.display_images)
             self.widget_controls['button']['force_update'].clicked.connect(self.redo_plots)
+            # Change plot limits
+            self.widget_controls['check_box']['graph_limits'] = QCheckBox('Squeeze plots')
+            self.widget_controls['check_box']['graph_limits'].setCheckState(Qt.CheckState.Unchecked)
+            self.widget_controls['check_box']['graph_limits'].stateChanged.connect(self.change_plot_lims)
+
         if self.metric_range_graph:
             # buttons to control which graph to show
             self.widget_controls['button']['next_metric_graph'] = QPushButton('->', self)
@@ -182,3 +188,10 @@ class widgets():
                 if len(metric_name) > 20:
                     metric_name = key
                 self.widget_row[i]['metric_images'][key]['label'].setText(metric_name)
+
+    def change_plot_lims(self, state):
+        if state == 2:  # 2 is the checked value
+            self.plot_data_lim = self.data_lims['range_data']
+        else:
+            self.plot_data_lim = self.data_lims['fixed']
+        self.redo_plots(calc_range=False)

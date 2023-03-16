@@ -80,10 +80,11 @@
 <span class="sd">plot bar chart on matplotlib qt qidget</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <div class="viewcode-block" id="bar_plotter"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.bar_plotter">[docs]</a><span class="k">class</span> <span class="nc">bar_plotter</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bar_names</span><span class="p">,</span> <span class="n">var_names</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bar_names</span><span class="p">,</span> <span class="n">var_names</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">lim</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">bar_names</span> <span class="o">=</span> <span class="n">bar_names</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">var_names</span> <span class="o">=</span> <span class="n">var_names</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lim</span> <span class="o">=</span><span class="n">lim</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">num_bars</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bar_names</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">num_vars</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var_names</span><span class="p">)</span>
@@ -113,17 +114,18 @@
 <div class="viewcode-block" id="bar_plotter.set_plot_lims"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.bar_plotter.set_plot_lims">[docs]</a>    <span class="k">def</span> <span class="nf">set_plot_lims</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">y_lims</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
         <span class="c1"># self.ax.axes.set_ylim(min(0, y_lims[0], max(1, y_lims[1])))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">top</span><span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">y_lims</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">top</span><span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lim</span><span class="p">,</span> <span class="n">y_lims</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div></div>
 
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">line plot of matplotlib qt widget</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <div class="viewcode-block" id="line_plotter"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.line_plotter">[docs]</a><span class="k">class</span> <span class="nc">line_plotter</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">x_label</span><span class="p">,</span> <span class="n">y_label</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">x_label</span><span class="p">,</span> <span class="n">y_label</span><span class="p">,</span> <span class="n">lim</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x_label</span> <span class="o">=</span> <span class="n">x_label</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y_label</span> <span class="o">=</span> <span class="n">y_label</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lim</span> <span class="o">=</span> <span class="n">lim</span>
 
 <div class="viewcode-block" id="line_plotter.plot"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.line_plotter.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span></div>
@@ -141,16 +143,17 @@
 <div class="viewcode-block" id="line_plotter.set_plot_lims"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.line_plotter.set_plot_lims">[docs]</a>    <span class="k">def</span> <span class="nf">set_plot_lims</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">y_lims</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
         <span class="c1"># self.ax.axes.set_ylim(min(0, y_lims[0], max(1, y_lims[1])))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">top</span><span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">y_lims</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">top</span><span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lim</span><span class="p">,</span> <span class="n">y_lims</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div></div>
 
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">plot radar chart on matplotlib qt widget</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <div class="viewcode-block" id="radar_plotter"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.radar_plotter">[docs]</a><span class="k">class</span> <span class="nc">radar_plotter</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radar_names</span><span class="p">,</span> <span class="n">var_names</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radar_names</span><span class="p">,</span> <span class="n">var_names</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">lim</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">radar_names</span> <span class="o">=</span> <span class="n">radar_names</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">var_names</span> <span class="o">=</span> <span class="n">var_names</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lim</span> <span class="o">=</span> <span class="n">lim</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">num_radars</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radar_names</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">num_vars</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var_names</span><span class="p">)</span>
@@ -176,7 +179,7 @@
 <div class="viewcode-block" id="radar_plotter.set_plot_lims"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.radar_plotter.set_plot_lims">[docs]</a>    <span class="k">def</span> <span class="nf">set_plot_lims</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">y_lims</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
         <span class="c1"># self.ax.axes.set_ylim(min(0, y_lims[0], max(1, y_lims[1])))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">top</span><span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">y_lims</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">top</span><span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lim</span><span class="p">,</span> <span class="n">y_lims</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div></div>
 
 
 <span class="sd">&#39;&#39;&#39;</span>
@@ -226,13 +229,14 @@
                 <span class="n">pbar</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">results</span></div>
 
-<div class="viewcode-block" id="get_radar_plots_avg"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.get_radar_plots_avg">[docs]</a><span class="k">def</span> <span class="nf">get_radar_plots_avg</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">metrics_names</span><span class="p">,</span> <span class="n">transformation_names</span><span class="p">,</span> <span class="n">axes</span><span class="p">):</span>
+<div class="viewcode-block" id="get_radar_plots_avg_plots"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.get_radar_plots_avg_plots">[docs]</a><span class="k">def</span> <span class="nf">get_radar_plots_avg_plots</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">metrics_names</span><span class="p">,</span> <span class="n">transformation_names</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">lim</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    plot results on a polar axes -&gt; radar/spider plot</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">radar_plt</span> <span class="o">=</span> <span class="n">radar_plotter</span><span class="p">(</span><span class="n">radar_names</span><span class="o">=</span><span class="n">metrics_names</span><span class="p">,</span>
                                     <span class="n">var_names</span><span class="o">=</span><span class="n">transformation_names</span><span class="p">,</span>
-                                    <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">)</span>
+                                    <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">,</span>
+                                    <span class="n">lim</span><span class="o">=</span><span class="n">lim</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">metrics_names</span><span class="p">:</span>
         <span class="n">mean_value</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="c1"># std_value = []</span>
@@ -245,11 +249,11 @@
     <span class="n">radar_plt</span><span class="o">.</span><span class="n">set_style</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">radar_plt</span></div>
 
-<div class="viewcode-block" id="get_transform_range_plots"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.get_transform_range_plots">[docs]</a><span class="k">def</span> <span class="nf">get_transform_range_plots</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="n">axes</span><span class="p">):</span>
+<div class="viewcode-block" id="get_transform_range_plots"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.get_transform_range_plots">[docs]</a><span class="k">def</span> <span class="nf">get_transform_range_plots</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">lim</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    plot a single transform range graph of all metrics</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">plot</span> <span class="o">=</span> <span class="n">line_plotter</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="s1">&#39;Values&#39;</span><span class="p">)</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">line_plotter</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="s1">&#39;Values&#39;</span><span class="p">,</span> <span class="n">lim</span><span class="o">=</span><span class="n">lim</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
         <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">transform</span><span class="o">+</span><span class="s1">&#39;_range_values&#39;</span><span class="p">],</span> <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">transform</span><span class="p">],</span> <span class="n">metric</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">plot</span></div>

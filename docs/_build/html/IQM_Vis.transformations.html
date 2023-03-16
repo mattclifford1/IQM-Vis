@@ -200,14 +200,14 @@ to an odd number. (Defaults to 7)</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="IQM_Vis.transformations.transforms.rotation">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.transformations.transforms.</span></span><span class="sig-name descname"><span class="pre">rotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/transformations/transforms.html#rotation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.transformations.transforms.rotation" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">IQM_Vis.transformations.transforms.</span></span><span class="sig-name descname"><span class="pre">rotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/transformations/transforms.html#rotation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.transformations.transforms.rotation" title="Permalink to this definition"></a></dt>
 <dd><p>Rotate an image around its centre. Uses skimage.transform.rotate. Areas
 that are rotated beyond the image are filled in with black pixel values</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>image</strong> (<em>np.array</em>) – image to be rotated</p></li>
-<li><p><strong>angle</strong> (<em>float</em>) – amount of rotation in degrees</p></li>
+<li><p><strong>angle</strong> (<em>float</em>) – amount of rotation in degrees (Defaults to 0)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

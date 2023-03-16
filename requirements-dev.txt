@@ -5,10 +5,10 @@ PyQt6
 matplotlib
 torch
 torchmetrics
-twine
-pytest
 dists-pytorch
 torchvision
+twine
+pytest
 sphinx
 sphinx_rtd_theme
 Pallets-Sphinx-Themes

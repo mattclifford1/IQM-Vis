@@ -200,9 +200,10 @@
         <span class="n">reset_button</span><span class="o">.</span><span class="n">addStretch</span><span class="p">()</span>
 
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;re calc graphs button&#39;&#39;&#39;</span>
-        <span class="n">graph_button</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">graph_button</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics_avg_graph</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric_range_graph</span><span class="p">:</span>
             <span class="n">graph_button</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget_controls</span><span class="p">[</span><span class="s1">&#39;button&#39;</span><span class="p">][</span><span class="s1">&#39;force_update&#39;</span><span class="p">])</span>
+            <span class="n">graph_button</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget_controls</span><span class="p">[</span><span class="s1">&#39;check_box&#39;</span><span class="p">][</span><span class="s1">&#39;graph_limits&#39;</span><span class="p">])</span>
             <span class="n">graph_button</span><span class="o">.</span><span class="n">addStretch</span><span class="p">()</span>
 
 <span class="w">        </span><span class="sd">&#39;&#39;&#39; put the whole layout together &#39;&#39;&#39;</span>
@@ -236,8 +237,8 @@
 <div class="viewcode-block" id="layout.init_style"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.layout.layout.init_style">[docs]</a>    <span class="k">def</span> <span class="nf">init_style</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">css_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">css_file</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="nb">dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
-            <span class="c1"># css_file = os.path.join(dir, &#39;style.css&#39;)</span>
-            <span class="n">css_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="s1">&#39;style.css&#39;</span><span class="p">)</span>
+            <span class="c1"># css_file = os.path.join(dir, &#39;style-light.css&#39;)</span>
+            <span class="n">css_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="s1">&#39;style-light.css&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">css_file</span><span class="p">):</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">css_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>

@@ -3,27 +3,11 @@ import glob
 import numpy as np
 import torch
 import IQM_Vis
-from DISTS_pytorch import DISTS
 
 from PIL import Image
 from PIL.TiffTags import TAGS
 
 
-'''DISTS metric'''
-class dists_wrapper:
-    def __init__(self):
-        self.metric = DISTS()
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.metric.to(self.device)
-        self.preproccess_function = IQM_Vis.metrics.preprocess_numpy_image
-
-    def __call__(self, im_ref, im_comp, **kwargs):
-        IQM_Vis.metrics.check_shapes(im_ref, im_comp)
-        im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
-        im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)
-        _score = self.metric(im_ref, im_comp)
-        score = _score.cpu().detach().numpy()
-        return score
 
 '''Textures calibrated image loader'''
 def load_and_calibrate_image(file, max_luminance=200, size=256):
@@ -97,9 +81,9 @@ def crop_centre(im):
 
 def run():
     # metrics functions must return a single value
-    metric = {'DISTS': dists_wrapper(),
-              'MAE': IQM_Vis.metrics.MAE,
-              '1-SSIM': IQM_Vis.metrics.ssim()}
+    metric = {'DISTS': IQM_Vis.metrics.DISTS(),
+              'MAE': IQM_Vis.metrics.MAE(),
+              '1-SSIM': IQM_Vis.metrics.SSIM()}
 
     # metrics images return a numpy image - dont include any for this example
     metric_images = {}

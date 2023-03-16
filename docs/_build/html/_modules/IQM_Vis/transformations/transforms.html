@@ -78,13 +78,13 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
-<div class="viewcode-block" id="rotation"><a class="viewcode-back" href="../../../IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.rotation">[docs]</a><span class="k">def</span> <span class="nf">rotation</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">angle</span><span class="p">):</span>
+<div class="viewcode-block" id="rotation"><a class="viewcode-back" href="../../../IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.rotation">[docs]</a><span class="k">def</span> <span class="nf">rotation</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Rotate an image around its centre. Uses skimage.transform.rotate. Areas</span>
 <span class="sd">    that are rotated beyond the image are filled in with black pixel values</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.array): image to be rotated</span>
-<span class="sd">        angle (float): amount of rotation in degrees</span>
+<span class="sd">        angle (float): amount of rotation in degrees (Defaults to 0)</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        image (np.array): rotated image</span>
@@ -110,9 +110,6 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
             <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">image</span></div>
-<span class="c1">#</span>
-<span class="k">def</span> <span class="nf">_zoom</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">param</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">zoom_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">param</span><span class="p">)</span>
 
 <div class="viewcode-block" id="x_shift"><a class="viewcode-back" href="../../../IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.x_shift">[docs]</a><span class="k">def</span> <span class="nf">x_shift</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">x_shift</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Translate image horizontally</span>
@@ -153,8 +150,19 @@
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">image</span> <span class="o">+</span> <span class="n">value</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
 
-<span class="k">def</span> <span class="nf">_translate_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">x_shift</span><span class="p">,</span> <span class="n">y_shift</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39; x and y shift in range (-1, 1)&#39;&#39;&#39;</span>
+<span class="k">def</span> <span class="nf">_translate_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">x_shift</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y_shift</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Translate image vertically</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        image (np.array): image to be shifted</span>
+<span class="sd">        x_shift (float): shift proportion of the image in the range (-1, 1).</span>
+<span class="sd">                         (Defaults to 0)</span>
+<span class="sd">        y_shift (float): shift proportion of the image in the range (-1, 1).</span>
+<span class="sd">                         (Defaults to 0)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        image (np.array): shifted image</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="n">x_shift</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">y_shift</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">image</span>
     <span class="n">original_size</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span>

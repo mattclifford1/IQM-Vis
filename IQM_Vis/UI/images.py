@@ -47,11 +47,13 @@ class images:
     '''
     metric graph updaters
     '''
-    def redo_plots(self):
+    def redo_plots(self, calc_range=True):
+        if calc_range:  # add an or metrics_range val not been calculated
+            if self.metrics_avg_graph or self.metric_range_graph:
+                self.get_metrics_over_all_trans_with_init_values()
         if self.metrics_avg_graph:
-            self.get_metrics_over_range()
+            self.display_metrics_over_range()
         if self.metric_range_graph:
-            self.get_metric_range_values()
             self.display_metric_range_plot()
 
     '''
@@ -85,7 +87,8 @@ class images:
     def display_metrics_graph(self, metrics, i):
         bar_plt = plot_utils.bar_plotter(bar_names=[''],
                                         var_names=list(metrics.keys()),
-                                        ax=self.widget_row[i]['metrics']['info']['data'])
+                                        ax=self.widget_row[i]['metrics']['info']['data'],
+                                        lim=self.plot_data_lim)
         bar_plt.plot('', list(metrics.values()))
         bar_plt.show()
 
@@ -97,31 +100,42 @@ class images:
         self.widget_row[i]['metrics']['info']['data'].setText(text)
 
     '''
-    metric range plot
+    get metric values when adjusting a single transformation value over its range
     '''
-    def get_metric_range_values(self):
-        self.metric_range_results = []
+    def get_metrics_over_all_trans_with_init_values(self):
+        self.metric_over_range_results = []
         # use the initiased/default values for all sliders
         init_trans_params = {}
         for trans in self.transformations:
             init_trans_params[trans] = self.transformations[trans]['init_value']
         self.status_bar.showMessage('Getting Range plot Values')
         QApplication.processEvents()
+        max_val = 0
         for i, data_store in enumerate(self.data_stores):
             results = plot_utils.compute_metrics_over_range(data_store,
                                                             self.transformations,
                                                             init_trans_params,
                                                             self.params_from_sliders['metric_params'],
                                                             pbar=self.pbar)
-            self.metric_range_results.append(results)
+            self.metric_over_range_results.append(results)
+            # see max metric values
+            for _, item in results.items():
+                for key2, item2 in item.items():
+                    if '_range_values' not in key2:
+                        for val in item2:
+                            max_val = max(max_val, val)
+
         self.status_bar.showMessage('Done', 3000)
+        self.data_lims['range_data'] = max_val
 
-
+    '''
+    metric range plot (line plots of range of all sliders)
+    '''
     def display_metric_range_plot(self):
         trans_to_plot = list(self.transformations.keys())[self.metric_range_graph_num]
         for i, data_store in enumerate(self.data_stores):
             axes = self.widget_row[i]['metrics']['range']['data']
-            plot = plot_utils.get_transform_range_plots(self.metric_range_results[i], trans_to_plot, axes)
+            plot = plot_utils.get_transform_range_plots(self.metric_over_range_results[i], trans_to_plot, axes, self.plot_data_lim)
             plot.show()
 
     def change_metric_range_graph(self, add=1):
@@ -134,31 +148,32 @@ class images:
         self.display_metric_range_plot()
 
     '''
+    metric averaging plots (radar plot)
+    '''
+    def display_metrics_over_range(self):
+        # self.status_bar.showMessage('Getting avg. values')
+        # QApplication.processEvents()
+        for i, data_store in enumerate(self.data_stores):
+            # uncomment below if you want to calc over the current trans values instead of init
+            # results = plot_utils.compute_metrics_over_range(data_store,
+            #                                                 self.transformations,
+            #                                                 self.params_from_sliders['transforms'],
+            #                                                 self.params_from_sliders['metric_params'],
+            #                                                 pbar=self.pbar)
+            self.plot_metrics_graphs(self.metric_over_range_results[i], i)
+        # self.status_bar.showMessage('Done', 3000)
+
+    def plot_metrics_graphs(self, results, i):
+        metrics_names = list(self.data_stores[i].metrics.keys())
+        transformation_names = list(self.sliders['transforms'].keys())
+        axes = self.widget_row[i]['metrics']['avg']['data']
+        radar_plotter = plot_utils.get_radar_plots_avg_plots(results, metrics_names, transformation_names, axes, self.plot_data_lim)
+        radar_plotter.show()
+
+    '''
     metric image updaters
     '''
     def display_metric_images(self, metric_images, i):
         for key in metric_images:
             widget = self.widget_row[i]['metric_images'][key]['data']
             gui_utils.change_im(widget, metric_images[key], resize=self.image_display_size)
-
-    '''
-    metric averaging plots
-    '''
-    def get_metrics_over_range(self):
-        self.status_bar.showMessage('Getting avg. values')
-        QApplication.processEvents()
-        for i, data_store in enumerate(self.data_stores):
-            results = plot_utils.compute_metrics_over_range(data_store,
-                                                            self.transformations,
-                                                            self.params_from_sliders['transforms'],
-                                                            self.params_from_sliders['metric_params'],
-                                                            pbar=self.pbar)
-            self.plot_metrics_graphs(results, i)
-        self.status_bar.showMessage('Done', 3000)
-
-    def plot_metrics_graphs(self, results, i):
-        metrics_names = list(self.data_stores[i].metrics.keys())
-        transformation_names = list(self.sliders['transforms'].keys())
-        axes = self.widget_row[i]['metrics']['avg']['data']
-        radar_plotter = plot_utils.get_radar_plots_avg(results, metrics_names, transformation_names, axes)
-        radar_plotter.show()

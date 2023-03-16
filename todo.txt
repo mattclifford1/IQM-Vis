@@ -1,6 +1,8 @@
 Needs doing:
-  - add LPIPS to DISTS
+  - add LPIPS
+  - add DISTS
   - add MSSIM
+  - add NLPD
 
 UI
   - Export images
@@ -13,6 +15,5 @@ UI
 
 minor:
   - fix metric images being stretched (muliptle rows)
-  - only calc range plots when arrow pressed
   - Option to change image display size
   - Option to change screen calibration

@@ -8,17 +8,157 @@ import torch.nn as nn
 import numpy as np
 import warnings
 
-from torchmetrics import StructuralSimilarityIndexMeasure as SSIM
-from torchmetrics import MultiScaleStructuralSimilarityIndexMeasure as MSSIM
+from torchmetrics import StructuralSimilarityIndexMeasure as ssim_torch
+from torchmetrics import MultiScaleStructuralSimilarityIndexMeasure as Mssim_torch
 from torchmetrics import PeakSignalNoiseRatio as PSNR
 # from torchmetrics import UniversalImageQualityIndex as UIQI
 from torchmetrics.functional import universal_image_quality_index as UIQI
 from torchmetrics import SpectralDistortionIndex as SDI
 from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity as LPIPS
+from DISTS_pytorch import DISTS as dists_original
+
+class MAE:
+    '''Mean Absolute Error between two images. Images must have the same
+       dimensions
+
+    Args:
+        return_image (bool): Whether to return the image (Defaults to False which
+                             will return a scalar value)
+    '''
+    def __init__(self, return_image=False):
+        self.return_image = return_image
+
+    def __call__(self, im_ref, im_comp, **kwargs):
+        '''When an instance is called
+
+        Args:
+            im_ref (np.array): Reference image
+            im_comp (np.array): Comparison image
+            **kwargs: Arbitrary keyword arguments
+
+        Returns:
+            score (np.array): MAE (scalar if return_image is False, image if
+                             return_image is True)
+        '''
+        _check_shapes(im_ref, im_comp)
+        L1 = np.abs(im_ref - im_comp)
+        if self.return_image:
+            return L1
+        else:
+            return L1.mean()
+
+class MSE:
+    '''Mean Squared Error between two images. Images must have the same
+       dimensions
+
+    Args:
+        return_image (bool): Whether to return the image (Defaults to False which
+                             will return a scalar value)
+    '''
+    def __init__(self, return_image=False):
+        self.return_image = return_image
+
+    def __call__(self, im_ref, im_comp, **kwargs):
+        '''When an instance is called
+
+        Args:
+            im_ref (np.array): Reference image
+            im_comp (np.array): Comparison image
+            **kwargs: Arbitrary keyword arguments
+
+        Returns:
+            score (np.array): MSE (scalar if return_image is False, image if
+                             return_image is True)
+        '''
+        _check_shapes(im_ref, im_comp)
+        L2 = (im_ref - im_comp)**2
+        if self.return_image:
+            return L2
+        else:
+            return L2.mean()
+
+class SSIM:
+    '''Structural Similarity Index Measure between two images. Images must have
+       the same dimensions. Score given is 1 - SSIM to give the loss/dissimilarity
+
+    Args:
+        return_image (bool): Whether to return the image (Defaults to False which
+                             will return a scalar value)
+    '''
+    def __init__(self, return_image=False):
+        self.return_image = return_image
+        self.metric = ssim_torch
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.preproccess_function = _preprocess_numpy_image
+
+    def __call__(self, im_ref, im_comp, **kwargs):
+        '''When an instance is called
+
+        Args:
+            im_ref (np.array): Reference image
+            im_comp (np.array): Comparison image
+            **kwargs: Arbitrary keyword arguments
+
+        Returns:
+            score (np.array): 1-SSIM (scalar if return_image is False, image if
+                             return_image is True)
+        '''
+        _check_shapes(im_ref, im_comp)
+        im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
+        im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)
+        # set up metric
+        with warnings.catch_warnings():    # we don't care about the warnings these give
+            warnings.simplefilter("ignore")
+            if self.return_image:
+                _metric = self.metric(return_full_image=True, reduction=None, **kwargs)
+            else:
+                _metric = self.metric(**kwargs)
+            _metric.to(self.device)
+        if self.return_image:
+            _, ssim_full_im = _metric(im_ref, im_comp)
+            ssim_full_im = torch.squeeze(ssim_full_im, axis=0)
+            ssim_full_im = ssim_full_im.permute(1, 2, 0)
+            ssim_full_im = torch.clip(ssim_full_im, 0, 1)
+            _score = ssim_full_im.cpu().detach().numpy()
+        else:
+            _score = _metric(im_ref, im_comp).cpu().detach().numpy()
+        _score = 1 - _score
+        _metric.reset()
+        return _score
 
 
+'''DISTS metric'''
+class DISTS:
+    '''DISTS metric (just link and description...)
+    '''
+    def __init__(self):
+        self.metric = dists_original()
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.metric.to(self.device)
+        self.preproccess_function = _preprocess_numpy_image
+
+    def __call__(self, im_ref, im_comp, **kwargs):
+        '''When an instance is called
+
+        Args:
+            im_ref (np.array): Reference image
+            im_comp (np.array): Comparison image
+            **kwargs: Arbitrary keyword arguments
+
+        Returns:
+            score (np.array): DISTS score
+        '''
+        _check_shapes(im_ref, im_comp)
+        im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
+        im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)
+        _score = self.metric(im_ref, im_comp)
+        score = _score.cpu().detach().numpy()
+        return score
+
+
+''' TO ADD TO DEMOS'''
 ''' simple functional format to call a metric (numpy)'''
-def MAE(im_ref, im_comp, **kwargs):
+def _MAE(im_ref, im_comp, **kwargs):
     '''Mean Absolute Error between two images. Images must have the same
        dimensions
 
@@ -30,77 +170,37 @@ def MAE(im_ref, im_comp, **kwargs):
     Returns:
         mean (np.array): scalar of MAE
     '''
-    check_shapes(im_ref, im_comp)
+    _check_shapes(im_ref, im_comp)
     L1 = np.abs(im_ref - im_comp)
     return L1.mean()
 
 ''' functional (using torch)'''
-def MSE(im_ref, im_comp, **kwargs):
-    check_shapes(im_ref, im_comp)
+def _MSE(im_ref, im_comp, **kwargs):
+    _check_shapes(im_ref, im_comp)
     metric = nn.MSELoss()
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    im_ref = preprocess_numpy_image(im_ref).to(device=device, dtype=torch.float)
-    im_comp = preprocess_numpy_image(im_comp).to(device=device, dtype=torch.float)
+    im_ref = _preprocess_numpy_image(im_ref).to(device=device, dtype=torch.float)
+    im_comp = _preprocess_numpy_image(im_comp).to(device=device, dtype=torch.float)
     _score = metric(im_ref, im_comp)
     return _score.cpu().detach().numpy()
 
 ''' can also call as a class to input default args (using torch)'''
-class ssim:
-    def __init__(self):
-        self.metric = SSIM
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.preproccess_function = preprocess_numpy_image
 
-    def __call__(self, im_ref, im_comp, **kwargs):
-        check_shapes(im_ref, im_comp)
-        im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
-        im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)
-        # set up metric
-        with warnings.catch_warnings():    # we don't care about the warnings these give
-            warnings.simplefilter("ignore")
-            _metric = self.metric(**kwargs)
-            _metric.to(self.device)
-        _score = _metric(im_ref, im_comp)
-        score = 1 - _score.cpu().detach().numpy()
-        _metric.reset()
-        return score
 
 
 '''Example of metric image produced to display (using numpy)'''
-def MSE_image(im_ref, im_comp, **kwargs):
-    check_shapes(im_ref, im_comp)
+def _MSE_image(im_ref, im_comp, **kwargs):
+    _check_shapes(im_ref, im_comp)
     L2 = (im_ref - im_comp)**2
     return L2
 
-'''Example of metric image produced to display (using torch metrics)'''
-class SSIM_image:
-    def __init__(self):
-        self.metric = SSIM
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.preproccess_function = preprocess_numpy_image
 
-    def __call__(self, im_ref, im_comp, **kwargs):
-        check_shapes(im_ref, im_comp)
-        im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
-        im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)
-        # set up metric
-        with warnings.catch_warnings():    # we don't care about the warnings these give
-            warnings.simplefilter("ignore")
-            _metric_image = self.metric(return_full_image=True, reduction=None, **kwargs)
-            _metric_image.to(self.device)
-        _, ssim_full_im = _metric_image(im_ref, im_comp)
-        ssim_full_im = torch.squeeze(ssim_full_im, axis=0)
-        ssim_full_im = ssim_full_im.permute(1, 2, 0)
-        ssim_full_im = torch.clip(ssim_full_im, 0, 1)
-        im = ssim_full_im.cpu().detach().numpy()
-        _metric_image.reset()   # clear mem buffer to stop overflow
-        return im
 
 
 '''
 Helper functions for metric computation
 '''
-def preprocess_numpy_image(image):
+def _preprocess_numpy_image(image):
     if len(image.shape) == 2:
         image = np.expand_dims(image, axis=2)
     image = image.transpose((2, 0, 1))
@@ -108,7 +208,7 @@ def preprocess_numpy_image(image):
     image = torch.from_numpy(image)
     return image
 
-def check_shapes(im_ref, im_comp):
+def _check_shapes(im_ref, im_comp):
     '''
     make sure both images have the same dimensions
     '''

@@ -130,9 +130,10 @@ class layout(QMainWindow):
         reset_button.addStretch()
 
         '''re calc graphs button'''
-        graph_button = QHBoxLayout()
+        graph_button = QVBoxLayout()
         if self.metrics_avg_graph or self.metric_range_graph:
             graph_button.addWidget(self.widget_controls['button']['force_update'])
+            graph_button.addWidget(self.widget_controls['check_box']['graph_limits'])
             graph_button.addStretch()
 
         ''' put the whole layout together '''
@@ -166,8 +167,8 @@ class layout(QMainWindow):
     def init_style(self, css_file=None):
         if css_file == None:
             dir = os.path.dirname(os.path.abspath(__file__))
-            # css_file = os.path.join(dir, 'style.css')
-            css_file = os.path.join(dir, 'style.css')
+            # css_file = os.path.join(dir, 'style-light.css')
+            css_file = os.path.join(dir, 'style-light.css')
         if os.path.isfile(css_file):
             with open(css_file, 'r') as file:
                 self.app.setStyleSheet(file.read())

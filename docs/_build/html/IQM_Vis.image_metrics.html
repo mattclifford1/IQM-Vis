@@ -45,13 +45,10 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">IQM_Vis.image_metrics package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-IQM_Vis.image_metrics.metrics">IQM_Vis.image_metrics.metrics module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.image_metrics.metrics.MAE"><code class="docutils literal notranslate"><span class="pre">MAE()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.image_metrics.metrics.MSE"><code class="docutils literal notranslate"><span class="pre">MSE()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.image_metrics.metrics.MSE_image"><code class="docutils literal notranslate"><span class="pre">MSE_image()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.image_metrics.metrics.SSIM_image"><code class="docutils literal notranslate"><span class="pre">SSIM_image</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.image_metrics.metrics.check_shapes"><code class="docutils literal notranslate"><span class="pre">check_shapes()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.image_metrics.metrics.preprocess_numpy_image"><code class="docutils literal notranslate"><span class="pre">preprocess_numpy_image()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.image_metrics.metrics.ssim"><code class="docutils literal notranslate"><span class="pre">ssim</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.image_metrics.metrics.DISTS"><code class="docutils literal notranslate"><span class="pre">DISTS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.image_metrics.metrics.MAE"><code class="docutils literal notranslate"><span class="pre">MAE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.image_metrics.metrics.MSE"><code class="docutils literal notranslate"><span class="pre">MSE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.image_metrics.metrics.SSIM"><code class="docutils literal notranslate"><span class="pre">SSIM</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#module-IQM_Vis.image_metrics">Module contents</a></li>
@@ -91,61 +88,59 @@
 <section id="module-IQM_Vis.image_metrics.metrics">
 <span id="iqm-vis-image-metrics-metrics-module"></span><h2>IQM_Vis.image_metrics.metrics module<a class="headerlink" href="#module-IQM_Vis.image_metrics.metrics" title="Permalink to this heading"></a></h2>
 <p>sample metrics to use with the examples of the UI</p>
-<dl class="py function">
+<dl class="py class">
+<dt class="sig sig-object py" id="IQM_Vis.image_metrics.metrics.DISTS">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.image_metrics.metrics.</span></span><span class="sig-name descname"><span class="pre">DISTS</span></span><a class="reference internal" href="_modules/IQM_Vis/image_metrics/metrics.html#DISTS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.image_metrics.metrics.DISTS" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>DISTS metric (just link and description…)</p>
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="IQM_Vis.image_metrics.metrics.MAE">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.image_metrics.metrics.</span></span><span class="sig-name descname"><span class="pre">MAE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/image_metrics/metrics.html#MAE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.image_metrics.metrics.MAE" title="Permalink to this definition"></a></dt>
-<dd><dl class="simple">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.image_metrics.metrics.</span></span><span class="sig-name descname"><span class="pre">MAE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/image_metrics/metrics.html#MAE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.image_metrics.metrics.MAE" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="simple">
 <dt>Mean Absolute Error between two images. Images must have the same</dt><dd><p>dimensions</p>
 </dd>
 </dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>im_ref</strong> (<em>np.array</em>) – Reference image</p></li>
-<li><p><strong>im_comp</strong> (<em>np.array</em>) – Comparison image</p></li>
-<li><p><strong>**kwargs</strong> – Arbitrary keyword arguments</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>scalar of MAE</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>mean (np.array)</p>
+<dd class="field-odd"><p><strong>return_image</strong> (<em>bool</em>) – Whether to return the image (Defaults to False which
+will return a scalar value)</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="py function">
+<dl class="py class">
 <dt class="sig sig-object py" id="IQM_Vis.image_metrics.metrics.MSE">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.image_metrics.metrics.</span></span><span class="sig-name descname"><span class="pre">MSE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/image_metrics/metrics.html#MSE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.image_metrics.metrics.MSE" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="IQM_Vis.image_metrics.metrics.MSE_image">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.image_metrics.metrics.</span></span><span class="sig-name descname"><span class="pre">MSE_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/image_metrics/metrics.html#MSE_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.image_metrics.metrics.MSE_image" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="IQM_Vis.image_metrics.metrics.SSIM_image">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.image_metrics.metrics.</span></span><span class="sig-name descname"><span class="pre">SSIM_image</span></span><a class="reference internal" href="_modules/IQM_Vis/image_metrics/metrics.html#SSIM_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.image_metrics.metrics.SSIM_image" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.image_metrics.metrics.</span></span><span class="sig-name descname"><span class="pre">MSE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/image_metrics/metrics.html#MSE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.image_metrics.metrics.MSE" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="simple">
+<dt>Mean Squared Error between two images. Images must have the same</dt><dd><p>dimensions</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>return_image</strong> (<em>bool</em>) – Whether to return the image (Defaults to False which
+will return a scalar value)</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="IQM_Vis.image_metrics.metrics.check_shapes">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.image_metrics.metrics.</span></span><span class="sig-name descname"><span class="pre">check_shapes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/image_metrics/metrics.html#check_shapes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.image_metrics.metrics.check_shapes" title="Permalink to this definition"></a></dt>
-<dd><p>make sure both images have the same dimensions</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="IQM_Vis.image_metrics.metrics.preprocess_numpy_image">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.image_metrics.metrics.</span></span><span class="sig-name descname"><span class="pre">preprocess_numpy_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/image_metrics/metrics.html#preprocess_numpy_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.image_metrics.metrics.preprocess_numpy_image" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
 <dl class="py class">
-<dt class="sig sig-object py" id="IQM_Vis.image_metrics.metrics.ssim">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.image_metrics.metrics.</span></span><span class="sig-name descname"><span class="pre">ssim</span></span><a class="reference internal" href="_modules/IQM_Vis/image_metrics/metrics.html#ssim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.image_metrics.metrics.ssim" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.image_metrics.metrics.SSIM">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.image_metrics.metrics.</span></span><span class="sig-name descname"><span class="pre">SSIM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/image_metrics/metrics.html#SSIM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.image_metrics.metrics.SSIM" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="simple">
+<dt>Structural Similarity Index Measure between two images. Images must have</dt><dd><p>the same dimensions. Score given is 1 - SSIM to give the loss/dissimilarity</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>return_image</strong> (<em>bool</em>) – Whether to return the image (Defaults to False which
+will return a scalar value)</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>

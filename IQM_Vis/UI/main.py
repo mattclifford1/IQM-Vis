@@ -25,6 +25,9 @@ class make_app(widgets, layout, images):
         self.image_display_size = image_display_size
         self.metric_params = metric_params
 
+        self.data_lims = {'fixed': 1, 'range_data': 1}
+        self.plot_data_lim = 1
+
         self.dataset = self._single_image_or_dataset()
         self.setWindowTitle('IQM-Vis')
 

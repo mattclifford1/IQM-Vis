@@ -5,3 +5,5 @@ PyQt6
 matplotlib
 torch
 torchmetrics
+dists-pytorch
+torchvision

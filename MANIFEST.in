@@ -1,5 +1,5 @@
 include README.md
 include pics/image2.jpg
 include pics/image3.jpg
-include IQM_Vis/UI/style.css
+include IQM_Vis/UI/style-light.css
 include VERSION

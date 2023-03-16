@@ -10,10 +10,11 @@ from IQM_Vis.utils import image_utils
 plot bar chart on matplotlib qt qidget
 '''
 class bar_plotter:
-    def __init__(self, bar_names, var_names, ax):
+    def __init__(self, bar_names, var_names, ax, lim):
             self.bar_names = bar_names
             self.var_names = var_names
             self.ax = ax
+            self.lim =lim
             self.ax.axes.clear()
             self.num_bars = len(self.bar_names)
             self.num_vars = len(self.var_names)
@@ -43,17 +44,18 @@ class bar_plotter:
     def set_plot_lims(self):
         y_lims = self.ax.axes.get_ylim()
         # self.ax.axes.set_ylim(min(0, y_lims[0], max(1, y_lims[1])))
-        self.ax.axes.set_ylim(top= max(1, y_lims[1]))
+        self.ax.axes.set_ylim(top= max(self.lim, y_lims[1]))
 
 '''
 line plot of matplotlib qt widget
 '''
 class line_plotter:
-    def __init__(self, ax, x_label, y_label):
+    def __init__(self, ax, x_label, y_label, lim=1):
         self.ax = ax
         self.ax.axes.clear()
         self.x_label = x_label
         self.y_label = y_label
+        self.lim = lim
 
     def plot(self, x, y, label):
         self.ax.axes.plot(x, y, label=label)
@@ -71,16 +73,17 @@ class line_plotter:
     def set_plot_lims(self):
         y_lims = self.ax.axes.get_ylim()
         # self.ax.axes.set_ylim(min(0, y_lims[0], max(1, y_lims[1])))
-        self.ax.axes.set_ylim(top= max(1, y_lims[1]))
+        self.ax.axes.set_ylim(top= max(self.lim, y_lims[1]))
 
 '''
 plot radar chart on matplotlib qt widget
 '''
 class radar_plotter:
-    def __init__(self, radar_names, var_names, ax):
+    def __init__(self, radar_names, var_names, ax, lim=1):
             self.radar_names = radar_names
             self.var_names = var_names
             self.ax = ax
+            self.lim = lim
             self.ax.axes.clear()
             self.num_radars = len(self.radar_names)
             self.num_vars = len(self.var_names)
@@ -106,7 +109,7 @@ class radar_plotter:
     def set_plot_lims(self):
         y_lims = self.ax.axes.get_ylim()
         # self.ax.axes.set_ylim(min(0, y_lims[0], max(1, y_lims[1])))
-        self.ax.axes.set_ylim(top= max(1, y_lims[1]))
+        self.ax.axes.set_ylim(top= max(self.lim, y_lims[1]))
 
 
 '''
@@ -156,13 +159,14 @@ def compute_metrics_over_range(data_store, transforms, transform_values, metric_
                 pbar.setValue(0)
     return results
 
-def get_radar_plots_avg(results, metrics_names, transformation_names, axes):
+def get_radar_plots_avg_plots(results, metrics_names, transformation_names, axes, lim=1):
     '''
     plot results on a polar axes -> radar/spider plot
     '''
     radar_plt = radar_plotter(radar_names=metrics_names,
                                     var_names=transformation_names,
-                                    ax=axes)
+                                    ax=axes,
+                                    lim=lim)
     for metric in metrics_names:
         mean_value = []
         # std_value = []
@@ -175,11 +179,11 @@ def get_radar_plots_avg(results, metrics_names, transformation_names, axes):
     radar_plt.set_style()
     return radar_plt
 
-def get_transform_range_plots(results, transform, axes):
+def get_transform_range_plots(results, transform, axes, lim=1):
     '''
     plot a single transform range graph of all metrics
     '''
-    plot = line_plotter(axes, transform, 'Values')
+    plot = line_plotter(axes, transform, 'Values', lim=lim)
     for metric in results:
         plot.plot(results[metric][transform+'_range_values'], results[metric][transform], metric)
     return plot

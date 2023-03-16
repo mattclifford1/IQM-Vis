@@ -7,13 +7,13 @@ def run():
     file_path = os.path.dirname(os.path.abspath(__file__))
 
     # metrics functions must return a single value
-    metric = {'MAE': IQM_Vis.metrics.MAE,
-              'MSE': IQM_Vis.metrics.MSE,
-              '1-SSIM': IQM_Vis.metrics.ssim()}
+    metric = {'MAE': IQM_Vis.metrics.MAE(),
+              'MSE': IQM_Vis.metrics.MSE(),
+              '1-SSIM': IQM_Vis.metrics.SSIM()}
 
     # metrics images return a numpy image
-    metric_images = {'MSE': IQM_Vis.metrics.MSE_image,
-                     'SSIM': IQM_Vis.metrics.SSIM_image()}
+    metric_images = {'MSE': IQM_Vis.metrics.MSE(return_image=True),
+                     'SSIM': IQM_Vis.metrics.SSIM(return_image=True)}
 
     # first row of images
     row_1 = IQM_Vis.data_holder(('X1', IQM_Vis.utils.load_image(os.path.join(file_path, 'images', 'wave3.jpeg'))),
