@@ -89,9 +89,9 @@
 <li class="toctree-l4"><a class="reference internal" href="IQM_Vis.UI.html#IQM_Vis.UI.images.images.display_metric_range_plot"><code class="docutils literal notranslate"><span class="pre">images.display_metric_range_plot()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="IQM_Vis.UI.html#IQM_Vis.UI.images.images.display_metrics"><code class="docutils literal notranslate"><span class="pre">images.display_metrics()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="IQM_Vis.UI.html#IQM_Vis.UI.images.images.display_metrics_graph"><code class="docutils literal notranslate"><span class="pre">images.display_metrics_graph()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="IQM_Vis.UI.html#IQM_Vis.UI.images.images.display_metrics_over_range"><code class="docutils literal notranslate"><span class="pre">images.display_metrics_over_range()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="IQM_Vis.UI.html#IQM_Vis.UI.images.images.display_metrics_text"><code class="docutils literal notranslate"><span class="pre">images.display_metrics_text()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="IQM_Vis.UI.html#IQM_Vis.UI.images.images.get_metric_range_values"><code class="docutils literal notranslate"><span class="pre">images.get_metric_range_values()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="IQM_Vis.UI.html#IQM_Vis.UI.images.images.get_metrics_over_range"><code class="docutils literal notranslate"><span class="pre">images.get_metrics_over_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="IQM_Vis.UI.html#IQM_Vis.UI.images.images.get_metrics_over_all_trans_with_init_values"><code class="docutils literal notranslate"><span class="pre">images.get_metrics_over_all_trans_with_init_values()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="IQM_Vis.UI.html#IQM_Vis.UI.images.images.plot_metrics_graphs"><code class="docutils literal notranslate"><span class="pre">images.plot_metrics_graphs()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="IQM_Vis.UI.html#IQM_Vis.UI.images.images.redo_plots"><code class="docutils literal notranslate"><span class="pre">images.redo_plots()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="IQM_Vis.UI.html#IQM_Vis.UI.images.images.transform_image"><code class="docutils literal notranslate"><span class="pre">images.transform_image()</span></code></a></li>
@@ -119,6 +119,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="IQM_Vis.UI.html#module-IQM_Vis.UI.widgets">IQM_Vis.UI.widgets module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets"><code class="docutils literal notranslate"><span class="pre">widgets</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.change_plot_lims"><code class="docutils literal notranslate"><span class="pre">widgets.change_plot_lims()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.display_slider_num"><code class="docutils literal notranslate"><span class="pre">widgets.display_slider_num()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.generic_value_change"><code class="docutils literal notranslate"><span class="pre">widgets.generic_value_change()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.init_widgets"><code class="docutils literal notranslate"><span class="pre">widgets.init_widgets()</span></code></a></li>
@@ -140,7 +141,6 @@
 <li class="toctree-l2"><a class="reference internal" href="IQM_Vis.examples.html#module-IQM_Vis.examples.dists">IQM_Vis.examples.dists module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="IQM_Vis.examples.html#IQM_Vis.examples.dists.correct"><code class="docutils literal notranslate"><span class="pre">correct()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="IQM_Vis.examples.html#IQM_Vis.examples.dists.crop_centre"><code class="docutils literal notranslate"><span class="pre">crop_centre()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="IQM_Vis.examples.html#IQM_Vis.examples.dists.dists_wrapper"><code class="docutils literal notranslate"><span class="pre">dists_wrapper</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="IQM_Vis.examples.html#IQM_Vis.examples.dists.load_and_calibrate_image"><code class="docutils literal notranslate"><span class="pre">load_and_calibrate_image()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="IQM_Vis.examples.html#IQM_Vis.examples.dists.run"><code class="docutils literal notranslate"><span class="pre">run()</span></code></a></li>
 </ul>
@@ -177,13 +177,10 @@
 <li class="toctree-l1"><a class="reference internal" href="IQM_Vis.image_metrics.html">IQM_Vis.image_metrics package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="IQM_Vis.image_metrics.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="IQM_Vis.image_metrics.html#module-IQM_Vis.image_metrics.metrics">IQM_Vis.image_metrics.metrics module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="IQM_Vis.image_metrics.html#IQM_Vis.image_metrics.metrics.MAE"><code class="docutils literal notranslate"><span class="pre">MAE()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="IQM_Vis.image_metrics.html#IQM_Vis.image_metrics.metrics.MSE"><code class="docutils literal notranslate"><span class="pre">MSE()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="IQM_Vis.image_metrics.html#IQM_Vis.image_metrics.metrics.MSE_image"><code class="docutils literal notranslate"><span class="pre">MSE_image()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="IQM_Vis.image_metrics.html#IQM_Vis.image_metrics.metrics.SSIM_image"><code class="docutils literal notranslate"><span class="pre">SSIM_image</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="IQM_Vis.image_metrics.html#IQM_Vis.image_metrics.metrics.check_shapes"><code class="docutils literal notranslate"><span class="pre">check_shapes()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="IQM_Vis.image_metrics.html#IQM_Vis.image_metrics.metrics.preprocess_numpy_image"><code class="docutils literal notranslate"><span class="pre">preprocess_numpy_image()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="IQM_Vis.image_metrics.html#IQM_Vis.image_metrics.metrics.ssim"><code class="docutils literal notranslate"><span class="pre">ssim</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="IQM_Vis.image_metrics.html#IQM_Vis.image_metrics.metrics.DISTS"><code class="docutils literal notranslate"><span class="pre">DISTS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="IQM_Vis.image_metrics.html#IQM_Vis.image_metrics.metrics.MAE"><code class="docutils literal notranslate"><span class="pre">MAE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="IQM_Vis.image_metrics.html#IQM_Vis.image_metrics.metrics.MSE"><code class="docutils literal notranslate"><span class="pre">MSE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="IQM_Vis.image_metrics.html#IQM_Vis.image_metrics.metrics.SSIM"><code class="docutils literal notranslate"><span class="pre">SSIM</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="IQM_Vis.image_metrics.html#module-IQM_Vis.image_metrics">Module contents</a></li>
@@ -234,7 +231,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.compute_metrics_over_range"><code class="docutils literal notranslate"><span class="pre">compute_metrics_over_range()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.get_all_slider_values"><code class="docutils literal notranslate"><span class="pre">get_all_slider_values()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.get_radar_plots_avg"><code class="docutils literal notranslate"><span class="pre">get_radar_plots_avg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.get_radar_plots_avg_plots"><code class="docutils literal notranslate"><span class="pre">get_radar_plots_avg_plots()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.get_transform_range_plots"><code class="docutils literal notranslate"><span class="pre">get_transform_range_plots()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.line_plotter"><code class="docutils literal notranslate"><span class="pre">line_plotter</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.line_plotter.plot"><code class="docutils literal notranslate"><span class="pre">line_plotter.plot()</span></code></a></li>

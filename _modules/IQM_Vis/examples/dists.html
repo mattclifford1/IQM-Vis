@@ -73,27 +73,11 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">IQM_Vis</span>
-<span class="kn">from</span> <span class="nn">DISTS_pytorch</span> <span class="kn">import</span> <span class="n">DISTS</span>
 
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">from</span> <span class="nn">PIL.TiffTags</span> <span class="kn">import</span> <span class="n">TAGS</span>
 
 
-<span class="sd">&#39;&#39;&#39;DISTS metric&#39;&#39;&#39;</span>
-<div class="viewcode-block" id="dists_wrapper"><a class="viewcode-back" href="../../../IQM_Vis.examples.html#IQM_Vis.examples.dists.dists_wrapper">[docs]</a><span class="k">class</span> <span class="nc">dists_wrapper</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">metric</span> <span class="o">=</span> <span class="n">DISTS</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">preproccess_function</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">preprocess_numpy_image</span>
-
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">check_shapes</span><span class="p">(</span><span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">)</span>
-        <span class="n">im_ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preproccess_function</span><span class="p">(</span><span class="n">im_ref</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
-        <span class="n">im_comp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preproccess_function</span><span class="p">(</span><span class="n">im_comp</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
-        <span class="n">_score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">(</span><span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">)</span>
-        <span class="n">score</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">score</span></div>
 
 <span class="sd">&#39;&#39;&#39;Textures calibrated image loader&#39;&#39;&#39;</span>
 <div class="viewcode-block" id="load_and_calibrate_image"><a class="viewcode-back" href="../../../IQM_Vis.examples.html#IQM_Vis.examples.dists.load_and_calibrate_image">[docs]</a><span class="k">def</span> <span class="nf">load_and_calibrate_image</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">max_luminance</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">256</span><span class="p">):</span>
@@ -167,9 +151,9 @@
 
 <div class="viewcode-block" id="run"><a class="viewcode-back" href="../../../IQM_Vis.examples.html#IQM_Vis.examples.dists.run">[docs]</a><span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
     <span class="c1"># metrics functions must return a single value</span>
-    <span class="n">metric</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;DISTS&#39;</span><span class="p">:</span> <span class="n">dists_wrapper</span><span class="p">(),</span>
-              <span class="s1">&#39;MAE&#39;</span><span class="p">:</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">MAE</span><span class="p">,</span>
-              <span class="s1">&#39;1-SSIM&#39;</span><span class="p">:</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">ssim</span><span class="p">()}</span>
+    <span class="n">metric</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;DISTS&#39;</span><span class="p">:</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">DISTS</span><span class="p">(),</span>
+              <span class="s1">&#39;MAE&#39;</span><span class="p">:</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">MAE</span><span class="p">(),</span>
+              <span class="s1">&#39;1-SSIM&#39;</span><span class="p">:</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">SSIM</span><span class="p">()}</span>
 
     <span class="c1"># metrics images return a numpy image - dont include any for this example</span>
     <span class="n">metric_images</span> <span class="o">=</span> <span class="p">{}</span>
