@@ -21,11 +21,20 @@ def rotation(image, angle):
     '''
     return rotate(image, angle)
 
-def blur(image, param):
-    if param == 1:
+def blur(image, kernel_size):
+    '''Gaussian Blur on an image
+
+    Args:
+        image: image to be rotated (numpy array)
+        kernel_size: size of the convolutional kernel (will be converted to odd)
+
+    Returns:
+        image: rotated image (numpy array)
+    '''
+    if kernel_size == 1:
         return image
-    elif param > 0:
-        blur_odd = (int(param/2)*2) + 1    # need to make kernel size odd
+    elif kernel_size > 0:
+        blur_odd = (int(kernel_size/2)*2) + 1    # need to make kernel size odd
         image = cv2.GaussianBlur(image,(blur_odd, blur_odd), cv2.BORDER_DEFAULT)
         if len(image.shape) == 2:
             image = np.expand_dims(image, axis=2)

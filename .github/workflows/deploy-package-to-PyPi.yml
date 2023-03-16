@@ -17,10 +17,6 @@ permissions:
   contents: read
 
 jobs:
-  # get-versions:
-  # runs-on: ubuntu-latest
-  #
-
   deploy:
     runs-on: ubuntu-latest
 
