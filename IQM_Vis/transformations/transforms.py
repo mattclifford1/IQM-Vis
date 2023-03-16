@@ -8,13 +8,13 @@ import cv2
 import numpy as np
 
 
-def rotation(image, angle):
+def rotation(image, angle=0):
     '''Rotate an image around its centre. Uses skimage.transform.rotate. Areas
     that are rotated beyond the image are filled in with black pixel values
 
     Args:
         image (np.array): image to be rotated
-        angle (float): amount of rotation in degrees
+        angle (float): amount of rotation in degrees (Defaults to 0)
 
     Returns:
         image (np.array): rotated image
