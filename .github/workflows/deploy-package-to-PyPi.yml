@@ -22,10 +22,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Get Version of latest code
-      run: echo "code_version=$(cat VERSION)" >> $GITHUB_ENV
-    - name: Get Version of PyPi Project latest release
-      run: echo "pypi_version=$(./scripts/get_latest_package_version.py)" >> $GITHUB_ENV
+    - name: Get Version numbers
+      run: |
+        echo "code_version=$(cat VERSION)" >> $GITHUB_ENV
+        echo "pypi_version=$(./scripts/get_latest_package_version.py)" >> $GITHUB_ENV
 
     - name: Set up Python
       if: env.code_version != env.pypi_version

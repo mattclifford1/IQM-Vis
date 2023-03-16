@@ -12,10 +12,11 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-      - name: Get Version of latest code
-        run: echo "code_version=$(cat VERSION)" >> $GITHUB_ENV
-      - name: Get Version of PyPi Project latest release
-        run: echo "pypi_version=$(./scripts/get_latest_package_version.py)" >> $GITHUB_ENV
+      - uses: actions/checkout@v3
+      - name: Get Version numbers
+        run: |
+          echo "code_version=$(cat VERSION)" >> $GITHUB_ENV
+          echo "pypi_version=$(./scripts/get_latest_package_version.py)" >> $GITHUB_ENV
 
       # - name: Setup Python
       #   uses: actions/setup-python@v3
