@@ -1,0 +1,43 @@
+name: etset if statemnet
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.x'
+
+    - name: Install base python deps
+      run: |
+        python -m pip install --upgrade pip
+        pip install packaging
+
+    - name: Get Version of latest code
+      run: echo "code_version=$(cat VERSION)" >> $GITHUB_ENV
+    - name: Get Version of PyPi Project latest release
+      run: echo "pypi_version=$(python3 scripts/get_latest_package_version.py)" >> $GITHUB_ENV
+
+
+    test:
+      runs-on: ubuntu-latest
+      steps:
+      - name: condition 1
+        if: "env.code_version != env.pypi_version"
+        run: echo "not"
+
+     - name: condition 2
+        if: "env.code_version == env.pypi_version"
+        run: echo "equals"
