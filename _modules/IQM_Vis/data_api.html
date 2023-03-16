@@ -100,6 +100,8 @@
                        <span class="n">image_post_processing</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># apply a function to the image after transformations (e.g. zoom to help with black boarders on rotation)</span>
                        <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image_list</span> <span class="o">=</span> <span class="n">image_list</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;image_list is empty&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image_loader</span> <span class="o">=</span> <span class="n">image_loader</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_image_data</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>   <span class="c1"># load the first image</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span> <span class="o">=</span> <span class="n">metrics</span>
