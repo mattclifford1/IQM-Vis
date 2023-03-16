@@ -40,9 +40,6 @@ def blur(image, kernel_size=7):
         if len(image.shape) == 2:
             image = np.expand_dims(image, axis=2)
     return image
-#
-def _zoom(image, param):
-    return zoom_image(image, param)
 
 def x_shift(image, x_shift=0):
     '''Translate image horizontally
@@ -83,8 +80,19 @@ def brightness(image, value=0):
     '''
     return np.clip(image + value, 0, 1)
 
-def _translate_image(image, x_shift, y_shift):
-    ''' x and y shift in range (-1, 1)'''
+def _translate_image(image, x_shift=0, y_shift=0):
+    '''Translate image vertically
+
+    Args:
+        image (np.array): image to be shifted
+        x_shift (float): shift proportion of the image in the range (-1, 1).
+                         (Defaults to 0)
+        y_shift (float): shift proportion of the image in the range (-1, 1).
+                         (Defaults to 0)
+
+    Returns:
+        image (np.array): shifted image
+    '''
     if x_shift == 0 and y_shift == 0:
         return image
     original_size = image.shape
