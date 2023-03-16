@@ -2,19 +2,19 @@
 name: example-workflow
 on: [push]
 
-# jobs:
-#   production-deploy:
-#     if: github.repository == 'octo-org/octo-repo-prod'
-#     runs-on: ubuntu-latest
-#     steps:
-#       - run: echo "done"
-
 jobs:
   production-deploy:
-    if: "a" == "a"
+    if: github.repository == 'octo-org/octo-repo-prod'
     runs-on: ubuntu-latest
     steps:
       - run: echo "done"
+
+# jobs:
+#   production-deploy:
+#     if: "a" == "a"
+#     runs-on: ubuntu-latest
+#     steps:
+#       - run: echo "done"
 
   # steps:
   #   - uses: ....
