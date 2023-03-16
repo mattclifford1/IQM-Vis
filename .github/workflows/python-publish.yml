@@ -8,15 +8,24 @@
 
 name: Upload Python Package to PyPi
 
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+    branches:
+      - main
 
 permissions:
   contents: read
 
 jobs:
-  publish:
+  deploy:
     runs-on: ubuntu-latest
-    - if: "$(cat VERSION) != $ $(python3 scripts/get_latest_package_version.py)"
+    - name: Get Version of latest code
+      run: echo "code_version=$(cat VERSION)" >> $GITHUB_ENV
+
+    - name: Get Version of PyPi Project latest release
+      run: echo "pypi_version=$(python3 scripts/get_latest_package_version.py)" >> $GITHUB_ENV
+
+    if: ${{ env.code_version != env.pypi_version }}
       steps:
       - uses: actions/checkout@v3
       - name: Set up Python
@@ -33,4 +42,4 @@ jobs:
         uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
         with:
           user: __token__
-            password: ${{ secrets.PYPI_API_TOKEN }}
+          password: ${{ secrets.PYPI_API_TOKEN }}
