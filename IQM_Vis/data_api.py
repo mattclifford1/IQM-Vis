@@ -68,6 +68,8 @@ class dataset_holder(base_dataset_loader):
                        image_post_processing=None,  # apply a function to the image after transformations (e.g. zoom to help with black boarders on rotation)
                        ):
         self.image_list = image_list
+        if len(self.image_list) == 0:
+            raise ValueError(f'image_list is empty')
         self.image_loader = image_loader
         self._load_image_data(0)   # load the first image
         self.metrics = metrics

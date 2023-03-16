@@ -7,9 +7,15 @@ def get_long_description():
         text = f.read()
     return text
 
+def get_version():
+    with open('VERSION') as f:
+        ver = f.read()
+    while ver[-1] == '\n':
+        ver = ver[:-1]
+    return ver
 
 setup(name='IQM-Vis',
-      version='0.2.5.39',
+      version=get_version(),
       packages=find_packages(),
       include_package_data=True,
       install_requires=['numpy',
@@ -19,7 +25,6 @@ setup(name='IQM-Vis',
                         'matplotlib',
                         'torch',
                         'torchmetrics'],
-      # data_files=[('/', ['IQM_Vis/UI/style.css'])], # include non .py files needed
       author="Matt Clifford",
       author_email="matt.clifford@bristol.ac.uk",
       description="Extendable user interface for the assessment of transformations on image metrics.",
