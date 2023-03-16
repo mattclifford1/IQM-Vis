@@ -17,13 +17,13 @@ permissions:
   contents: read
 
 jobs:
-  get-versions:
-    runs-on: ubuntu-latest
-    - name: Get Version of latest code
-      run: echo "code_version=$(cat VERSION)" >> $GITHUB_ENV
-
-    - name: Get Version of PyPi Project latest release
-      run: echo "pypi_version=$(python3 scripts/get_latest_package_version.py)" >> $GITHUB_ENV
+  # get-versions:
+  #   runs-on: ubuntu-latest
+  #   - name: Get Version of latest code
+  #     run: echo "code_version=$(cat VERSION)" >> $GITHUB_ENV
+  #
+  #   - name: Get Version of PyPi Project latest release
+  #     run: echo "pypi_version=$(python3 scripts/get_latest_package_version.py)" >> $GITHUB_ENV
 
   deploy:
     # if: env.code_version != env.pypi_version
