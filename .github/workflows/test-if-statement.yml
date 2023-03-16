@@ -9,11 +9,12 @@ on: [push]
 #     steps:
 #       - run: echo "done"
 
-job_name:
-  runs-on: ubuntu-latest
-  if: "a" == "a"
-  steps:
-    - run: echo "done"
+jobs:
+  production-deploy:
+    if: "a" == "a"
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "done"
 
   # steps:
   #   - uses: ....
