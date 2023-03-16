@@ -11,7 +11,7 @@ permissions:
 jobs:
   docs:
     runs-on: ubuntu-latest
-    - if: $(cat VERSION) != $ $(python3 scripts/get_latest_package_version.py)
+    - if: "$(cat VERSION) != $ $(python3 scripts/get_latest_package_version.py)"
       steps:
         - uses: actions/checkout@v3
 
