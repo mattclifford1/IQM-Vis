@@ -1,3 +1,5 @@
+#!/bin/python3
+
 '''Get the latest version of a PyPi package'''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 import urllib.request
