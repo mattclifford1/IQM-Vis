@@ -7,7 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Get Version of latest code
-      run: echo "code_version=$(cat ./VERSION)" >> $GITHUB_ENV
+      run: |
+        pwd
+        ls
+        echo "code_version=$(cat ./VERSION)" >> $GITHUB_ENV
     - name: check code
       if: env.code_version != 'octo-org/octo-repo-prod'
       run: echo $code_version
