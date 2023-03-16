@@ -13,23 +13,24 @@ def rotation(image, angle):
     that are rotated beyond the image are filled in with black pixel values
 
     Args:
-        image: image to be rotated (numpy array)
-        angle: amount of rotation in degrees
+        image (np.array): image to be rotated
+        angle (float): amount of rotation in degrees
 
     Returns:
-        image: rotated image (numpy array)
+        image (np.array): rotated image
     '''
     return rotate(image, angle)
 
-def blur(image, kernel_size):
+def blur(image, kernel_size=7):
     '''Gaussian Blur on an image
 
     Args:
-        image: image to be rotated (numpy array)
-        kernel_size: size of the convolutional kernel (will be converted to odd)
+        image (np.array): image to be rotated
+        kernel_size (int): size of the convolutional kernel, will be converted
+                           to an odd number. (Defaults to 7)
 
     Returns:
-        image: rotated image (numpy array)
+        image (np.array): rotated image
     '''
     if kernel_size == 1:
         return image
@@ -39,20 +40,50 @@ def blur(image, kernel_size):
         if len(image.shape) == 2:
             image = np.expand_dims(image, axis=2)
     return image
-
-def zoom(image, param):
+#
+def _zoom(image, param):
     return zoom_image(image, param)
 
-def x_shift(image, param):
-    return translate_image(image, param, 0)
+def x_shift(image, x_shift=0):
+    '''Translate image horizontally
 
-def y_shift(image, param):
-    return translate_image(image, 0, param)
+    Args:
+        image (np.array): image to be shifted
+        x_shift (float): shift proportion of the image in the range (-1, 1).
+                         (Defaults to 0)
 
-def brightness(image, param):
-    return np.clip(image + param, 0, 1)
+    Returns:
+        image (np.array): shifted image
+    '''
+    return _translate_image(image, x_shift, 0)
 
-def translate_image(image, x_shift, y_shift):
+def y_shift(image, y_shift=0):
+    '''Translate image vertically
+
+    Args:
+        image (np.array): image to be shifted
+        y_shift (float): shift proportion of the image in the range (-1, 1).
+                         (Defaults to 0)
+
+    Returns:
+        image (np.array): shifted image
+    '''
+    return _translate_image(image, 0, y_shift)
+
+def brightness(image, value=0):
+    '''Adjust image brightness. Image is clipped to the range (0, 1)
+
+    Args:
+        image (np.array): image to have its brightness adjusted
+        value (float): value to adjust all pixels by in the range (-1, 1).
+                         (Defaults to 0)
+
+    Returns:
+        image (np.array): adjusted image
+    '''
+    return np.clip(image + value, 0, 1)
+
+def _translate_image(image, x_shift, y_shift):
     ''' x and y shift in range (-1, 1)'''
     if x_shift == 0 and y_shift == 0:
         return image
@@ -72,21 +103,30 @@ def translate_image(image, x_shift, y_shift):
         canvas[:original_size[0]-prop_y:,:original_size[1]-prop_x,:] = image[prop_y-original_size[0]:,prop_x-original_size[1]:,:]
     return canvas
 
-def zoom_image(image, factor):
-    ''' digital zoom of image: scale_factor the % to zoom in by (for square zoom only)
-        0.5  = 2x zoom out
-        1 = normal size
-        2 = 2x zoom in'''
+def zoom_image(image, scale_factor=1):
+    '''digital zoom of image
+
+    Args:
+        image (np.array): image to be zoomed
+        scale_factor (float): the percentage to zoom in by (for square zoom only).
+                              0.5  = 2x zoom out
+                              1 = normal size
+                              2 = 2x zoom in
+                              (Defaults to 1)
+
+    Returns:
+        image (np.array): zoomed image
+    '''
     original_size = image.shape
-    new_size_x = int(original_size[0]/factor)
-    new_size_y = int(original_size[1]/factor)
-    if factor > 1:
+    new_size_x = int(original_size[0]/scale_factor)
+    new_size_y = int(original_size[1]/scale_factor)
+    if scale_factor > 1:
         start_point_x = int((original_size[0] - new_size_x)/2)
         start_point_y = int((original_size[1] - new_size_y)/2)
         image = image[start_point_x:start_point_x+new_size_x,
                       start_point_y:start_point_y+new_size_y,
                       :]
-    elif factor < 1:
+    elif scale_factor < 1:
         new_size = (new_size_x, new_size_y, original_size[2]) if len(original_size) == 3 else (new_size_x, new_size_y)
         start_point_x = int((new_size_x - original_size[0])/2)
         start_point_y = int((new_size_y - original_size[1])/2)
@@ -98,12 +138,22 @@ def zoom_image(image, factor):
 
     return resize(image, original_size)
 
-def binary_threshold(image, param):
+def binary_threshold(image, threshold=100):
+    '''conver image to binary at a given threshold
+
+    Args:
+        image (np.array): image to be thresholded
+        threshold (int): threshold value in the range (1, 255)
+                     (Defaults to 100)
+
+    Returns:
+        image (np.array): thresholded image (float32 in range 0, 1)
+    '''
     image = img_as_ubyte(image)
     if len(image.shape) > 2:
         if image.shape[2] == 3:
             image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-    image = cv2.adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, int(param))
+    image = cv2.adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, int(threshold))
     if len(image.shape) == 2:
         image = image[..., np.newaxis]
     return image.astype(np.float32) / 255.0
@@ -112,11 +162,12 @@ def jpeg_compression(image, compression=90):
     '''encode image using jpeg then decode
 
     Args:
-        image: image to be rotated (numpy array)
-        compression: amount of jpeg compression (100 returns identity image)
+        image (np.array): image to be compressed
+        compression (int): amount of jpeg compression. 100 returns identity image.
+                     (Defaults to 90)
 
     Returns:
-        image: rotated image (numpy array)
+        image (np.array): jpeg compressed image
     '''
     encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), int(compression)]
     encoder = '.jpg'
@@ -126,11 +177,11 @@ def png_compression(image, compression=9):
     '''encode image using png then decode (note png is lossless compression)
 
     Args:
-        image: image to be rotated (numpy array)
-        compression: amount of png compression
+        image (np.array): image to be compressed
+        compression (int): amount of png compression (Defaults to 9)
 
     Returns:
-        image: rotated image (numpy array)
+        image (np.array): png compressed image
     '''
     encode_param = [int(cv2.IMWRITE_PNG_COMPRESSION), int(compression)]
     encoder = '.png'

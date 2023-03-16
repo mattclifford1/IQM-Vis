@@ -19,6 +19,17 @@ from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity as LPI
 
 ''' simple functional format to call a metric (numpy)'''
 def MAE(im_ref, im_comp, **kwargs):
+    '''Mean Absolute Error between two images. Images must have the same
+       dimensions
+
+    Args:
+        im_ref (np.array): Reference image
+        im_comp (np.array): Comparison image
+        **kwargs: Arbitrary keyword arguments
+
+    Returns:
+        mean (np.array): scalar of MAE
+    '''
     check_shapes(im_ref, im_comp)
     L1 = np.abs(im_ref - im_comp)
     return L1.mean()
