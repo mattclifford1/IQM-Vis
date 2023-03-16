@@ -89,6 +89,17 @@
 
 <span class="sd">&#39;&#39;&#39; simple functional format to call a metric (numpy)&#39;&#39;&#39;</span>
 <div class="viewcode-block" id="MAE"><a class="viewcode-back" href="../../../IQM_Vis.image_metrics.html#IQM_Vis.image_metrics.metrics.MAE">[docs]</a><span class="k">def</span> <span class="nf">MAE</span><span class="p">(</span><span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Mean Absolute Error between two images. Images must have the same</span>
+<span class="sd">       dimensions</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        im_ref (np.array): Reference image</span>
+<span class="sd">        im_comp (np.array): Comparison image</span>
+<span class="sd">        **kwargs: Arbitrary keyword arguments</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        mean (np.array): scalar of MAE</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">check_shapes</span><span class="p">(</span><span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">)</span>
     <span class="n">L1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">im_ref</span> <span class="o">-</span> <span class="n">im_comp</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">L1</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span></div>

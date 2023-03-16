@@ -51,10 +51,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.transformations.transforms.jpeg_compression"><code class="docutils literal notranslate"><span class="pre">jpeg_compression()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.transformations.transforms.png_compression"><code class="docutils literal notranslate"><span class="pre">png_compression()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.transformations.transforms.rotation"><code class="docutils literal notranslate"><span class="pre">rotation()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.transformations.transforms.translate_image"><code class="docutils literal notranslate"><span class="pre">translate_image()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.transformations.transforms.x_shift"><code class="docutils literal notranslate"><span class="pre">x_shift()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.transformations.transforms.y_shift"><code class="docutils literal notranslate"><span class="pre">y_shift()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.transformations.transforms.zoom"><code class="docutils literal notranslate"><span class="pre">zoom()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.transformations.transforms.zoom_image"><code class="docutils literal notranslate"><span class="pre">zoom_image()</span></code></a></li>
 </ul>
 </li>
@@ -98,33 +96,66 @@
 <p>Sample image transformations to get the user started with</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="IQM_Vis.transformations.transforms.binary_threshold">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.transformations.transforms.</span></span><span class="sig-name descname"><span class="pre">binary_threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/transformations/transforms.html#binary_threshold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.transformations.transforms.binary_threshold" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">IQM_Vis.transformations.transforms.</span></span><span class="sig-name descname"><span class="pre">binary_threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/transformations/transforms.html#binary_threshold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.transformations.transforms.binary_threshold" title="Permalink to this definition"></a></dt>
+<dd><p>conver image to binary at a given threshold</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>np.array</em>) – image to be thresholded</p></li>
+<li><p><strong>threshold</strong> (<em>int</em>) – threshold value in the range (1, 255)
+(Defaults to 100)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>thresholded image (float32 in range 0, 1)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>image (np.array)</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="IQM_Vis.transformations.transforms.blur">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.transformations.transforms.</span></span><span class="sig-name descname"><span class="pre">blur</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/transformations/transforms.html#blur"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.transformations.transforms.blur" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">IQM_Vis.transformations.transforms.</span></span><span class="sig-name descname"><span class="pre">blur</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">7</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/transformations/transforms.html#blur"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.transformations.transforms.blur" title="Permalink to this definition"></a></dt>
 <dd><p>Gaussian Blur on an image</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>image</strong> – image to be rotated (numpy array)</p></li>
-<li><p><strong>kernel_size</strong> – size of the convolutional kernel (will be converted to odd)</p></li>
+<li><p><strong>image</strong> (<em>np.array</em>) – image to be rotated</p></li>
+<li><p><strong>kernel_size</strong> (<em>int</em>) – size of the convolutional kernel, will be converted
+to an odd number. (Defaults to 7)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>rotated image (numpy array)</p>
+<dd class="field-even"><p>rotated image</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>image</p>
+<dd class="field-odd"><p>image (np.array)</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="IQM_Vis.transformations.transforms.brightness">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.transformations.transforms.</span></span><span class="sig-name descname"><span class="pre">brightness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/transformations/transforms.html#brightness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.transformations.transforms.brightness" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">IQM_Vis.transformations.transforms.</span></span><span class="sig-name descname"><span class="pre">brightness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/transformations/transforms.html#brightness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.transformations.transforms.brightness" title="Permalink to this definition"></a></dt>
+<dd><p>Adjust image brightness. Image is clipped to the range (0, 1)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>np.array</em>) – image to have its brightness adjusted</p></li>
+<li><p><strong>value</strong> (<em>float</em>) – value to adjust all pixels by in the range (-1, 1).
+(Defaults to 0)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>adjusted image</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>image (np.array)</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="IQM_Vis.transformations.transforms.jpeg_compression">
@@ -133,15 +164,16 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>image</strong> – image to be rotated (numpy array)</p></li>
-<li><p><strong>compression</strong> – amount of jpeg compression (100 returns identity image)</p></li>
+<li><p><strong>image</strong> (<em>np.array</em>) – image to be compressed</p></li>
+<li><p><strong>compression</strong> (<em>int</em>) – amount of jpeg compression. 100 returns identity image.
+(Defaults to 90)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>rotated image (numpy array)</p>
+<dd class="field-even"><p>jpeg compressed image</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>image</p>
+<dd class="field-odd"><p>image (np.array)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -153,15 +185,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>image</strong> – image to be rotated (numpy array)</p></li>
-<li><p><strong>compression</strong> – amount of png compression</p></li>
+<li><p><strong>image</strong> (<em>np.array</em>) – image to be compressed</p></li>
+<li><p><strong>compression</strong> (<em>int</em>) – amount of png compression (Defaults to 9)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>rotated image (numpy array)</p>
+<dd class="field-even"><p>png compressed image</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>image</p>
+<dd class="field-odd"><p>image (np.array)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -174,47 +206,83 @@ that are rotated beyond the image are filled in with black pixel values</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>image</strong> – image to be rotated (numpy array)</p></li>
-<li><p><strong>angle</strong> – amount of rotation in degrees</p></li>
+<li><p><strong>image</strong> (<em>np.array</em>) – image to be rotated</p></li>
+<li><p><strong>angle</strong> (<em>float</em>) – amount of rotation in degrees</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>rotated image (numpy array)</p>
+<dd class="field-even"><p>rotated image</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>image</p>
+<dd class="field-odd"><p>image (np.array)</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="IQM_Vis.transformations.transforms.translate_image">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.transformations.transforms.</span></span><span class="sig-name descname"><span class="pre">translate_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_shift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_shift</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/transformations/transforms.html#translate_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.transformations.transforms.translate_image" title="Permalink to this definition"></a></dt>
-<dd><p>x and y shift in range (-1, 1)</p>
+<dt class="sig sig-object py" id="IQM_Vis.transformations.transforms.x_shift">
+<span class="sig-prename descclassname"><span class="pre">IQM_Vis.transformations.transforms.</span></span><span class="sig-name descname"><span class="pre">x_shift</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_shift</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/transformations/transforms.html#x_shift"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.transformations.transforms.x_shift" title="Permalink to this definition"></a></dt>
+<dd><p>Translate image horizontally</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>np.array</em>) – image to be shifted</p></li>
+<li><p><strong>x_shift</strong> (<em>float</em>) – shift proportion of the image in the range (-1, 1).
+(Defaults to 0)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>shifted image</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>image (np.array)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="IQM_Vis.transformations.transforms.x_shift">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.transformations.transforms.</span></span><span class="sig-name descname"><span class="pre">x_shift</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/transformations/transforms.html#x_shift"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.transformations.transforms.x_shift" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="IQM_Vis.transformations.transforms.y_shift">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.transformations.transforms.</span></span><span class="sig-name descname"><span class="pre">y_shift</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/transformations/transforms.html#y_shift"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.transformations.transforms.y_shift" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="IQM_Vis.transformations.transforms.zoom">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.transformations.transforms.</span></span><span class="sig-name descname"><span class="pre">zoom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/transformations/transforms.html#zoom"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.transformations.transforms.zoom" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">IQM_Vis.transformations.transforms.</span></span><span class="sig-name descname"><span class="pre">y_shift</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_shift</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/transformations/transforms.html#y_shift"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.transformations.transforms.y_shift" title="Permalink to this definition"></a></dt>
+<dd><p>Translate image vertically</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>np.array</em>) – image to be shifted</p></li>
+<li><p><strong>y_shift</strong> (<em>float</em>) – shift proportion of the image in the range (-1, 1).
+(Defaults to 0)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>shifted image</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>image (np.array)</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="IQM_Vis.transformations.transforms.zoom_image">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.transformations.transforms.</span></span><span class="sig-name descname"><span class="pre">zoom_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/transformations/transforms.html#zoom_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.transformations.transforms.zoom_image" title="Permalink to this definition"></a></dt>
-<dd><p>digital zoom of image: scale_factor the % to zoom in by (for square zoom only)
+<span class="sig-prename descclassname"><span class="pre">IQM_Vis.transformations.transforms.</span></span><span class="sig-name descname"><span class="pre">zoom_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/transformations/transforms.html#zoom_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.transformations.transforms.zoom_image" title="Permalink to this definition"></a></dt>
+<dd><p>digital zoom of image</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>np.array</em>) – image to be zoomed</p></li>
+<li><p><strong>scale_factor</strong> (<em>float</em>) – the percentage to zoom in by (for square zoom only).
 0.5  = 2x zoom out
 1 = normal size
-2 = 2x zoom in</p>
+2 = 2x zoom in
+(Defaults to 1)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>zoomed image</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>image (np.array)</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
