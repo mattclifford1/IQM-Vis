@@ -17,8 +17,8 @@ permissions:
   contents: read
 
 jobs:
-  runs-on: ubuntu-latest
   # get-versions:
+  # runs-on: ubuntu-latest
   #   - name: Get Version of latest code
   #     run: echo "code_version=$(cat VERSION)" >> $GITHUB_ENV
   #
@@ -26,6 +26,7 @@ jobs:
   #     run: echo "pypi_version=$(python3 scripts/get_latest_package_version.py)" >> $GITHUB_ENV
 
   deploy:
+    runs-on: ubuntu-latest
     # if: env.code_version != env.pypi_version
       steps:
       - uses: actions/checkout@v3
