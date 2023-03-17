@@ -37,7 +37,6 @@ class make_app(widgets, layout, images):
         self.make_menu()
 
         self.construct_UI()
-        self.reset_sliders()  # widgets.py
 
     def make_menu(self):
         self.menu_bar = self.menuBar()
@@ -93,10 +92,11 @@ class make_app(widgets, layout, images):
             if self.menu_options['transforms'][trans].isChecked():
                 self.checked_transformations[trans] = item
 
-        self.init_style()     # layout
-        self.init_widgets()   # widgets
-        self.init_layout()    # layout
-        self.display_images() # images
+        self.init_style()     # layout.py
+        self.init_widgets()   # widgets.py
+        self.init_layout()    # layout.py
+        self.display_images() # images.py
+        self.reset_sliders()  # widgets.py
 
     def _single_image_or_dataset(self):
         '''set whether dataset or single image used for data_store'''
