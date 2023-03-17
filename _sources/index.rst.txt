@@ -1,0 +1,42 @@
+.. IQM-Vis documentation master file, created by
+   sphinx-quickstart on Tue Mar 14 15:06:26 2023.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+IQM-Vis documentation
++++++++++++++++++++++
+IQM-Vis is an image quality metric visualisation toolbox to help with the interactive visulating and investigation into metrics.
+
+You can visit the source code on `GitHub <https://github.com/mattclifford1/IQM-Vis>`_ .
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Getting Started:
+
+   getting_started
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Tutorials:
+
+   Tutorials
+
+
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Contents:
+
+   IQM_Vis.transformations
+   IQM_Vis.metrics
+
+
+Indices and tables
+==================
+
+..
+  * :ref:`genindex`
+* :ref:`modindex`
+..
+  * :ref:`search`
