@@ -18,7 +18,7 @@ class make_UI:
     def __init__(self, data_store,
                        transformations: dict,
                        metrics_info_format: str='graph',
-                       metrics_avg_graph: bool=False,
+                       metrics_avg_graph: bool=True,
                        metric_params: dict={}):
         self.data_store = data_store
         self.transformations = transformations

@@ -115,9 +115,8 @@ def run():
 
     # use the API to create the UI
     IQM_Vis.make_UI(data,
-                transformations,
-                metrics_avg_graph=True,
-                metric_params=ssim_params)
+                    transformations,
+                    metric_params=ssim_params)
 
 
 if __name__ == '__main__':

@@ -22,7 +22,9 @@ release = '0.2'
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.viewcode',
-    'sphinx.ext.napoleon'
+    'sphinx.ext.napoleon',
+    "nbsphinx",
+    "sphinx_gallery.load_style",
 ]
 
 templates_path = ['_templates']
@@ -41,5 +43,12 @@ exclude_patterns = ['_build',
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
+html_theme = 'sphinx_book_theme'
+html_theme = 'pydata_sphinx_theme'
+
+# html_theme = 'furo'
 html_theme = 'sphinx_rtd_theme'
+html_theme = 'renku'
+html_theme = 'cloud'
+html_theme = 'sphinx_typo3_theme'
 html_static_path = ['_static']

@@ -16,15 +16,13 @@ def run():
                      'SSIM': IQM_Vis.metrics.SSIM(return_image=True)}
 
     # first row of images
-    row_1 = IQM_Vis.data_holder(('X1', IQM_Vis.utils.load_image(os.path.join(file_path, 'images', 'wave3.jpeg'))),
-                             ('X1', IQM_Vis.utils.load_image(os.path.join(file_path, 'images', 'wave3.jpeg'))),
-                             metric,
-                             metric_images)
+    row_1 = IQM_Vis.dataset_holder([os.path.join(file_path, 'images', 'waves2.jpeg')],
+                                   metric,
+                                   metric_images)
     # second row of images
-    row_2 = IQM_Vis.data_holder(('X1', IQM_Vis.utils.load_image(os.path.join(file_path, 'images', 'wave3.jpeg'))),
-                            ('X2', IQM_Vis.utils.load_image(os.path.join(file_path, 'images', 'waves1.jpeg'))),
-                             metric,
-                             metric_images)
+    row_2 = IQM_Vis.dataset_holder([os.path.join(file_path, 'images', 'wave3.jpeg')],
+                                   metric,
+                                   metric_images)
     # define the transformations
     transformations = {
                'rotation':{'min':-180, 'max':180, 'function':IQM_Vis.transforms.rotation},    # normal input
@@ -34,8 +32,7 @@ def run():
 
     # use the API to create the UI
     IQM_Vis.make_UI([row_1, row_2],
-                transformations,
-                metrics_avg_graph=True)
+                    transformations)
 
 
 if __name__ == '__main__':

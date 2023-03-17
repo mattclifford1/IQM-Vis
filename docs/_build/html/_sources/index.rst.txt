@@ -12,8 +12,15 @@ You can visit the source code on `GitHub <https://github.com/mattclifford1/IQM-V
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Tutorials:
 
+   Tutorials
+
+
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Contents:
 
    IQM_Vis.transformations
    IQM_Vis.image_metrics
@@ -22,6 +29,8 @@ You can visit the source code on `GitHub <https://github.com/mattclifford1/IQM-V
 Indices and tables
 ==================
 
-* :ref:`genindex`
+..
+  * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`
+..
+  * :ref:`search`

@@ -7,8 +7,16 @@ torch
 torchmetrics
 dists-pytorch
 torchvision
+notebook
 twine
 pytest
 sphinx
+nbsphinx
+sphinx_gallery
 sphinx_rtd_theme
 Pallets-Sphinx-Themes
+renku-sphinx-theme
+pydata-sphinx-theme
+sphinx-book-theme
+cloud-sptheme
+Jinja2==3.0

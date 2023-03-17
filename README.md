@@ -115,3 +115,7 @@ Run MWEs
 python IQM_Vis/examples/simple.py
 python IQM_Vis/examples/multiple.py
 ```
+To be able to generate documentation you will also need pandoc bins via:
+```
+conda install pandoc
+```

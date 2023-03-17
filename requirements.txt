@@ -7,3 +7,4 @@ torch
 torchmetrics
 dists-pytorch
 torchvision
+notebook
