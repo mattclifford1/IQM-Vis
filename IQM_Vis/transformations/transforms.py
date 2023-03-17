@@ -163,7 +163,7 @@ def binary_threshold(image, threshold=100):
             image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
     image = cv2.adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, int(threshold))
     if len(image.shape) == 2:
-        image = image[..., np.newaxis]
+        image = np.stack((image,)*3, axis=-1)
     return image.astype(np.float32) / 255.0
 
 def jpeg_compression(image, compression=90):
@@ -179,20 +179,6 @@ def jpeg_compression(image, compression=90):
     '''
     encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), int(compression)]
     encoder = '.jpg'
-    return _encode_compression(image, encoder, encode_param)
-
-def png_compression(image, compression=9):
-    '''encode image using png then decode (note png is lossless compression)
-
-    Args:
-        image (np.array): image to be compressed
-        compression (int): amount of png compression (Defaults to 9)
-
-    Returns:
-        image (np.array): png compressed image
-    '''
-    encode_param = [int(cv2.IMWRITE_PNG_COMPRESSION), int(compression)]
-    encoder = '.png'
     return _encode_compression(image, encoder, encode_param)
 
 def _encode_compression(image, encoder, encode_param, uint=True):

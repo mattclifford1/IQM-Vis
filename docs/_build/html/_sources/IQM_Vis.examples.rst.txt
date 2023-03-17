@@ -12,6 +12,14 @@ Subpackages
 Submodules
 ----------
 
+IQM\_Vis.examples.all module
+----------------------------
+
+.. automodule:: IQM_Vis.examples.all
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 IQM\_Vis.examples.dataset module
 --------------------------------
 

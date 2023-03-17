@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>IQM_Vis.metrics.metrics &mdash; IQM-Vis 0.2 documentation</title>
+  <title>IQM_Vis.metrics.IQMs &mdash; IQM-Vis 0.2 documentation</title>
   
 
   
@@ -151,7 +151,7 @@
         
           <li><a href="../metrics.html">IQM_Vis.metrics</a> &raquo;</li>
         
-      <li>IQM_Vis.metrics.metrics</li>
+      <li>IQM_Vis.metrics.IQMs</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -166,7 +166,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for IQM_Vis.metrics.metrics</h1><div class="highlight"><pre>
+  <h1>Source code for IQM_Vis.metrics.IQMs</h1><div class="highlight"><pre>
 <span></span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">sample metrics to use with the examples of the UI</span>
 <span class="sd">&#39;&#39;&#39;</span>
@@ -186,7 +186,7 @@
 <span class="kn">from</span> <span class="nn">torchmetrics.image.lpip</span> <span class="kn">import</span> <span class="n">LearnedPerceptualImagePatchSimilarity</span> <span class="k">as</span> <span class="n">LPIPS</span>
 <span class="kn">from</span> <span class="nn">DISTS_pytorch</span> <span class="kn">import</span> <span class="n">DISTS</span> <span class="k">as</span> <span class="n">dists_original</span>
 
-<div class="viewcode-block" id="MAE"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.metrics.MAE">[docs]</a><span class="k">class</span> <span class="nc">MAE</span><span class="p">:</span>
+<div class="viewcode-block" id="MAE"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.MAE">[docs]</a><span class="k">class</span> <span class="nc">MAE</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Mean Absolute Error between two images. Images must have the same</span>
 <span class="sd">       dimensions</span>
 
@@ -197,7 +197,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">return_image</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">return_image</span> <span class="o">=</span> <span class="n">return_image</span>
 
-<div class="viewcode-block" id="MAE.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.metrics.MAE.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="MAE.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.MAE.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;When an instance is called</span>
 
 <span class="sd">        Args:</span>
@@ -216,7 +216,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">L1</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span></div></div>
 
-<div class="viewcode-block" id="MSE"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.metrics.MSE">[docs]</a><span class="k">class</span> <span class="nc">MSE</span><span class="p">:</span>
+<div class="viewcode-block" id="MSE"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.MSE">[docs]</a><span class="k">class</span> <span class="nc">MSE</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Mean Squared Error between two images. Images must have the same</span>
 <span class="sd">       dimensions</span>
 
@@ -227,7 +227,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">return_image</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">return_image</span> <span class="o">=</span> <span class="n">return_image</span>
 
-<div class="viewcode-block" id="MSE.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.metrics.MSE.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="MSE.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.MSE.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;When an instance is called</span>
 
 <span class="sd">        Args:</span>
@@ -246,7 +246,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">L2</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span></div></div>
 
-<div class="viewcode-block" id="SSIM"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.metrics.SSIM">[docs]</a><span class="k">class</span> <span class="nc">SSIM</span><span class="p">:</span>
+<div class="viewcode-block" id="SSIM"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.SSIM">[docs]</a><span class="k">class</span> <span class="nc">SSIM</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Structural Similarity Index Measure between two images. Images must have</span>
 <span class="sd">       the same dimensions. Score given is 1 - SSIM to give the loss/dissimilarity</span>
 
@@ -260,7 +260,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">preproccess_function</span> <span class="o">=</span> <span class="n">_numpy_to_torch_image</span>
 
-<div class="viewcode-block" id="SSIM.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.metrics.SSIM.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="SSIM.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.SSIM.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;When an instance is called</span>
 
 <span class="sd">        Args:</span>
@@ -296,7 +296,7 @@
         <span class="k">return</span> <span class="n">_score</span></div></div>
 
 
-<div class="viewcode-block" id="DISTS"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.metrics.DISTS">[docs]</a><span class="k">class</span> <span class="nc">DISTS</span><span class="p">:</span>
+<div class="viewcode-block" id="DISTS"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.DISTS">[docs]</a><span class="k">class</span> <span class="nc">DISTS</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Deep Image Structure and Texture Similarity (DISTS) Metric. Uses the</span>
 <span class="sd">        code from https://github.com/dingkeyan93/DISTS. Uses the PyTorch backend.</span>
 <span class="sd">        It is robust to texture variance (e.g., evaluating the images generated</span>
@@ -310,7 +310,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">preproccess_function</span> <span class="o">=</span> <span class="n">_numpy_to_torch_image</span>
 
-<div class="viewcode-block" id="DISTS.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.metrics.DISTS.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="DISTS.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.DISTS.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;When an instance is called</span>
 
 <span class="sd">        Args:</span>

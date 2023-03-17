@@ -81,9 +81,9 @@ def crop_centre(im):
 
 def run():
     # metrics functions must return a single value
-    metric = {'DISTS': IQM_Vis.metrics.DISTS(),
-              'MAE': IQM_Vis.metrics.MAE(),
-              '1-SSIM': IQM_Vis.metrics.SSIM()}
+    metric = {'DISTS': IQM_Vis.IQMs.DISTS(),
+              'MAE': IQM_Vis.IQMs.MAE(),
+              '1-SSIM': IQM_Vis.IQMs.SSIM()}
 
     # metrics images return a numpy image - dont include any for this example
     metric_images = {}

@@ -1,4 +1,4 @@
-from .metrics import MAE, MSE, SSIM, DISTS
+from .IQMs import MAE, MSE, SSIM, DISTS
 
 def get_all_metrics():
     ''' Get all available IQMs provided by IQM_Vis '''

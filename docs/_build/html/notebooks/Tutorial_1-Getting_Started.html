@@ -231,9 +231,9 @@ Images files: [&#39;/home/matt/projects/IQM-VIS/IQM_Vis/examples/images/waves1.j
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MAE</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">MAE</span><span class="p">()</span>
-<span class="n">MSE</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">MSE</span><span class="p">()</span>
-<span class="n">SSIM</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">SSIM</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MAE</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">IQMs</span><span class="o">.</span><span class="n">MAE</span><span class="p">()</span>
+<span class="n">MSE</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">IQMs</span><span class="o">.</span><span class="n">MSE</span><span class="p">()</span>
+<span class="n">SSIM</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">IQMs</span><span class="o">.</span><span class="n">SSIM</span><span class="p">()</span>
 
 <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;MAE&#39;</span><span class="p">:</span> <span class="n">MAE</span><span class="p">,</span>
            <span class="s1">&#39;MSE&#39;</span><span class="p">:</span> <span class="n">MSE</span><span class="p">,</span>
@@ -249,8 +249,8 @@ Images files: [&#39;/home/matt/projects/IQM-VIS/IQM_Vis/examples/images/waves1.j
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MSE_image</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">MSE</span><span class="p">(</span><span class="n">return_image</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">SSIM_image</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">SSIM</span><span class="p">(</span><span class="n">return_image</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MSE_image</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">IQMs</span><span class="o">.</span><span class="n">MSE</span><span class="p">(</span><span class="n">return_image</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">SSIM_image</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">IQMs</span><span class="o">.</span><span class="n">SSIM</span><span class="p">(</span><span class="n">return_image</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">metric_images</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;MSE&#39;</span><span class="p">:</span> <span class="n">MSE_image</span><span class="p">,</span>
                  <span class="s1">&#39;1-SSIM&#39;</span><span class="p">:</span> <span class="n">SSIM_image</span><span class="p">}</span>
