@@ -12,6 +12,14 @@ IQM\_Vis.UI.custom\_widgets module
    :undoc-members:
    :show-inheritance:
 
+IQM\_Vis.UI.dists module
+------------------------
+
+.. automodule:: IQM_Vis.UI.dists
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 IQM\_Vis.UI.images module
 -------------------------
 

@@ -91,6 +91,17 @@ class make_app(widgets, layout, images):
         for trans, item in self.transformations.items():
             if self.menu_options['transforms'][trans].isChecked():
                 self.checked_transformations[trans] = item
+        # get currently selected metrics to use
+        self.checked_metrics = []
+        for metric in self.data_stores[0].metrics:
+            if self.menu_options['metrics'][metric].isChecked():
+                self.checked_metrics.append(metric)
+        # get currently selected metric_images to use
+        self.checked_metric_images = []
+        for metric_image in self.data_stores[0].metric_images:
+            if self.menu_options['metric_images'][metric_image].isChecked():
+                self.checked_metric_images.append(metric_image)
+
 
         self.init_style()     # layout.py
         self.init_widgets()   # widgets.py

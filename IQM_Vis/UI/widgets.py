@@ -36,13 +36,14 @@ class widgets():
                 self.widget_row[i]['images'][image_name]['label'].setText(image_name)
 
             '''metric images'''
-            for key in data_store.metric_images.keys():
-                self.widget_row[i]['metric_images'][key] = {}
-                self.widget_row[i]['metric_images'][key]['data'] = QLabel(self)
-                self.widget_row[i]['metric_images'][key]['data'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-                # image label
-                self.widget_row[i]['metric_images'][key]['label'] = QLabel(self)
-                self.widget_row[i]['metric_images'][key]['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+            for metric_image in data_store.metric_images:
+                if metric_image in self.checked_metric_images:
+                    self.widget_row[i]['metric_images'][metric_image] = {}
+                    self.widget_row[i]['metric_images'][metric_image]['data'] = QLabel(self)
+                    self.widget_row[i]['metric_images'][metric_image]['data'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                    # image label
+                    self.widget_row[i]['metric_images'][metric_image]['label'] = QLabel(self)
+                    self.widget_row[i]['metric_images'][metric_image]['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
 
             '''metrics graphs'''
             im_pair_name = gui_utils.get_image_pair_name(data_store)
@@ -183,11 +184,12 @@ class widgets():
         for i, data_store in enumerate(self.data_stores):
             self.widget_row[i]['images']['original']['label'].setText(data_store.get_reference_image_name())
             self.widget_row[i]['images']['transformed']['label'].setText(gui_utils.get_transformed_image_name(data_store))
-            for key in data_store.metric_images:
-                metric_name = gui_utils.get_metric_image_name(key, data_store)
-                if len(metric_name) > 20:
-                    metric_name = key
-                self.widget_row[i]['metric_images'][key]['label'].setText(metric_name)
+            for metric_image in data_store.metric_images:
+                if metric_image in self.checked_metric_images:
+                    metric_name = gui_utils.get_metric_image_name(metric_image, data_store)
+                    if len(metric_name) > 20:
+                        metric_name = metric_image
+                    self.widget_row[i]['metric_images'][metric_image]['label'].setText(metric_name)
 
     def change_plot_lims(self, state):
         if state == 2:  # 2 is the checked value

@@ -125,7 +125,7 @@ def get_all_slider_values(transforms, num_steps=10):
     values.append(transforms['max'])
     return values
 
-def compute_metrics_over_range(data_store, transforms, transform_values, metric_params, pbar=None):
+def compute_metrics_over_range(data_store, transforms, transform_values, metric_params, metrics_to_use, pbar=None):
     '''
     compute metrics over a range of trans
         data_store: object containing metrics and image
@@ -148,7 +148,7 @@ def compute_metrics_over_range(data_store, transforms, transform_values, metric_
             vary_one_value = transform_values.copy()
             vary_one_value[curr_trans] = trans_value   # set to the varying value in this range loop
             trans_im = image_utils.get_transform_image(data_store, transforms, vary_one_value)     # initialse image
-            metric_scores = data_store.get_metrics(trans_im, **metric_params)
+            metric_scores = data_store.get_metrics(trans_im, metrics_to_use, **metric_params)
             for metric in metric_scores:
                 results[metric][curr_trans].append(float(metric_scores[metric]))
                 # and store the input trans values for plotting

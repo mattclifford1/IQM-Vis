@@ -121,16 +121,18 @@ class dataset_holder(base_dataset_loader):
     def get_image_to_transform(self):
         return self.image_to_transform[1]
 
-    def get_metrics(self, transformed_image, **kwargs):
+    def get_metrics(self, transformed_image, metrics_to_use='all', **kwargs):
         results = {}
-        for metric_key in self.metrics:
-            results[metric_key] = self.metrics[metric_key](self.get_reference_image(), transformed_image, **kwargs)
+        for metric in self.metrics:
+            if metric in metrics_to_use or metrics_to_use == 'all':
+                results[metric] = self.metrics[metric](self.get_reference_image(), transformed_image, **kwargs)
         return results
 
-    def get_metric_images(self, transformed_image, **kwargs):
+    def get_metric_images(self, transformed_image, metrics_to_use='all', **kwargs):
         results = {}
-        for metric_key in self.metric_images:
-            results[metric_key] = self.metric_images[metric_key](self.get_reference_image(), transformed_image, **kwargs)
+        for metric in self.metric_images:
+            if metric in metrics_to_use or metrics_to_use == 'all':
+                results[metric] = self.metric_images[metric](self.get_reference_image(), transformed_image, **kwargs)
         return results
 
     def _check_inputs(self):

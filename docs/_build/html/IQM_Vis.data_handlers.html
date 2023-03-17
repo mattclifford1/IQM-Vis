@@ -211,12 +211,12 @@ transformations. For example cropping an image after rotation.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api.dataset_holder.get_metric_images">
-<span class="sig-name descname"><span class="pre">get_metric_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transformed_image</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder.get_metric_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder.get_metric_images" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_metric_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transformed_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_to_use</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder.get_metric_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder.get_metric_images" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api.dataset_holder.get_metrics">
-<span class="sig-name descname"><span class="pre">get_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transformed_image</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder.get_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder.get_metrics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transformed_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_to_use</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder.get_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder.get_metrics" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -267,6 +267,16 @@ transformations. For example cropping an image after rotation.
 <dl class="py method">
 <dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_reference_image_name">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_reference_image_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api_abstract.html#base_dataloader.get_reference_image_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_reference_image_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api_abstract.base_dataloader.metric_images">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">metric_images</span></span><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.metric_images" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api_abstract.base_dataloader.metrics">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.metrics" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>

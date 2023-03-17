@@ -1,6 +1,5 @@
 Needs doing:
   - add LPIPS
-  - add DISTS
   - add MSSIM
   - add NLPD
 
@@ -17,3 +16,6 @@ minor:
   - fix metric images being stretched (muliptle rows)
   - Option to change image display size
   - Option to change screen calibration
+
+  - get metrics and metric images from all data stores
+  - stay on current tab for plots when resetting UI

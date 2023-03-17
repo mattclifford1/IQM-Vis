@@ -31,10 +31,10 @@ class images:
             trans_im = image_utils.get_transform_image(data_store, self.sliders['transforms'], self.params_from_sliders['transforms'])
             gui_utils.change_im(self.widget_row[i]['images']['transformed']['data'], trans_im, resize=self.image_display_size)
             # metrics
-            metrics = data_store.get_metrics(trans_im, **self.params_from_sliders['metric_params'])
+            metrics = data_store.get_metrics(trans_im, self.checked_metrics, **self.params_from_sliders['metric_params'])
             self.display_metrics(metrics, i)
             # metric images
-            metric_images = data_store.get_metric_images(trans_im, **self.params_from_sliders['metric_params'])
+            metric_images = data_store.get_metric_images(trans_im, self.checked_metric_images, **self.params_from_sliders['metric_params'])
             self.display_metric_images(metric_images, i)
 
             QApplication.processEvents()   # force to change otherwise the UI wont respond
@@ -116,6 +116,7 @@ class images:
                                                             self.checked_transformations,
                                                             init_trans_params,
                                                             self.params_from_sliders['metric_params'],
+                                                            self.checked_metrics,
                                                             pbar=self.pbar)
             self.metric_over_range_results.append(results)
             # see max metric values
