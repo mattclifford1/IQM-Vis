@@ -8,22 +8,14 @@ Subpackages
    :maxdepth: 4
 
    IQM_Vis.UI
+   IQM_Vis.data_handlers
    IQM_Vis.examples
-   IQM_Vis.image_loaders
-   IQM_Vis.image_metrics
+   IQM_Vis.metrics
    IQM_Vis.transformations
    IQM_Vis.utils
 
 Submodules
 ----------
-
-IQM\_Vis.data\_api module
--------------------------
-
-.. automodule:: IQM_Vis.data_api
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 IQM\_Vis.ui\_wrapper module
 ---------------------------
