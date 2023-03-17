@@ -136,7 +136,9 @@ class DISTS:
 
     '''
     def __init__(self):
-        self.metric = dists_original()
+        with warnings.catch_warnings():    # we don't care about the warnings these give
+            warnings.simplefilter("ignore")
+            self.metric = dists_original()
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.metric.to(self.device)
         self.preproccess_function = _numpy_to_torch_image

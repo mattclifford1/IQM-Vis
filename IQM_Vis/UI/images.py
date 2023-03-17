@@ -106,14 +106,14 @@ class images:
         self.metric_over_range_results = []
         # use the initiased/default values for all sliders
         init_trans_params = {}
-        for trans in self.transformations:
-            init_trans_params[trans] = self.transformations[trans]['init_value']
+        for trans in self.checked_transformations:
+            init_trans_params[trans] = self.checked_transformations[trans]['init_value']
         self.status_bar.showMessage('Getting Range plot Values')
         QApplication.processEvents()
         max_val = 0
         for i, data_store in enumerate(self.data_stores):
             results = plot_utils.compute_metrics_over_range(data_store,
-                                                            self.transformations,
+                                                            self.checked_transformations,
                                                             init_trans_params,
                                                             self.params_from_sliders['metric_params'],
                                                             pbar=self.pbar)
@@ -132,14 +132,14 @@ class images:
     metric range plot (line plots of range of all sliders)
     '''
     def display_metric_range_plot(self):
-        trans_to_plot = list(self.transformations.keys())[self.metric_range_graph_num]
+        trans_to_plot = list(self.checked_transformations.keys())[self.metric_range_graph_num]
         for i, data_store in enumerate(self.data_stores):
             axes = self.widget_row[i]['metrics']['range']['data']
             plot = plot_utils.get_transform_range_plots(self.metric_over_range_results[i], trans_to_plot, axes, self.plot_data_lim)
             plot.show()
 
     def change_metric_range_graph(self, add=1):
-        max_graph_num = len(list(self.transformations.keys()))
+        max_graph_num = len(list(self.checked_transformations.keys()))
         self.metric_range_graph_num += add
         if self.metric_range_graph_num >= max_graph_num:
             self.metric_range_graph_num = max_graph_num - 1
@@ -156,7 +156,7 @@ class images:
         for i, data_store in enumerate(self.data_stores):
             # uncomment below if you want to calc over the current trans values instead of init
             # results = plot_utils.compute_metrics_over_range(data_store,
-            #                                                 self.transformations,
+            #                                                 self.checked_transformations,
             #                                                 self.params_from_sliders['transforms'],
             #                                                 self.params_from_sliders['metric_params'],
             #                                                 pbar=self.pbar)

@@ -164,16 +164,17 @@ class layout(QMainWindow):
         self.setCentralWidget(main_widget)
         self.show()
 
-    def init_style(self, css_file=None):
+    def init_style(self, style='light', css_file=None):
         if css_file == None:
             dir = os.path.dirname(os.path.abspath(__file__))
             # css_file = os.path.join(dir, 'style-light.css')
-            css_file = os.path.join(dir, 'style-light.css')
+            css_file = os.path.join(dir, f'style-{style}.css')
         if os.path.isfile(css_file):
             with open(css_file, 'r') as file:
                 self.app.setStyleSheet(file.read())
         else:
             warnings.warn('Cannot load css style sheet - file not found')
+
 
 def add_layout_to_tab(tab, layout, name):
     _tab = QWidget()   # QTabWidget only accepts widgets not layouts so need to use this as a workaround

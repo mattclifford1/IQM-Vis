@@ -18,7 +18,7 @@ class widgets():
         '''
         # first setup the slider data
         self.sliders = {'transforms': {}, 'metric_params': {}}
-        self._init_sliders(self.sliders['transforms'], self.transformations, param_group='transforms')
+        self._init_sliders(self.sliders['transforms'], self.checked_transformations, param_group='transforms')
         self._init_sliders(self.sliders['metric_params'], self.metric_params, param_group='metric_params')
 
         self.widget_row = {}
