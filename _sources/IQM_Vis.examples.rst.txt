@@ -1,6 +1,14 @@
 IQM\_Vis.examples package
 =========================
 
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   IQM_Vis.examples.images
+
 Submodules
 ----------
 

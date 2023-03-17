@@ -1,0 +1,197 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "7d64af1f",
+   "metadata": {},
+   "source": [
+    "# IQM-Vis Tutorial 1: Getting Started\n",
+    "In this notebook we will get to grips with how to peice together a simple IQM-Vis UI. We will go through the 3 basic aspects that are required to generate a UI:\n",
+    " - Images\n",
+    " - Metrics\n",
+    " - Transformations\n",
+    "\n",
+    "Let's start by importing the package."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "215fd983",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import IQM_Vis"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "59b6af9e",
+   "metadata": {},
+   "source": [
+    "### Images\n",
+    "Now will need to load some images. For now we will use the example images provided with IQM-Vis, but feel free to change the file paths with your own local image files."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "04dc4a41",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Images files: ['/home/matt/projects/IQM-VIS/IQM_Vis/examples/images/waves1.jpeg', '/home/matt/projects/IQM-VIS/IQM_Vis/examples/images/waves2.jpeg']\n"
+     ]
+    }
+   ],
+   "source": [
+    "image1 = IQM_Vis.examples.images.IMAGE1\n",
+    "image2 = IQM_Vis.examples.images.IMAGE2\n",
+    "\n",
+    "images = [image1, image2]\n",
+    "print(f'Images files: {images}')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e6984719",
+   "metadata": {},
+   "source": [
+    "### Metrics\n",
+    "Now we will add some image quality metrics. These return a scalar value when comparing two images. For now we will use some metrics provided by IQM-Vis. See later tutorials for how to define your own custom metrics."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "19eab748",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "MAE = IQM_Vis.metrics.MAE()\n",
+    "MSE = IQM_Vis.metrics.MSE()\n",
+    "SSIM = IQM_Vis.metrics.SSIM()\n",
+    "\n",
+    "metrics = {'MAE': MAE,\n",
+    "           'MSE': MSE,\n",
+    "           '1-SSIM': SSIM}"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "a509fc73",
+   "metadata": {},
+   "source": [
+    "### Metric Images\n",
+    "Now we will add some image quality metrics that return an image instead of a scalar value. Defining these is optional but can be useful for qualitive spacial analysis."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "9038617d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "MSE_image = IQM_Vis.metrics.MSE(return_image=True)\n",
+    "SSIM_image = IQM_Vis.metrics.SSIM(return_image=True)\n",
+    "\n",
+    "metric_images = {'MSE': MSE_image,\n",
+    "                 '1-SSIM': SSIM_image}"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "8fe1426e",
+   "metadata": {},
+   "source": [
+    "### Transformations\n",
+    "Now we need to define some image transformation/distortions. We also need to provide the range of values that we want the transformations to operate over."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "0d35590d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "rotation = IQM_Vis.transforms.rotation\n",
+    "blur = IQM_Vis.transforms.blur\n",
+    "brightness = IQM_Vis.transforms.brightness\n",
+    "jpeg_compression = IQM_Vis.transforms.jpeg_compression\n",
+    "\n",
+    "transformations = {\n",
+    "    'rotation':  {'min':-180, 'max':180, 'function':rotation},                # normal input\n",
+    "    'blur':      {'min':1,    'max':41,  'function':blur, 'normalise':'odd'}, # only odd ints since it's a kernel\n",
+    "    'brightness':{'min':-1.0, 'max':1.0, 'function':brightness},              # float values\n",
+    "    'jpg comp.': {'min':1,    'max':100, 'function':jpeg_compression, 'init_value':100}, # non zero inital value\n",
+    "               }"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "393e6549",
+   "metadata": {},
+   "source": [
+    "## Putting it all together\n",
+    "First we need to bundle up the images and metrics in a datastore"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "171060e6",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "data = IQM_Vis.dataset_holder(images,\n",
+    "                              metrics,\n",
+    "                              metric_images)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "cb8a3088",
+   "metadata": {},
+   "source": [
+    "Now we need to pass everything to the UI maker"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "45efb3d3",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "IQM_Vis.make_UI(data,\n",
+    "                transformations)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.16"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
