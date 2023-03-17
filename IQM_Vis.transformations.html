@@ -267,26 +267,6 @@ to an odd number. (Defaults to 7)</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="IQM_Vis.transformations.transforms.png_compression">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.transformations.transforms.</span></span><span class="sig-name descname"><span class="pre">png_compression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compression</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/transformations/transforms.html#png_compression"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.transformations.transforms.png_compression" title="Permalink to this definition">¶</a></dt>
-<dd><p>encode image using png then decode (note png is lossless compression)</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>image</strong> (<em>np.array</em>) – image to be compressed</p></li>
-<li><p><strong>compression</strong> (<em>int</em>) – amount of png compression (Defaults to 9)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>png compressed image</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>image (np.array)</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="IQM_Vis.transformations.transforms.rotation">
 <span class="sig-prename descclassname"><span class="pre">IQM_Vis.transformations.transforms.</span></span><span class="sig-name descname"><span class="pre">rotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/transformations/transforms.html#rotation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.transformations.transforms.rotation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Rotate an image around its centre. Uses skimage.transform.rotate. Areas
@@ -376,6 +356,11 @@ that are rotated beyond the image are filled in with black pixel values</p>
 </section>
 <section id="module-IQM_Vis.transformations">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-IQM_Vis.transformations" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="IQM_Vis.transformations.get_all_transforms">
+<span class="sig-prename descclassname"><span class="pre">IQM_Vis.transformations.</span></span><span class="sig-name descname"><span class="pre">get_all_transforms</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/transformations.html#get_all_transforms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.transformations.get_all_transforms" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </section>
 </section>
 
