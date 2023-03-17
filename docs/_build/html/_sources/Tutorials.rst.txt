@@ -2,4 +2,4 @@ Tutorials
 ==================
 
 .. nbgallery::
-  notebooks/Tutorial 1 - Getting Started
+  notebooks/Tutorial_1-Getting_Started

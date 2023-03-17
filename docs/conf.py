@@ -52,3 +52,10 @@ html_theme = 'renku'
 html_theme = 'cloud'
 html_theme = 'sphinx_typo3_theme'
 html_static_path = ['_static']
+
+# notebook links
+nbsphinx_prolog = """
+View the whole notebook: https://github.com/mattclifford1/IQM-Vis/docs/{{ env.doc2path(env.docname, base=None) }}
+
+----
+"""
