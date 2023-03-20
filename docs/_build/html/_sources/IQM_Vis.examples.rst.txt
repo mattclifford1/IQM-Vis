@@ -28,6 +28,14 @@ IQM\_Vis.examples.dataset module
    :undoc-members:
    :show-inheritance:
 
+IQM\_Vis.examples.dists module
+------------------------------
+
+.. automodule:: IQM_Vis.examples.dists
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 IQM\_Vis.examples.multiple module
 ---------------------------------
 

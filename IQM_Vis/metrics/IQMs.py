@@ -10,11 +10,11 @@ import warnings
 
 from torchmetrics import StructuralSimilarityIndexMeasure as ssim_torch
 from torchmetrics import MultiScaleStructuralSimilarityIndexMeasure as Mssim_torch
-from torchmetrics import PeakSignalNoiseRatio as PSNR
+# from torchmetrics import PeakSignalNoiseRatio as PSNRs
 # from torchmetrics import UniversalImageQualityIndex as UIQI
-from torchmetrics.functional import universal_image_quality_index as UIQI
-from torchmetrics import SpectralDistortionIndex as SDI
-from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity as LPIPS
+# from torchmetrics.functional import universal_image_quality_index as UIQI
+# from torchmetrics import SpectralDistortionIndex as SDI
+from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity as lpips_torch
 from DISTS_pytorch import DISTS as dists_original
 
 class MAE:
@@ -126,6 +126,100 @@ class SSIM:
         _metric.reset()
         return _score
 
+class MSSIM:
+    '''Multi-Scale Structural Similarity Index Measure between two images.
+       Images must have the same dimensions. Score given is 1 - MSSIM to give the
+       loss/dissimilarity
+
+    Args:
+        return_image (bool): Whether to return the image (Defaults to False which
+                             will return a scalar value)
+    '''
+    def __init__(self, return_image=False):
+        self.return_image = return_image
+        self.metric = Mssim_torch
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.preproccess_function = _numpy_to_torch_image
+
+    def __call__(self, im_ref, im_comp, **kwargs):
+        '''When an instance is called
+
+        Args:
+            im_ref (np.array): Reference image
+            im_comp (np.array): Comparison image
+            **kwargs: Arbitrary keyword arguments
+
+        Returns:
+            score (np.array): 1-SSIM (scalar if return_image is False, image if
+                             return_image is True)
+        '''
+        _check_shapes(im_ref, im_comp)
+        im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
+        im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)
+        # set up metric
+        with warnings.catch_warnings():    # we don't care about the warnings these give
+            warnings.simplefilter("ignore")
+            if self.return_image:
+                _metric = self.metric(return_full_image=True, reduction=None, **kwargs)
+            else:
+                _metric = self.metric(**kwargs)
+            _metric.to(self.device)
+        if self.return_image:
+            _, ssim_full_im = _metric(im_ref, im_comp)
+            ssim_full_im = torch.squeeze(ssim_full_im, axis=0)
+            ssim_full_im = ssim_full_im.permute(1, 2, 0)
+            ssim_full_im = torch.clip(ssim_full_im, 0, 1)
+            _score = ssim_full_im.cpu().detach().numpy()
+        else:
+            _score = _metric(im_ref, im_comp).cpu().detach().numpy()
+        _score = 1 - _score
+        _metric.reset()
+        return _score
+
+class LPIPS:
+    '''Learned Perceptual Image Patch Similarity between two images.
+       Images must have the same dimensions.
+
+    Args:
+        network (str): Pretrained network to use. Choose between ‘alex’, ‘vgg’
+                       or ‘squeeze’. (Defaults to 'alex')
+        reduction (str): How to reduce over the batch dimension. Choose between
+                         ‘sum’ or ‘mean’. (Defaults to 'mean')
+
+    '''
+    def __init__(self, network='alex', reduction='mean'):
+        self.network = network
+        self.reduction = reduction
+        self.metric = lpips_torch
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.preproccess_function = _numpy_to_torch_image
+
+    def __call__(self, im_ref, im_comp, **kwargs):
+        '''When an instance is called
+
+        Args:
+            im_ref (np.array): Reference image
+            im_comp (np.array): Comparison image
+            **kwargs: Arbitrary keyword arguments
+
+        Returns:
+            score (np.array): 1-SSIM (scalar if return_image is False, image if
+                             return_image is True)
+        '''
+        _check_shapes(im_ref, im_comp)
+        im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
+        im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)
+        # set up metric
+        with warnings.catch_warnings():    # we don't care about the warnings these give
+            warnings.simplefilter("ignore")
+            _metric = self.metric(net_type=self.network,
+                                  reduction=self.reduction,
+                                  normalise=True,
+                                  **kwargs)
+            _metric.to(self.device)
+        _score = _metric(im_ref, im_comp).cpu().detach().numpy()
+        _metric.reset()
+        return _score
 
 class DISTS:
     '''Deep Image Structure and Texture Similarity (DISTS) Metric. Uses the

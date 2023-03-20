@@ -5,6 +5,7 @@ PyQt6
 matplotlib
 torch
 torchmetrics
+lpips
 dists-pytorch
 torchvision
 notebook
