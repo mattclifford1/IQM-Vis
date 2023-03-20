@@ -87,6 +87,7 @@ class widgets():
             self.widget_controls['button']['force_update'].clicked.connect(self.redo_plots)
             # Change plot limits
             self.widget_controls['check_box']['graph_limits'] = QCheckBox('Squeeze plots')
+            self.widget_controls['check_box']['graph_limits'].setToolTip('Set the scale of the plots to the metric data range.')
             self.widget_controls['check_box']['graph_limits'].setCheckState(Qt.CheckState.Unchecked)
             self.widget_controls['check_box']['graph_limits'].stateChanged.connect(self.change_plot_lims)
 
@@ -122,7 +123,7 @@ class widgets():
                 self.params_from_sliders['transforms'][key] = item_sliders['init_ind']
                 self.widget_controls['slider'][key]['label'] = QLabel(self)
                 self.widget_controls['slider'][key]['label'].setAlignment(Qt.AlignmentFlag.AlignRight)
-                self.widget_controls['slider'][key]['label'].setText(key+':')
+                self.widget_controls['slider'][key]['label'].setText(f"{key}:")
                 self.widget_controls['slider'][key]['value'] = QLabel(self)
                 self.widget_controls['slider'][key]['value'].setAlignment(Qt.AlignmentFlag.AlignCenter)
                 self.widget_controls['slider'][key]['value'].setText(str(self.params_from_sliders['transforms'][key]))
@@ -165,7 +166,7 @@ class widgets():
 
         # post processing
         self.post_processing_options = {'None': None,
-                                        'Crop Centre': lambda im: IQM_Vis.transforms.zoom_image(im, 2)}
+                                        'Crop Centre': IQM_Vis.utils.image_utils.crop_centre}
         init_val = 'None'
         for i, data_store in enumerate(self.data_stores):
             if hasattr(data_store, 'image_post_processing'):
@@ -233,8 +234,17 @@ class widgets():
         for data_store in self.data_stores:
             if hasattr(data_store, 'image_post_processing'):
                 data_store.image_post_processing = self.post_processing_options[option]
-        self.construct_UI()
+        self.display_images()
+        self.redo_plots()
 
     def change_display_im_size(self, txt):
-        self.image_display_size = int(txt)
-        self.construct_UI()
+        if txt == '':
+            txt = 1
+        old_size = self.image_display_size
+        self.image_display_size = max(1, int(txt))
+        # self.construct_UI()
+        self.display_images()
+        # if old_size > self.image_display_size:
+        #     self.setMaximumSize(self.main_layout.sizeHint())
+        # if old_size < self.image_display_size:
+        #     self.setMinimumSize(self.main_layout.sizeHint())

@@ -75,10 +75,6 @@ def correct(img, meta_dict, greycale=True):
     II = np.reshape(np.reshape(II, (np.prod(II.shape[0:2]), 3), order='F')@T.T, (II.shape), order='F')
     return II
 
-'''post processing to allow better image rotations by cropping'''
-def crop_centre(im):
-    return IQM_Vis.transforms.zoom_image(im, 2)
-
 def run():
     # metrics functions must return a single value
     metric = {'DISTS': IQM_Vis.IQMs.DISTS(),
@@ -94,7 +90,7 @@ def run():
                                   metric,
                                   metric_images,
                                   load_and_calibrate_image,
-                                  image_post_processing=crop_centre)
+                                  image_post_processing=IQM_Vis.utils.image_utils.crop_centre)
 
     # define the transformations
     transformations = {
