@@ -76,6 +76,8 @@ class dataset_holder(base_dataset_loader):
 
     def get_reference_image(self):
         im = self.image_reference[1]
+        if self.image_post_processing is not None:
+            im = self.image_post_processing(im)
         return im
 
     def get_image_to_transform_name(self):

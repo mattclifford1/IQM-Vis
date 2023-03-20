@@ -7,14 +7,6 @@ import cv2
 import numpy as np
 from skimage.transform import resize
 
-def get_reference_image(data_store):
-    ''' get reference image and apply image_post_processing if there is any '''
-    image = data_store.get_reference_image()
-    if hasattr(data_store, 'image_post_processing'):
-        if data_store.image_post_processing is not None:
-            image = self.image_post_processing(image)
-    return image
-
 def get_transform_image(data_store, transform_functions, transform_params):
     '''transform image with image post processing
 

@@ -118,9 +118,19 @@ class layout(QMainWindow):
             metric_controls.addLayout(inner_metric_layout)
         metric_controls.addStretch()
 
+        '''settings controls'''
+        settings_controls = QVBoxLayout()
+        for key, item in self.widget_settings.items():
+            inner_layout = QHBoxLayout()
+            inner_layout.addWidget(item['label'])
+            inner_layout.addWidget(item['widget'])
+            settings_controls.addLayout(inner_layout)
+        settings_controls.addStretch()
+
         ''' parameter controls tab'''
         slider_tabs = QTabWidget()
-        for tab_layout, tab_name in zip([image_controls, metric_controls], ['transforms', 'metric params']):
+        for tab_layout, tab_name in zip([image_controls, metric_controls, settings_controls],
+                                        ['transforms', 'metric params', 'settings']):
             add_layout_to_tab(slider_tabs, tab_layout, tab_name)
 
         ''' reset sliders button'''

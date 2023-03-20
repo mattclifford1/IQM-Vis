@@ -5,9 +5,10 @@ UI create widgets
 from functools import partial
 
 import numpy as np
-from PyQt6.QtWidgets import QPushButton, QLabel, QSlider, QCheckBox
+from PyQt6.QtWidgets import QPushButton, QLabel, QSlider, QCheckBox, QComboBox
 from PyQt6.QtCore import Qt
 
+import IQM_Vis
 from IQM_Vis.utils import gui_utils
 
 # sub class used by IQM_Vis.main.make_app to initialise widgets and general UI functions for widgets
@@ -158,6 +159,23 @@ class widgets():
             # get ind of the initial value to set the slider at
             sliders_dict[key]['init_ind'] = np.searchsorted(sliders_dict[key]['values'], info_item['init_value'], side='left')
 
+    def _init_image_settings(self):
+        self.post_processing_options = {'None': None,
+                                        'Crop Centre': lambda im: IQM_Vis.transforms.zoom_image(im, 2)}
+        init_val = 'None'
+        for i, data_store in enumerate(self.data_stores):
+            if hasattr(data_store, 'image_post_processing'):
+                if data_store.image_post_processing != None:
+                    name = f"Custom {i}"
+                    self.post_processing_options[name] = data_store.image_post_processing
+                    init_val = name
+        combobox = QComboBox()
+        combobox.addItems(list(self.post_processing_options.keys()))
+        combobox.setCurrentText(init_val)
+        combobox.activated.connect(self.change_post_processing)
+        self.widget_settings = {'image_post_processing': {'widget': combobox, 'label':QLabel('Image Post Processing:')}}
+
+
     '''
     ==================== functions to bind to sliders/widgets ====================
     '''
@@ -197,3 +215,10 @@ class widgets():
         else:
             self.plot_data_lim = self.data_lims['fixed']
         self.redo_plots(calc_range=False)
+
+    def change_post_processing(self, i):
+        option = self.widget_settings['image_post_processing']['widget'].currentText()
+        for data_store in self.data_stores:
+            if hasattr(data_store, 'image_post_processing'):
+                data_store.image_post_processing = self.post_processing_options[option]
+        self.construct_UI()

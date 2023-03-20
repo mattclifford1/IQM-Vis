@@ -15,7 +15,8 @@ class make_app(widgets, layout, images):
                 metrics_avg_graph=False,
                 metric_range_graph=True,
                 metric_params: dict={},
-                image_display_size=150):
+                image_display_size=150,
+                ):
         super().__init__()
         self.app = app
         self.data_stores = data_stores
@@ -36,6 +37,7 @@ class make_app(widgets, layout, images):
         self.make_status_bar()
         self.make_menu()
 
+        self._init_image_settings()
         self.construct_UI()
 
     def make_menu(self):
@@ -60,7 +62,9 @@ class make_app(widgets, layout, images):
     def get_menu_checkboxes(self):
         ''' list all trans/metrics in the menu drop downs '''
         # transformations
-        self.menu_options = {'transforms': {}, 'metrics': {}, 'metric_images': {}}
+        self.menu_options = {'transforms': {},
+                             'metrics': {},
+                             'metric_images': {}}
         set_checked_menu_from_iterable(self.menu_bar,
                                        self.transformations,
                                        'Transforms',
