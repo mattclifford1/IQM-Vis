@@ -7,23 +7,32 @@ import cv2
 import numpy as np
 from skimage.transform import resize
 
+def get_reference_image(data_store):
+    ''' get reference image and apply image_post_processing if there is any '''
+    image = data_store.get_reference_image()
+    if hasattr(data_store, 'image_post_processing'):
+        if data_store.image_post_processing is not None:
+            image = self.image_post_processing(image)
+    return image
+
 def get_transform_image(data_store, transform_functions, transform_params):
     '''transform image with image post processing
 
     Args:
-        - data_store: IQM_Vis data_api
-        - transform_functions: dict holding transforms
+        data_store: IQM_Vis data_api
+        transform_functions: dict holding transforms
                                (each key is the name of transform, items have key 'function')
-        - transform_params:  dict holding the parameters for transforms (corresponding to keys in transform_functions)
+        transform_params:  dict holding the parameters for transforms (corresponding to keys in transform_functions)
 
     Return:
-        - image: processed numpy image
+        image: processed numpy image
     '''
     image = data_store.get_image_to_transform()
     for key in transform_functions:
         image = transform_functions[key]['function'](image, transform_params[key])
-    if data_store.image_post_processing is not None:
-        image = data_store.image_post_processing(image)
+    if hasattr(data_store, 'image_post_processing'):
+        if data_store.image_post_processing is not None:
+            image = data_store.image_post_processing(image)
     return image
 
 def load_image(image_path):

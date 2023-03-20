@@ -1,6 +1,7 @@
 '''
 blueprint for data loader API
 '''
+# Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 from abc import ABC, abstractmethod
 
 class base_dataloader(ABC):
