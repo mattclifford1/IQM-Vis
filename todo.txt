@@ -1,6 +1,4 @@
 Needs doing:
-  - add LPIPS
-  - add MSSIM
   - add NLPD
 
 UI
@@ -9,7 +7,7 @@ UI
      - image display size
      - calibration
     - Progress bar force update
-    - kill avg plot graph calc when next images press to make more responsive UI
+    - kill avg plot graph calc when next images press to make more responsive UI (add these as threads we can kill)
 
 
 minor:

@@ -5,7 +5,8 @@ UI create widgets
 from functools import partial
 
 import numpy as np
-from PyQt6.QtWidgets import QPushButton, QLabel, QSlider, QCheckBox, QComboBox
+from PyQt6.QtWidgets import QPushButton, QLabel, QSlider, QCheckBox, QComboBox, QLineEdit
+from PyQt6.QtGui import QIntValidator
 from PyQt6.QtCore import Qt
 
 import IQM_Vis
@@ -160,6 +161,9 @@ class widgets():
             sliders_dict[key]['init_ind'] = np.searchsorted(sliders_dict[key]['values'], info_item['init_value'], side='left')
 
     def _init_image_settings(self):
+        self.widget_settings = {}
+
+        # post processing
         self.post_processing_options = {'None': None,
                                         'Crop Centre': lambda im: IQM_Vis.transforms.zoom_image(im, 2)}
         init_val = 'None'
@@ -173,7 +177,15 @@ class widgets():
         combobox.addItems(list(self.post_processing_options.keys()))
         combobox.setCurrentText(init_val)
         combobox.activated.connect(self.change_post_processing)
-        self.widget_settings = {'image_post_processing': {'widget': combobox, 'label':QLabel('Image Post Processing:')}}
+        self.widget_settings['image_post_processing'] = {'widget': combobox, 'label': QLabel('Image Post Processing:')}
+
+        # image display size
+        lineedit = QLineEdit()
+        lineedit.setValidator(QIntValidator())
+        lineedit.setMaxLength(3)
+        lineedit.setText(str(self.image_display_size))
+        lineedit.textChanged.connect(self.change_display_im_size)
+        self.widget_settings['image_display_size'] = {'widget': lineedit, 'label': QLabel('Image Display Size:')}
 
 
     '''
@@ -221,4 +233,8 @@ class widgets():
         for data_store in self.data_stores:
             if hasattr(data_store, 'image_post_processing'):
                 data_store.image_post_processing = self.post_processing_options[option]
+        self.construct_UI()
+
+    def change_display_im_size(self, txt):
+        self.image_display_size = int(txt)
         self.construct_UI()
