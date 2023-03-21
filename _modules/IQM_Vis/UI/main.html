@@ -169,8 +169,9 @@
 <span class="sd">main entry point to initialise the UI</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="c1"># Author: Matt Clifford &lt;matt.clifford@bristol.ac.uk&gt;</span>
-<span class="kn">from</span> <span class="nn">PyQt6.QtWidgets</span> <span class="kn">import</span> <span class="n">QLabel</span><span class="p">,</span> <span class="n">QApplication</span><span class="p">,</span> <span class="n">QCheckBox</span>
-<span class="kn">from</span> <span class="nn">PyQt6.QtGui</span> <span class="kn">import</span> <span class="n">QIcon</span><span class="p">,</span> <span class="n">QAction</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">PyQt6.QtWidgets</span> <span class="kn">import</span> <span class="n">QLabel</span><span class="p">,</span> <span class="n">QApplication</span><span class="p">,</span> <span class="n">QCheckBox</span><span class="p">,</span> <span class="n">QMessageBox</span>
+<span class="kn">from</span> <span class="nn">PyQt6.QtGui</span> <span class="kn">import</span> <span class="n">QIcon</span><span class="p">,</span> <span class="n">QAction</span><span class="p">,</span> <span class="n">QCloseEvent</span>
 <span class="kn">from</span> <span class="nn">PyQt6.QtCore</span> <span class="kn">import</span> <span class="n">Qt</span>
 <span class="kn">from</span> <span class="nn">IQM_Vis.UI</span> <span class="kn">import</span> <span class="n">layout</span><span class="p">,</span> <span class="n">widgets</span><span class="p">,</span> <span class="n">images</span><span class="p">,</span> <span class="n">ProgressBar</span>
 
@@ -227,8 +228,23 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">get_menu_checkboxes</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="make_app.quit"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.main.make_app.quit">[docs]</a>    <span class="k">def</span> <span class="nf">quit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
         <span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># garbage collection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<div class="viewcode-block" id="make_app.closeEvent"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.main.make_app.closeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="c1"># Ask for confirmation</span>
+        <span class="n">answer</span> <span class="o">=</span> <span class="n">QMessageBox</span><span class="o">.</span><span class="n">question</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+        <span class="s2">&quot;Confirm Exit...&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Are you sure you want to exit?</span><span class="se">\n</span><span class="s2">All data will be lost.&quot;</span><span class="p">,</span>
+        <span class="n">QMessageBox</span><span class="o">.</span><span class="n">StandardButton</span><span class="o">.</span><span class="n">Yes</span> <span class="o">|</span> <span class="n">QMessageBox</span><span class="o">.</span><span class="n">StandardButton</span><span class="o">.</span><span class="n">No</span><span class="p">)</span>
+
+        <span class="n">event</span><span class="o">.</span><span class="n">ignore</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">answer</span> <span class="o">==</span> <span class="n">QMessageBox</span><span class="o">.</span><span class="n">StandardButton</span><span class="o">.</span><span class="n">Yes</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="make_app.get_menu_checkboxes"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.main.make_app.get_menu_checkboxes">[docs]</a>    <span class="k">def</span> <span class="nf">get_menu_checkboxes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39; list all trans/metrics in the menu drop downs &#39;&#39;&#39;</span>
@@ -277,14 +293,25 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu_options</span><span class="p">[</span><span class="s1">&#39;metric_images&#39;</span><span class="p">][</span><span class="n">metric_image</span><span class="p">]</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">checked_metric_images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">metric_image</span><span class="p">)</span>
 
+        <span class="c1"># get any current tabs showing so we can keep them showing on a remake</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;slider_tabs&#39;</span><span class="p">):</span>
+            <span class="n">slider_tabs_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">slider_tabs</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">slider_tabs_index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;graph_tabs&#39;</span><span class="p">):</span>
+            <span class="n">graph_tabs_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph_tabs</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">graph_tabs_index</span> <span class="o">=</span> <span class="mi">1</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">init_style</span><span class="p">()</span>     <span class="c1"># layout.py</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">init_widgets</span><span class="p">()</span>   <span class="c1"># widgets.py</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">init_layout</span><span class="p">()</span>    <span class="c1"># layout.py</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slider_tabs</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">slider_tabs_index</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph_tabs</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">graph_tabs_index</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">display_images</span><span class="p">()</span> <span class="c1"># images.py</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reset_sliders</span><span class="p">()</span>  <span class="c1"># widgets.py</span></div>
 
-        <span class="c1"># self.setMinimumSize(self.main_layout.sizeHint())</span>
+        <span class="c1"># self.setMinimumSize(self.main_window.sizeHint())</span>
 
     <span class="k">def</span> <span class="nf">_single_image_or_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;set whether dataset or single image used for data_store&#39;&#39;&#39;</span>
