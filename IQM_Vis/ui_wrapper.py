@@ -29,6 +29,7 @@ class make_UI:
         self.show()
 
     def show(self):
+        self._check_data_store()
         self._check_inputs()
         app = QApplication(sys.argv)
         window = make_app(app,
@@ -39,13 +40,14 @@ class make_UI:
                           metric_params=self.metric_params)
         sys.exit(app.exec())
 
-    def _check_inputs(self):
+    def _check_data_store(self):
         '''data store checking'''
         if type(self.data_store) != list:
             self.data_store = [self.data_store]
+
+    def _check_inputs(self):
         for item in self.data_store:
             test_datastore_attributes(item)
-
         '''input items that should be dictionaries'''
         should_be_dict = [self.transformations, self.metric_params]
         for item in should_be_dict:

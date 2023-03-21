@@ -125,9 +125,70 @@ def get_all_slider_values(transforms, num_steps=10):
     values.append(transforms['max'])
     return values
 
-def compute_metrics_over_range(data_store, transforms, transform_values, metric_params, metrics_to_use, pbar_signal=None, stop_flag=None):
+def get_all_single_transform_params(transforms):
+    ''' get a list of all the individual transforms with a single parameter value
+        useful when doing experiments to make a dataset '''
+    list_of_single_trans = []
+    for curr_trans in transforms:  # loop over all transformations
+        for val in get_all_slider_values(transforms[curr_trans]):
+            list_of_single_trans.append({curr_trans: val})
+    return list_of_single_trans
+
+def compute_metrics_over_range_single_trans(data_store, transforms, metric_params, metrics_to_use, pbar_signal=None, stop_flag=None):
     '''
     compute metrics over a range of trans
+        data_store: object containing metrics and image
+        transforms: dict containing trans functions and min/max/initial values
+    '''
+    # compute all metrics over their range of params and get avg/std
+    results = {}
+    # initialise results
+    for metric in data_store.metrics:
+        results[metric] = {}
+        for tran in transforms:
+            results[metric][tran] = {'param_values': [], 'scores': []}
+
+    # get bar info (the lazy way)
+    if pbar_signal != None:
+        len_loop = 0
+        for i, curr_trans in enumerate(transforms):
+            for trans_value in get_all_slider_values(transforms[curr_trans]):
+                len_loop += 1
+    pbar_counter = 0
+
+    # compute over all image transformations
+    for curr_trans in transforms:  # loop over all transformations
+        single_trans = {curr_trans: transforms[curr_trans]}
+        for trans_value in get_all_slider_values(transforms[curr_trans]):   # all values of the parameter
+            single_param_dict = {curr_trans: trans_value}
+            trans_im = image_utils.get_transform_image(data_store, single_trans, single_param_dict) # initialse image
+            metric_scores = data_store.get_metrics(trans_im, metrics_to_use, **metric_params)
+            for metric in metric_scores:
+                results[metric][curr_trans]['scores'].append(float(metric_scores[metric]))
+                # and store the input trans values for plotting
+                results[metric][curr_trans]['param_values'] = get_all_slider_values(transforms[curr_trans])
+
+                # end if flag says to stop
+                if stop_flag != None:
+                    if stop_flag[0] == True:
+                        # reset pbar
+                        if pbar_signal != None:
+                            pbar_signal.emit(0)
+                        return
+
+            # send signal to progress bar if provided
+            if pbar_signal != None:
+                pbar_counter += 1
+                if pbar_counter == len_loop:
+                    pbar_signal.emit(0)
+                else:
+                    pbar_signal.emit(int(((pbar_counter)/len_loop)*100))
+    return results
+
+def compute_metrics_over_range(data_store, transforms, transform_values, metric_params, metrics_to_use, pbar_signal=None, stop_flag=None):
+    '''
+    compute metrics over a range of trans (when using non initial values for other transforms)
+    currently this method is not being used and instead using the simpler compute_metrics_over_range_single_trans
         data_store: object containing metrics and image
         transforms: dict containing trans functions and min/max/initial values
         transform_values: dict containing the fixed current transform parameter values
@@ -138,8 +199,7 @@ def compute_metrics_over_range(data_store, transforms, transform_values, metric_
     for metric in data_store.metrics:
         results[metric] = {}
         for tran in transforms:
-            results[metric][tran] = []
-            results[metric][tran+'_range_values'] = []
+            results[metric][tran] = {'param_values': [], 'scores': []}
 
     # get bar info (the lazy way)
     if pbar_signal != None:
@@ -148,22 +208,26 @@ def compute_metrics_over_range(data_store, transforms, transform_values, metric_
             for trans_value in get_all_slider_values(transforms[curr_trans]):
                 len_loop += 1
     pbar_counter = 0
+
     # compute over all image transformations
-    for i, curr_trans in enumerate(transforms):  # loop over all transformations
+    for curr_trans in transforms:  # loop over all transformations
         for trans_value in get_all_slider_values(transforms[curr_trans]):   # all values of the parameter
             vary_one_value = transform_values.copy()
             vary_one_value[curr_trans] = trans_value   # set to the varying value in this range loop
             trans_im = image_utils.get_transform_image(data_store, transforms, vary_one_value)     # initialse image
             metric_scores = data_store.get_metrics(trans_im, metrics_to_use, **metric_params)
             for metric in metric_scores:
-                results[metric][curr_trans].append(float(metric_scores[metric]))
+                results[metric][curr_trans]['scores'].append(float(metric_scores[metric]))
                 # and store the input trans values for plotting
-                results[metric][curr_trans+'_range_values'] = get_all_slider_values(transforms[curr_trans])
-                if stop_flag[0] == True:
-                    # reset pbar
-                    if pbar_signal != None:
-                        pbar_signal.emit(0)
-                    return
+                results[metric][curr_trans]['param_values'] = get_all_slider_values(transforms[curr_trans])
+
+                # end if flag says to stop
+                if stop_flag != None:
+                    if stop_flag[0] == True:
+                        # reset pbar
+                        if pbar_signal != None:
+                            pbar_signal.emit(0)
+                        return
 
             # send signal to progress bar if provided
             if pbar_signal != None:
@@ -172,7 +236,6 @@ def compute_metrics_over_range(data_store, transforms, transform_values, metric_
                     pbar_signal.emit(0)
                 else:
                     pbar_signal.emit(int(((pbar_counter)/len_loop)*100))
-
     return results
 
 def get_radar_plots_avg_plots(results, metrics_names, transformation_names, axes, lim=1):
@@ -189,8 +252,8 @@ def get_radar_plots_avg_plots(results, metrics_names, transformation_names, axes
         transform = []
         for tran in transformation_names:
             transform.append(tran)
-            mean_value.append(np.mean(results[metric][tran]))
-            # std_value.append(np.std(results[metric][tran]))
+            mean_value.append(np.mean(results[metric][tran]['scores']))
+            # std_value.append(np.std(results[metric][tran]['scores']))
         radar_plt.plot(metric, mean_value)
     radar_plt.set_style()
     return radar_plt
@@ -201,5 +264,5 @@ def get_transform_range_plots(results, transform, axes, lim=1):
     '''
     plot = line_plotter(axes, transform, 'Values', lim=lim)
     for metric in results:
-        plot.plot(results[metric][transform+'_range_values'], results[metric][transform], metric)
+        plot.plot(results[metric][transform]['param_values'], results[metric][transform]['scores'], metric)
     return plot

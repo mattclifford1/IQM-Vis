@@ -18,9 +18,8 @@ class get_range_results_worker(QObject):
         self.stop_flag = [False]
         for i, data_store in enumerate(data['data_stores']):
             self.current_image.emit(f'Getting range plot values for {data_store.get_reference_image_name()} progress:')
-            results = plot_utils.compute_metrics_over_range(data_store,
+            results = plot_utils.compute_metrics_over_range_single_trans(data_store,
                                                             data['trans'],
-                                                            data['init_trans'],
                                                             data['metric_params'],
                                                             data['metrics_to_use'],
                                                             pbar_signal=self.progress,
@@ -30,17 +29,17 @@ class get_range_results_worker(QObject):
                 return
             metric_over_range_results.append(results)
             # see max metric values
-            for _, item in results.items():
-                for key2, item2 in item.items():
-                    if '_range_values' not in key2:
-                        for val in item2:
-                            max_val = max(max_val, val)
+            for _, metric in results.items():
+                for trans, data in metric.items():
+                    for val in data['scores']:
+                        max_val = max(max_val, val)
         data_return = {'metric_over_range_results': metric_over_range_results,
                        'max_val': max_val}
         self.completed.emit(data_return)
 
     def stop(self):
         if hasattr(self, 'stop_flag'):
+            # use a mutable data type (list) as can pass as a reference (ish) then
             self.stop_flag[0] = True
 
     def __del__(self):

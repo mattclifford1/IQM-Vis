@@ -122,12 +122,8 @@ class images:
     '''
     def get_metrics_over_all_trans_with_init_values(self):
         # use the initiased/default values for all sliders
-        init_trans_params = {}
-        for trans in self.checked_transformations:
-            init_trans_params[trans] = self.checked_transformations[trans]['init_value']
         # bundle up data needed to send to the worker
         data = {'trans': self.checked_transformations,
-                'init_trans': init_trans_params,
                 'metric_params': self.params_from_sliders['metric_params'],
                 'metrics_to_use': self.checked_metrics,
                 'data_stores': self.data_stores
@@ -142,7 +138,7 @@ class images:
         self.metric_over_range_results = results['metric_over_range_results']
         self.data_lims['range_data'] = results['max_val']
         if self.metrics_avg_graph:
-            self.display_metrics_over_range()
+            self.display_radar_plots()
         if self.metric_range_graph:
             self.display_metric_range_plot()
 
@@ -169,20 +165,17 @@ class images:
     '''
     metric averaging plots (radar plot)
     '''
-    def display_metrics_over_range(self):
-        # self.status_bar.showMessage('Getting avg. values')
-        # QApplication.processEvents()
+    def display_radar_plots(self):
         for i, data_store in enumerate(self.data_stores):
+            self.plot_radar_graph(self.metric_over_range_results[i], i)
             # uncomment below if you want to calc over the current trans values instead of init
             # results = plot_utils.compute_metrics_over_range(data_store,
             #                                                 self.checked_transformations,
             #                                                 self.params_from_sliders['transforms'],
             #                                                 self.params_from_sliders['metric_params'],
             #                                                 pbar=self.pbar)
-            self.plot_metrics_graphs(self.metric_over_range_results[i], i)
-        # self.status_bar.showMessage('Done', 3000)
 
-    def plot_metrics_graphs(self, results, i):
+    def plot_radar_graph(self, results, i):
         metrics_names = list(self.data_stores[i].metrics.keys())
         transformation_names = list(self.sliders['transforms'].keys())
         axes = self.widget_row[i]['metrics']['avg']['data']
