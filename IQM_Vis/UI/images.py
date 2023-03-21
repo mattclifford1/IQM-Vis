@@ -4,16 +4,30 @@ UI image functions
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 
 import os
-
 import numpy as np
 from PyQt6.QtWidgets import QApplication
-
+from PyQt6.QtCore import pyqtSignal, QThread
+import IQM_Vis
 from IQM_Vis.utils import gui_utils, plot_utils, image_utils
 
 # sub class used by IQM_Vis.main.make_app to control all of the image widgets
 class images:
+    request_range_work = pyqtSignal(dict)
+
     def __init__(self):
         self.metric_range_graph_num = 0
+
+        ''' set up thread for smoother range plot calculation '''
+        self.range_worker = IQM_Vis.UI.threads.get_range_results_worker()
+        self.range_worker_thread = QThread()
+        self.range_worker.progress.connect(self.update_progress)
+        self.range_worker.completed.connect(self.completed_range_results)
+        self.request_range_work.connect(self.range_worker.do_work)
+        # move worker to the worker thread
+        self.range_worker.moveToThread(self.range_worker_thread)
+        # start the thread
+        self.range_worker_thread.start()
+
     '''
     image updaters
     '''
@@ -51,21 +65,20 @@ class images:
         if calc_range:  # add an or metrics_range val not been calculated
             if self.metrics_avg_graph or self.metric_range_graph:
                 self.get_metrics_over_all_trans_with_init_values()
-        if self.metrics_avg_graph:
-            self.display_metrics_over_range()
-        if self.metric_range_graph:
-            self.display_metric_range_plot()
 
     '''
     change image in dataset
     '''
     def change_data(self, i):
+        self.range_worker.stop() # stop any calculations on the old image
         self.data_num += i
         # check the num is legal
         if self.data_num < 0:
             self.data_num = 0
+            return
         if self.data_num > self.max_data_ind:
             self.data_num = self.max_data_ind
+            return
         for data_store in self.data_stores:
             try:
                 data_store[self.data_num]
@@ -103,31 +116,30 @@ class images:
     get metric values when adjusting a single transformation value over its range
     '''
     def get_metrics_over_all_trans_with_init_values(self):
-        self.metric_over_range_results = []
+        self.status_bar.showMessage('Getting Range plot Values')
         # use the initiased/default values for all sliders
         init_trans_params = {}
         for trans in self.checked_transformations:
             init_trans_params[trans] = self.checked_transformations[trans]['init_value']
-        self.status_bar.showMessage('Getting Range plot Values')
-        QApplication.processEvents()
-        max_val = 0
-        for i, data_store in enumerate(self.data_stores):
-            results = plot_utils.compute_metrics_over_range(data_store,
-                                                            self.checked_transformations,
-                                                            init_trans_params,
-                                                            self.params_from_sliders['metric_params'],
-                                                            self.checked_metrics,
-                                                            pbar=self.pbar)
-            self.metric_over_range_results.append(results)
-            # see max metric values
-            for _, item in results.items():
-                for key2, item2 in item.items():
-                    if '_range_values' not in key2:
-                        for val in item2:
-                            max_val = max(max_val, val)
+        # bundle up data needed to send to the worker
+        data = {'trans': self.checked_transformations,
+                'init_trans': init_trans_params,
+                'metric_params': self.params_from_sliders['metric_params'],
+                'metrics_to_use': self.checked_metrics,
+                'data_stores': self.data_stores
+                }
+        # start the worker working
+        self.request_range_work.emit(data)
 
-        self.status_bar.showMessage('Done', 3000)
-        self.data_lims['range_data'] = max_val
+    def completed_range_results(self, results):
+        ''' data results sent from signal from thread worker '''
+        self.metric_over_range_results = results['metric_over_range_results']
+        self.data_lims['range_data'] = results['max_val']
+        if self.metrics_avg_graph:
+            self.display_metrics_over_range()
+        if self.metric_range_graph:
+            self.display_metric_range_plot()
+
 
     '''
     metric range plot (line plots of range of all sliders)

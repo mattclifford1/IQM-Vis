@@ -55,9 +55,13 @@ class make_app(widgets, layout, images):
 
         quit_action.setShortcut('Ctrl+Q')
         quit_action.setStatusTip('Exit application')
-        quit_action.triggered.connect(QApplication.instance().quit)
+        quit_action.triggered.connect(self.quit)
 
         self.get_menu_checkboxes()
+
+    def quit(self):
+        self.range_worker.stop()
+        QApplication.instance().quit()
 
     def get_menu_checkboxes(self):
         ''' list all trans/metrics in the menu drop downs '''

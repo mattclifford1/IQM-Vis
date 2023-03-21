@@ -125,7 +125,7 @@ def get_all_slider_values(transforms, num_steps=10):
     values.append(transforms['max'])
     return values
 
-def compute_metrics_over_range(data_store, transforms, transform_values, metric_params, metrics_to_use, pbar=None):
+def compute_metrics_over_range(data_store, transforms, transform_values, metric_params, metrics_to_use, pbar_signal=None, stop_flag=None):
     '''
     compute metrics over a range of trans
         data_store: object containing metrics and image
@@ -141,8 +141,14 @@ def compute_metrics_over_range(data_store, transforms, transform_values, metric_
             results[metric][tran] = []
             results[metric][tran+'_range_values'] = []
 
+    # get bar info (the lazy way)
+    if pbar_signal != None:
+        len_loop = 0
+        for i, curr_trans in enumerate(transforms):
+            for trans_value in get_all_slider_values(transforms[curr_trans]):
+                len_loop += 1
+    pbar_counter = 0
     # compute over all image transformations
-    len_loop = len(transforms)
     for i, curr_trans in enumerate(transforms):  # loop over all transformations
         for trans_value in get_all_slider_values(transforms[curr_trans]):   # all values of the parameter
             vary_one_value = transform_values.copy()
@@ -153,10 +159,19 @@ def compute_metrics_over_range(data_store, transforms, transform_values, metric_
                 results[metric][curr_trans].append(float(metric_scores[metric]))
                 # and store the input trans values for plotting
                 results[metric][curr_trans+'_range_values'] = get_all_slider_values(transforms[curr_trans])
-        if pbar != None:
-            pbar.setValue(int(((i+2)/len_loop)*100))
-            if i + 1 == len_loop:
-                pbar.setValue(0)
+                if stop_flag[0] == True:
+                    # reset pbar
+                    if pbar_signal != None:
+                        pbar_signal.emit(0)
+                    return
+
+            # send signal to progress bar if provided
+            if pbar_signal != None:
+                pbar_signal.emit(int(((pbar_counter)/len_loop)*100))
+                pbar_counter += 1
+                if pbar_counter == len_loop:
+                    pbar_signal.emit(0)
+
     return results
 
 def get_radar_plots_avg_plots(results, metrics_names, transformation_names, axes, lim=1):

@@ -71,7 +71,7 @@ class MSE:
                              return_image is True)
         '''
         _check_shapes(im_ref, im_comp)
-        L2 = (im_ref - im_comp)**2
+        L2 = np.square(im_ref - im_comp)
         if self.return_image:
             return L2
         else:

@@ -292,7 +292,7 @@
     <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transforms</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">values</span></div>
 
-<div class="viewcode-block" id="compute_metrics_over_range"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.compute_metrics_over_range">[docs]</a><span class="k">def</span> <span class="nf">compute_metrics_over_range</span><span class="p">(</span><span class="n">data_store</span><span class="p">,</span> <span class="n">transforms</span><span class="p">,</span> <span class="n">transform_values</span><span class="p">,</span> <span class="n">metric_params</span><span class="p">,</span> <span class="n">metrics_to_use</span><span class="p">,</span> <span class="n">pbar</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="compute_metrics_over_range"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.compute_metrics_over_range">[docs]</a><span class="k">def</span> <span class="nf">compute_metrics_over_range</span><span class="p">(</span><span class="n">data_store</span><span class="p">,</span> <span class="n">transforms</span><span class="p">,</span> <span class="n">transform_values</span><span class="p">,</span> <span class="n">metric_params</span><span class="p">,</span> <span class="n">metrics_to_use</span><span class="p">,</span> <span class="n">pbar_signal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stop_flag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    compute metrics over a range of trans</span>
 <span class="sd">        data_store: object containing metrics and image</span>
@@ -308,8 +308,14 @@
             <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">tran</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">tran</span><span class="o">+</span><span class="s1">&#39;_range_values&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
+    <span class="c1"># get bar info (the lazy way)</span>
+    <span class="k">if</span> <span class="n">pbar_signal</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">len_loop</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">curr_trans</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">transforms</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">trans_value</span> <span class="ow">in</span> <span class="n">get_all_slider_values</span><span class="p">(</span><span class="n">transforms</span><span class="p">[</span><span class="n">curr_trans</span><span class="p">]):</span>
+                <span class="n">len_loop</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">pbar_counter</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="c1"># compute over all image transformations</span>
-    <span class="n">len_loop</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">transforms</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">curr_trans</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">transforms</span><span class="p">):</span>  <span class="c1"># loop over all transformations</span>
         <span class="k">for</span> <span class="n">trans_value</span> <span class="ow">in</span> <span class="n">get_all_slider_values</span><span class="p">(</span><span class="n">transforms</span><span class="p">[</span><span class="n">curr_trans</span><span class="p">]):</span>   <span class="c1"># all values of the parameter</span>
             <span class="n">vary_one_value</span> <span class="o">=</span> <span class="n">transform_values</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -320,10 +326,19 @@
                 <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">curr_trans</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">metric_scores</span><span class="p">[</span><span class="n">metric</span><span class="p">]))</span>
                 <span class="c1"># and store the input trans values for plotting</span>
                 <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">curr_trans</span><span class="o">+</span><span class="s1">&#39;_range_values&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_all_slider_values</span><span class="p">(</span><span class="n">transforms</span><span class="p">[</span><span class="n">curr_trans</span><span class="p">])</span>
-        <span class="k">if</span> <span class="n">pbar</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">pbar</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="nb">int</span><span class="p">(((</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">len_loop</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">))</span>
-            <span class="k">if</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">len_loop</span><span class="p">:</span>
-                <span class="n">pbar</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">stop_flag</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="c1"># reset pbar</span>
+                    <span class="k">if</span> <span class="n">pbar_signal</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">pbar_signal</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="k">return</span>
+
+            <span class="c1"># send signal to progress bar if provided</span>
+            <span class="k">if</span> <span class="n">pbar_signal</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">pbar_signal</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="nb">int</span><span class="p">(((</span><span class="n">pbar_counter</span><span class="p">)</span><span class="o">/</span><span class="n">len_loop</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">))</span>
+                <span class="n">pbar_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">pbar_counter</span> <span class="o">==</span> <span class="n">len_loop</span><span class="p">:</span>
+                    <span class="n">pbar_signal</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
     <span class="k">return</span> <span class="n">results</span></div>
 
 <div class="viewcode-block" id="get_radar_plots_avg_plots"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.get_radar_plots_avg_plots">[docs]</a><span class="k">def</span> <span class="nf">get_radar_plots_avg_plots</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">metrics_names</span><span class="p">,</span> <span class="n">transformation_names</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">lim</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>

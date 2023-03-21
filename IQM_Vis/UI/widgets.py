@@ -248,3 +248,8 @@ class widgets():
         #     self.setMaximumSize(self.main_layout.sizeHint())
         # if old_size < self.image_display_size:
         #     self.setMinimumSize(self.main_layout.sizeHint())
+
+    def update_progress(self, v):
+        self.pbar.setValue(v)
+        if v == 0:
+            self.status_bar.showMessage('Done', 3000)

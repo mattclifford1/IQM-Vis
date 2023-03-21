@@ -11,6 +11,7 @@ import numpy as np
 try:
     from PyQt6.QtWidgets import QApplication
     from IQM_Vis.UI.main import make_app
+    from IQM_Vis.utils import image_utils
 except ImportError:
     warnings.warn('Cannot load PyQt6 library - running IQM_Vis package in headless mode')
 
@@ -91,8 +92,8 @@ def test_datastore_attributes(data_store):
     ('get_reference_image_name', str),
     ('get_reference_image', np.ndarray),
     ('get_image_to_transform_name', str),
-    ('get_metrics', dict, data_store.get_image_to_transform()),
-    ('get_metric_images', dict, data_store.get_image_to_transform()),
+    ('get_metrics', dict, image_utils.get_transform_image(data_store, {}, {})),
+    ('get_metric_images', dict, image_utils.get_transform_image(data_store, {}, {})),
     ]
     for meth in method_return_types:
         method = getattr(data_store,  meth[0])
