@@ -6,6 +6,12 @@ UI
   - Tool bar
      - calibration
 
+Experiments:
+  - sort all images RMSE
+  - click feature
+  - sort algorithm
+  - store results
+  - save results
 
 minor:
   - fix metric images being stretched (muliptle rows)

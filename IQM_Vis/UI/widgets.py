@@ -10,7 +10,7 @@ from PyQt6.QtGui import QIntValidator
 from PyQt6.QtCore import Qt
 
 import IQM_Vis
-from IQM_Vis.utils import gui_utils, plot_utils
+from IQM_Vis.utils import gui_utils, plot_utils, image_utils
 
 # sub class used by IQM_Vis.main.make_app to initialise widgets and general UI functions for widgets
 class widgets():
@@ -279,4 +279,20 @@ class widgets():
         self.menu_bar.setEnabled(False)
         self.experiments_tab.setCurrentIndex(1)
         self.experiment_transforms = plot_utils.get_all_single_transform_params(self.checked_transformations)
+
         print(f'Using distortions: {self.experiment_transforms}')
+
+        ''' quick proto type to display some images '''
+        ref = self.data_stores[0].get_reference_image()
+        A_trans = list(self.experiment_transforms[0])[0]
+        A = image_utils.get_transform_image(self.data_stores[0],
+                                             {A_trans: self.checked_transformations[A_trans]},
+                                             self.experiment_transforms[0])
+        B_trans = list(self.experiment_transforms[1])[0]
+        B = image_utils.get_transform_image(self.data_stores[0],
+                                             {B_trans: self.checked_transformations[B_trans]},
+                                             self.experiment_transforms[1])
+
+        gui_utils.change_im(self.widget_experiments['images']['Reference']['data'], ref, resize=self.image_display_size)
+        gui_utils.change_im(self.widget_experiments['images']['A']['data'], A, resize=self.image_display_size)
+        gui_utils.change_im(self.widget_experiments['images']['B']['data'], B, resize=self.image_display_size)
