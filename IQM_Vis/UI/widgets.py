@@ -10,7 +10,7 @@ from PyQt6.QtGui import QIntValidator
 from PyQt6.QtCore import Qt
 
 import IQM_Vis
-from IQM_Vis.utils import gui_utils
+from IQM_Vis.utils import gui_utils, plot_utils
 
 # sub class used by IQM_Vis.main.make_app to initialise widgets and general UI functions for widgets
 class widgets():
@@ -277,3 +277,6 @@ class widgets():
     def start_experiment(self):
         self.init_style('dark')
         self.menu_bar.setEnabled(False)
+        self.experiments_tab.setCurrentIndex(1)
+        self.experiment_transforms = plot_utils.get_all_single_transform_params(self.checked_transformations)
+        print(f'Using distortions: {self.experiment_transforms}')

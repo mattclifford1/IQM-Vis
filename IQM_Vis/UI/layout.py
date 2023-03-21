@@ -178,9 +178,35 @@ class layout(QMainWindow):
         self.show()
 
     def get_experiment_layout(self):
+
+        experiment_mode_info = QVBoxLayout()
+        experiment_mode_info.addWidget(self.widget_experiments['preamble']['text'])
+        experiment_mode_info.addWidget(self.widget_experiments['preamble']['start_button'])
+
+        reference = QVBoxLayout()
+        for name, widget in self.widget_experiments['images']['Reference'].items():
+            reference.addWidget(widget)
+        A = QVBoxLayout()
+        for name, widget in self.widget_experiments['images']['A'].items():
+            A.addWidget(widget)
+        B = QVBoxLayout()
+        for name, widget in self.widget_experiments['images']['B'].items():
+            B.addWidget(widget)
+
+        distorted_images = QHBoxLayout()
+        distorted_images.addLayout(A)
+        distorted_images.addLayout(B)
+
+        experiment_mode_images = QVBoxLayout()
+        experiment_mode_images.addLayout(reference)
+        experiment_mode_images.addLayout(distorted_images)
+
+        self.experiments_tab = QTabWidget()
+        for tab_layout, tab_name in zip([experiment_mode_info, experiment_mode_images],
+                                        ['info', 'run']):
+            add_layout_to_tab(self.experiments_tab, tab_layout, tab_name)
         experiment_mode_layout = QVBoxLayout()
-        experiment_mode_layout.addWidget(self.widget_experiments['preamble']['text'])
-        experiment_mode_layout.addWidget(self.widget_experiments['preamble']['start_button'])
+        experiment_mode_layout.addWidget(self.experiments_tab)
         return experiment_mode_layout
 
     def init_style(self, style='light', css_file=None):
