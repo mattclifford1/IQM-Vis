@@ -7,7 +7,9 @@ from IQM_Vis.utils import plot_utils
 
 class get_range_results_worker(QObject):
     progress = pyqtSignal(int)
+    current_image = pyqtSignal(str)
     completed = pyqtSignal(dict)
+    stopped = pyqtSignal(bool)
 
     @pyqtSlot(dict)
     def do_work(self, data):
@@ -15,6 +17,7 @@ class get_range_results_worker(QObject):
         max_val = 0
         self.stop_flag = [False]
         for i, data_store in enumerate(data['data_stores']):
+            self.current_image.emit(f'Getting range plot values for {data_store.get_reference_image_name()} progress:')
             results = plot_utils.compute_metrics_over_range(data_store,
                                                             data['trans'],
                                                             data['init_trans'],
@@ -23,6 +26,7 @@ class get_range_results_worker(QObject):
                                                             pbar_signal=self.progress,
                                                             stop_flag=self.stop_flag)
             if self.stop_flag[0] == True:
+                self.stopped.emit(True)
                 return
             metric_over_range_results.append(results)
             # see max metric values
@@ -38,3 +42,7 @@ class get_range_results_worker(QObject):
     def stop(self):
         if hasattr(self, 'stop_flag'):
             self.stop_flag[0] = True
+
+    def __del__(self):
+        # close app upon garbage collection
+        self.stop()

@@ -2,8 +2,9 @@
 main entry point to initialise the UI
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
-from PyQt6.QtWidgets import QLabel, QApplication, QCheckBox
-from PyQt6.QtGui import QIcon, QAction
+import time
+from PyQt6.QtWidgets import QLabel, QApplication, QCheckBox, QMessageBox
+from PyQt6.QtGui import QIcon, QAction, QCloseEvent
 from PyQt6.QtCore import Qt
 from IQM_Vis.UI import layout, widgets, images, ProgressBar
 
@@ -60,8 +61,23 @@ class make_app(widgets, layout, images):
         self.get_menu_checkboxes()
 
     def quit(self):
-        self.range_worker.stop()
         QApplication.instance().quit()
+
+    def __del__(self):
+        # garbage collection
+        self.range_worker.stop()
+
+    def closeEvent(self, event):
+        # Ask for confirmation
+        answer = QMessageBox.question(self,
+        "Confirm Exit...",
+        "Are you sure you want to exit?\nAll data will be lost.",
+        QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+
+        event.ignore()
+        if answer == QMessageBox.StandardButton.Yes:
+            self.range_worker.stop()
+            event.accept()
 
     def get_menu_checkboxes(self):
         ''' list all trans/metrics in the menu drop downs '''

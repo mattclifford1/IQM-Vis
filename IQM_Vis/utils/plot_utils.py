@@ -167,10 +167,11 @@ def compute_metrics_over_range(data_store, transforms, transform_values, metric_
 
             # send signal to progress bar if provided
             if pbar_signal != None:
-                pbar_signal.emit(int(((pbar_counter)/len_loop)*100))
                 pbar_counter += 1
                 if pbar_counter == len_loop:
                     pbar_signal.emit(0)
+                else:
+                    pbar_signal.emit(int(((pbar_counter)/len_loop)*100))
 
     return results
 

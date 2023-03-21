@@ -253,3 +253,6 @@ class widgets():
         self.pbar.setValue(v)
         if v == 0:
             self.status_bar.showMessage('Done', 3000)
+
+    def update_status_bar(self, v):
+        self.status_bar.showMessage(v)

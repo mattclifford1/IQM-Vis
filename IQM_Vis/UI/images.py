@@ -16,17 +16,22 @@ class images:
 
     def __init__(self):
         self.metric_range_graph_num = 0
+        self.init_worker_thread()
 
+    def init_worker_thread(self):
         ''' set up thread for smoother range plot calculation '''
         self.range_worker = IQM_Vis.UI.threads.get_range_results_worker()
         self.range_worker_thread = QThread()
         self.range_worker.progress.connect(self.update_progress)
+        self.range_worker.current_image.connect(self.update_status_bar)
         self.range_worker.completed.connect(self.completed_range_results)
+        self.range_worker.stopped.connect(self.stopped_range_results)
         self.request_range_work.connect(self.range_worker.do_work)
         # move worker to the worker thread
         self.range_worker.moveToThread(self.range_worker_thread)
         # start the thread
         self.range_worker_thread.start()
+        self.worker_working = False
 
     '''
     image updaters
@@ -70,7 +75,6 @@ class images:
     change image in dataset
     '''
     def change_data(self, i):
-        self.range_worker.stop() # stop any calculations on the old image
         self.data_num += i
         # check the num is legal
         if self.data_num < 0:
@@ -79,6 +83,7 @@ class images:
         if self.data_num > self.max_data_ind:
             self.data_num = self.max_data_ind
             return
+        self.range_worker.stop() # stop any calculations on the old image
         for data_store in self.data_stores:
             try:
                 data_store[self.data_num]
@@ -116,7 +121,6 @@ class images:
     get metric values when adjusting a single transformation value over its range
     '''
     def get_metrics_over_all_trans_with_init_values(self):
-        self.status_bar.showMessage('Getting Range plot Values')
         # use the initiased/default values for all sliders
         init_trans_params = {}
         for trans in self.checked_transformations:
@@ -129,10 +133,12 @@ class images:
                 'data_stores': self.data_stores
                 }
         # start the worker working
+        self.worker_working = True
         self.request_range_work.emit(data)
 
     def completed_range_results(self, results):
         ''' data results sent from signal from thread worker '''
+        self.worker_working = False
         self.metric_over_range_results = results['metric_over_range_results']
         self.data_lims['range_data'] = results['max_val']
         if self.metrics_avg_graph:
@@ -190,3 +196,9 @@ class images:
         for key in metric_images:
             widget = self.widget_row[i]['metric_images'][key]['data']
             gui_utils.change_im(widget, metric_images[key], resize=self.image_display_size)
+
+    '''
+    thread manegment
+    '''
+    def stopped_range_results(self, signal):
+        self.worker_working = False
