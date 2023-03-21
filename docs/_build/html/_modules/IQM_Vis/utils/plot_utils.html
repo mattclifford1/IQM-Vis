@@ -284,7 +284,9 @@
 <span class="sd">&#39;&#39;&#39;</span>
 <div class="viewcode-block" id="get_all_slider_values"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.get_all_slider_values">[docs]</a><span class="k">def</span> <span class="nf">get_all_slider_values</span><span class="p">(</span><span class="n">transforms</span><span class="p">,</span> <span class="n">num_steps</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
     <span class="nb">range</span> <span class="o">=</span> <span class="n">transforms</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">transforms</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">]</span>
-    <span class="n">num_steps</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">range</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">)</span>
+    <span class="c1"># make sure if it&#39;s an int then we dont return step values that are floats</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">transforms</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">],</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">transforms</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">],</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">num_steps</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">range</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">)</span>
     <span class="n">steps</span> <span class="o">=</span> <span class="nb">range</span><span class="o">/</span><span class="n">num_steps</span>
     <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">transforms</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
         <span class="n">steps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">steps</span><span class="p">)</span>
@@ -292,12 +294,25 @@
     <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transforms</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">values</span></div>
 
-<div class="viewcode-block" id="compute_metrics_over_range"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.compute_metrics_over_range">[docs]</a><span class="k">def</span> <span class="nf">compute_metrics_over_range</span><span class="p">(</span><span class="n">data_store</span><span class="p">,</span> <span class="n">transforms</span><span class="p">,</span> <span class="n">transform_values</span><span class="p">,</span> <span class="n">metric_params</span><span class="p">,</span> <span class="n">metrics_to_use</span><span class="p">,</span> <span class="n">pbar_signal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stop_flag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    compute metrics over a range of trans</span>
+<div class="viewcode-block" id="get_all_single_transform_params"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.get_all_single_transform_params">[docs]</a><span class="k">def</span> <span class="nf">get_all_single_transform_params</span><span class="p">(</span><span class="n">transforms</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; get a list of all the individual transforms with a single parameter value</span>
+<span class="sd">        useful when doing experiments to make a dataset &#39;&#39;&#39;</span>
+    <span class="n">list_of_single_trans</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">curr_trans</span> <span class="ow">in</span> <span class="n">transforms</span><span class="p">:</span>  <span class="c1"># loop over all transformations</span>
+        <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">get_all_slider_values</span><span class="p">(</span><span class="n">transforms</span><span class="p">[</span><span class="n">curr_trans</span><span class="p">]):</span>
+            <span class="n">list_of_single_trans</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="n">curr_trans</span><span class="p">:</span> <span class="n">val</span><span class="p">})</span>
+    <span class="k">return</span> <span class="n">list_of_single_trans</span></div>
+
+<div class="viewcode-block" id="compute_metrics_over_range_single_trans"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.compute_metrics_over_range_single_trans">[docs]</a><span class="k">def</span> <span class="nf">compute_metrics_over_range_single_trans</span><span class="p">(</span><span class="n">data_store</span><span class="p">,</span> <span class="n">transforms</span><span class="p">,</span> <span class="n">metric_params</span><span class="p">,</span> <span class="n">metrics_to_use</span><span class="p">,</span> <span class="n">pbar_signal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stop_flag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; compute metrics over a range of trans</span>
+
+<span class="sd">    Args:</span>
 <span class="sd">        data_store: object containing metrics and image</span>
-<span class="sd">        transforms: dict containing trans functions and min/max/initial values</span>
-<span class="sd">        transform_values: dict containing the fixed current transform parameter values</span>
+<span class="sd">        transforms (dict): containing trans functions and min/max/initial values</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        results (dict): results of IQM values at each transform value across its</span>
+<span class="sd">                        whole paramter rance for the reference image</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="c1"># compute all metrics over their range of params and get avg/std</span>
     <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
@@ -305,8 +320,7 @@
     <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">data_store</span><span class="o">.</span><span class="n">metrics</span><span class="p">:</span>
         <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">tran</span> <span class="ow">in</span> <span class="n">transforms</span><span class="p">:</span>
-            <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">tran</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">tran</span><span class="o">+</span><span class="s1">&#39;_range_values&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">tran</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;param_values&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;scores&#39;</span><span class="p">:</span> <span class="p">[]}</span>
 
     <span class="c1"># get bar info (the lazy way)</span>
     <span class="k">if</span> <span class="n">pbar_signal</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
@@ -315,30 +329,94 @@
             <span class="k">for</span> <span class="n">trans_value</span> <span class="ow">in</span> <span class="n">get_all_slider_values</span><span class="p">(</span><span class="n">transforms</span><span class="p">[</span><span class="n">curr_trans</span><span class="p">]):</span>
                 <span class="n">len_loop</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="n">pbar_counter</span> <span class="o">=</span> <span class="mi">0</span>
+
     <span class="c1"># compute over all image transformations</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">curr_trans</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">transforms</span><span class="p">):</span>  <span class="c1"># loop over all transformations</span>
+    <span class="k">for</span> <span class="n">curr_trans</span> <span class="ow">in</span> <span class="n">transforms</span><span class="p">:</span>  <span class="c1"># loop over all transformations</span>
+        <span class="n">single_trans</span> <span class="o">=</span> <span class="p">{</span><span class="n">curr_trans</span><span class="p">:</span> <span class="n">transforms</span><span class="p">[</span><span class="n">curr_trans</span><span class="p">]}</span>
+        <span class="n">all_param_values</span> <span class="o">=</span> <span class="n">get_all_slider_values</span><span class="p">(</span><span class="n">transforms</span><span class="p">[</span><span class="n">curr_trans</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">trans_value</span> <span class="ow">in</span> <span class="n">all_param_values</span><span class="p">:</span>
+            <span class="n">single_param_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">curr_trans</span><span class="p">:</span> <span class="n">trans_value</span><span class="p">}</span>
+            <span class="n">trans_im</span> <span class="o">=</span> <span class="n">image_utils</span><span class="o">.</span><span class="n">get_transform_image</span><span class="p">(</span><span class="n">data_store</span><span class="p">,</span> <span class="n">single_trans</span><span class="p">,</span> <span class="n">single_param_dict</span><span class="p">)</span> <span class="c1"># initialse image</span>
+            <span class="n">metric_scores</span> <span class="o">=</span> <span class="n">data_store</span><span class="o">.</span><span class="n">get_metrics</span><span class="p">(</span><span class="n">trans_im</span><span class="p">,</span> <span class="n">metrics_to_use</span><span class="p">,</span> <span class="o">**</span><span class="n">metric_params</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">metric_scores</span><span class="p">:</span>
+                <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">curr_trans</span><span class="p">][</span><span class="s1">&#39;scores&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">metric_scores</span><span class="p">[</span><span class="n">metric</span><span class="p">]))</span>
+                <span class="c1"># and store the input trans values for plotting</span>
+                <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">curr_trans</span><span class="p">][</span><span class="s1">&#39;param_values&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">all_param_values</span>
+
+                <span class="c1"># end if flag says to stop</span>
+                <span class="k">if</span> <span class="n">stop_flag</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">stop_flag</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                        <span class="c1"># reset pbar</span>
+                        <span class="k">if</span> <span class="n">pbar_signal</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="n">pbar_signal</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                        <span class="k">return</span>
+
+            <span class="c1"># send signal to progress bar if provided</span>
+            <span class="k">if</span> <span class="n">pbar_signal</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">pbar_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">pbar_counter</span> <span class="o">==</span> <span class="n">len_loop</span><span class="p">:</span>
+                    <span class="n">pbar_signal</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">pbar_signal</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="nb">int</span><span class="p">(((</span><span class="n">pbar_counter</span><span class="p">)</span><span class="o">/</span><span class="n">len_loop</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">results</span></div>
+
+<div class="viewcode-block" id="compute_metrics_over_range"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.compute_metrics_over_range">[docs]</a><span class="k">def</span> <span class="nf">compute_metrics_over_range</span><span class="p">(</span><span class="n">data_store</span><span class="p">,</span> <span class="n">transforms</span><span class="p">,</span> <span class="n">transform_values</span><span class="p">,</span> <span class="n">metric_params</span><span class="p">,</span> <span class="n">metrics_to_use</span><span class="p">,</span> <span class="n">pbar_signal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stop_flag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    compute metrics over a range of trans (when using non initial values for other transforms)</span>
+<span class="sd">    currently this method is not being used and instead using the simpler compute_metrics_over_range_single_trans</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data_store: object containing metrics and image</span>
+<span class="sd">        transforms (dict): containing trans functions and min/max/initial values</span>
+<span class="sd">        transform_values (dict): containing the fixed current transform parameter values</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        results (dict): results of IQM values at each transform value across its</span>
+<span class="sd">                        whole paramter rance for the reference image</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># compute all metrics over their range of params and get avg/std</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># initialise results</span>
+    <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">data_store</span><span class="o">.</span><span class="n">metrics</span><span class="p">:</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">tran</span> <span class="ow">in</span> <span class="n">transforms</span><span class="p">:</span>
+            <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">tran</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;param_values&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;scores&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+
+    <span class="c1"># get bar info (the lazy way)</span>
+    <span class="k">if</span> <span class="n">pbar_signal</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">len_loop</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">curr_trans</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">transforms</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">trans_value</span> <span class="ow">in</span> <span class="n">get_all_slider_values</span><span class="p">(</span><span class="n">transforms</span><span class="p">[</span><span class="n">curr_trans</span><span class="p">]):</span>
+                <span class="n">len_loop</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">pbar_counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># compute over all image transformations</span>
+    <span class="k">for</span> <span class="n">curr_trans</span> <span class="ow">in</span> <span class="n">transforms</span><span class="p">:</span>  <span class="c1"># loop over all transformations</span>
         <span class="k">for</span> <span class="n">trans_value</span> <span class="ow">in</span> <span class="n">get_all_slider_values</span><span class="p">(</span><span class="n">transforms</span><span class="p">[</span><span class="n">curr_trans</span><span class="p">]):</span>   <span class="c1"># all values of the parameter</span>
             <span class="n">vary_one_value</span> <span class="o">=</span> <span class="n">transform_values</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
             <span class="n">vary_one_value</span><span class="p">[</span><span class="n">curr_trans</span><span class="p">]</span> <span class="o">=</span> <span class="n">trans_value</span>   <span class="c1"># set to the varying value in this range loop</span>
             <span class="n">trans_im</span> <span class="o">=</span> <span class="n">image_utils</span><span class="o">.</span><span class="n">get_transform_image</span><span class="p">(</span><span class="n">data_store</span><span class="p">,</span> <span class="n">transforms</span><span class="p">,</span> <span class="n">vary_one_value</span><span class="p">)</span>     <span class="c1"># initialse image</span>
             <span class="n">metric_scores</span> <span class="o">=</span> <span class="n">data_store</span><span class="o">.</span><span class="n">get_metrics</span><span class="p">(</span><span class="n">trans_im</span><span class="p">,</span> <span class="n">metrics_to_use</span><span class="p">,</span> <span class="o">**</span><span class="n">metric_params</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">metric_scores</span><span class="p">:</span>
-                <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">curr_trans</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">metric_scores</span><span class="p">[</span><span class="n">metric</span><span class="p">]))</span>
+                <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">curr_trans</span><span class="p">][</span><span class="s1">&#39;scores&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">metric_scores</span><span class="p">[</span><span class="n">metric</span><span class="p">]))</span>
                 <span class="c1"># and store the input trans values for plotting</span>
-                <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">curr_trans</span><span class="o">+</span><span class="s1">&#39;_range_values&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_all_slider_values</span><span class="p">(</span><span class="n">transforms</span><span class="p">[</span><span class="n">curr_trans</span><span class="p">])</span>
-                <span class="k">if</span> <span class="n">stop_flag</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
-                    <span class="c1"># reset pbar</span>
-                    <span class="k">if</span> <span class="n">pbar_signal</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="n">pbar_signal</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-                    <span class="k">return</span>
+                <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">curr_trans</span><span class="p">][</span><span class="s1">&#39;param_values&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_all_slider_values</span><span class="p">(</span><span class="n">transforms</span><span class="p">[</span><span class="n">curr_trans</span><span class="p">])</span>
+
+                <span class="c1"># end if flag says to stop</span>
+                <span class="k">if</span> <span class="n">stop_flag</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">stop_flag</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                        <span class="c1"># reset pbar</span>
+                        <span class="k">if</span> <span class="n">pbar_signal</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="n">pbar_signal</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                        <span class="k">return</span>
 
             <span class="c1"># send signal to progress bar if provided</span>
             <span class="k">if</span> <span class="n">pbar_signal</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">pbar_signal</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="nb">int</span><span class="p">(((</span><span class="n">pbar_counter</span><span class="p">)</span><span class="o">/</span><span class="n">len_loop</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">))</span>
                 <span class="n">pbar_counter</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="k">if</span> <span class="n">pbar_counter</span> <span class="o">==</span> <span class="n">len_loop</span><span class="p">:</span>
                     <span class="n">pbar_signal</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">pbar_signal</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="nb">int</span><span class="p">(((</span><span class="n">pbar_counter</span><span class="p">)</span><span class="o">/</span><span class="n">len_loop</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">results</span></div>
 
 <div class="viewcode-block" id="get_radar_plots_avg_plots"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.get_radar_plots_avg_plots">[docs]</a><span class="k">def</span> <span class="nf">get_radar_plots_avg_plots</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">metrics_names</span><span class="p">,</span> <span class="n">transformation_names</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">lim</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
@@ -355,8 +433,8 @@
         <span class="n">transform</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">tran</span> <span class="ow">in</span> <span class="n">transformation_names</span><span class="p">:</span>
             <span class="n">transform</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tran</span><span class="p">)</span>
-            <span class="n">mean_value</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">tran</span><span class="p">]))</span>
-            <span class="c1"># std_value.append(np.std(results[metric][tran]))</span>
+            <span class="n">mean_value</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">tran</span><span class="p">][</span><span class="s1">&#39;scores&#39;</span><span class="p">]))</span>
+            <span class="c1"># std_value.append(np.std(results[metric][tran][&#39;scores&#39;]))</span>
         <span class="n">radar_plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">metric</span><span class="p">,</span> <span class="n">mean_value</span><span class="p">)</span>
     <span class="n">radar_plt</span><span class="o">.</span><span class="n">set_style</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">radar_plt</span></div>
@@ -367,7 +445,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">plot</span> <span class="o">=</span> <span class="n">line_plotter</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="s1">&#39;Values&#39;</span><span class="p">,</span> <span class="n">lim</span><span class="o">=</span><span class="n">lim</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
-        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">transform</span><span class="o">+</span><span class="s1">&#39;_range_values&#39;</span><span class="p">],</span> <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">transform</span><span class="p">],</span> <span class="n">metric</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">transform</span><span class="p">][</span><span class="s1">&#39;param_values&#39;</span><span class="p">],</span> <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">transform</span><span class="p">][</span><span class="s1">&#39;scores&#39;</span><span class="p">],</span> <span class="n">metric</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">plot</span></div>
 </pre></div>
 

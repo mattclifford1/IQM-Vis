@@ -10,6 +10,7 @@ from PyQt6.QtGui import QIntValidator
 from PyQt6.QtCore import Qt
 
 import IQM_Vis
+from IQM_Vis.UI.custom_widgets import ClickLabel
 from IQM_Vis.utils import gui_utils, plot_utils, image_utils
 
 # sub class used by IQM_Vis.main.make_app to initialise widgets and general UI functions for widgets
@@ -129,24 +130,27 @@ class widgets():
                 self.widget_controls['slider'][key]['value'].setText(str(self.params_from_sliders['transforms'][key]))
 
         self.set_image_name_text()
-        self.init_experiment_widgets()
+        self._init_experiment_widgets()
 
-    def init_experiment_widgets(self):
+    def _init_experiment_widgets(self):
         self.widget_experiments = {'images': {}, 'preamble': {}}
         ''' pre experiments screen '''
         self.widget_experiments['preamble']['text'] = QLabel(self)
         self.widget_experiments['preamble']['text'].setText('Write info here about the experiment ...')
         self.widget_experiments['preamble']['start_button'] = QPushButton('Start', self)
-        self.widget_experiments['preamble']['start_button'].clicked.connect(self.start_experiment)
+        self.running_experiment = False
+        self.widget_experiments['preamble']['start_button'].clicked.connect(self.toggle_experiment)
 
         ''' images '''
         for image in ['Reference', 'A', 'B']:
             self.widget_experiments['images'][image] = {}
-            self.widget_experiments['images'][image]['data'] = QLabel(self)
+            self.widget_experiments['images'][image]['data'] = ClickLabel(image)
             self.widget_experiments['images'][image]['data'].setAlignment(Qt.AlignmentFlag.AlignCenter)
             # image label
-            self.widget_experiments['images'][image]['label'] = QLabel(self)
+            self.widget_experiments['images'][image]['label'] = QLabel(image, self)
             self.widget_experiments['images'][image]['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.widget_experiments['images']['A']['data'].clicked.connect(self.clicked_image)
+        self.widget_experiments['images']['B']['data'].clicked.connect(self.clicked_image)
 
     '''
     setup/helper functions
@@ -274,25 +278,51 @@ class widgets():
     def update_status_bar(self, v):
         self.status_bar.showMessage(v)
 
+    def toggle_experiment(self):
+        if self.running_experiment:
+            self.reset_experiment()
+            self.running_experiment = False
+            self.widget_experiments['preamble']['start_button'].setText('Start')
+        else:
+            self.start_experiment()
+            self.widget_experiments['preamble']['start_button'].setText('Reset')
+            self.running_experiment = True
+
+    def reset_experiment(self):
+        self.init_style('light')
+        self.menu_bar.setEnabled(True)
+
     def start_experiment(self):
         self.init_style('dark')
         self.menu_bar.setEnabled(False)
         self.experiments_tab.setCurrentIndex(1)
         self.experiment_transforms = plot_utils.get_all_single_transform_params(self.checked_transformations)
 
-        print(f'Using distortions: {self.experiment_transforms}')
 
         ''' quick proto type to display some images '''
         ref = self.data_stores[0].get_reference_image()
-        A_trans = list(self.experiment_transforms[0])[0]
+        gui_utils.change_im(self.widget_experiments['images']['Reference']['data'], ref, resize=self.image_display_size)
+        self.exp_im_ind = {'A': 0, 'B': len(self.experiment_transforms)//2}
+        self.change_experiment_images(A_ind=self.exp_im_ind['A'], B_ind=self.exp_im_ind['B'])
+
+    def change_experiment_images(self, A_ind, B_ind):
+        A_trans = list(self.experiment_transforms[A_ind])[0]
         A = image_utils.get_transform_image(self.data_stores[0],
                                              {A_trans: self.checked_transformations[A_trans]},
-                                             self.experiment_transforms[0])
-        B_trans = list(self.experiment_transforms[1])[0]
+                                             self.experiment_transforms[A_ind])
+        B_trans = list(self.experiment_transforms[B_ind])[0]
         B = image_utils.get_transform_image(self.data_stores[0],
                                              {B_trans: self.checked_transformations[B_trans]},
-                                             self.experiment_transforms[1])
+                                             self.experiment_transforms[B_ind])
 
-        gui_utils.change_im(self.widget_experiments['images']['Reference']['data'], ref, resize=self.image_display_size)
         gui_utils.change_im(self.widget_experiments['images']['A']['data'], A, resize=self.image_display_size)
+        self.widget_experiments['images']['A']['data'].setObjectName(f'{self.data_stores[0].get_reference_image_name()}-{self.experiment_transforms[A_ind]}')
         gui_utils.change_im(self.widget_experiments['images']['B']['data'], B, resize=self.image_display_size)
+        self.widget_experiments['images']['B']['data'].setObjectName(f'{self.data_stores[0].get_reference_image_name()}-{self.experiment_transforms[B_ind]}')
+
+    def clicked_image(self, image_name, widget_name):
+        print(f'clicked {widget_name}, name: {image_name}')
+        self.exp_im_ind[widget_name] += 1
+        if self.exp_im_ind[widget_name] == len(self.experiment_transforms):
+            self.exp_im_ind[widget_name] -= 1
+        self.change_experiment_images(A_ind=self.exp_im_ind['A'], B_ind=self.exp_im_ind['B'])

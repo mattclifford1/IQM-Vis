@@ -183,17 +183,22 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metric_range_graph_num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_worker_thread</span><span class="p">()</span>
 
+<div class="viewcode-block" id="images.init_worker_thread"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.init_worker_thread">[docs]</a>    <span class="k">def</span> <span class="nf">init_worker_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39; set up thread for smoother range plot calculation &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">UI</span><span class="o">.</span><span class="n">threads</span><span class="o">.</span><span class="n">get_range_results_worker</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">range_worker_thread</span> <span class="o">=</span> <span class="n">QThread</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">progress</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_progress</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">current_image</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_status_bar</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">completed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">completed_range_results</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">stopped</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stopped_range_results</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">request_range_work</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">do_work</span><span class="p">)</span>
         <span class="c1"># move worker to the worker thread</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">moveToThread</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">range_worker_thread</span><span class="p">)</span>
         <span class="c1"># start the thread</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">range_worker_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">worker_working</span> <span class="o">=</span> <span class="kc">False</span></div>
 
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    image updaters</span>
@@ -237,7 +242,6 @@
 <span class="sd">    change image in dataset</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 <div class="viewcode-block" id="images.change_data"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.change_data">[docs]</a>    <span class="k">def</span> <span class="nf">change_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span> <span class="c1"># stop any calculations on the old image</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_num</span> <span class="o">+=</span> <span class="n">i</span>
         <span class="c1"># check the num is legal</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_num</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -246,6 +250,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_num</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_data_ind</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">data_num</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_data_ind</span>
             <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span> <span class="c1"># stop any calculations on the old image</span>
         <span class="k">for</span> <span class="n">data_store</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">data_store</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_num</span><span class="p">]</span>
@@ -283,27 +288,24 @@
 <span class="sd">    get metric values when adjusting a single transformation value over its range</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 <div class="viewcode-block" id="images.get_metrics_over_all_trans_with_init_values"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.get_metrics_over_all_trans_with_init_values">[docs]</a>    <span class="k">def</span> <span class="nf">get_metrics_over_all_trans_with_init_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">status_bar</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s1">&#39;Getting Range plot Values&#39;</span><span class="p">)</span>
         <span class="c1"># use the initiased/default values for all sliders</span>
-        <span class="n">init_trans_params</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">trans</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked_transformations</span><span class="p">:</span>
-            <span class="n">init_trans_params</span><span class="p">[</span><span class="n">trans</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked_transformations</span><span class="p">[</span><span class="n">trans</span><span class="p">][</span><span class="s1">&#39;init_value&#39;</span><span class="p">]</span>
         <span class="c1"># bundle up data needed to send to the worker</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;trans&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked_transformations</span><span class="p">,</span>
-                <span class="s1">&#39;init_trans&#39;</span><span class="p">:</span> <span class="n">init_trans_params</span><span class="p">,</span>
                 <span class="s1">&#39;metric_params&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">params_from_sliders</span><span class="p">[</span><span class="s1">&#39;metric_params&#39;</span><span class="p">],</span>
                 <span class="s1">&#39;metrics_to_use&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked_metrics</span><span class="p">,</span>
                 <span class="s1">&#39;data_stores&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span>
                 <span class="p">}</span>
         <span class="c1"># start the worker working</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">worker_working</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">request_range_work</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="images.completed_range_results"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.completed_range_results">[docs]</a>    <span class="k">def</span> <span class="nf">completed_range_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">results</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39; data results sent from signal from thread worker &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">worker_working</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metric_over_range_results</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;metric_over_range_results&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_lims</span><span class="p">[</span><span class="s1">&#39;range_data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;max_val&#39;</span><span class="p">]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics_avg_graph</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">display_metrics_over_range</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">display_radar_plots</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric_range_graph</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">display_metric_range_plot</span><span class="p">()</span></div>
 
@@ -330,21 +332,26 @@
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    metric averaging plots (radar plot)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-<div class="viewcode-block" id="images.display_metrics_over_range"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.display_metrics_over_range">[docs]</a>    <span class="k">def</span> <span class="nf">display_metrics_over_range</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># self.status_bar.showMessage(&#39;Getting avg. values&#39;)</span>
-        <span class="c1"># QApplication.processEvents()</span>
+<div class="viewcode-block" id="images.display_radar_plots"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.display_radar_plots">[docs]</a>    <span class="k">def</span> <span class="nf">display_radar_plots</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">data_store</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot_radar_graph</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_over_range_results</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">i</span><span class="p">)</span></div>
             <span class="c1"># uncomment below if you want to calc over the current trans values instead of init</span>
             <span class="c1"># results = plot_utils.compute_metrics_over_range(data_store,</span>
             <span class="c1">#                                                 self.checked_transformations,</span>
             <span class="c1">#                                                 self.params_from_sliders[&#39;transforms&#39;],</span>
             <span class="c1">#                                                 self.params_from_sliders[&#39;metric_params&#39;],</span>
             <span class="c1">#                                                 pbar=self.pbar)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">plot_metrics_graphs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_over_range_results</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">i</span><span class="p">)</span></div>
-        <span class="c1"># self.status_bar.showMessage(&#39;Done&#39;, 3000)</span>
 
-<div class="viewcode-block" id="images.plot_metrics_graphs"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.plot_metrics_graphs">[docs]</a>    <span class="k">def</span> <span class="nf">plot_metrics_graphs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">results</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-        <span class="n">metrics_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<div class="viewcode-block" id="images.plot_radar_graph"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.plot_radar_graph">[docs]</a>    <span class="k">def</span> <span class="nf">plot_radar_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">results</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="c1"># get current metrics used for this data_store</span>
+        <span class="n">metrics_names</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">metrics</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">metric</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked_metrics</span><span class="p">:</span>
+                <span class="n">metrics_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">metric</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">metrics_names</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span>
+            
         <span class="n">transformation_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s1">&#39;transforms&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
         <span class="n">axes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">][</span><span class="s1">&#39;avg&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]</span>
         <span class="n">radar_plotter</span> <span class="o">=</span> <span class="n">plot_utils</span><span class="o">.</span><span class="n">get_radar_plots_avg_plots</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">metrics_names</span><span class="p">,</span> <span class="n">transformation_names</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_data_lim</span><span class="p">)</span>
@@ -356,7 +363,13 @@
 <div class="viewcode-block" id="images.display_metric_images"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.display_metric_images">[docs]</a>    <span class="k">def</span> <span class="nf">display_metric_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_images</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">metric_images</span><span class="p">:</span>
             <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metric_images&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]</span>
-            <span class="n">gui_utils</span><span class="o">.</span><span class="n">change_im</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">metric_images</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">resize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_display_size</span><span class="p">)</span></div></div>
+            <span class="n">gui_utils</span><span class="o">.</span><span class="n">change_im</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">metric_images</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">resize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_display_size</span><span class="p">)</span></div>
+
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    thread manegment</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+<div class="viewcode-block" id="images.stopped_range_results"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.stopped_range_results">[docs]</a>    <span class="k">def</span> <span class="nf">stopped_range_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">worker_working</span> <span class="o">=</span> <span class="kc">False</span></div></div>
 </pre></div>
 
            </div>

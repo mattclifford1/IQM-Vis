@@ -229,19 +229,19 @@
             <span class="n">metric_layouts</span><span class="o">.</span><span class="n">addStretch</span><span class="p">()</span>
 
 <span class="w">            </span><span class="sd">&#39;&#39;&#39;graphs&#39;&#39;&#39;</span>
-            <span class="n">graph_tabs</span> <span class="o">=</span> <span class="n">QTabWidget</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">graph_tabs</span> <span class="o">=</span> <span class="n">QTabWidget</span><span class="p">()</span>
             <span class="c1"># &#39;&#39;&#39;metrics graphs&#39;&#39;&#39;</span>
             <span class="n">metric_bar</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
             <span class="n">metric_bar</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">][</span><span class="s1">&#39;info&#39;</span><span class="p">][</span><span class="s1">&#39;label&#39;</span><span class="p">])</span>
             <span class="n">metric_bar</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">][</span><span class="s1">&#39;info&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
-            <span class="n">add_layout_to_tab</span><span class="p">(</span><span class="n">graph_tabs</span><span class="p">,</span> <span class="n">metric_bar</span><span class="p">,</span> <span class="s1">&#39;Metrics&#39;</span><span class="p">)</span>
+            <span class="n">add_layout_to_tab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph_tabs</span><span class="p">,</span> <span class="n">metric_bar</span><span class="p">,</span> <span class="s1">&#39;Metrics&#39;</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics_avg_graph</span><span class="p">:</span>
                 <span class="n">avg_graph</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
                 <span class="n">avg_graph</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">][</span><span class="s1">&#39;avg&#39;</span><span class="p">][</span><span class="s1">&#39;label&#39;</span><span class="p">])</span>
                 <span class="n">graph</span> <span class="o">=</span> <span class="n">QGridLayout</span><span class="p">()</span>
                 <span class="n">graph</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">][</span><span class="s1">&#39;avg&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">im_height</span><span class="p">,</span> <span class="n">im_width</span><span class="p">)</span>
                 <span class="n">avg_graph</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>   <span class="c1"># need for matplotlib? - test this...   (grid)</span>
-                <span class="n">add_layout_to_tab</span><span class="p">(</span><span class="n">graph_tabs</span><span class="p">,</span> <span class="n">avg_graph</span><span class="p">,</span> <span class="s1">&#39;Radar&#39;</span><span class="p">)</span>
+                <span class="n">add_layout_to_tab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph_tabs</span><span class="p">,</span> <span class="n">avg_graph</span><span class="p">,</span> <span class="s1">&#39;Radar&#39;</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric_range_graph</span><span class="p">:</span>
                 <span class="n">range_graph</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
                 <span class="n">range_graph</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">][</span><span class="s1">&#39;range&#39;</span><span class="p">][</span><span class="s1">&#39;label&#39;</span><span class="p">])</span>
@@ -253,8 +253,8 @@
                 <span class="n">graph_controls</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget_controls</span><span class="p">[</span><span class="s1">&#39;button&#39;</span><span class="p">][</span><span class="s1">&#39;prev_metric_graph&#39;</span><span class="p">])</span>
                 <span class="n">graph_controls</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget_controls</span><span class="p">[</span><span class="s1">&#39;button&#39;</span><span class="p">][</span><span class="s1">&#39;next_metric_graph&#39;</span><span class="p">])</span>
                 <span class="n">range_graph</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">graph_controls</span><span class="p">)</span>
-                <span class="n">add_layout_to_tab</span><span class="p">(</span><span class="n">graph_tabs</span><span class="p">,</span> <span class="n">range_graph</span><span class="p">,</span> <span class="s1">&#39;Range&#39;</span><span class="p">)</span>
-            <span class="n">graph_layouts</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">graph_tabs</span><span class="p">)</span>
+                <span class="n">add_layout_to_tab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph_tabs</span><span class="p">,</span> <span class="n">range_graph</span><span class="p">,</span> <span class="s1">&#39;Range&#39;</span><span class="p">)</span>
+            <span class="n">graph_layouts</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph_tabs</span><span class="p">)</span>
             <span class="n">graph_layouts</span><span class="o">.</span><span class="n">addStretch</span><span class="p">()</span>
 
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;dataset controls&#39;&#39;&#39;</span>
@@ -295,10 +295,10 @@
         <span class="n">settings_controls</span><span class="o">.</span><span class="n">addStretch</span><span class="p">()</span>
 
 <span class="w">        </span><span class="sd">&#39;&#39;&#39; parameter controls tab&#39;&#39;&#39;</span>
-        <span class="n">slider_tabs</span> <span class="o">=</span> <span class="n">QTabWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slider_tabs</span> <span class="o">=</span> <span class="n">QTabWidget</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">tab_layout</span><span class="p">,</span> <span class="n">tab_name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="n">image_controls</span><span class="p">,</span> <span class="n">metric_controls</span><span class="p">,</span> <span class="n">settings_controls</span><span class="p">],</span>
                                         <span class="p">[</span><span class="s1">&#39;transforms&#39;</span><span class="p">,</span> <span class="s1">&#39;metric params&#39;</span><span class="p">,</span> <span class="s1">&#39;settings&#39;</span><span class="p">]):</span>
-            <span class="n">add_layout_to_tab</span><span class="p">(</span><span class="n">slider_tabs</span><span class="p">,</span> <span class="n">tab_layout</span><span class="p">,</span> <span class="n">tab_name</span><span class="p">)</span>
+            <span class="n">add_layout_to_tab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slider_tabs</span><span class="p">,</span> <span class="n">tab_layout</span><span class="p">,</span> <span class="n">tab_name</span><span class="p">)</span>
 
 <span class="w">        </span><span class="sd">&#39;&#39;&#39; reset sliders button&#39;&#39;&#39;</span>
         <span class="c1"># reset sliders button</span>
@@ -317,7 +317,7 @@
         <span class="n">image_left_side</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
         <span class="n">image_left_side</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">image_layouts</span><span class="p">)</span>
         <span class="n">image_left_side</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">dataset_layout</span><span class="p">)</span>
-        <span class="n">image_left_side</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">slider_tabs</span><span class="p">)</span>
+        <span class="n">image_left_side</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slider_tabs</span><span class="p">)</span>
         <span class="n">image_left_side</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">reset_button</span><span class="p">)</span>
         <span class="n">image_middle</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
         <span class="n">image_middle</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">metric_layouts</span><span class="p">)</span>
@@ -325,21 +325,56 @@
         <span class="n">graph_right</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">graph_layouts</span><span class="p">)</span>
         <span class="n">graph_right</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">graph_button</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">main_layout</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">main_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">image_left_side</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">main_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">image_middle</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">main_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">graph_right</span><span class="p">)</span>
+        <span class="n">main_layout</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">main_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">image_left_side</span><span class="p">)</span>
+        <span class="n">main_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">image_middle</span><span class="p">)</span>
+        <span class="n">main_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">graph_right</span><span class="p">)</span>
 
-        <span class="c1"># self.main_layout.setColumnStretch(1, 1)</span>
-        <span class="c1"># self.main_layout.setSpacing(0)</span>
-        <span class="c1"># self.main_layout.setContentsMargins(0, 0, 0, 0)</span>
+        <span class="c1"># main_layout.setColumnStretch(1, 1)</span>
+        <span class="c1"># main_layout.setSpacing(0)</span>
+        <span class="c1"># main_layout.setContentsMargins(0, 0, 0, 0)</span>
 
-        <span class="c1"># self.setLayout(self.main_layout)</span>
+        <span class="n">experiment_mode_layout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_experiment_layout</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_window</span> <span class="o">=</span> <span class="n">QTabWidget</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">tab_layout</span><span class="p">,</span> <span class="n">tab_name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="n">main_layout</span><span class="p">,</span> <span class="n">experiment_mode_layout</span><span class="p">],</span>
+                                        <span class="p">[</span><span class="s1">&#39;Normal&#39;</span><span class="p">,</span> <span class="s1">&#39;Experiment&#39;</span><span class="p">]):</span>
+            <span class="n">add_layout_to_tab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_window</span><span class="p">,</span> <span class="n">tab_layout</span><span class="p">,</span> <span class="n">tab_name</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">main_widget</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">main_widget</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_layout</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_widget</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_window</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="layout.get_experiment_layout"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.layout.layout.get_experiment_layout">[docs]</a>    <span class="k">def</span> <span class="nf">get_experiment_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">experiment_mode_info</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="n">experiment_mode_info</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;preamble&#39;</span><span class="p">][</span><span class="s1">&#39;text&#39;</span><span class="p">])</span>
+        <span class="n">experiment_mode_info</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;preamble&#39;</span><span class="p">][</span><span class="s1">&#39;start_button&#39;</span><span class="p">])</span>
+
+        <span class="n">reference</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;images&#39;</span><span class="p">][</span><span class="s1">&#39;Reference&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">reference</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;images&#39;</span><span class="p">][</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">A</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+        <span class="n">B</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;images&#39;</span><span class="p">][</span><span class="s1">&#39;B&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">B</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+
+        <span class="n">distorted_images</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">distorted_images</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+        <span class="n">distorted_images</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+
+        <span class="n">experiment_mode_images</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="n">experiment_mode_images</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">reference</span><span class="p">)</span>
+        <span class="n">experiment_mode_images</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">distorted_images</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">experiments_tab</span> <span class="o">=</span> <span class="n">QTabWidget</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">tab_layout</span><span class="p">,</span> <span class="n">tab_name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="n">experiment_mode_info</span><span class="p">,</span> <span class="n">experiment_mode_images</span><span class="p">],</span>
+                                        <span class="p">[</span><span class="s1">&#39;info&#39;</span><span class="p">,</span> <span class="s1">&#39;run&#39;</span><span class="p">]):</span>
+            <span class="n">add_layout_to_tab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">experiments_tab</span><span class="p">,</span> <span class="n">tab_layout</span><span class="p">,</span> <span class="n">tab_name</span><span class="p">)</span>
+        <span class="n">experiment_mode_layout</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="n">experiment_mode_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">experiments_tab</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">experiment_mode_layout</span></div>
 
 <div class="viewcode-block" id="layout.init_style"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.layout.layout.init_style">[docs]</a>    <span class="k">def</span> <span class="nf">init_style</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;light&#39;</span><span class="p">,</span> <span class="n">css_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">css_file</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>

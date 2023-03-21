@@ -1,7 +1,20 @@
-from random import randint
-import sys
-from PyQt6.QtCore import QTimer
-from PyQt6.QtWidgets import QWidget, QApplication, QVBoxLayout, QProgressBar
+''' Custom SubClasses of PyQt6 widget to extent to the required functionality '''
+# Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+from PyQt6.QtCore import pyqtSignal
+from PyQt6.QtWidgets import QProgressBar, QLabel
+
+
+class ClickLabel(QLabel):
+    ''' add a click mousePressEvent event to label (so can click on images) '''
+    clicked = pyqtSignal(str, str)
+
+    def __init__(self, name='clickable label'):
+        super().__init__()
+        self.name = name
+
+    def mousePressEvent(self, event):
+        self.clicked.emit(self.objectName(), self.name)
+
 
 StyleSheet = '''
 #RedProgressBar {

@@ -8,9 +8,9 @@ UI
 
 Experiments:
   - sort all images RMSE
-  - click feature
+  - expose num_steps to experimetnal setup in plot_utils.get_all_slider_values
   - sort algorithm
-  - store results
+  - store results - good naming structre for images/QLabels
   - save results
 
 minor:

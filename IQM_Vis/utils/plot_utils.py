@@ -117,7 +117,9 @@ metric averaging functions to get metric values over a range of transformation
 '''
 def get_all_slider_values(transforms, num_steps=10):
     range = transforms['max'] - transforms['min']
-    num_steps = min(range, num_steps)
+    # make sure if it's an int then we dont return step values that are floats
+    if isinstance(transforms['min'], int) and isinstance(transforms['max'], int):
+        num_steps = min(range, num_steps)
     steps = range/num_steps
     if type(transforms['min']) == int:
         steps = int(steps)
@@ -135,10 +137,15 @@ def get_all_single_transform_params(transforms):
     return list_of_single_trans
 
 def compute_metrics_over_range_single_trans(data_store, transforms, metric_params, metrics_to_use, pbar_signal=None, stop_flag=None):
-    '''
-    compute metrics over a range of trans
+    ''' compute metrics over a range of trans
+
+    Args:
         data_store: object containing metrics and image
-        transforms: dict containing trans functions and min/max/initial values
+        transforms (dict): containing trans functions and min/max/initial values
+
+    Returns:
+        results (dict): results of IQM values at each transform value across its
+                        whole paramter rance for the reference image
     '''
     # compute all metrics over their range of params and get avg/std
     results = {}
@@ -159,14 +166,15 @@ def compute_metrics_over_range_single_trans(data_store, transforms, metric_param
     # compute over all image transformations
     for curr_trans in transforms:  # loop over all transformations
         single_trans = {curr_trans: transforms[curr_trans]}
-        for trans_value in get_all_slider_values(transforms[curr_trans]):   # all values of the parameter
+        all_param_values = get_all_slider_values(transforms[curr_trans])
+        for trans_value in all_param_values:
             single_param_dict = {curr_trans: trans_value}
             trans_im = image_utils.get_transform_image(data_store, single_trans, single_param_dict) # initialse image
             metric_scores = data_store.get_metrics(trans_im, metrics_to_use, **metric_params)
             for metric in metric_scores:
                 results[metric][curr_trans]['scores'].append(float(metric_scores[metric]))
                 # and store the input trans values for plotting
-                results[metric][curr_trans]['param_values'] = get_all_slider_values(transforms[curr_trans])
+                results[metric][curr_trans]['param_values'] = all_param_values
 
                 # end if flag says to stop
                 if stop_flag != None:
@@ -189,9 +197,15 @@ def compute_metrics_over_range(data_store, transforms, transform_values, metric_
     '''
     compute metrics over a range of trans (when using non initial values for other transforms)
     currently this method is not being used and instead using the simpler compute_metrics_over_range_single_trans
+
+    Args:
         data_store: object containing metrics and image
-        transforms: dict containing trans functions and min/max/initial values
-        transform_values: dict containing the fixed current transform parameter values
+        transforms (dict): containing trans functions and min/max/initial values
+        transform_values (dict): containing the fixed current transform parameter values
+
+    Returns:
+        results (dict): results of IQM values at each transform value across its
+                        whole paramter rance for the reference image
     '''
     # compute all metrics over their range of params and get avg/std
     results = {}
