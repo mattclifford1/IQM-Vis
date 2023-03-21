@@ -245,9 +245,9 @@ class widgets():
         # self.construct_UI()
         self.display_images()
         # if old_size > self.image_display_size:
-        #     self.setMaximumSize(self.main_layout.sizeHint())
+        #     self.setMaximumSize(self.main_window.sizeHint())
         # if old_size < self.image_display_size:
-        #     self.setMinimumSize(self.main_layout.sizeHint())
+        #     self.setMinimumSize(self.main_window.sizeHint())
 
     def update_progress(self, v):
         self.pbar.setValue(v)

@@ -158,20 +158,23 @@ class layout(QMainWindow):
         graph_right.addLayout(graph_layouts)
         graph_right.addLayout(graph_button)
 
-        self.main_layout = QHBoxLayout()
-        self.main_layout.addLayout(image_left_side)
-        self.main_layout.addLayout(image_middle)
-        self.main_layout.addLayout(graph_right)
+        main_layout = QHBoxLayout()
+        main_layout.addLayout(image_left_side)
+        main_layout.addLayout(image_middle)
+        main_layout.addLayout(graph_right)
 
-        # self.main_layout.setColumnStretch(1, 1)
-        # self.main_layout.setSpacing(0)
-        # self.main_layout.setContentsMargins(0, 0, 0, 0)
+        # main_layout.setColumnStretch(1, 1)
+        # main_layout.setSpacing(0)
+        # main_layout.setContentsMargins(0, 0, 0, 0)
 
-        # self.setLayout(self.main_layout)
+        experiment_mode_layout = QHBoxLayout()
+        self.main_window = QTabWidget()
+        for tab_layout, tab_name in zip([main_layout, experiment_mode_layout],
+                                        ['Normal', 'Experiment']):
+            add_layout_to_tab(self.main_window, tab_layout, tab_name)
 
-        self.main_widget = QWidget()
-        self.main_widget.setLayout(self.main_layout)
-        self.setCentralWidget(self.main_widget)
+
+        self.setCentralWidget(self.main_window)
         self.show()
 
     def init_style(self, style='light', css_file=None):

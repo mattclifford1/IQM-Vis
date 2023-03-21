@@ -133,7 +133,7 @@ class make_app(widgets, layout, images):
         self.display_images() # images.py
         self.reset_sliders()  # widgets.py
 
-        # self.setMinimumSize(self.main_layout.sizeHint())
+        # self.setMinimumSize(self.main_window.sizeHint())
 
     def _single_image_or_dataset(self):
         '''set whether dataset or single image used for data_store'''
