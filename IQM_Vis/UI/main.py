@@ -126,10 +126,21 @@ class make_app(widgets, layout, images):
             if self.menu_options['metric_images'][metric_image].isChecked():
                 self.checked_metric_images.append(metric_image)
 
+        # get any current tabs showing so we can keep them showing on a remake
+        if hasattr(self, 'slider_tabs'):
+            slider_tabs_index = self.slider_tabs.currentIndex()
+        else:
+            slider_tabs_index = 0
+        if hasattr(self, 'graph_tabs'):
+            graph_tabs_index = self.graph_tabs.currentIndex()
+        else:
+            graph_tabs_index = 1
 
         self.init_style()     # layout.py
         self.init_widgets()   # widgets.py
         self.init_layout()    # layout.py
+        self.slider_tabs.setCurrentIndex(slider_tabs_index)
+        self.graph_tabs.setCurrentIndex(graph_tabs_index)
         self.display_images() # images.py
         self.reset_sliders()  # widgets.py
 

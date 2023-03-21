@@ -62,19 +62,19 @@ class layout(QMainWindow):
             metric_layouts.addStretch()
 
             '''graphs'''
-            graph_tabs = QTabWidget()
+            self.graph_tabs = QTabWidget()
             # '''metrics graphs'''
             metric_bar = QVBoxLayout()
             metric_bar.addWidget(self.widget_row[i]['metrics']['info']['label'])
             metric_bar.addWidget(self.widget_row[i]['metrics']['info']['data'])
-            add_layout_to_tab(graph_tabs, metric_bar, 'Metrics')
+            add_layout_to_tab(self.graph_tabs, metric_bar, 'Metrics')
             if self.metrics_avg_graph:
                 avg_graph = QVBoxLayout()
                 avg_graph.addWidget(self.widget_row[i]['metrics']['avg']['label'])
                 graph = QGridLayout()
                 graph.addWidget(self.widget_row[i]['metrics']['avg']['data'], 0, 0, im_height, im_width)
                 avg_graph.addLayout(graph)   # need for matplotlib? - test this...   (grid)
-                add_layout_to_tab(graph_tabs, avg_graph, 'Radar')
+                add_layout_to_tab(self.graph_tabs, avg_graph, 'Radar')
             if self.metric_range_graph:
                 range_graph = QVBoxLayout()
                 range_graph.addWidget(self.widget_row[i]['metrics']['range']['label'])
@@ -86,8 +86,8 @@ class layout(QMainWindow):
                 graph_controls.addWidget(self.widget_controls['button']['prev_metric_graph'])
                 graph_controls.addWidget(self.widget_controls['button']['next_metric_graph'])
                 range_graph.addLayout(graph_controls)
-                add_layout_to_tab(graph_tabs, range_graph, 'Range')
-            graph_layouts.addWidget(graph_tabs)
+                add_layout_to_tab(self.graph_tabs, range_graph, 'Range')
+            graph_layouts.addWidget(self.graph_tabs)
             graph_layouts.addStretch()
 
         '''dataset controls'''
@@ -128,10 +128,10 @@ class layout(QMainWindow):
         settings_controls.addStretch()
 
         ''' parameter controls tab'''
-        slider_tabs = QTabWidget()
+        self.slider_tabs = QTabWidget()
         for tab_layout, tab_name in zip([image_controls, metric_controls, settings_controls],
                                         ['transforms', 'metric params', 'settings']):
-            add_layout_to_tab(slider_tabs, tab_layout, tab_name)
+            add_layout_to_tab(self.slider_tabs, tab_layout, tab_name)
 
         ''' reset sliders button'''
         # reset sliders button
@@ -150,7 +150,7 @@ class layout(QMainWindow):
         image_left_side = QVBoxLayout()
         image_left_side.addLayout(image_layouts)
         image_left_side.addLayout(dataset_layout)
-        image_left_side.addWidget(slider_tabs)
+        image_left_side.addWidget(self.slider_tabs)
         image_left_side.addLayout(reset_button)
         image_middle = QVBoxLayout()
         image_middle.addLayout(metric_layouts)
@@ -167,7 +167,7 @@ class layout(QMainWindow):
         # main_layout.setSpacing(0)
         # main_layout.setContentsMargins(0, 0, 0, 0)
 
-        experiment_mode_layout = QHBoxLayout()
+        experiment_mode_layout = self.get_experiment_layout()
         self.main_window = QTabWidget()
         for tab_layout, tab_name in zip([main_layout, experiment_mode_layout],
                                         ['Normal', 'Experiment']):
@@ -176,6 +176,12 @@ class layout(QMainWindow):
 
         self.setCentralWidget(self.main_window)
         self.show()
+
+    def get_experiment_layout(self):
+        experiment_mode_layout = QVBoxLayout()
+        experiment_mode_layout.addWidget(self.widget_experiments['preamble']['text'])
+        experiment_mode_layout.addWidget(self.widget_experiments['preamble']['start_button'])
+        return experiment_mode_layout
 
     def init_style(self, style='light', css_file=None):
         if css_file == None:

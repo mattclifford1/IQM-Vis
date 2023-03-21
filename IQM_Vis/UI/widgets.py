@@ -129,6 +129,24 @@ class widgets():
                 self.widget_controls['slider'][key]['value'].setText(str(self.params_from_sliders['transforms'][key]))
 
         self.set_image_name_text()
+        self.init_experiment_widgets()
+
+    def init_experiment_widgets(self):
+        self.widget_experiments = {'images': {}, 'preamble': {}}
+        ''' pre experiments screen '''
+        self.widget_experiments['preamble']['text'] = QLabel(self)
+        self.widget_experiments['preamble']['text'].setText('Write info here about the experiment ...')
+        self.widget_experiments['preamble']['start_button'] = QPushButton('Start', self)
+        self.widget_experiments['preamble']['start_button'].clicked.connect(self.start_experiment)
+
+        ''' images '''
+        for image in ['Reference', 'A', 'B']:
+            self.widget_experiments['images'][image] = {}
+            self.widget_experiments['images'][image]['data'] = QLabel(self)
+            self.widget_experiments['images'][image]['data'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+            # image label
+            self.widget_experiments['images'][image]['label'] = QLabel(self)
+            self.widget_experiments['images'][image]['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
 
     '''
     setup/helper functions
@@ -187,7 +205,6 @@ class widgets():
         lineedit.setText(str(self.image_display_size))
         lineedit.textChanged.connect(self.change_display_im_size)
         self.widget_settings['image_display_size'] = {'widget': lineedit, 'label': QLabel('Image Display Size:')}
-
 
     '''
     ==================== functions to bind to sliders/widgets ====================
@@ -256,3 +273,7 @@ class widgets():
 
     def update_status_bar(self, v):
         self.status_bar.showMessage(v)
+
+    def start_experiment(self):
+        self.init_style('dark')
+        self.menu_bar.setEnabled(False)

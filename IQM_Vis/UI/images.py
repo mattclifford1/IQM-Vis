@@ -176,7 +176,15 @@ class images:
             #                                                 pbar=self.pbar)
 
     def plot_radar_graph(self, results, i):
-        metrics_names = list(self.data_stores[i].metrics.keys())
+        # get current metrics used for this data_store
+        metrics_names = []
+        for metric in self.data_stores[i].metrics:
+            if metric in self.checked_metrics:
+                metrics_names.append(metric)
+
+        if len(metrics_names) == 0:
+            return
+            
         transformation_names = list(self.sliders['transforms'].keys())
         axes = self.widget_row[i]['metrics']['avg']['data']
         radar_plotter = plot_utils.get_radar_plots_avg_plots(results, metrics_names, transformation_names, axes, self.plot_data_lim)
