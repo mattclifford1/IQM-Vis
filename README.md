@@ -1,9 +1,7 @@
 [![PyPI version](https://badge.fury.io/py/IQM-Vis.svg)](https://badge.fury.io/py/IQM-Vis)
 
 # IQM-Vis
-Image Quality Metric Visualision
-
-Extendable user interface for the assessment of transformations on image metrics.
+Image Quality Metric Visualision. An extendable user interface for the assessment of transformations on image metrics.
 
 Head over to the [DOCUMENTATION](https://mattclifford1.github.io/IQM-Vis/) for tutorials and package reference.
 
