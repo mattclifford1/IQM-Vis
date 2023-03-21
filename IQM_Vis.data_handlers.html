@@ -178,7 +178,7 @@
 both use the same image for reference and transformed</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api.dataset_holder">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.data_handlers.data_api.</span></span><span class="sig-name descname"><span class="pre">dataset_holder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_list:</span> <span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_images:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_loader=&lt;function</span> <span class="pre">load_image&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_post_processing=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.data_handlers.data_api.</span></span><span class="sig-name descname"><span class="pre">dataset_holder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_list:</span> <span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_images:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_loader=&lt;function</span> <span class="pre">load_image&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_post_processing=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_list_to_transform=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataset_loader" title="IQM_Vis.data_handlers.data_api_abstract.base_dataset_loader"><code class="xref py py-class docutils literal notranslate"><span class="pre">IQM_Vis.data_handlers.data_api_abstract.base_dataset_loader</span></code></a></p>
 <p>Stores images and metrics to communicate with the UI via the IQM-Vis data
 API.</p>
@@ -196,6 +196,10 @@ a file path (Defaults to IQM_Vis.utils.load_image)</p></li>
 <li><p><strong>image_post_processing</strong> (<em>function</em>) – Optional function to apply after image
 transformations. For example cropping an image after rotation.
 (Defaults to None)</p></li>
+<li><p><strong>image_list_to_transform</strong> (<em>list</em>) – list of image file paths for images
+to transform if they are different to the reference
+images. If None then will use the same image as
+the reference image. (Defaults to None)</p></li>
 </ul>
 </dd>
 </dl>

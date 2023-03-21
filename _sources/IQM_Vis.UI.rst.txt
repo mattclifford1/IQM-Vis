@@ -36,6 +36,14 @@ IQM\_Vis.UI.main module
    :undoc-members:
    :show-inheritance:
 
+IQM\_Vis.UI.threads module
+--------------------------
+
+.. automodule:: IQM_Vis.UI.threads
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 IQM\_Vis.UI.widgets module
 --------------------------
 

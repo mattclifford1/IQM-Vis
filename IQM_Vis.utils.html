@@ -212,26 +212,50 @@
 <span id="iqm-vis-utils-image-utils-module"></span><h2>IQM_Vis.utils.image_utils module<a class="headerlink" href="#module-IQM_Vis.utils.image_utils" title="Permalink to this headline">¶</a></h2>
 <p>image helper functions</p>
 <dl class="py function">
+<dt class="sig sig-object py" id="IQM_Vis.utils.image_utils.crop_centre">
+<span class="sig-prename descclassname"><span class="pre">IQM_Vis.utils.image_utils.</span></span><span class="sig-name descname"><span class="pre">crop_centre</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/utils/image_utils.html#crop_centre"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.utils.image_utils.crop_centre" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>crop to the centre of the image, note this will return a small image size</dt><dd><p>so it best used as post processing</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>np.array</em>) – image to be cropped</p></li>
+<li><p><strong>scale_factor</strong> (<em>float</em>) – the percentage to zoom in by (for square crop only).
+0.5  = 2x zoom out
+1 = normal size
+2 = 2x zoom in
+(Defaults to 2 - half the size)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>cropeed image</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>image (np.array)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="IQM_Vis.utils.image_utils.get_transform_image">
 <span class="sig-prename descclassname"><span class="pre">IQM_Vis.utils.image_utils.</span></span><span class="sig-name descname"><span class="pre">get_transform_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_store</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_functions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/utils/image_utils.html#get_transform_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.utils.image_utils.get_transform_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>transform image with image post processing</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data_store</strong> (<em>-</em>) – IQM_Vis data_api</p></li>
-<li><p><strong>transform_functions</strong> (<em>-</em>) – dict holding transforms
+<li><p><strong>data_store</strong> – IQM_Vis data_api</p></li>
+<li><p><strong>transform_functions</strong> – dict holding transforms
 (each key is the name of transform, items have key ‘function’)</p></li>
-<li><p><strong>transform_params</strong> (<em>-</em>) – dict holding the parameters for transforms (corresponding to keys in transform_functions)</p></li>
+<li><p><strong>transform_params</strong> – dict holding the parameters for transforms (corresponding to keys in transform_functions)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>processed numpy image</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p>image</p></li>
-</ul>
-</p>
+<dd class="field-odd"><p>image</p>
 </dd>
 </dl>
 </dd></dl>
@@ -287,7 +311,7 @@ TODO: write docs how to use these (currently just have to look at the UI code)</
 
 <dl class="py function">
 <dt class="sig sig-object py" id="IQM_Vis.utils.plot_utils.compute_metrics_over_range">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.utils.plot_utils.</span></span><span class="sig-name descname"><span class="pre">compute_metrics_over_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_store</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transforms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_to_use</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/utils/plot_utils.html#compute_metrics_over_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.utils.plot_utils.compute_metrics_over_range" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">IQM_Vis.utils.plot_utils.</span></span><span class="sig-name descname"><span class="pre">compute_metrics_over_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_store</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transforms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_to_use</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbar_signal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/utils/plot_utils.html#compute_metrics_over_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.utils.plot_utils.compute_metrics_over_range" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>compute metrics over a range of trans</dt><dd><p>data_store: object containing metrics and image
 transforms: dict containing trans functions and min/max/initial values
