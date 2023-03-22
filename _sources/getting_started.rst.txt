@@ -25,4 +25,4 @@ Run a demonstration example by running the python code:
 ..  code-block:: python
 
     import IQM_Vis
-    IQM_Vis.examples.all.run()
+    IQM_Vis.examples.dataset.run()
