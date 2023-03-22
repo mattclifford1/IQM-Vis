@@ -1,11 +1,13 @@
 Needs doing:
   - add NLPD
   - add preproccessing function to the datastore/ UI (resize image to smaller)
+  - add support for inputting human experiment results
 
 UI
   - Export images
   - Tool bar
      - luminance calibration
+
 
 Experiments:
   - sort all images RMSE
@@ -13,6 +15,7 @@ Experiments:
   - sorting algorithm
   - store results - good naming structre for images/QLabels
   - save results
+  - timer
 
 minor:
   - fix metric images being stretched (muliptle rows)

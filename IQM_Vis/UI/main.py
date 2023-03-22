@@ -137,12 +137,22 @@ class make_app(widgets, layout, images):
             graph_tabs_index = self.graph_tabs.currentIndex()
         else:
             graph_tabs_index = 1
+        if hasattr(self, 'experiments_tab'):
+            experi_tabs_index = self.experiments_tab.currentIndex()
+        else:
+            experi_tabs_index = 0
+        if hasattr(self, 'main_window'):
+            main_tabs_index = self.main_window.currentIndex()
+        else:
+            main_tabs_index = 0
 
         self.init_style()     # layout.py
         self.init_widgets()   # widgets.py
         self.init_layout()    # layout.py
         self.slider_tabs.setCurrentIndex(slider_tabs_index)
         self.graph_tabs.setCurrentIndex(graph_tabs_index)
+        self.experiments_tab.setCurrentIndex(experi_tabs_index)
+        self.main_window.setCurrentIndex(main_tabs_index)
         self.display_images() # images.py
         self.reset_sliders()  # widgets.py
 
