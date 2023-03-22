@@ -1,21 +1,22 @@
 Needs doing:
   - add NLPD
+  - add preproccessing function to the datastore/ UI (resize image to smaller)
 
 UI
   - Export images
   - Tool bar
-     - calibration
+     - luminance calibration
 
 Experiments:
   - sort all images RMSE
   - expose num_steps to experimetnal setup in plot_utils.get_all_slider_values
-  - sort algorithm
+  - sorting algorithm
   - store results - good naming structre for images/QLabels
   - save results
 
 minor:
   - fix metric images being stretched (muliptle rows)
   - Option to change screen calibration
+  - move redo graphs menu to separete menu tab
 
   - get metrics and metric images from all data stores
-  - stay on current tab for plots when resetting UI
