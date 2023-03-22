@@ -59,6 +59,9 @@ IQM_Vis.make_UI(data,
               transformations,
               metrics_avg_graph=True)
 ```
+
+# UI Example
+![Alt text](https://github.com/mattclifford1/IQM-Vis/blob/main/pics/UI-all.png?raw=true "Dataset UI")
 <!--
 ## UI Examples (section needs pictures updating)
 Simple UI with single image and image metric

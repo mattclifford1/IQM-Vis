@@ -277,6 +277,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">status_bar</span><span class="o">.</span><span class="n">addPermanentWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pbar</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="make_app.construct_UI"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.main.make_app.construct_UI">[docs]</a>    <span class="k">def</span> <span class="nf">construct_UI</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;range_worker&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span> <span class="c1"># stop any calculations on the old UI</span>
         <span class="c1"># get currently selected tranformations to use</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">checked_transformations</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">trans</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>

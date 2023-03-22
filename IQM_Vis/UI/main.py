@@ -110,6 +110,8 @@ class make_app(widgets, layout, images):
         self.status_bar.addPermanentWidget(self.pbar)
 
     def construct_UI(self):
+        if hasattr(self, 'range_worker'):
+            self.range_worker.stop() # stop any calculations on the old UI
         # get currently selected tranformations to use
         self.checked_transformations = {}
         for trans, item in self.transformations.items():
