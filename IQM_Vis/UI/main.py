@@ -26,19 +26,24 @@ class make_app(widgets, layout, images):
         self.metrics_info_format = metrics_info_format
         self.metrics_avg_graph = metrics_avg_graph
         self.metric_range_graph = metric_range_graph
-        self.image_display_size = image_display_size
         self.metric_params = metric_params
 
         self.data_lims = {'fixed': 1, 'range_data': 1}
         self.plot_data_lim = 1
 
+        self.window_names = ['Visualise', 'Experiment']
         self.dataset = self._single_image_or_dataset()
         self.setWindowTitle('IQM-Vis')
 
         self.make_status_bar()
         self.make_menu()
 
-        self._init_image_settings()
+
+        self.widget_settings = {}
+        self.image_display_size = {}
+        for window_name in self.window_names:
+            self.image_display_size[window_name] = image_display_size
+            self._init_image_settings(window_name)
         self.construct_UI()
 
     def make_menu(self):
@@ -51,7 +56,7 @@ class make_app(widgets, layout, images):
 
         reload_action.setShortcut('Ctrl+R')
         reload_action.setStatusTip('')
-        reload_action.triggered.connect(self.display_images)
+        # reload_action.triggered.connect(self.display_images)
         reload_action.triggered.connect(self.redo_plots)
 
         quit_action.setShortcut('Ctrl+Q')
@@ -128,19 +133,20 @@ class make_app(widgets, layout, images):
             if self.menu_options['metric_images'][metric_image].isChecked():
                 self.checked_metric_images.append(metric_image)
 
+        ''' update these '''
         # get any current tabs showing so we can keep them showing on a remake
         if hasattr(self, 'slider_tabs'):
-            slider_tabs_index = self.slider_tabs.currentIndex()
+            slider_tabs_index = self.tabs[window_name]['slider'].currentIndex()
         else:
             slider_tabs_index = 0
         if hasattr(self, 'graph_tabs'):
-            graph_tabs_index = self.graph_tabs.currentIndex()
+            graph_tabs_index = self.tabs[window_name]['graph'].currentIndex()
         else:
             graph_tabs_index = 1
-        if hasattr(self, 'experiments_tab'):
-            experi_tabs_index = self.experiments_tab.currentIndex()
-        else:
-            experi_tabs_index = 0
+        # if hasattr(self, 'experiments_tab'):
+        #     experi_tabs_index = self.experiments_tab.currentIndex()
+        # else:
+        #     experi_tabs_index = 0
         if hasattr(self, 'main_window'):
             main_tabs_index = self.main_window.currentIndex()
         else:
@@ -149,12 +155,13 @@ class make_app(widgets, layout, images):
         self.init_style()     # layout.py
         self.init_widgets()   # widgets.py
         self.init_layout()    # layout.py
-        self.slider_tabs.setCurrentIndex(slider_tabs_index)
-        self.graph_tabs.setCurrentIndex(graph_tabs_index)
-        self.experiments_tab.setCurrentIndex(experi_tabs_index)
-        self.main_window.setCurrentIndex(main_tabs_index)
-        self.display_images() # images.py
-        self.reset_sliders()  # widgets.py
+        for window_name in self.window_names:
+            self.tabs[window_name]['slider'].setCurrentIndex(slider_tabs_index)
+            self.tabs[window_name]['graph'].setCurrentIndex(graph_tabs_index)
+            # self.experiments_tab.setCurrentIndex(experi_tabs_index)
+            self.main_window.setCurrentIndex(main_tabs_index)
+            self.display_images(window_name) # images.py
+            self.reset_sliders(window_name)  # widgets.py
 
         # self.setMinimumSize(self.main_window.sizeHint())
 

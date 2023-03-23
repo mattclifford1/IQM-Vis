@@ -2,11 +2,17 @@ Needs doing:
   - add NLPD
   - add preproccessing function to the datastore/ UI (resize image to smaller)
   - add support for inputting human experiment results
+  - add SCATTER plot of correlations
+    - interactive to get which images fail the correlation
 
 UI
   - Export images
+    - ref
+    - all distortions
+    -  graphs
   - Tool bar
      - luminance calibration
+  - Separate metric range plots based on window_name (same range_worker thought?)
 
 
 Experiments:
