@@ -1,6 +1,7 @@
 include README.md
-include pics/image2.jpg
-include pics/image3.jpg
+include IQM_Vis/examples/images/waves1.jpeg
+include IQM_Vis/examples/images/waves2.jpeg
+include IQM_Vis/examples/images/wave3.jpeg
 include IQM_Vis/UI/style-light.css
 include IQM_Vis/UI/style-dark.css
 include VERSION
