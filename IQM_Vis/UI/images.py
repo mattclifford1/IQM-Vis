@@ -148,8 +148,11 @@ class images:
     metric range plot (line plots of range of all sliders)
     '''
     def display_metric_range_plot(self):
+        all_trans = list(self.checked_transformations.keys())
+        if all_trans == []:
+            return
         for window_name in self.window_names:
-            trans_to_plot = list(self.checked_transformations.keys())[self.metric_range_graph_num]
+            trans_to_plot = all_trans[self.metric_range_graph_num]
             for i, data_store in enumerate(self.data_stores):
                     if 'range' in self.widget_row[window_name][i]['metrics'].keys():
                         axes = self.widget_row[window_name][i]['metrics']['range']['data']
@@ -179,6 +182,9 @@ class images:
             #                                                 pbar=self.pbar)
 
     def plot_radar_graph(self, results, i):
+        all_trans = list(self.checked_transformations.keys())
+        if len(all_trans) == 0:
+            return
         for window_name in self.window_names:
             if 'avg'  in self.widget_row[window_name][i]['metrics'].keys():
                 # get current metrics used for this data_store

@@ -260,6 +260,8 @@ def get_radar_plots_avg_plots(results, metrics_names, transformation_names, axes
                                     var_names=transformation_names,
                                     ax=axes,
                                     lim=lim)
+    if transformation_names == []:
+        return radar_plt
     for metric in metrics_names:
         mean_value = []
         # std_value = []
