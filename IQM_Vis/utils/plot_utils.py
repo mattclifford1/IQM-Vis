@@ -150,7 +150,7 @@ def compute_metrics_over_range_single_trans(data_store, transforms, metric_param
     # compute all metrics over their range of params and get avg/std
     results = {}
     # initialise results
-    for metric in data_store.metrics:
+    for metric in metrics_to_use:
         results[metric] = {}
         for tran in transforms:
             results[metric][tran] = {'param_values': [], 'scores': []}
