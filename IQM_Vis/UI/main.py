@@ -135,18 +135,15 @@ class make_app(widgets, layout, images):
 
         ''' update these '''
         # get any current tabs showing so we can keep them showing on a remake
-        if hasattr(self, 'slider_tabs'):
-            slider_tabs_index = self.tabs[window_name]['slider'].currentIndex()
-        else:
-            slider_tabs_index = 0
-        if hasattr(self, 'graph_tabs'):
-            graph_tabs_index = self.tabs[window_name]['graph'].currentIndex()
-        else:
-            graph_tabs_index = 1
-        # if hasattr(self, 'experiments_tab'):
-        #     experi_tabs_index = self.experiments_tab.currentIndex()
-        # else:
-        #     experi_tabs_index = 0
+        tabs_index = {}
+        for window_name in self.window_names:
+            tabs_index[window_name] = {}
+            if hasattr(self, 'tabs'):
+                tabs_index[window_name]['slider'] = self.tabs[window_name]['slider'].currentIndex()
+                tabs_index[window_name]['graph'] = self.tabs[window_name]['graph'].currentIndex()
+            else:
+                tabs_index[window_name]['slider'] = 0
+                tabs_index[window_name]['graph'] = 1
         if hasattr(self, 'main_window'):
             main_tabs_index = self.main_window.currentIndex()
         else:
@@ -155,11 +152,11 @@ class make_app(widgets, layout, images):
         self.init_style()     # layout.py
         self.init_widgets()   # widgets.py
         self.init_layout()    # layout.py
+        self.main_window.setCurrentIndex(main_tabs_index)
         for window_name in self.window_names:
-            self.tabs[window_name]['slider'].setCurrentIndex(slider_tabs_index)
-            self.tabs[window_name]['graph'].setCurrentIndex(graph_tabs_index)
+            self.tabs[window_name]['slider'].setCurrentIndex(tabs_index[window_name]['slider'])
+            self.tabs[window_name]['graph'].setCurrentIndex(tabs_index[window_name]['graph'])
             # self.experiments_tab.setCurrentIndex(experi_tabs_index)
-            self.main_window.setCurrentIndex(main_tabs_index)
             self.display_images(window_name) # images.py
             self.reset_sliders(window_name)  # widgets.py
 
