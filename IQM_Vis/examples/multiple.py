@@ -20,7 +20,7 @@ def run():
                                    metric,
                                    metric_images)
     # second row of images
-    row_2 = IQM_Vis.dataset_holder([os.path.join(file_path, 'images', 'wave3.jpeg')],
+    row_2 = IQM_Vis.dataset_holder([os.path.join(file_path, 'images', 'waves3.jpeg')],
                                    metric,
                                    metric_images)
     # define the transformations

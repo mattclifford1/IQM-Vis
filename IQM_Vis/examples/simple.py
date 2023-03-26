@@ -9,7 +9,7 @@ def run():
     metric = {'MAE': lambda im1, im2: np.abs(im1 - im2).mean()}
     metric_im = {'MAE': lambda im1, im2: np.abs(im1 - im2)}
     # add numpy image and the metrics to the data handler
-    data_store = IQM_Vis.dataset_holder(image_list=[os.path.join(file_path, 'images', 'wave3.jpeg')],
+    data_store = IQM_Vis.dataset_holder(image_list=[os.path.join(file_path, 'images', 'waves3.jpeg')],
                                         metrics=metric,
                                         metric_images=metric_im)
     # define the transformations

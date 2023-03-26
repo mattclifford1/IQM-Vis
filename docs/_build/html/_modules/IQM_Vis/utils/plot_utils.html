@@ -317,7 +317,7 @@
     <span class="c1"># compute all metrics over their range of params and get avg/std</span>
     <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="c1"># initialise results</span>
-    <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">data_store</span><span class="o">.</span><span class="n">metrics</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">metrics_to_use</span><span class="p">:</span>
         <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">tran</span> <span class="ow">in</span> <span class="n">transforms</span><span class="p">:</span>
             <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">tran</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;param_values&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;scores&#39;</span><span class="p">:</span> <span class="p">[]}</span>
@@ -427,6 +427,8 @@
                                     <span class="n">var_names</span><span class="o">=</span><span class="n">transformation_names</span><span class="p">,</span>
                                     <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">,</span>
                                     <span class="n">lim</span><span class="o">=</span><span class="n">lim</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">transformation_names</span> <span class="o">==</span> <span class="p">[]:</span>
+        <span class="k">return</span> <span class="n">radar_plt</span>
     <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">metrics_names</span><span class="p">:</span>
         <span class="n">mean_value</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="c1"># std_value = []</span>

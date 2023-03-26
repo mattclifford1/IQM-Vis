@@ -18,11 +18,12 @@ def run():
     file_path = os.path.dirname(os.path.abspath(__file__))
     dataset = [os.path.join(file_path, 'images', 'waves1.jpeg'),
                os.path.join(file_path, 'images', 'waves2.jpeg'),
-               os.path.join(file_path, 'images', 'wave3.jpeg')]
+               os.path.join(file_path, 'images', 'waves3.jpeg')]
     data = IQM_Vis.dataset_holder(dataset,
                                   metric,
                                   metric_images,
                                   IQM_Vis.utils.load_image,
+                                  human_exp_csv=os.path.join(file_path, 'images', 'HIQM.csv'),
                                   )
 
     # define the transformations
@@ -42,8 +43,8 @@ def run():
     # use the API to create the UI
     IQM_Vis.make_UI(data,
                     transformations,
-                    metric_params=ssim_params)
-
+                    metric_params=ssim_params,
+                    )
 
 if __name__ == '__main__':
     run()

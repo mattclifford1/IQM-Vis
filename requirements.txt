@@ -9,3 +9,4 @@ lpips
 dists-pytorch
 torchvision
 notebook
+pandas

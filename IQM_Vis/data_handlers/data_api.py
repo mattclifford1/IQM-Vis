@@ -5,6 +5,7 @@ both use the same image for reference and transformed
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 import os
 import numpy as np
+import pandas as pd
 import IQM_Vis
 from IQM_Vis.data_handlers import base_dataloader, base_dataset_loader
 
@@ -36,6 +37,7 @@ class dataset_holder(base_dataset_loader):
                        image_loader=IQM_Vis.utils.load_image,     # function to load image files
                        image_post_processing=None,  # apply a function to the image after transformations (e.g. zoom to help with black boarders on rotation)
                        image_list_to_transform=None, # if you want to use a different image to transform than reference
+                       human_exp_csv=None    # csv for where the human experiments file is
                        ):
         self.image_list = image_list
         if image_list_to_transform == None:
@@ -49,6 +51,9 @@ class dataset_holder(base_dataset_loader):
         self.metrics = metrics
         self.metric_images = metric_images
         self.image_post_processing = image_post_processing
+        if human_exp_csv is not None:
+            self.human_exp_df = pd.read_csv(human_exp_csv, index_col=0)
+
         self._check_inputs()
 
     def _load_image_data(self, i):
@@ -64,6 +69,13 @@ class dataset_holder(base_dataset_loader):
             image_name = os.path.splitext(os.path.basename(self.image_list_to_transform[i]))[0]
             image_data = self.image_loader(self.image_list_to_transform[i])
             self.image_reference = (self.image_name, image_data)
+        # Human experiments
+        if hasattr(self, 'human_scores'):
+            del self.human_scores  # delete old scores (incase we dont have ones for new image)
+        if hasattr(self, 'human_exp_df'):
+            if self.image_name in self.human_exp_df.index:
+                self.human_scores = self.human_exp_df.loc[self.image_name].to_dict()
+                print(self.human_scores)
 
     def __len__(self):
         return len(self.image_list)

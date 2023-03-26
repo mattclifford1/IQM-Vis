@@ -9,6 +9,7 @@ dists-pytorch
 torchvision
 lpips
 notebook
+pandas
 twine
 pytest
 sphinx
