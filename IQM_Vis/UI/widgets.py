@@ -276,3 +276,4 @@ class widgets():
                                                      self.data_stores[0],
                                                      self.image_display_size[window_name])
         self.experiment.show()
+        self.experiment.showFullScreen()

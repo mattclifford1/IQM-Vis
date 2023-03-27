@@ -13,7 +13,8 @@ from PyQt6.QtWidgets import (QWidget,
                              QVBoxLayout,
                              QStackedLayout,
                              QTabWidget,
-                             QWidget)
+                             QWidget,
+                             QApplication)
 
 from PyQt6.QtGui import QIntValidator
 from PyQt6.QtCore import Qt
@@ -38,41 +39,56 @@ class make_experiment(QMainWindow):
         # Ask for confirmation
         answer = QMessageBox.question(self,
         "Confirm Exit...",
-        "Are you sure you want to exit?\nAll data will be lost.",
+        "Are you sure you want to exit?\nAll unsaved data will be lost.",
         QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
 
         event.ignore()
         if answer == QMessageBox.StandardButton.Yes:
-            self.range_worker.stop()
+            if hasattr(self, 'range_worker'):
+                self.range_worker.stop()
             event.accept()
 
+    def quit(self):
+        self.close()
+
     def _init_experiment_window_widgets(self):
-        self.widget_experiments = {'images': {}, 'preamble': {}}
+        self.widget_experiments = {'exp': {}, 'preamble': {}}
         ''' pre experiments screen '''
         self.widget_experiments['preamble']['text'] = QLabel(self)
-        self.widget_experiments['preamble']['text'].setText('Write info here about the experiment ...')
+        self.widget_experiments['preamble']['text'].setText(''' For this experiment you will be shown a reference image and two similar images.
+
+        You need to click on the image (A or B) which you believe to be most similar to the reference image.
+
+
+        When you are ready, click the Start button to begin the experiment ''')
         self.widget_experiments['preamble']['start_button'] = QPushButton('Start', self)
         self.running_experiment = False
         self.widget_experiments['preamble']['start_button'].clicked.connect(self.toggle_experiment)
 
+        self.widget_experiments['exp']['quit_button'] = QPushButton('Quit', self)
+        self.widget_experiments['exp']['quit_button'].clicked.connect(self.quit)
+
         ''' images '''
         for image in ['Reference', 'A', 'B']:
-            self.widget_experiments['images'][image] = {}
-            self.widget_experiments['images'][image]['data'] = ClickLabel(image)
-            self.widget_experiments['images'][image]['data'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+            self.widget_experiments['exp'][image] = {}
+            self.widget_experiments['exp'][image]['data'] = ClickLabel(image)
+            self.widget_experiments['exp'][image]['data'].setAlignment(Qt.AlignmentFlag.AlignCenter)
             # image label
-            self.widget_experiments['images'][image]['label'] = QLabel(image, self)
-            self.widget_experiments['images'][image]['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.widget_experiments['images']['A']['data'].clicked.connect(self.clicked_image)
-        self.widget_experiments['images']['B']['data'].clicked.connect(self.clicked_image)
+            self.widget_experiments['exp'][image]['label'] = QLabel(image, self)
+            self.widget_experiments['exp'][image]['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.widget_experiments['exp']['A']['data'].clicked.connect(self.clicked_image)
+        self.widget_experiments['exp']['B']['data'].clicked.connect(self.clicked_image)
 
     def toggle_experiment(self):
         if self.running_experiment:
             self.reset_experiment()
+            self.experiments_tab.setTabEnabled(0, True)
             self.running_experiment = False
             self.widget_experiments['preamble']['start_button'].setText('Start')
+
         else:
             self.start_experiment()
+            self.experiments_tab.setTabEnabled(0, False)
             self.widget_experiments['preamble']['start_button'].setText('Reset')
             self.running_experiment = True
 
@@ -87,7 +103,7 @@ class make_experiment(QMainWindow):
 
         ''' quick proto type to display some images '''
         ref = self.data_store.get_reference_image()
-        gui_utils.change_im(self.widget_experiments['images']['Reference']['data'], ref, resize=self.image_display_size)
+        gui_utils.change_im(self.widget_experiments['exp']['Reference']['data'], ref, resize=self.image_display_size)
         self.exp_im_ind = {'A': 0, 'B': len(self.experiment_transforms)//2}
         self.change_experiment_images(A_ind=self.exp_im_ind['A'], B_ind=self.exp_im_ind['B'])
 
@@ -101,10 +117,10 @@ class make_experiment(QMainWindow):
                                              {B_trans: self.checked_transformations[B_trans]},
                                              self.experiment_transforms[B_ind])
 
-        gui_utils.change_im(self.widget_experiments['images']['A']['data'], A, resize=self.image_display_size)
-        self.widget_experiments['images']['A']['data'].setObjectName(f'{self.data_store.get_reference_image_name()}-{self.experiment_transforms[A_ind]}')
-        gui_utils.change_im(self.widget_experiments['images']['B']['data'], B, resize=self.image_display_size)
-        self.widget_experiments['images']['B']['data'].setObjectName(f'{self.data_store.get_reference_image_name()}-{self.experiment_transforms[B_ind]}')
+        gui_utils.change_im(self.widget_experiments['exp']['A']['data'], A, resize=self.image_display_size)
+        self.widget_experiments['exp']['A']['data'].setObjectName(f'{self.data_store.get_reference_image_name()}-{self.experiment_transforms[A_ind]}')
+        gui_utils.change_im(self.widget_experiments['exp']['B']['data'], B, resize=self.image_display_size)
+        self.widget_experiments['exp']['B']['data'].setObjectName(f'{self.data_store.get_reference_image_name()}-{self.experiment_transforms[B_ind]}')
 
     def clicked_image(self, image_name, widget_name):
         print(f'clicked {widget_name}, name: {image_name}')
@@ -131,13 +147,13 @@ class make_experiment(QMainWindow):
         experiment_mode_info.addWidget(self.widget_experiments['preamble']['start_button'])
 
         reference = QVBoxLayout()
-        for name, widget in self.widget_experiments['images']['Reference'].items():
+        for name, widget in self.widget_experiments['exp']['Reference'].items():
             reference.addWidget(widget)
         A = QVBoxLayout()
-        for name, widget in self.widget_experiments['images']['A'].items():
+        for name, widget in self.widget_experiments['exp']['A'].items():
             A.addWidget(widget)
         B = QVBoxLayout()
-        for name, widget in self.widget_experiments['images']['B'].items():
+        for name, widget in self.widget_experiments['exp']['B'].items():
             B.addWidget(widget)
 
         distorted_images = QHBoxLayout()
@@ -148,8 +164,13 @@ class make_experiment(QMainWindow):
         experiment_mode_images.addLayout(reference)
         experiment_mode_images.addLayout(distorted_images)
 
+        all_experiment = QVBoxLayout()
+        all_experiment.addLayout(experiment_mode_images)
+        all_experiment.addWidget(self.widget_experiments['exp']['quit_button'])
+
+
         self.experiments_tab = QTabWidget()
-        for tab_layout, tab_name in zip([experiment_mode_info, experiment_mode_images],
+        for tab_layout, tab_name in zip([experiment_mode_info, all_experiment],
                                         ['info', 'run']):
             utils.add_layout_to_tab(self.experiments_tab, tab_layout, tab_name)
         # experiment_mode_layout = QVBoxLayout()

@@ -76,12 +76,13 @@ class make_app(widgets, layout, images):
         # Ask for confirmation
         answer = QMessageBox.question(self,
         "Confirm Exit...",
-        "Are you sure you want to exit?\nAll data will be lost.",
+        "Are you sure you want to exit?\nAll unsaved data will be lost.",
         QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
 
         event.ignore()
         if answer == QMessageBox.StandardButton.Yes:
-            self.range_worker.stop()
+            if hasattr(self, 'range_worker'):
+                self.range_worker.stop()
             event.accept()
 
     def get_menu_checkboxes(self):
