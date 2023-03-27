@@ -1,4 +1,4 @@
-from .IQMs import MAE, MSE, SSIM, MSSIM, LPIPS, DISTS
+from .IQMs import MAE, MSE, SSIM, MS_SSIM, LPIPS, DISTS
 
 def get_all_metrics():
     ''' Get all available IQMs provided by IQM_Vis '''
@@ -8,7 +8,7 @@ def get_all_metrics():
         'SSIM': SSIM(),
         'DISTS': DISTS(),
         'SSIM': SSIM(),
-        'MSSIM': MSSIM(),
+        'MS_SSIM': MS_SSIM(),
         'LPIPS': LPIPS(),
     }
     return all_metrics

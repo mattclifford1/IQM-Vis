@@ -126,9 +126,9 @@ class SSIM:
         _metric.reset()
         return _score
 
-class MSSIM:
+class MS_SSIM:
     '''Multi-Scale Structural Similarity Index Measure between two images.
-       Images must have the same dimensions. Score given is 1 - MSSIM to give the
+       Images must have the same dimensions. Score given is 1 - MS_SSIM to give the
        loss/dissimilarity
 
     Args:
@@ -256,6 +256,9 @@ class DISTS:
         return score
 
 
+
+
+''' ============================================================================ '''
 ''' TO ADD TO DEMOS'''
 ''' simple functional format to call a metric (numpy)'''
 def _MAE(im_ref, im_comp, **kwargs):
