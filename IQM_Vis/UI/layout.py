@@ -12,6 +12,7 @@ from PyQt6.QtWidgets import (QWidget,
                              QStackedLayout,
                              QTabWidget,
                              QWidget)
+from IQM_Vis.UI import utils
 
 # sub class used by IQM_Vis.main.make_app to initialise layout of the UI
 # uses widgets from IQM_Vis.widgets.app_widgets
@@ -37,7 +38,7 @@ class layout(QMainWindow):
 
         self.main_window = QTabWidget()
         for tab_name, tab_layout in self.main_layouts.items():
-            add_layout_to_tab(self.main_window, tab_layout, tab_name)
+            utils.add_layout_to_tab(self.main_window, tab_layout, tab_name)
 
         self.setCentralWidget(self.main_window)
         self.show()
@@ -90,14 +91,14 @@ class layout(QMainWindow):
             metric_bar = QVBoxLayout()
             metric_bar.addWidget(self.widget_row[window_name][i]['metrics']['info']['label'])
             metric_bar.addWidget(self.widget_row[window_name][i]['metrics']['info']['data'])
-            add_layout_to_tab(self.tabs[window_name]['graph'], metric_bar, 'Metrics')
+            utils.add_layout_to_tab(self.tabs[window_name]['graph'], metric_bar, 'Metrics')
             if 'avg' in self.widget_row[window_name][i]['metrics'].keys():
                 avg_graph = QVBoxLayout()
                 avg_graph.addWidget(self.widget_row[window_name][i]['metrics']['avg']['label'])
                 graph = QGridLayout()
                 graph.addWidget(self.widget_row[window_name][i]['metrics']['avg']['data'], 0, 0, im_height, im_width)
                 avg_graph.addLayout(graph)   # need for matplotlib? - test this...   (grid)
-                add_layout_to_tab(self.tabs[window_name]['graph'], avg_graph, 'Radar')
+                utils.add_layout_to_tab(self.tabs[window_name]['graph'], avg_graph, 'Radar')
             if 'range' in self.widget_row[window_name][i]['metrics'].keys():
                 range_graph = QVBoxLayout()
                 range_graph.addWidget(self.widget_row[window_name][i]['metrics']['range']['label'])
@@ -109,7 +110,7 @@ class layout(QMainWindow):
                 graph_controls.addWidget(self.widget_controls[window_name]['button']['prev_metric_graph'])
                 graph_controls.addWidget(self.widget_controls[window_name]['button']['next_metric_graph'])
                 range_graph.addLayout(graph_controls)
-                add_layout_to_tab(self.tabs[window_name]['graph'], range_graph, 'Range')
+                utils.add_layout_to_tab(self.tabs[window_name]['graph'], range_graph, 'Range')
             graph_layouts.addWidget(self.tabs[window_name]['graph'])
             graph_layouts.addStretch()
 
@@ -155,12 +156,14 @@ class layout(QMainWindow):
         self.tabs[window_name]['slider'] = QTabWidget()
         for tab_layout, tab_name in zip([image_controls, metric_controls, settings_controls],
                                         ['transforms', 'metric params', 'settings']):
-            add_layout_to_tab(self.tabs[window_name]['slider'], tab_layout, tab_name)
+            utils.add_layout_to_tab(self.tabs[window_name]['slider'], tab_layout, tab_name)
 
         ''' reset sliders button'''
         # reset sliders button
         reset_button = QHBoxLayout()
         reset_button.addWidget(self.widget_controls[window_name]['button']['reset_sliders'])
+        if window_name == 'Experiment':
+            reset_button.addWidget(self.widget_controls[window_name]['button']['launch_exp'])
         reset_button.addStretch()
 
         '''re calc graphs button'''
@@ -201,9 +204,3 @@ class layout(QMainWindow):
                 self.app.setStyleSheet(file.read())
         else:
             warnings.warn('Cannot load css style sheet - file not found')
-
-
-def add_layout_to_tab(tab, layout, name):
-    _tab = QWidget()   # QTabWidget only accepts widgets not layouts so need to use this as a workaround
-    _tab.setLayout(layout)
-    tab.addTab(_tab, name)

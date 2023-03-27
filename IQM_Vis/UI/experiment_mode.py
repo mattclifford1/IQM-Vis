@@ -3,10 +3,9 @@ create experiment window
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 import os
-from functools import partial
 
 import numpy as np
-from PyQt6.QtWidgets import QPushButton, QLabel, QSlider, QCheckBox, QComboBox, QLineEdit
+from PyQt6.QtWidgets import QPushButton, QLabel, QSlider, QCheckBox, QComboBox, QLineEdit, QMessageBox
 from PyQt6.QtWidgets import (QWidget,
                              QMainWindow,
                              QGridLayout,
@@ -21,10 +20,32 @@ from PyQt6.QtCore import Qt
 
 import IQM_Vis
 from IQM_Vis.UI.custom_widgets import ClickLabel
+from IQM_Vis.UI import utils
 from IQM_Vis.utils import gui_utils, plot_utils, image_utils
 
 
-class make_experiment():
+class make_experiment(QMainWindow):
+    def __init__(self, checked_transformations, data_store, image_display_size):
+        super().__init__()
+        self.checked_transformations = checked_transformations
+        self.data_store = data_store
+        self.image_display_size = image_display_size
+        self._init_experiment_window_widgets()
+        self.experiment_layout()
+        self.setCentralWidget(self.experiments_tab)
+
+    def closeEvent(self, event):
+        # Ask for confirmation
+        answer = QMessageBox.question(self,
+        "Confirm Exit...",
+        "Are you sure you want to exit?\nAll data will be lost.",
+        QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+
+        event.ignore()
+        if answer == QMessageBox.StandardButton.Yes:
+            self.range_worker.stop()
+            event.accept()
+
     def _init_experiment_window_widgets(self):
         self.widget_experiments = {'images': {}, 'preamble': {}}
         ''' pre experiments screen '''
@@ -65,25 +86,25 @@ class make_experiment():
 
 
         ''' quick proto type to display some images '''
-        ref = self.data_stores[0].get_reference_image()
+        ref = self.data_store.get_reference_image()
         gui_utils.change_im(self.widget_experiments['images']['Reference']['data'], ref, resize=self.image_display_size)
         self.exp_im_ind = {'A': 0, 'B': len(self.experiment_transforms)//2}
         self.change_experiment_images(A_ind=self.exp_im_ind['A'], B_ind=self.exp_im_ind['B'])
 
     def change_experiment_images(self, A_ind, B_ind):
         A_trans = list(self.experiment_transforms[A_ind])[0]
-        A = image_utils.get_transform_image(self.data_stores[0],
+        A = image_utils.get_transform_image(self.data_store,
                                              {A_trans: self.checked_transformations[A_trans]},
                                              self.experiment_transforms[A_ind])
         B_trans = list(self.experiment_transforms[B_ind])[0]
-        B = image_utils.get_transform_image(self.data_stores[0],
+        B = image_utils.get_transform_image(self.data_store,
                                              {B_trans: self.checked_transformations[B_trans]},
                                              self.experiment_transforms[B_ind])
 
         gui_utils.change_im(self.widget_experiments['images']['A']['data'], A, resize=self.image_display_size)
-        self.widget_experiments['images']['A']['data'].setObjectName(f'{self.data_stores[0].get_reference_image_name()}-{self.experiment_transforms[A_ind]}')
+        self.widget_experiments['images']['A']['data'].setObjectName(f'{self.data_store.get_reference_image_name()}-{self.experiment_transforms[A_ind]}')
         gui_utils.change_im(self.widget_experiments['images']['B']['data'], B, resize=self.image_display_size)
-        self.widget_experiments['images']['B']['data'].setObjectName(f'{self.data_stores[0].get_reference_image_name()}-{self.experiment_transforms[B_ind]}')
+        self.widget_experiments['images']['B']['data'].setObjectName(f'{self.data_store.get_reference_image_name()}-{self.experiment_transforms[B_ind]}')
 
     def clicked_image(self, image_name, widget_name):
         print(f'clicked {widget_name}, name: {image_name}')
@@ -99,7 +120,7 @@ class make_experiment():
             css_file = os.path.join(dir, f'style-{style}.css')
         if os.path.isfile(css_file):
             with open(css_file, 'r') as file:
-                self.app.setStyleSheet(file.read())
+                self.setStyleSheet(file.read())
         else:
             warnings.warn('Cannot load css style sheet - file not found')
 
@@ -130,7 +151,7 @@ class make_experiment():
         self.experiments_tab = QTabWidget()
         for tab_layout, tab_name in zip([experiment_mode_info, experiment_mode_images],
                                         ['info', 'run']):
-            add_layout_to_tab(self.experiments_tab, tab_layout, tab_name)
-        experiment_mode_layout = QVBoxLayout()
-        experiment_mode_layout.addWidget(self.experiments_tab)
-        return experiment_mode_layout
+            utils.add_layout_to_tab(self.experiments_tab, tab_layout, tab_name)
+        # experiment_mode_layout = QVBoxLayout()
+        # experiment_mode_layout.addWidget(self.experiments_tab)
+        # return experiment_mode_layout

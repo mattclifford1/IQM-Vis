@@ -1,6 +1,5 @@
 Needs doing:
   - add NLPD
-  - add preproccessing function to the datastore/ UI (resize image to smaller)
   - add support for inputting human experiment results
   - add SCATTER plot of correlations
     - interactive to get which images fail the correlation
@@ -29,3 +28,10 @@ minor:
   - move redo graphs menu to separete menu tab
 
   - get metrics and metric images from all data stores
+
+
+
+CODE styling
+  - make the whole self.window_names setup more polished
+  - make a base class for QMainWindow for each window with set style, close event etc.
+  - make a deepcopy of datastore for experiments

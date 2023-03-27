@@ -118,6 +118,10 @@ class widgets():
             self.widget_controls[window_name]['button']['prev_data'].clicked.connect(partial(self.change_data, -1, window_name))
             self.widget_controls[window_name]['label']['data'] = QLabel(self)
             self.widget_controls[window_name]['label']['data'].setText('Change Image:')
+        # launch experiment button
+        if window_name == 'Experiment':
+            self.widget_controls[window_name]['button']['launch_exp'] = QPushButton('Run Experiment', self)
+            self.widget_controls[window_name]['button']['launch_exp'].clicked.connect(partial(self.launch_experiment, window_name))
 
 
         '''sliders'''
@@ -266,3 +270,9 @@ class widgets():
 
     def update_status_bar(self, v):
         self.status_bar.showMessage(v)
+
+    def launch_experiment(self, window_name):
+        self.experiment = IQM_Vis.UI.make_experiment(self.checked_transformations,
+                                                     self.data_stores[0],
+                                                     self.image_display_size[window_name])
+        self.experiment.show()
