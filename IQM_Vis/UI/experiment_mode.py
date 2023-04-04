@@ -104,24 +104,34 @@ class make_experiment(QMainWindow):
     def start_experiment(self):
         self.init_style('dark')
         self.experiments_tab.setCurrentIndex(1)
-        self.experiment_transforms = plot_utils.get_all_single_transform_params(self.checked_transformations)
-
+        experiment_transforms = plot_utils.get_all_single_transform_params(self.checked_transformations)
 
         ''' quick proto type to display some images '''
         ref = self.data_store.get_reference_image()
         gui_utils.change_im(self.widget_experiments['exp']['Reference']['data'], ref, resize=self.image_display_size)
+
+        # get MSE for experiments to get a rough sorting
+        mses = []
+        mse = IQM_Vis.IQMs.MSE()
+        for trans in experiment_transforms:
+            mses.append(mse(ref, self.get_single_transform_im(trans)))
+        # sort experiment transforms based on MSE
+
+        self.experiment_transforms = sort_list(experiment_transforms, mses)
+        print(self.experiment_transforms)
+
         self.exp_im_ind = {'A': 0, 'B': len(self.experiment_transforms)//2}
         self.change_experiment_images(A_ind=self.exp_im_ind['A'], B_ind=self.exp_im_ind['B'])
 
+    def get_single_transform_im(self, single_trans_dict):
+        trans_name = list(single_trans_dict)[0]
+        return image_utils.get_transform_image(self.data_store,
+                                        {trans_name: self.checked_transformations[trans_name]},
+                                        single_trans_dict)
+
     def change_experiment_images(self, A_ind, B_ind):
-        A_trans = list(self.experiment_transforms[A_ind])[0]
-        A = image_utils.get_transform_image(self.data_store,
-                                             {A_trans: self.checked_transformations[A_trans]},
-                                             self.experiment_transforms[A_ind])
-        B_trans = list(self.experiment_transforms[B_ind])[0]
-        B = image_utils.get_transform_image(self.data_store,
-                                             {B_trans: self.checked_transformations[B_trans]},
-                                             self.experiment_transforms[B_ind])
+        A = self.get_single_transform_im(self.experiment_transforms[A_ind])
+        B = self.get_single_transform_im(self.experiment_transforms[B_ind])
 
         gui_utils.change_im(self.widget_experiments['exp']['A']['data'], A, resize=self.image_display_size)
         self.widget_experiments['exp']['A']['data'].setObjectName(f'{self.data_store.get_reference_image_name()}-{self.experiment_transforms[A_ind]}')
@@ -191,3 +201,11 @@ class make_experiment(QMainWindow):
         # experiment_mode_layout = QVBoxLayout()
         # experiment_mode_layout.addWidget(self.experiments_tab)
         # return experiment_mode_layout
+
+def sort_list(list1, list2):
+    # sort list1 based on list2
+    inds = np.argsort(list2)
+    sorted_list1 = []
+    for i in inds:
+        sorted_list1.append(list1[i])
+    return sorted_list1
