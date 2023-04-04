@@ -116,12 +116,12 @@ class make_experiment(QMainWindow):
         for trans in experiment_transforms:
             mses.append(mse(ref, self.get_single_transform_im(trans)))
         # sort experiment transforms based on MSE
-
         self.experiment_transforms = sort_list(experiment_transforms, mses)
-        print(self.experiment_transforms)
+        self.current_pivot = self.experiment_transforms.pop(len(self.experiment_transforms)//2)
+        self.current_sort_check = self.experiment_transforms[0]
+        print(f'{self.current_pivot=}')
 
-        self.exp_im_ind = {'A': 0, 'B': len(self.experiment_transforms)//2}
-        self.change_experiment_images(A_ind=self.exp_im_ind['A'], B_ind=self.exp_im_ind['B'])
+        self.change_experiment_images(A_trans=self.current_pivot, B_trans=self.current_sort_check)
 
     def get_single_transform_im(self, single_trans_dict):
         trans_name = list(single_trans_dict)[0]
@@ -129,21 +129,27 @@ class make_experiment(QMainWindow):
                                         {trans_name: self.checked_transformations[trans_name]},
                                         single_trans_dict)
 
-    def change_experiment_images(self, A_ind, B_ind):
-        A = self.get_single_transform_im(self.experiment_transforms[A_ind])
-        B = self.get_single_transform_im(self.experiment_transforms[B_ind])
+    def change_experiment_images(self, A_trans, B_trans):
+        A = self.get_single_transform_im(A_trans)
+        B = self.get_single_transform_im(B_trans)
 
         gui_utils.change_im(self.widget_experiments['exp']['A']['data'], A, resize=self.image_display_size)
-        self.widget_experiments['exp']['A']['data'].setObjectName(f'{self.data_store.get_reference_image_name()}-{self.experiment_transforms[A_ind]}')
+        self.widget_experiments['exp']['A']['data'].setObjectName(f'{self.data_store.get_reference_image_name()}-{A_trans}')
         gui_utils.change_im(self.widget_experiments['exp']['B']['data'], B, resize=self.image_display_size)
-        self.widget_experiments['exp']['B']['data'].setObjectName(f'{self.data_store.get_reference_image_name()}-{self.experiment_transforms[B_ind]}')
+        self.widget_experiments['exp']['B']['data'].setObjectName(f'{self.data_store.get_reference_image_name()}-{B_trans}')
 
     def clicked_image(self, image_name, widget_name):
         print(f'clicked {widget_name}, name: {image_name}')
+        trans_str = image_name[len(self.data_store.get_reference_image_name())+1:]
+        if trans_str == str(self.current_sort_check): # lower value
+            pass
+            # now impliment
+
+        print(trans)
         self.exp_im_ind[widget_name] += 1
         if self.exp_im_ind[widget_name] == len(self.experiment_transforms):
             self.exp_im_ind[widget_name] -= 1
-        self.change_experiment_images(A_ind=self.exp_im_ind['A'], B_ind=self.exp_im_ind['B'])
+        # self.change_experiment_images(A_ind=self.exp_im_ind['A'], B_ind=self.exp_im_ind['B'])
 
     def init_style(self, style='light', css_file=None):
         if css_file == None:
