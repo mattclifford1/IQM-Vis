@@ -97,7 +97,7 @@ class widgets():
             self.widget_controls[window_name]['button']['force_update'] = QPushButton('Update Graphs', self)
             self.widget_controls[window_name]['button']['force_update'].setToolTip('Update graphs using all the current slider values.')
             self.widget_controls[window_name]['button']['force_update'].clicked.connect(partial(self.display_images, window_name))
-            self.widget_controls[window_name]['button']['force_update'].clicked.connect(self.redo_plots)
+            self.widget_controls[window_name]['button']['force_update'].clicked.connect(partial(self.redo_plots, True))
             # Change plot limits
             self.widget_controls[window_name]['check_box']['graph_limits'] = QCheckBox('Squeeze plots')
             self.widget_controls[window_name]['check_box']['graph_limits'].setToolTip('Set the scale of the plots to the metric data range.')

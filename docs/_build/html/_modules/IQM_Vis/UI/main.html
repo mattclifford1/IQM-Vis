@@ -1,0 +1,410 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>IQM_Vis.UI.main &mdash; IQM-Vis 0.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> IQM-Vis
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">IQM-Vis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>IQM_Vis.UI.main</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for IQM_Vis.UI.main</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">main entry point to initialise the UI</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="c1"># Author: Matt Clifford &lt;matt.clifford@bristol.ac.uk&gt;</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">PyQt6.QtWidgets</span> <span class="kn">import</span> <span class="n">QLabel</span><span class="p">,</span> <span class="n">QApplication</span><span class="p">,</span> <span class="n">QCheckBox</span><span class="p">,</span> <span class="n">QMessageBox</span>
+<span class="kn">from</span> <span class="nn">PyQt6.QtGui</span> <span class="kn">import</span> <span class="n">QIcon</span><span class="p">,</span> <span class="n">QAction</span><span class="p">,</span> <span class="n">QCloseEvent</span>
+<span class="kn">from</span> <span class="nn">PyQt6.QtCore</span> <span class="kn">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">IQM_Vis.UI</span> <span class="kn">import</span> <span class="n">layout</span><span class="p">,</span> <span class="n">widgets</span><span class="p">,</span> <span class="n">images</span><span class="p">,</span> <span class="n">ProgressBar</span>
+
+<div class="viewcode-block" id="make_app"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.main.make_app">[docs]</a><span class="k">class</span> <span class="nc">make_app</span><span class="p">(</span><span class="n">widgets</span><span class="p">,</span> <span class="n">layout</span><span class="p">,</span> <span class="n">images</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span>
+                <span class="n">data_stores</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+                <span class="n">transformations</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+                <span class="n">metrics_info_format</span><span class="o">=</span><span class="s1">&#39;graph&#39;</span><span class="p">,</span>    <span class="c1"># graph or text</span>
+                <span class="n">metrics_avg_graph</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">metric_range_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">metric_params</span><span class="p">:</span> <span class="nb">dict</span><span class="o">=</span><span class="p">{},</span>
+                <span class="n">image_display_size</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span>
+                <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">app</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span> <span class="o">=</span> <span class="n">data_stores</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span> <span class="o">=</span> <span class="n">transformations</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">metrics_info_format</span> <span class="o">=</span> <span class="n">metrics_info_format</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metrics_avg_graph</span> <span class="o">=</span> <span class="n">metrics_avg_graph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metric_range_graph</span> <span class="o">=</span> <span class="n">metric_range_graph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metric_params</span> <span class="o">=</span> <span class="n">metric_params</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_lims</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;fixed&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;range_data&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_data_lim</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">window_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Visualise&#39;</span><span class="p">,</span> <span class="s1">&#39;Experiment&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_single_image_or_dataset</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s1">&#39;IQM-Vis&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">make_status_bar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">make_menu</span><span class="p">()</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_display_size</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">window_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_names</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image_display_size</span><span class="p">[</span><span class="n">window_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">image_display_size</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_init_image_settings</span><span class="p">(</span><span class="n">window_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">construct_UI</span><span class="p">()</span>
+
+<div class="viewcode-block" id="make_app.make_menu"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.main.make_app.make_menu">[docs]</a>    <span class="k">def</span> <span class="nf">make_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu_bar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">menuBar</span><span class="p">()</span>
+
+        <span class="c1"># make file menu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_menu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu_bar</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="s1">&#39;File&#39;</span><span class="p">)</span>
+        <span class="n">reload_action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="s1">&#39;Redo Graphs&#39;</span><span class="p">)</span>
+        <span class="n">quit_action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="s1">&#39;Quit&#39;</span><span class="p">)</span>
+
+        <span class="n">reload_action</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="s1">&#39;Ctrl+R&#39;</span><span class="p">)</span>
+        <span class="n">reload_action</span><span class="o">.</span><span class="n">setStatusTip</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="c1"># reload_action.triggered.connect(self.display_images)</span>
+        <span class="n">reload_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">redo_plots</span><span class="p">)</span>
+
+        <span class="n">quit_action</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="s1">&#39;Ctrl+Q&#39;</span><span class="p">)</span>
+        <span class="n">quit_action</span><span class="o">.</span><span class="n">setStatusTip</span><span class="p">(</span><span class="s1">&#39;Exit application&#39;</span><span class="p">)</span>
+        <span class="n">quit_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">quit</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_menu_checkboxes</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="make_app.quit"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.main.make_app.quit">[docs]</a>    <span class="k">def</span> <span class="nf">quit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># garbage collection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<div class="viewcode-block" id="make_app.closeEvent"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.main.make_app.closeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="c1"># Ask for confirmation</span>
+        <span class="n">answer</span> <span class="o">=</span> <span class="n">QMessageBox</span><span class="o">.</span><span class="n">question</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+        <span class="s2">&quot;Confirm Exit...&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Are you sure you want to exit?</span><span class="se">\n</span><span class="s2">All unsaved data will be lost.&quot;</span><span class="p">,</span>
+        <span class="n">QMessageBox</span><span class="o">.</span><span class="n">StandardButton</span><span class="o">.</span><span class="n">Yes</span> <span class="o">|</span> <span class="n">QMessageBox</span><span class="o">.</span><span class="n">StandardButton</span><span class="o">.</span><span class="n">No</span><span class="p">)</span>
+
+        <span class="n">event</span><span class="o">.</span><span class="n">ignore</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">answer</span> <span class="o">==</span> <span class="n">QMessageBox</span><span class="o">.</span><span class="n">StandardButton</span><span class="o">.</span><span class="n">Yes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;range_worker&#39;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="make_app.get_menu_checkboxes"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.main.make_app.get_menu_checkboxes">[docs]</a>    <span class="k">def</span> <span class="nf">get_menu_checkboxes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39; list all trans/metrics in the menu drop downs &#39;&#39;&#39;</span>
+        <span class="c1"># transformations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu_options</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;transforms&#39;</span><span class="p">:</span> <span class="p">{},</span>
+                             <span class="s1">&#39;metrics&#39;</span><span class="p">:</span> <span class="p">{},</span>
+                             <span class="s1">&#39;metric_images&#39;</span><span class="p">:</span> <span class="p">{}}</span>
+        <span class="n">set_checked_menu_from_iterable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">menu_bar</span><span class="p">,</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span><span class="p">,</span>
+                                       <span class="s1">&#39;Transforms&#39;</span><span class="p">,</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">menu_options</span><span class="p">[</span><span class="s1">&#39;transforms&#39;</span><span class="p">],</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">construct_UI</span><span class="p">)</span>
+        <span class="n">set_checked_menu_from_iterable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">menu_bar</span><span class="p">,</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">metric_images</span><span class="p">,</span>
+                                       <span class="s1">&#39;Metric Images&#39;</span><span class="p">,</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">menu_options</span><span class="p">[</span><span class="s1">&#39;metric_images&#39;</span><span class="p">],</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">construct_UI</span><span class="p">)</span>
+        <span class="n">set_checked_menu_from_iterable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">menu_bar</span><span class="p">,</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">metrics</span><span class="p">,</span>
+                                       <span class="s1">&#39;Metrics&#39;</span><span class="p">,</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">menu_options</span><span class="p">[</span><span class="s1">&#39;metrics&#39;</span><span class="p">],</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">construct_UI</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="make_app.make_status_bar"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.main.make_app.make_status_bar">[docs]</a>    <span class="k">def</span> <span class="nf">make_status_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_bar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">statusBar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span> <span class="o">=</span> <span class="n">ProgressBar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minimum</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">maximum</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">textVisible</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">objectName</span><span class="o">=</span><span class="s2">&quot;GreenProgressBar&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_bar</span><span class="o">.</span><span class="n">addPermanentWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pbar</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="make_app.construct_UI"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.main.make_app.construct_UI">[docs]</a>    <span class="k">def</span> <span class="nf">construct_UI</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;range_worker&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span> <span class="c1"># stop any calculations on the old UI</span>
+        <span class="c1"># get currently selected tranformations to use</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checked_transformations</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">trans</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu_options</span><span class="p">[</span><span class="s1">&#39;transforms&#39;</span><span class="p">][</span><span class="n">trans</span><span class="p">]</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">checked_transformations</span><span class="p">[</span><span class="n">trans</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span>
+        <span class="c1"># get currently selected metrics to use</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checked_metrics</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">metrics</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu_options</span><span class="p">[</span><span class="s1">&#39;metrics&#39;</span><span class="p">][</span><span class="n">metric</span><span class="p">]</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">checked_metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">metric</span><span class="p">)</span>
+        <span class="c1"># get currently selected metric_images to use</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checked_metric_images</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">metric_image</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">metric_images</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu_options</span><span class="p">[</span><span class="s1">&#39;metric_images&#39;</span><span class="p">][</span><span class="n">metric_image</span><span class="p">]</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">checked_metric_images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">metric_image</span><span class="p">)</span>
+
+<span class="w">        </span><span class="sd">&#39;&#39;&#39; update these &#39;&#39;&#39;</span>
+        <span class="c1"># get any current tabs showing so we can keep them showing on a remake</span>
+        <span class="n">tabs_index</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">window_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_names</span><span class="p">:</span>
+            <span class="n">tabs_index</span><span class="p">[</span><span class="n">window_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;tabs&#39;</span><span class="p">):</span>
+                <span class="n">tabs_index</span><span class="p">[</span><span class="n">window_name</span><span class="p">][</span><span class="s1">&#39;slider&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabs</span><span class="p">[</span><span class="n">window_name</span><span class="p">][</span><span class="s1">&#39;slider&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
+                <span class="n">tabs_index</span><span class="p">[</span><span class="n">window_name</span><span class="p">][</span><span class="s1">&#39;graph&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabs</span><span class="p">[</span><span class="n">window_name</span><span class="p">][</span><span class="s1">&#39;graph&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tabs_index</span><span class="p">[</span><span class="n">window_name</span><span class="p">][</span><span class="s1">&#39;slider&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">tabs_index</span><span class="p">[</span><span class="n">window_name</span><span class="p">][</span><span class="s1">&#39;graph&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;main_window&#39;</span><span class="p">):</span>
+            <span class="n">main_tabs_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_window</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">main_tabs_index</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_style</span><span class="p">()</span>     <span class="c1"># layout.py</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_widgets</span><span class="p">()</span>   <span class="c1"># widgets.py</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_layout</span><span class="p">()</span>    <span class="c1"># layout.py</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_window</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">main_tabs_index</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">window_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_names</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tabs</span><span class="p">[</span><span class="n">window_name</span><span class="p">][</span><span class="s1">&#39;slider&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">tabs_index</span><span class="p">[</span><span class="n">window_name</span><span class="p">][</span><span class="s1">&#39;slider&#39;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tabs</span><span class="p">[</span><span class="n">window_name</span><span class="p">][</span><span class="s1">&#39;graph&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">tabs_index</span><span class="p">[</span><span class="n">window_name</span><span class="p">][</span><span class="s1">&#39;graph&#39;</span><span class="p">])</span>
+            <span class="c1"># self.experiments_tab.setCurrentIndex(experi_tabs_index)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">display_images</span><span class="p">(</span><span class="n">window_name</span><span class="p">)</span> <span class="c1"># images.py</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reset_sliders</span><span class="p">(</span><span class="n">window_name</span><span class="p">)</span>  <span class="c1"># widgets.py</span></div>
+
+        <span class="c1"># self.setMinimumSize(self.main_window.sizeHint())</span>
+
+    <span class="k">def</span> <span class="nf">_single_image_or_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;set whether dataset or single image used for data_store&#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">data_store</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">data_store</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">dataset_found</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data_num</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">data_store</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_num</span><span class="p">]</span>  <span class="c1"># return to initial image</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># calc what is the last data point in all the datasets</span>
+        <span class="n">max_length</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">data_store</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_store</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">length</span> <span class="o">&gt;</span> <span class="n">max_length</span><span class="p">:</span>
+                    <span class="n">max_length</span> <span class="o">=</span> <span class="n">length</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">obj_name</span> <span class="o">=</span> <span class="n">data_store</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+                <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">obj_name</span><span class="si">}</span><span class="s1"> needs to have __len__ attribute to be a dataset&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_data_ind</span> <span class="o">=</span> <span class="n">max_length</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">dataset_found</span></div>
+
+
+<div class="viewcode-block" id="set_checked_menu_from_iterable"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.main.set_checked_menu_from_iterable">[docs]</a><span class="k">def</span> <span class="nf">set_checked_menu_from_iterable</span><span class="p">(</span><span class="n">main_menu</span><span class="p">,</span> <span class="n">iterable</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">action_store</span><span class="p">,</span> <span class="n">connect_func</span><span class="p">):</span>
+    <span class="n">_menu</span> <span class="o">=</span> <span class="n">main_menu</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">_menu</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">connect_func</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">trans</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+        <span class="n">action_store</span><span class="p">[</span><span class="n">trans</span><span class="p">]</span> <span class="o">=</span> <span class="n">_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">trans</span><span class="p">)</span>
+        <span class="n">action_store</span><span class="p">[</span><span class="n">trans</span><span class="p">]</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">action_store</span><span class="p">[</span><span class="n">trans</span><span class="p">]</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2023, Matt Clifford.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
