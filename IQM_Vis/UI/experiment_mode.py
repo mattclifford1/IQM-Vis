@@ -34,6 +34,12 @@ class make_experiment(QMainWindow):
         self._init_experiment_window_widgets()
         self.experiment_layout()
         self.setCentralWidget(self.experiments_tab)
+        # move to centre of the screen
+        qr = self.frameGeometry()
+        cp = self.screen().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
+
 
     def closeEvent(self, event):
         # Ask for confirmation
@@ -142,32 +148,41 @@ class make_experiment(QMainWindow):
 
     def experiment_layout(self):
 
+        # info
         experiment_mode_info = QVBoxLayout()
         experiment_mode_info.addWidget(self.widget_experiments['preamble']['text'])
         experiment_mode_info.addWidget(self.widget_experiments['preamble']['start_button'])
+        experiment_mode_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
+
+        # experiment
         reference = QVBoxLayout()
         for name, widget in self.widget_experiments['exp']['Reference'].items():
             reference.addWidget(widget)
+        reference.setAlignment(Qt.AlignmentFlag.AlignBottom)
         A = QVBoxLayout()
         for name, widget in self.widget_experiments['exp']['A'].items():
             A.addWidget(widget)
+        A.setAlignment(Qt.AlignmentFlag.AlignTop)
         B = QVBoxLayout()
         for name, widget in self.widget_experiments['exp']['B'].items():
             B.addWidget(widget)
+        B.setAlignment(Qt.AlignmentFlag.AlignTop)
 
         distorted_images = QHBoxLayout()
         distorted_images.addLayout(A)
         distorted_images.addLayout(B)
+        distorted_images.setAlignment(Qt.AlignmentFlag.AlignTop)
 
         experiment_mode_images = QVBoxLayout()
         experiment_mode_images.addLayout(reference)
         experiment_mode_images.addLayout(distorted_images)
+        experiment_mode_images.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         all_experiment = QVBoxLayout()
         all_experiment.addLayout(experiment_mode_images)
         all_experiment.addWidget(self.widget_experiments['exp']['quit_button'])
-
+        all_experiment.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.experiments_tab = QTabWidget()
         for tab_layout, tab_name in zip([experiment_mode_info, all_experiment],
