@@ -13,9 +13,9 @@
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/nbsphinx-gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/nbsphinx-code-cells.css" type="text/css" />
 
   
   
@@ -32,7 +32,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -87,15 +86,15 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+              <p><span class="caption-text">Getting Started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
+<p><span class="caption-text">Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../Tutorials.html">Tutorials</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<p><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
@@ -187,7 +186,7 @@
 <span class="kn">from</span> <span class="nn">DISTS_pytorch</span> <span class="kn">import</span> <span class="n">DISTS</span> <span class="k">as</span> <span class="n">dists_original</span>
 
 <div class="viewcode-block" id="MAE"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.MAE">[docs]</a><span class="k">class</span> <span class="nc">MAE</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Mean Absolute Error between two images. Images must have the same</span>
+    <span class="sd">&#39;&#39;&#39;Mean Absolute Error between two images. Images must have the same</span>
 <span class="sd">       dimensions</span>
 
 <span class="sd">    Args:</span>
@@ -198,7 +197,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">return_image</span> <span class="o">=</span> <span class="n">return_image</span>
 
 <div class="viewcode-block" id="MAE.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.MAE.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;When an instance is called</span>
+        <span class="sd">&#39;&#39;&#39;When an instance is called</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            im_ref (np.array): Reference image</span>
@@ -217,7 +216,7 @@
             <span class="k">return</span> <span class="n">L1</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span></div></div>
 
 <div class="viewcode-block" id="MSE"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.MSE">[docs]</a><span class="k">class</span> <span class="nc">MSE</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Mean Squared Error between two images. Images must have the same</span>
+    <span class="sd">&#39;&#39;&#39;Mean Squared Error between two images. Images must have the same</span>
 <span class="sd">       dimensions</span>
 
 <span class="sd">    Args:</span>
@@ -228,7 +227,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">return_image</span> <span class="o">=</span> <span class="n">return_image</span>
 
 <div class="viewcode-block" id="MSE.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.MSE.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;When an instance is called</span>
+        <span class="sd">&#39;&#39;&#39;When an instance is called</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            im_ref (np.array): Reference image</span>
@@ -247,7 +246,7 @@
             <span class="k">return</span> <span class="n">L2</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span></div></div>
 
 <div class="viewcode-block" id="SSIM"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.SSIM">[docs]</a><span class="k">class</span> <span class="nc">SSIM</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Structural Similarity Index Measure between two images. Images must have</span>
+    <span class="sd">&#39;&#39;&#39;Structural Similarity Index Measure between two images. Images must have</span>
 <span class="sd">       the same dimensions. Score given is 1 - SSIM to give the loss/dissimilarity</span>
 
 <span class="sd">    Args:</span>
@@ -261,7 +260,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">preproccess_function</span> <span class="o">=</span> <span class="n">_numpy_to_torch_image</span>
 
 <div class="viewcode-block" id="SSIM.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.SSIM.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;When an instance is called</span>
+        <span class="sd">&#39;&#39;&#39;When an instance is called</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            im_ref (np.array): Reference image</span>
@@ -295,9 +294,9 @@
         <span class="n">_metric</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">_score</span></div></div>
 
-<div class="viewcode-block" id="MSSIM"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.MSSIM">[docs]</a><span class="k">class</span> <span class="nc">MSSIM</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Multi-Scale Structural Similarity Index Measure between two images.</span>
-<span class="sd">       Images must have the same dimensions. Score given is 1 - MSSIM to give the</span>
+<div class="viewcode-block" id="MS_SSIM"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.MS_SSIM">[docs]</a><span class="k">class</span> <span class="nc">MS_SSIM</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;Multi-Scale Structural Similarity Index Measure between two images.</span>
+<span class="sd">       Images must have the same dimensions. Score given is 1 - MS_SSIM to give the</span>
 <span class="sd">       loss/dissimilarity</span>
 
 <span class="sd">    Args:</span>
@@ -310,8 +309,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">preproccess_function</span> <span class="o">=</span> <span class="n">_numpy_to_torch_image</span>
 
-<div class="viewcode-block" id="MSSIM.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.MSSIM.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;When an instance is called</span>
+<div class="viewcode-block" id="MS_SSIM.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.MS_SSIM.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;When an instance is called</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            im_ref (np.array): Reference image</span>
@@ -346,7 +345,7 @@
         <span class="k">return</span> <span class="n">_score</span></div></div>
 
 <div class="viewcode-block" id="LPIPS"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.LPIPS">[docs]</a><span class="k">class</span> <span class="nc">LPIPS</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Learned Perceptual Image Patch Similarity between two images.</span>
+    <span class="sd">&#39;&#39;&#39;Learned Perceptual Image Patch Similarity between two images.</span>
 <span class="sd">       Images must have the same dimensions.</span>
 
 <span class="sd">    Args:</span>
@@ -364,7 +363,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">preproccess_function</span> <span class="o">=</span> <span class="n">_numpy_to_torch_image</span>
 
 <div class="viewcode-block" id="LPIPS.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.LPIPS.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;When an instance is called</span>
+        <span class="sd">&#39;&#39;&#39;When an instance is called</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            im_ref (np.array): Reference image</span>
@@ -391,7 +390,7 @@
         <span class="k">return</span> <span class="n">_score</span></div></div>
 
 <div class="viewcode-block" id="DISTS"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.DISTS">[docs]</a><span class="k">class</span> <span class="nc">DISTS</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Deep Image Structure and Texture Similarity (DISTS) Metric. Uses the</span>
+    <span class="sd">&#39;&#39;&#39;Deep Image Structure and Texture Similarity (DISTS) Metric. Uses the</span>
 <span class="sd">        code from https://github.com/dingkeyan93/DISTS. Uses the PyTorch backend.</span>
 <span class="sd">        It is robust to texture variance (e.g., evaluating the images generated</span>
 <span class="sd">        by GANs) and mild geometric transformations (e.g., evaluating the image</span>
@@ -407,7 +406,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">preproccess_function</span> <span class="o">=</span> <span class="n">_numpy_to_torch_image</span>
 
 <div class="viewcode-block" id="DISTS.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.DISTS.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;When an instance is called</span>
+        <span class="sd">&#39;&#39;&#39;When an instance is called</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            im_ref (np.array): Reference image</span>
@@ -425,10 +424,13 @@
         <span class="k">return</span> <span class="n">score</span></div></div>
 
 
+
+
+<span class="sd">&#39;&#39;&#39; ============================================================================ &#39;&#39;&#39;</span>
 <span class="sd">&#39;&#39;&#39; TO ADD TO DEMOS&#39;&#39;&#39;</span>
 <span class="sd">&#39;&#39;&#39; simple functional format to call a metric (numpy)&#39;&#39;&#39;</span>
 <span class="k">def</span> <span class="nf">_MAE</span><span class="p">(</span><span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Mean Absolute Error between two images. Images must have the same</span>
+    <span class="sd">&#39;&#39;&#39;Mean Absolute Error between two images. Images must have the same</span>
 <span class="sd">       dimensions</span>
 
 <span class="sd">    Args:</span>
@@ -478,7 +480,7 @@
     <span class="k">return</span> <span class="n">image</span>
 
 <span class="k">def</span> <span class="nf">_check_shapes</span><span class="p">(</span><span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    make sure both images have the same dimensions</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="n">im_ref</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">im_comp</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>

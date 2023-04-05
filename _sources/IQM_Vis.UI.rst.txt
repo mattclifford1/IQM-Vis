@@ -12,6 +12,14 @@ IQM\_Vis.UI.custom\_widgets module
    :undoc-members:
    :show-inheritance:
 
+IQM\_Vis.UI.experiment\_mode module
+-----------------------------------
+
+.. automodule:: IQM_Vis.UI.experiment_mode
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 IQM\_Vis.UI.images module
 -------------------------
 
@@ -40,6 +48,14 @@ IQM\_Vis.UI.threads module
 --------------------------
 
 .. automodule:: IQM_Vis.UI.threads
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+IQM\_Vis.UI.utils module
+------------------------
+
+.. automodule:: IQM_Vis.UI.utils
    :members:
    :undoc-members:
    :show-inheritance:

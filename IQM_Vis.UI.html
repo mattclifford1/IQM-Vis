@@ -4,7 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
@@ -14,8 +14,6 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
 
   
@@ -33,7 +31,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -88,15 +85,15 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+              <p><span class="caption-text">Getting Started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
+<p><span class="caption-text">Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Tutorials.html">Tutorials</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<p><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
@@ -176,126 +173,217 @@
 <span id="iqm-vis-ui-custom-widgets-module"></span><h2>IQM_Vis.UI.custom_widgets module<a class="headerlink" href="#module-IQM_Vis.UI.custom_widgets" title="Permalink to this headline">¶</a></h2>
 <p>Custom SubClasses of PyQt6 widget to extent to the required functionality</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="IQM_Vis.UI.custom_widgets.ClickLabel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.custom_widgets.</span></span><span class="sig-name descname"><span class="pre">ClickLabel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'clickable</span> <span class="pre">label'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/custom_widgets.html#ClickLabel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.custom_widgets.ClickLabel" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.custom_widgets.ClickLabel">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.custom_widgets.</span></code><code class="sig-name descname"><span class="pre">ClickLabel</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'clickable</span> <span class="pre">label'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/custom_widgets.html#ClickLabel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.custom_widgets.ClickLabel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt6.QtWidgets.QLabel</span></code></p>
 <p>add a click mousePressEvent event to label (so can click on images)</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="IQM_Vis.UI.custom_widgets.ClickLabel.clicked">
-<span class="sig-name descname"><span class="pre">clicked</span></span><a class="headerlink" href="#IQM_Vis.UI.custom_widgets.ClickLabel.clicked" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.custom_widgets.ClickLabel.clicked">
+<code class="sig-name descname"><span class="pre">clicked</span></code><a class="headerlink" href="#IQM_Vis.UI.custom_widgets.ClickLabel.clicked" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.custom_widgets.ClickLabel.mousePressEvent">
-<span class="sig-name descname"><span class="pre">mousePressEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ev</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QMouseEvent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/custom_widgets.html#ClickLabel.mousePressEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.custom_widgets.ClickLabel.mousePressEvent" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.custom_widgets.ClickLabel.mousePressEvent">
+<code class="sig-name descname"><span class="pre">mousePressEvent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">QMouseEvent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/custom_widgets.html#ClickLabel.mousePressEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.custom_widgets.ClickLabel.mousePressEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="IQM_Vis.UI.custom_widgets.ProgressBar">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.custom_widgets.</span></span><span class="sig-name descname"><span class="pre">ProgressBar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/custom_widgets.html#ProgressBar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.custom_widgets.ProgressBar" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.custom_widgets.ProgressBar">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.custom_widgets.</span></code><code class="sig-name descname"><span class="pre">ProgressBar</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/custom_widgets.html#ProgressBar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.custom_widgets.ProgressBar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt6.QtWidgets.QProgressBar</span></code></p>
 </dd></dl>
+
+</section>
+<section id="module-IQM_Vis.UI.experiment_mode">
+<span id="iqm-vis-ui-experiment-mode-module"></span><h2>IQM_Vis.UI.experiment_mode module<a class="headerlink" href="#module-IQM_Vis.UI.experiment_mode" title="Permalink to this headline">¶</a></h2>
+<p>create experiment window</p>
+<dl class="py class">
+<dt id="IQM_Vis.UI.experiment_mode.make_experiment">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.experiment_mode.</span></code><code class="sig-name descname"><span class="pre">make_experiment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checked_transformations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_store</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_display_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt6.QtWidgets.QMainWindow</span></code></p>
+<dl class="py method">
+<dt id="IQM_Vis.UI.experiment_mode.make_experiment.change_experiment_images">
+<code class="sig-name descname"><span class="pre">change_experiment_images</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A_trans</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B_trans</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.change_experiment_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.change_experiment_images" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="IQM_Vis.UI.experiment_mode.make_experiment.clicked_image">
+<code class="sig-name descname"><span class="pre">clicked_image</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">widget_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.clicked_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.clicked_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="IQM_Vis.UI.experiment_mode.make_experiment.closeEvent">
+<code class="sig-name descname"><span class="pre">closeEvent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">QCloseEvent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.closeEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.closeEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="IQM_Vis.UI.experiment_mode.make_experiment.experiment_layout">
+<code class="sig-name descname"><span class="pre">experiment_layout</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.experiment_layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.experiment_layout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="IQM_Vis.UI.experiment_mode.make_experiment.get_single_transform_im">
+<code class="sig-name descname"><span class="pre">get_single_transform_im</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">single_trans_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.get_single_transform_im"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.get_single_transform_im" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="IQM_Vis.UI.experiment_mode.make_experiment.init_style">
+<code class="sig-name descname"><span class="pre">init_style</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'light'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">css_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.init_style"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.init_style" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="IQM_Vis.UI.experiment_mode.make_experiment.partition">
+<code class="sig-name descname"><span class="pre">partition</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.partition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.partition" title="Permalink to this definition">¶</a></dt>
+<dd><p>given an unsorted partition of the array between low and high, order
+elements lower than a given pivot point to the left and higher to the right</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="IQM_Vis.UI.experiment_mode.make_experiment.quick_sort">
+<code class="sig-name descname"><span class="pre">quick_sort</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.quick_sort"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.quick_sort" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="IQM_Vis.UI.experiment_mode.make_experiment.quit">
+<code class="sig-name descname"><span class="pre">quit</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.quit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.quit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="IQM_Vis.UI.experiment_mode.make_experiment.reset_experiment">
+<code class="sig-name descname"><span class="pre">reset_experiment</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.reset_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.reset_experiment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="IQM_Vis.UI.experiment_mode.make_experiment.start_experiment">
+<code class="sig-name descname"><span class="pre">start_experiment</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.start_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.start_experiment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="IQM_Vis.UI.experiment_mode.make_experiment.swap_inds">
+<code class="sig-name descname"><span class="pre">swap_inds</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.swap_inds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.swap_inds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="IQM_Vis.UI.experiment_mode.make_experiment.toggle_experiment">
+<code class="sig-name descname"><span class="pre">toggle_experiment</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.toggle_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.toggle_experiment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="IQM_Vis.UI.experiment_mode.sort_list">
+<code class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.experiment_mode.</span></code><code class="sig-name descname"><span class="pre">sort_list</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#sort_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.sort_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 <section id="module-IQM_Vis.UI.images">
 <span id="iqm-vis-ui-images-module"></span><h2>IQM_Vis.UI.images module<a class="headerlink" href="#module-IQM_Vis.UI.images" title="Permalink to this headline">¶</a></h2>
 <p>UI image functions</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="IQM_Vis.UI.images.images">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.images.</span></span><span class="sig-name descname"><span class="pre">images</span></span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.images.images">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.images.</span></code><code class="sig-name descname"><span class="pre">images</span></code><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.images.images.change_data">
-<span class="sig-name descname"><span class="pre">change_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.change_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.change_data" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.images.images.change_data">
+<code class="sig-name descname"><span class="pre">change_data</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.change_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.change_data" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.images.images.change_metric_range_graph">
-<span class="sig-name descname"><span class="pre">change_metric_range_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">add</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.change_metric_range_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.change_metric_range_graph" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.images.images.change_metric_correlations_graph">
+<code class="sig-name descname"><span class="pre">change_metric_correlations_graph</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">add</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.change_metric_correlations_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.change_metric_correlations_graph" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.images.images.completed_range_results">
-<span class="sig-name descname"><span class="pre">completed_range_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.completed_range_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.completed_range_results" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.images.images.change_metric_range_graph">
+<code class="sig-name descname"><span class="pre">change_metric_range_graph</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">add</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.change_metric_range_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.change_metric_range_graph" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="IQM_Vis.UI.images.images.completed_range_results">
+<code class="sig-name descname"><span class="pre">completed_range_results</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.completed_range_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.completed_range_results" title="Permalink to this definition">¶</a></dt>
 <dd><p>data results sent from signal from thread worker</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.images.images.display_images">
-<span class="sig-name descname"><span class="pre">display_images</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.display_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.display_images" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.images.images.display_images">
+<code class="sig-name descname"><span class="pre">display_images</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.display_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.display_images" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.images.images.display_metric_images">
-<span class="sig-name descname"><span class="pre">display_metric_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric_images</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.display_metric_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.display_metric_images" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.images.images.display_metric_correlation_plot">
+<code class="sig-name descname"><span class="pre">display_metric_correlation_plot</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.display_metric_correlation_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.display_metric_correlation_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>uncomment and finish this off:
+- store scores
+- only calc scores that havent already been
+- plot scatter</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="IQM_Vis.UI.images.images.display_metric_images">
+<code class="sig-name descname"><span class="pre">display_metric_images</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_images</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.display_metric_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.display_metric_images" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.images.images.display_metric_range_plot">
-<span class="sig-name descname"><span class="pre">display_metric_range_plot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.display_metric_range_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.display_metric_range_plot" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.images.images.display_metric_range_plot">
+<code class="sig-name descname"><span class="pre">display_metric_range_plot</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.display_metric_range_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.display_metric_range_plot" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.images.images.display_metrics">
-<span class="sig-name descname"><span class="pre">display_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.display_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.display_metrics" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.images.images.display_metrics">
+<code class="sig-name descname"><span class="pre">display_metrics</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.display_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.display_metrics" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.images.images.display_metrics_graph">
-<span class="sig-name descname"><span class="pre">display_metrics_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.display_metrics_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.display_metrics_graph" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.images.images.display_metrics_graph">
+<code class="sig-name descname"><span class="pre">display_metrics_graph</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.display_metrics_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.display_metrics_graph" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.images.images.display_metrics_text">
-<span class="sig-name descname"><span class="pre">display_metrics_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disp_len</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.display_metrics_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.display_metrics_text" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.images.images.display_metrics_text">
+<code class="sig-name descname"><span class="pre">display_metrics_text</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disp_len</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.display_metrics_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.display_metrics_text" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.images.images.display_radar_plots">
-<span class="sig-name descname"><span class="pre">display_radar_plots</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.display_radar_plots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.display_radar_plots" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.images.images.display_radar_plots">
+<code class="sig-name descname"><span class="pre">display_radar_plots</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.display_radar_plots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.display_radar_plots" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.images.images.get_metrics_over_all_trans_with_init_values">
-<span class="sig-name descname"><span class="pre">get_metrics_over_all_trans_with_init_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.get_metrics_over_all_trans_with_init_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.get_metrics_over_all_trans_with_init_values" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.images.images.get_metrics_over_all_trans_with_init_values">
+<code class="sig-name descname"><span class="pre">get_metrics_over_all_trans_with_init_values</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.get_metrics_over_all_trans_with_init_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.get_metrics_over_all_trans_with_init_values" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.images.images.init_worker_thread">
-<span class="sig-name descname"><span class="pre">init_worker_thread</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.init_worker_thread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.init_worker_thread" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.images.images.init_worker_thread">
+<code class="sig-name descname"><span class="pre">init_worker_thread</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.init_worker_thread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.init_worker_thread" title="Permalink to this definition">¶</a></dt>
 <dd><p>set up thread for smoother range plot calculation</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.images.images.plot_radar_graph">
-<span class="sig-name descname"><span class="pre">plot_radar_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.plot_radar_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.plot_radar_graph" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.images.images.plot_radar_graph">
+<code class="sig-name descname"><span class="pre">plot_radar_graph</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.plot_radar_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.plot_radar_graph" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.images.images.redo_plots">
-<span class="sig-name descname"><span class="pre">redo_plots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">calc_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.redo_plots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.redo_plots" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.images.images.redo_plots">
+<code class="sig-name descname"><span class="pre">redo_plots</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">calc_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.redo_plots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.redo_plots" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="IQM_Vis.UI.images.images.request_range_work">
-<span class="sig-name descname"><span class="pre">request_range_work</span></span><a class="headerlink" href="#IQM_Vis.UI.images.images.request_range_work" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.images.images.request_range_work">
+<code class="sig-name descname"><span class="pre">request_range_work</span></code><a class="headerlink" href="#IQM_Vis.UI.images.images.request_range_work" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.images.images.stopped_range_results">
-<span class="sig-name descname"><span class="pre">stopped_range_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.stopped_range_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.stopped_range_results" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.images.images.stopped_range_results">
+<code class="sig-name descname"><span class="pre">stopped_range_results</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.stopped_range_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.stopped_range_results" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.images.images.transform_image">
-<span class="sig-name descname"><span class="pre">transform_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.transform_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.transform_image" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.images.images.update_image_widgets">
-<span class="sig-name descname"><span class="pre">update_image_widgets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.update_image_widgets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.update_image_widgets" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.images.images.update_image_widgets">
+<code class="sig-name descname"><span class="pre">update_image_widgets</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.update_image_widgets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.update_image_widgets" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -304,29 +392,18 @@
 <section id="module-IQM_Vis.UI.layout">
 <span id="iqm-vis-ui-layout-module"></span><h2>IQM_Vis.UI.layout module<a class="headerlink" href="#module-IQM_Vis.UI.layout" title="Permalink to this headline">¶</a></h2>
 <p>UI create layout</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="IQM_Vis.UI.layout.add_layout_to_tab">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.layout.</span></span><span class="sig-name descname"><span class="pre">add_layout_to_tab</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/layout.html#add_layout_to_tab"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.layout.add_layout_to_tab" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="py class">
-<dt class="sig sig-object py" id="IQM_Vis.UI.layout.layout">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.layout.</span></span><span class="sig-name descname"><span class="pre">layout</span></span><a class="reference internal" href="_modules/IQM_Vis/UI/layout.html#layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.layout.layout" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.layout.layout">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.layout.</span></code><code class="sig-name descname"><span class="pre">layout</span></code><a class="reference internal" href="_modules/IQM_Vis/UI/layout.html#layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.layout.layout" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt6.QtWidgets.QMainWindow</span></code></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.layout.layout.get_experiment_layout">
-<span class="sig-name descname"><span class="pre">get_experiment_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/layout.html#layout.get_experiment_layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.layout.layout.get_experiment_layout" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.layout.layout.init_layout">
+<code class="sig-name descname"><span class="pre">init_layout</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/layout.html#layout.init_layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.layout.layout.init_layout" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.layout.layout.init_layout">
-<span class="sig-name descname"><span class="pre">init_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/layout.html#layout.init_layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.layout.layout.init_layout" title="Permalink to this definition">¶</a></dt>
-<dd><p>place all the widgets in the window</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.layout.layout.init_style">
-<span class="sig-name descname"><span class="pre">init_style</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'light'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">css_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/layout.html#layout.init_style"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.layout.layout.init_style" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.layout.layout.init_style">
+<code class="sig-name descname"><span class="pre">init_style</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'light'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">css_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/layout.html#layout.init_style"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.layout.layout.init_style" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -336,45 +413,45 @@
 <span id="iqm-vis-ui-main-module"></span><h2>IQM_Vis.UI.main module<a class="headerlink" href="#module-IQM_Vis.UI.main" title="Permalink to this headline">¶</a></h2>
 <p>main entry point to initialise the UI</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="IQM_Vis.UI.main.make_app">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.main.</span></span><span class="sig-name descname"><span class="pre">make_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_stores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transformations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_info_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'graph'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_avg_graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_range_graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_display_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">150</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/main.html#make_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.main.make_app" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.main.make_app">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.main.</span></code><code class="sig-name descname"><span class="pre">make_app</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_stores</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transformations</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_info_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'graph'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_avg_graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_range_graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_display_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">150</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/main.html#make_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.main.make_app" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#IQM_Vis.UI.widgets.widgets" title="IQM_Vis.UI.widgets.widgets"><code class="xref py py-class docutils literal notranslate"><span class="pre">IQM_Vis.UI.widgets.widgets</span></code></a>, <a class="reference internal" href="#IQM_Vis.UI.layout.layout" title="IQM_Vis.UI.layout.layout"><code class="xref py py-class docutils literal notranslate"><span class="pre">IQM_Vis.UI.layout.layout</span></code></a>, <a class="reference internal" href="#IQM_Vis.UI.images.images" title="IQM_Vis.UI.images.images"><code class="xref py py-class docutils literal notranslate"><span class="pre">IQM_Vis.UI.images.images</span></code></a></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.main.make_app.closeEvent">
-<span class="sig-name descname"><span class="pre">closeEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QCloseEvent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/main.html#make_app.closeEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.main.make_app.closeEvent" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.main.make_app.closeEvent">
+<code class="sig-name descname"><span class="pre">closeEvent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">QCloseEvent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/main.html#make_app.closeEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.main.make_app.closeEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.main.make_app.construct_UI">
-<span class="sig-name descname"><span class="pre">construct_UI</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/main.html#make_app.construct_UI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.main.make_app.construct_UI" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.main.make_app.construct_UI">
+<code class="sig-name descname"><span class="pre">construct_UI</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/main.html#make_app.construct_UI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.main.make_app.construct_UI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.main.make_app.get_menu_checkboxes">
-<span class="sig-name descname"><span class="pre">get_menu_checkboxes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/main.html#make_app.get_menu_checkboxes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.main.make_app.get_menu_checkboxes" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.main.make_app.get_menu_checkboxes">
+<code class="sig-name descname"><span class="pre">get_menu_checkboxes</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/main.html#make_app.get_menu_checkboxes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.main.make_app.get_menu_checkboxes" title="Permalink to this definition">¶</a></dt>
 <dd><p>list all trans/metrics in the menu drop downs</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.main.make_app.make_menu">
-<span class="sig-name descname"><span class="pre">make_menu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/main.html#make_app.make_menu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.main.make_app.make_menu" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.main.make_app.make_menu">
+<code class="sig-name descname"><span class="pre">make_menu</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/main.html#make_app.make_menu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.main.make_app.make_menu" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.main.make_app.make_status_bar">
-<span class="sig-name descname"><span class="pre">make_status_bar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/main.html#make_app.make_status_bar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.main.make_app.make_status_bar" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.main.make_app.make_status_bar">
+<code class="sig-name descname"><span class="pre">make_status_bar</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/main.html#make_app.make_status_bar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.main.make_app.make_status_bar" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.main.make_app.quit">
-<span class="sig-name descname"><span class="pre">quit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/main.html#make_app.quit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.main.make_app.quit" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.main.make_app.quit">
+<code class="sig-name descname"><span class="pre">quit</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/main.html#make_app.quit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.main.make_app.quit" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="IQM_Vis.UI.main.set_checked_menu_from_iterable">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.main.</span></span><span class="sig-name descname"><span class="pre">set_checked_menu_from_iterable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">main_menu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action_store</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connect_func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/main.html#set_checked_menu_from_iterable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.main.set_checked_menu_from_iterable" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.main.set_checked_menu_from_iterable">
+<code class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.main.</span></code><code class="sig-name descname"><span class="pre">set_checked_menu_from_iterable</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">main_menu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action_store</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connect_func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/main.html#set_checked_menu_from_iterable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.main.set_checked_menu_from_iterable" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </section>
@@ -383,123 +460,111 @@
 <p>thread and signal classes to makethe UI smoother
 useful info about PyQt6 threads: <a class="reference external" href="https://www.pythontutorial.net/pyqt/pyqt-qthread/">https://www.pythontutorial.net/pyqt/pyqt-qthread/</a></p>
 <dl class="py class">
-<dt class="sig sig-object py" id="IQM_Vis.UI.threads.get_range_results_worker">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.threads.</span></span><span class="sig-name descname"><span class="pre">get_range_results_worker</span></span><a class="reference internal" href="_modules/IQM_Vis/UI/threads.html#get_range_results_worker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.threads.get_range_results_worker" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.threads.get_range_results_worker">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.threads.</span></code><code class="sig-name descname"><span class="pre">get_range_results_worker</span></code><a class="reference internal" href="_modules/IQM_Vis/UI/threads.html#get_range_results_worker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.threads.get_range_results_worker" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt6.QtCore.QObject</span></code></p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="IQM_Vis.UI.threads.get_range_results_worker.completed">
-<span class="sig-name descname"><span class="pre">completed</span></span><a class="headerlink" href="#IQM_Vis.UI.threads.get_range_results_worker.completed" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.threads.get_range_results_worker.completed">
+<code class="sig-name descname"><span class="pre">completed</span></code><a class="headerlink" href="#IQM_Vis.UI.threads.get_range_results_worker.completed" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="IQM_Vis.UI.threads.get_range_results_worker.current_image">
-<span class="sig-name descname"><span class="pre">current_image</span></span><a class="headerlink" href="#IQM_Vis.UI.threads.get_range_results_worker.current_image" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.threads.get_range_results_worker.current_image">
+<code class="sig-name descname"><span class="pre">current_image</span></code><a class="headerlink" href="#IQM_Vis.UI.threads.get_range_results_worker.current_image" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.threads.get_range_results_worker.do_work">
-<span class="sig-name descname"><span class="pre">do_work</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/threads.html#get_range_results_worker.do_work"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.threads.get_range_results_worker.do_work" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.threads.get_range_results_worker.do_work">
+<code class="sig-name descname"><span class="pre">do_work</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/threads.html#get_range_results_worker.do_work"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.threads.get_range_results_worker.do_work" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="IQM_Vis.UI.threads.get_range_results_worker.progress">
-<span class="sig-name descname"><span class="pre">progress</span></span><a class="headerlink" href="#IQM_Vis.UI.threads.get_range_results_worker.progress" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.threads.get_range_results_worker.progress">
+<code class="sig-name descname"><span class="pre">progress</span></code><a class="headerlink" href="#IQM_Vis.UI.threads.get_range_results_worker.progress" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.threads.get_range_results_worker.stop">
-<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/threads.html#get_range_results_worker.stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.threads.get_range_results_worker.stop" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.threads.get_range_results_worker.stop">
+<code class="sig-name descname"><span class="pre">stop</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/threads.html#get_range_results_worker.stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.threads.get_range_results_worker.stop" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="IQM_Vis.UI.threads.get_range_results_worker.stopped">
-<span class="sig-name descname"><span class="pre">stopped</span></span><a class="headerlink" href="#IQM_Vis.UI.threads.get_range_results_worker.stopped" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.threads.get_range_results_worker.stopped">
+<code class="sig-name descname"><span class="pre">stopped</span></code><a class="headerlink" href="#IQM_Vis.UI.threads.get_range_results_worker.stopped" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
+
+</section>
+<section id="module-IQM_Vis.UI.utils">
+<span id="iqm-vis-ui-utils-module"></span><h2>IQM_Vis.UI.utils module<a class="headerlink" href="#module-IQM_Vis.UI.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="IQM_Vis.UI.utils.add_layout_to_tab">
+<code class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.utils.</span></code><code class="sig-name descname"><span class="pre">add_layout_to_tab</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/utils.html#add_layout_to_tab"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.utils.add_layout_to_tab" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 <section id="module-IQM_Vis.UI.widgets">
 <span id="iqm-vis-ui-widgets-module"></span><h2>IQM_Vis.UI.widgets module<a class="headerlink" href="#module-IQM_Vis.UI.widgets" title="Permalink to this headline">¶</a></h2>
 <p>UI create widgets</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.widgets.</span></span><span class="sig-name descname"><span class="pre">widgets</span></span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.widgets.widgets">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.widgets.</span></code><code class="sig-name descname"><span class="pre">widgets</span></code><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.change_display_im_size">
-<span class="sig-name descname"><span class="pre">change_display_im_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">txt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.change_display_im_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.change_display_im_size" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.widgets.widgets.change_display_im_size">
+<code class="sig-name descname"><span class="pre">change_display_im_size</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">txt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.change_display_im_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.change_display_im_size" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.change_experiment_images">
-<span class="sig-name descname"><span class="pre">change_experiment_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A_ind</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B_ind</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.change_experiment_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.change_experiment_images" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.widgets.widgets.change_plot_lims">
+<code class="sig-name descname"><span class="pre">change_plot_lims</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.change_plot_lims"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.change_plot_lims" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.change_plot_lims">
-<span class="sig-name descname"><span class="pre">change_plot_lims</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.change_plot_lims"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.change_plot_lims" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.widgets.widgets.change_post_processing">
+<code class="sig-name descname"><span class="pre">change_post_processing</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.change_post_processing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.change_post_processing" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.change_post_processing">
-<span class="sig-name descname"><span class="pre">change_post_processing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.change_post_processing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.change_post_processing" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.widgets.widgets.display_slider_num">
+<code class="sig-name descname"><span class="pre">display_slider_num</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disp_len</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.display_slider_num"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.display_slider_num" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.clicked_image">
-<span class="sig-name descname"><span class="pre">clicked_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">widget_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.clicked_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.clicked_image" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.widgets.widgets.generic_value_change">
+<code class="sig-name descname"><span class="pre">generic_value_change</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.generic_value_change"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.generic_value_change" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.display_slider_num">
-<span class="sig-name descname"><span class="pre">display_slider_num</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disp_len</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.display_slider_num"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.display_slider_num" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.generic_value_change">
-<span class="sig-name descname"><span class="pre">generic_value_change</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_group</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.generic_value_change"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.generic_value_change" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.init_widgets">
-<span class="sig-name descname"><span class="pre">init_widgets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.init_widgets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.init_widgets" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.widgets.widgets.init_widgets">
+<code class="sig-name descname"><span class="pre">init_widgets</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.init_widgets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.init_widgets" title="Permalink to this definition">¶</a></dt>
 <dd><p>create all the widgets we need and init params</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.reset_experiment">
-<span class="sig-name descname"><span class="pre">reset_experiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.reset_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.reset_experiment" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.widgets.widgets.launch_experiment">
+<code class="sig-name descname"><span class="pre">launch_experiment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.launch_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.launch_experiment" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.reset_sliders">
-<span class="sig-name descname"><span class="pre">reset_sliders</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.reset_sliders"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.reset_sliders" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.widgets.widgets.reset_sliders">
+<code class="sig-name descname"><span class="pre">reset_sliders</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.reset_sliders"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.reset_sliders" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.set_image_name_text">
-<span class="sig-name descname"><span class="pre">set_image_name_text</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.set_image_name_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.set_image_name_text" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.widgets.widgets.set_image_name_text">
+<code class="sig-name descname"><span class="pre">set_image_name_text</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.set_image_name_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.set_image_name_text" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.start_experiment">
-<span class="sig-name descname"><span class="pre">start_experiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.start_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.start_experiment" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.widgets.widgets.update_progress">
+<code class="sig-name descname"><span class="pre">update_progress</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.update_progress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.update_progress" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.toggle_experiment">
-<span class="sig-name descname"><span class="pre">toggle_experiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.toggle_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.toggle_experiment" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.update_progress">
-<span class="sig-name descname"><span class="pre">update_progress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.update_progress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.update_progress" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.update_status_bar">
-<span class="sig-name descname"><span class="pre">update_status_bar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.update_status_bar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.update_status_bar" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.UI.widgets.widgets.update_status_bar">
+<code class="sig-name descname"><span class="pre">update_status_bar</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.update_status_bar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.update_status_bar" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>

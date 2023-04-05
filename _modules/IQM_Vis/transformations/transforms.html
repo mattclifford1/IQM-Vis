@@ -13,9 +13,9 @@
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/nbsphinx-gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/nbsphinx-code-cells.css" type="text/css" />
 
   
   
@@ -32,7 +32,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -87,15 +86,15 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+              <p><span class="caption-text">Getting Started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
+<p><span class="caption-text">Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../Tutorials.html">Tutorials</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<p><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
@@ -178,7 +177,7 @@
 
 
 <div class="viewcode-block" id="rotation"><a class="viewcode-back" href="../../../IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.rotation">[docs]</a><span class="k">def</span> <span class="nf">rotation</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Rotate an image around its centre. Uses skimage.transform.rotate. Areas</span>
+    <span class="sd">&#39;&#39;&#39;Rotate an image around its centre. Uses skimage.transform.rotate. Areas</span>
 <span class="sd">    that are rotated beyond the image are filled in with black pixel values</span>
 
 <span class="sd">    Args:</span>
@@ -191,7 +190,7 @@
     <span class="k">return</span> <span class="n">rotate</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">angle</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="blur"><a class="viewcode-back" href="../../../IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.blur">[docs]</a><span class="k">def</span> <span class="nf">blur</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">7</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Gaussian Blur on an image</span>
+    <span class="sd">&#39;&#39;&#39;Gaussian Blur on an image</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.array): image to be rotated</span>
@@ -211,7 +210,7 @@
     <span class="k">return</span> <span class="n">image</span></div>
 
 <div class="viewcode-block" id="x_shift"><a class="viewcode-back" href="../../../IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.x_shift">[docs]</a><span class="k">def</span> <span class="nf">x_shift</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">x_shift</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Translate image horizontally</span>
+    <span class="sd">&#39;&#39;&#39;Translate image horizontally</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.array): image to be shifted</span>
@@ -224,7 +223,7 @@
     <span class="k">return</span> <span class="n">_translate_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">x_shift</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="y_shift"><a class="viewcode-back" href="../../../IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.y_shift">[docs]</a><span class="k">def</span> <span class="nf">y_shift</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">y_shift</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Translate image vertically</span>
+    <span class="sd">&#39;&#39;&#39;Translate image vertically</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.array): image to be shifted</span>
@@ -237,7 +236,7 @@
     <span class="k">return</span> <span class="n">_translate_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y_shift</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="brightness"><a class="viewcode-back" href="../../../IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.brightness">[docs]</a><span class="k">def</span> <span class="nf">brightness</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Adjust image brightness. Image is clipped to the range (0, 1)</span>
+    <span class="sd">&#39;&#39;&#39;Adjust image brightness. Image is clipped to the range (0, 1)</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.array): image to have its brightness adjusted</span>
@@ -250,7 +249,7 @@
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">image</span> <span class="o">+</span> <span class="n">value</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
 
 <span class="k">def</span> <span class="nf">_translate_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">x_shift</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y_shift</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Translate image vertically</span>
+    <span class="sd">&#39;&#39;&#39;Translate image vertically</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.array): image to be shifted</span>
@@ -281,7 +280,7 @@
     <span class="k">return</span> <span class="n">canvas</span>
 
 <div class="viewcode-block" id="zoom_image"><a class="viewcode-back" href="../../../IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.zoom_image">[docs]</a><span class="k">def</span> <span class="nf">zoom_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">scale_factor</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;digital zoom of image</span>
+    <span class="sd">&#39;&#39;&#39;digital zoom of image</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.array): image to be zoomed</span>
@@ -316,7 +315,7 @@
     <span class="k">return</span> <span class="n">resize</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">original_size</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="binary_threshold"><a class="viewcode-back" href="../../../IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.binary_threshold">[docs]</a><span class="k">def</span> <span class="nf">binary_threshold</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;conver image to binary at a given threshold</span>
+    <span class="sd">&#39;&#39;&#39;conver image to binary at a given threshold</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.array): image to be thresholded</span>
@@ -336,7 +335,7 @@
     <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.0</span></div>
 
 <div class="viewcode-block" id="jpeg_compression"><a class="viewcode-back" href="../../../IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.jpeg_compression">[docs]</a><span class="k">def</span> <span class="nf">jpeg_compression</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="mi">90</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;encode image using jpeg then decode</span>
+    <span class="sd">&#39;&#39;&#39;encode image using jpeg then decode</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.array): image to be compressed</span>
@@ -351,7 +350,7 @@
     <span class="k">return</span> <span class="n">_encode_compression</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">encoder</span><span class="p">,</span> <span class="n">encode_param</span><span class="p">)</span></div>
 
 <span class="k">def</span> <span class="nf">_encode_compression</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">encoder</span><span class="p">,</span> <span class="n">encode_param</span><span class="p">,</span> <span class="n">uint</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        generic image encoder for jpeg, png etc</span>
 <span class="sd">        using https://docs.opencv.org/3.4/d4/da8/group__imgcodecs.html to encode/decode</span>
 <span class="sd">        for encode types: https://docs.opencv.org/3.4/d6/d87/imgcodecs_8hpp.html</span>
