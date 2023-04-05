@@ -127,12 +127,12 @@ def get_all_slider_values(transforms, num_steps=10):
     values.append(transforms['max'])
     return values
 
-def get_all_single_transform_params(transforms):
+def get_all_single_transform_params(transforms, num_steps=10):
     ''' get a list of all the individual transforms with a single parameter value
         useful when doing experiments to make a dataset '''
     list_of_single_trans = []
     for curr_trans in transforms:  # loop over all transformations
-        for val in get_all_slider_values(transforms[curr_trans]):
+        for val in get_all_slider_values(transforms[curr_trans], num_steps=num_steps):
             list_of_single_trans.append({curr_trans: val})
     return list_of_single_trans
 
