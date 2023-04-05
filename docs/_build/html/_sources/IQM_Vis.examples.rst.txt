@@ -36,6 +36,14 @@ IQM\_Vis.examples.dists module
    :undoc-members:
    :show-inheritance:
 
+IQM\_Vis.examples.experiment module
+-----------------------------------
+
+.. automodule:: IQM_Vis.examples.experiment
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 IQM\_Vis.examples.multiple module
 ---------------------------------
 

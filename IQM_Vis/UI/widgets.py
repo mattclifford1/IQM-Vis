@@ -87,6 +87,14 @@ class widgets():
                 self.widget_row[window_name][i]['metrics']['range']['label'].setText('Response Profiles')
                 self.widget_row[window_name][i]['metrics']['range']['data'] = gui_utils.MplCanvas(self)
                 self.widget_row[window_name][i]['metrics']['range']['data'].setToolTip('Single tranformation value range for all metrics.')
+            if hasattr(data_store, 'human_scores'):
+                self.widget_row[window_name][i]['metrics']['correlation'] = {}
+                self.widget_row[window_name][i]['metrics']['correlation']['label'] = QLabel(self)
+                self.widget_row[window_name][i]['metrics']['correlation']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                self.widget_row[window_name][i]['metrics']['correlation']['label'].setText('Human Correlation')
+                self.widget_row[window_name][i]['metrics']['correlation']['data'] = gui_utils.MplCanvas(self)
+                self.widget_row[window_name][i]['metrics']['correlation']['data'].setToolTip('Human scores versus IQMs.')
+
 
         '''buttons'''
         self.widget_controls[window_name] = {'button': {}, 'slider': {}, 'label': {}, 'check_box': {}}
@@ -105,11 +113,18 @@ class widgets():
             self.widget_controls[window_name]['check_box']['graph_limits'].stateChanged.connect(self.change_plot_lims)
 
         if self.metric_range_graph and window_name != 'Experiment':
-            # buttons to control which graph to show
+            # buttons to control which metric range graph to show
             self.widget_controls[window_name]['button']['next_metric_graph'] = QPushButton('->', self)
             self.widget_controls[window_name]['button']['next_metric_graph'].clicked.connect(partial(self.change_metric_range_graph, 1))
             self.widget_controls[window_name]['button']['prev_metric_graph'] = QPushButton('<-', self)
             self.widget_controls[window_name]['button']['prev_metric_graph'].clicked.connect(partial(self.change_metric_range_graph, -1))
+        if hasattr(data_store, 'human_scores'):
+            # buttons to control which correlation graph to show
+            self.widget_controls[window_name]['button']['next_correlation_graph'] = QPushButton('->', self)
+            self.widget_controls[window_name]['button']['next_correlation_graph'].clicked.connect(partial(self.change_metric_correlations_graph, 1))
+            self.widget_controls[window_name]['button']['prev_correlation_graph'] = QPushButton('<-', self)
+            self.widget_controls[window_name]['button']['prev_correlation_graph'].clicked.connect(partial(self.change_metric_correlations_graph, -1))
+
         if self.dataset:
             # control what image is used from the dataset
             self.widget_controls[window_name]['button']['next_data'] = QPushButton('->', self)

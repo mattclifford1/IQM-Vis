@@ -111,7 +111,6 @@ class radar_plotter:
         # self.ax.axes.set_ylim(min(0, y_lims[0], max(1, y_lims[1])))
         self.ax.axes.set_ylim(top= max(self.lim, y_lims[1]))
 
-
 '''
 metric averaging functions to get metric values over a range of transformation
 '''
@@ -135,6 +134,19 @@ def get_all_single_transform_params(transforms, num_steps=10):
         for val in get_all_slider_values(transforms[curr_trans], num_steps=num_steps):
             list_of_single_trans.append({curr_trans: val})
     return list_of_single_trans
+
+def compute_metric_for_human_correlation(data_store, transforms, metric_params, human_scores, metric):
+    scores = {}
+    for trans_str in human_scores:
+        trans = ' '.join(trans_str.split(' ')[:-1])
+        trans_value = float(trans_str.split(' ')[-1])
+        single_trans = {trans: transforms[trans]}
+        single_param_dict = {trans: trans_value}
+        trans_im = image_utils.get_transform_image(data_store, single_trans, single_param_dict) # initialse image
+        metric_scores = data_store.get_metrics(trans_im, metric, **metric_params)
+        scores[trans_str] = metric_scores[metric]
+    return scores
+
 
 def compute_metrics_over_range_single_trans(data_store, transforms, metric_params, metrics_to_use, pbar_signal=None, stop_flag=None):
     ''' compute metrics over a range of trans

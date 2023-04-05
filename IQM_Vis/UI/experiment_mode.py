@@ -34,6 +34,8 @@ class make_experiment(QMainWindow):
         self.data_store = data_store
         self.image_display_size = image_display_size
         self.clicked_event = threading.Event()
+        self.stop_event = threading.Event()
+        self.saved = False
         self._init_experiment_window_widgets()
         self.experiment_layout()
         self.setCentralWidget(self.experiments_tab)
@@ -44,16 +46,21 @@ class make_experiment(QMainWindow):
         self.move(qr.topLeft())
 
     def closeEvent(self, event):
-        # Ask for confirmation
-        answer = QMessageBox.question(self,
-        "Confirm Exit...",
-        "Are you sure you want to exit?\nAll unsaved data will be lost.",
-        QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        # Ask for confirmation if not saved
+        if not self.saved:
+            answer = QMessageBox.question(self,
+            "Confirm Exit...",
+            "Are you sure you want to exit?\nAll unsaved data will be lost.",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        else:
+            answer = QMessageBox.StandardButton.Yes
 
         event.ignore()
         if answer == QMessageBox.StandardButton.Yes:
             if hasattr(self, 'range_worker'):
                 self.range_worker.stop()
+            self.stop_event.set()
+            self.clicked_event.set()
             event.accept()
 
     def quit(self):
@@ -63,9 +70,12 @@ class make_experiment(QMainWindow):
         self.widget_experiments = {'exp': {}, 'preamble': {}}
         ''' pre experiments screen '''
         self.widget_experiments['preamble']['text'] = QLabel(self)
-        self.widget_experiments['preamble']['text'].setText(''' For this experiment you will be shown a reference image and two similar images.
+        self.widget_experiments['preamble']['text'].setText('''
+        For this experiment you will be shown a reference image and two similar images.
 
         You need to click on the image (A or B) which you believe to be most similar to the reference image.
+
+
 
 
         When you are ready, click the Start button to begin the experiment ''')
@@ -138,6 +148,8 @@ class make_experiment(QMainWindow):
             # Find pivot elements such that element smaller than pivot are on the
             # left and elements greater than pivot are on the right
             pi = self.partition(low, high)
+            if self.stop_event.is_set():
+                return
             # Recursive call on the left of pivot
             self._quick_sort(low, pi - 1)
             # Recursive call on the right of pivot
@@ -160,6 +172,8 @@ class make_experiment(QMainWindow):
             # wait for image to be clicked
             self.clicked_event.clear()
             self.clicked_event.wait()
+            if self.stop_event.is_set():
+                return
             if self.less_than_pivot == True:
             # if self.experiment_transforms[self.current_comparision]['brightness'] <= self.pivot['brightness']:
                 # If element smaller than pivot is found swap it with the greater element pointed by i

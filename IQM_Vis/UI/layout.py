@@ -111,6 +111,18 @@ class layout(QMainWindow):
                 graph_controls.addWidget(self.widget_controls[window_name]['button']['next_metric_graph'])
                 range_graph.addLayout(graph_controls)
                 utils.add_layout_to_tab(self.tabs[window_name]['graph'], range_graph, 'Range')
+            if 'correlation' in self.widget_row[window_name][i]['metrics'].keys():
+                correlation_graph = QVBoxLayout()
+                correlation_graph.addWidget(self.widget_row[window_name][i]['metrics']['correlation']['label'])
+                graph = QGridLayout()
+                graph.addWidget(self.widget_row[window_name][i]['metrics']['correlation']['data'], 0, 0, im_height, im_width)
+                correlation_graph.addLayout(graph)  # need for matplotlib? - test this...    (grid)
+                '''graph controls''' # will add to last one since there is one widget to control all
+                graph_controls = QHBoxLayout()
+                graph_controls.addWidget(self.widget_controls[window_name]['button']['prev_correlation_graph'])
+                graph_controls.addWidget(self.widget_controls[window_name]['button']['next_correlation_graph'])
+                correlation_graph.addLayout(graph_controls)
+                utils.add_layout_to_tab(self.tabs[window_name]['graph'], correlation_graph, 'Correlation')
             graph_layouts.addWidget(self.tabs[window_name]['graph'])
             graph_layouts.addStretch()
 

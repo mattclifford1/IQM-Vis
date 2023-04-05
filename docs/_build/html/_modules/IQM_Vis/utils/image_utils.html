@@ -13,9 +13,9 @@
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/nbsphinx-gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/nbsphinx-code-cells.css" type="text/css" />
 
   
   
@@ -32,7 +32,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -87,15 +86,15 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+              <p><span class="caption-text">Getting Started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
+<p><span class="caption-text">Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../Tutorials.html">Tutorials</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<p><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
@@ -175,7 +174,7 @@
 <span class="kn">from</span> <span class="nn">skimage.transform</span> <span class="kn">import</span> <span class="n">resize</span>
 
 <div class="viewcode-block" id="get_transform_image"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.image_utils.get_transform_image">[docs]</a><span class="k">def</span> <span class="nf">get_transform_image</span><span class="p">(</span><span class="n">data_store</span><span class="p">,</span> <span class="n">transform_functions</span><span class="p">,</span> <span class="n">transform_params</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;transform image with image post processing</span>
+    <span class="sd">&#39;&#39;&#39;transform image with image post processing</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        data_store: IQM_Vis data_api</span>
@@ -195,7 +194,7 @@
     <span class="k">return</span> <span class="n">image</span></div>
 
 <div class="viewcode-block" id="load_image"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.image_utils.load_image">[docs]</a><span class="k">def</span> <span class="nf">load_image</span><span class="p">(</span><span class="n">image_path</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    load image as RGB float</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">image_path</span><span class="p">):</span>
@@ -205,7 +204,7 @@
     <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.0</span></div>
 
 <div class="viewcode-block" id="resize_to_longest_side"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.image_utils.resize_to_longest_side">[docs]</a><span class="k">def</span> <span class="nf">resize_to_longest_side</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="mi">128</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    resize image to longest side</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">shape</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">shape</span>
@@ -219,7 +218,7 @@
     <span class="k">return</span> <span class="n">im</span></div>
 
 <div class="viewcode-block" id="resize_image"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.image_utils.resize_image">[docs]</a><span class="k">def</span> <span class="nf">resize_image</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">128</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    resize image to square or specified size</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">tuple</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
@@ -228,7 +227,7 @@
     <span class="k">return</span> <span class="n">im</span></div>
 
 <div class="viewcode-block" id="crop_centre"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.image_utils.crop_centre">[docs]</a><span class="k">def</span> <span class="nf">crop_centre</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">scale_factor</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39; crop to the centre of the image, note this will return a small image size</span>
+    <span class="sd">&#39;&#39;&#39; crop to the centre of the image, note this will return a small image size</span>
 <span class="sd">        so it best used as post processing</span>
 
 <span class="sd">    Args:</span>

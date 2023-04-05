@@ -13,9 +13,9 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
+  <link rel="stylesheet" href="_static/nbsphinx-gallery.css" type="text/css" />
+  <link rel="stylesheet" href="_static/nbsphinx-code-cells.css" type="text/css" />
 
   
   
@@ -32,7 +32,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -87,15 +86,15 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+              <p><span class="caption-text">Getting Started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
+<p><span class="caption-text">Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Tutorials.html">Tutorials</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<p><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
@@ -250,6 +249,8 @@
 </li>
       <li><a href="IQM_Vis.utils.html#IQM_Vis.utils.gui_utils.change_im">change_im() (in module IQM_Vis.utils.gui_utils)</a>
 </li>
+      <li><a href="IQM_Vis.UI.html#IQM_Vis.UI.images.images.change_metric_correlations_graph">change_metric_correlations_graph() (IQM_Vis.UI.images.images method)</a>
+</li>
       <li><a href="IQM_Vis.UI.html#IQM_Vis.UI.images.images.change_metric_range_graph">change_metric_range_graph() (IQM_Vis.UI.images.images method)</a>
 </li>
       <li><a href="IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.change_plot_lims">change_plot_lims() (IQM_Vis.UI.widgets.widgets method)</a>
@@ -274,6 +275,8 @@
 </li>
       <li><a href="IQM_Vis.UI.html#IQM_Vis.UI.images.images.completed_range_results">completed_range_results() (IQM_Vis.UI.images.images method)</a>
 </li>
+      <li><a href="IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.compute_metric_for_human_correlation">compute_metric_for_human_correlation() (in module IQM_Vis.utils.plot_utils)</a>
+</li>
       <li><a href="IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.compute_metrics_over_range">compute_metrics_over_range() (in module IQM_Vis.utils.plot_utils)</a>
 </li>
       <li><a href="IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.compute_metrics_over_range_single_trans">compute_metrics_over_range_single_trans() (in module IQM_Vis.utils.plot_utils)</a>
@@ -295,6 +298,8 @@
       <li><a href="IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api.dataset_holder">dataset_holder (class in IQM_Vis.data_handlers.data_api)</a>
 </li>
       <li><a href="IQM_Vis.UI.html#IQM_Vis.UI.images.images.display_images">display_images() (IQM_Vis.UI.images.images method)</a>
+</li>
+      <li><a href="IQM_Vis.UI.html#IQM_Vis.UI.images.images.display_metric_correlation_plot">display_metric_correlation_plot() (IQM_Vis.UI.images.images method)</a>
 </li>
       <li><a href="IQM_Vis.UI.html#IQM_Vis.UI.images.images.display_metric_images">display_metric_images() (IQM_Vis.UI.images.images method)</a>
 </li>
@@ -360,14 +365,14 @@
 </li>
       <li><a href="IQM_Vis.utils.html#IQM_Vis.utils.gui_utils.get_metric_image_name">get_metric_image_name() (in module IQM_Vis.utils.gui_utils)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api.dataset_holder.get_metric_images">get_metric_images() (IQM_Vis.data_handlers.data_api.dataset_holder method)</a>
 
       <ul>
         <li><a href="IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_metric_images">(IQM_Vis.data_handlers.data_api_abstract.base_dataloader method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api.dataset_holder.get_metrics">get_metrics() (IQM_Vis.data_handlers.data_api.dataset_holder method)</a>
 
       <ul>
@@ -392,6 +397,8 @@
         <li><a href="IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_reference_image_name">(IQM_Vis.data_handlers.data_api_abstract.base_dataloader method)</a>
 </li>
       </ul></li>
+      <li><a href="IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.get_single_transform_im">get_single_transform_im() (IQM_Vis.UI.experiment_mode.make_experiment method)</a>
+</li>
       <li><a href="IQM_Vis.utils.html#IQM_Vis.utils.image_utils.get_transform_image">get_transform_image() (in module IQM_Vis.utils.image_utils)</a>
 </li>
       <li><a href="IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.get_transform_range_plots">get_transform_range_plots() (in module IQM_Vis.utils.plot_utils)</a>
@@ -472,6 +479,13 @@
 
       <ul>
         <li><a href="IQM_Vis.examples.html#module-IQM_Vis.examples.dists">module</a>
+</li>
+      </ul></li>
+      <li>
+    IQM_Vis.examples.experiment
+
+      <ul>
+        <li><a href="IQM_Vis.examples.html#module-IQM_Vis.examples.experiment">module</a>
 </li>
       </ul></li>
       <li>
@@ -669,9 +683,9 @@
 </li>
       <li><a href="IQM_Vis.html#IQM_Vis.ui_wrapper.make_UI">make_UI (class in IQM_Vis.ui_wrapper)</a>
 </li>
-      <li><a href="IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.metric_images">metric_images (IQM_Vis.data_handlers.data_api_abstract.base_dataloader property)</a>
+      <li><a href="IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.metric_images">metric_images() (IQM_Vis.data_handlers.data_api_abstract.base_dataloader property)</a>
 </li>
-      <li><a href="IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.metrics">metrics (IQM_Vis.data_handlers.data_api_abstract.base_dataloader property)</a>
+      <li><a href="IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.metrics">metrics() (IQM_Vis.data_handlers.data_api_abstract.base_dataloader property)</a>
 </li>
       <li>
     module
@@ -692,6 +706,8 @@
         <li><a href="IQM_Vis.examples.html#module-IQM_Vis.examples.dataset">IQM_Vis.examples.dataset</a>
 </li>
         <li><a href="IQM_Vis.examples.html#module-IQM_Vis.examples.dists">IQM_Vis.examples.dists</a>
+</li>
+        <li><a href="IQM_Vis.examples.html#module-IQM_Vis.examples.experiment">IQM_Vis.examples.experiment</a>
 </li>
         <li><a href="IQM_Vis.examples.images.html#module-IQM_Vis.examples.images">IQM_Vis.examples.images</a>
 </li>
@@ -752,6 +768,8 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.partition">partition() (IQM_Vis.UI.experiment_mode.make_experiment method)</a>
+</li>
       <li><a href="IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.bar_plotter.plot">plot() (IQM_Vis.utils.plot_utils.bar_plotter method)</a>
 
       <ul>
@@ -773,6 +791,10 @@
 
 <h2 id="Q">Q</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.quick_sort">quick_sort() (IQM_Vis.UI.experiment_mode.make_experiment method)</a>
+</li>
+  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.quit">quit() (IQM_Vis.UI.experiment_mode.make_experiment method)</a>
 
@@ -798,10 +820,10 @@
 </li>
       <li><a href="IQM_Vis.utils.html#IQM_Vis.utils.image_utils.resize_image">resize_image() (in module IQM_Vis.utils.image_utils)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="IQM_Vis.utils.html#IQM_Vis.utils.image_utils.resize_to_longest_side">resize_to_longest_side() (in module IQM_Vis.utils.image_utils)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.rotation">rotation() (in module IQM_Vis.transformations.transforms)</a>
 </li>
       <li><a href="IQM_Vis.examples.html#IQM_Vis.examples.all.run">run() (in module IQM_Vis.examples.all)</a>
@@ -810,6 +832,8 @@
         <li><a href="IQM_Vis.examples.html#IQM_Vis.examples.dataset.run">(in module IQM_Vis.examples.dataset)</a>
 </li>
         <li><a href="IQM_Vis.examples.html#IQM_Vis.examples.dists.run">(in module IQM_Vis.examples.dists)</a>
+</li>
+        <li><a href="IQM_Vis.examples.html#IQM_Vis.examples.experiment.run">(in module IQM_Vis.examples.experiment)</a>
 </li>
         <li><a href="IQM_Vis.examples.html#IQM_Vis.examples.multiple.run">(in module IQM_Vis.examples.multiple)</a>
 </li>
@@ -854,6 +878,8 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.sort_list">sort_list() (in module IQM_Vis.UI.experiment_mode)</a>
+</li>
       <li><a href="IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.SSIM">SSIM (class in IQM_Vis.metrics.IQMs)</a>
 </li>
       <li><a href="IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.start_experiment">start_experiment() (IQM_Vis.UI.experiment_mode.make_experiment method)</a>
@@ -865,6 +891,8 @@
       <li><a href="IQM_Vis.UI.html#IQM_Vis.UI.images.images.stopped_range_results">stopped_range_results() (IQM_Vis.UI.images.images method)</a>
 </li>
       <li><a href="IQM_Vis.utils.html#IQM_Vis.utils.gui_utils.str_to_len">str_to_len() (in module IQM_Vis.utils.gui_utils)</a>
+</li>
+      <li><a href="IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.swap_inds">swap_inds() (IQM_Vis.UI.experiment_mode.make_experiment method)</a>
 </li>
   </ul></td>
 </tr></table>

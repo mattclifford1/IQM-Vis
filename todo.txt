@@ -1,8 +1,12 @@
 Needs doing:
   - add NLPD
   - add support for inputting human experiment results
-  - add SCATTER plot of correlations
+  ###########################################
+  - add SCATTER plot of correlations (display_metric_correlation_plot)
     - interactive to get which images fail the correlation
+  ###########################################
+
+  - load human experiment data in the visualise tab
 
 UI
   - Export images
@@ -14,15 +18,18 @@ UI
   - Separate metric range plots based on window_name (same range_worker thought?)
 
 
-Experiments:
-  - sort all images RMSE
+Experiment:
+  -
+
   - expose num_steps to experimetnal setup in plot_utils.get_all_slider_values
-  - sorting algorithm
   - store results - good naming structre for images/QLabels
   - save results
   - timer
+  -
 
 minor:
+  - install package correct docs
+
   - fix metric images being stretched (muliptle rows)
   - Option to change screen calibration
   - move redo graphs menu to separete menu tab

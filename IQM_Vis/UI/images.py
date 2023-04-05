@@ -16,6 +16,7 @@ class images:
 
     def __init__(self):
         self.metric_range_graph_num = 0
+        self.metric_correlation_graph_num = 0
         self.init_worker_thread()
 
     def init_worker_thread(self):
@@ -142,7 +143,8 @@ class images:
             self.display_radar_plots()
         if self.metric_range_graph:
             self.display_metric_range_plot()
-
+        if hasattr(self.data_stores[0], 'human_scores'):
+            self.display_metric_correlation_plot()
 
     '''
     metric range plot (line plots of range of all sliders)
@@ -154,10 +156,10 @@ class images:
         for window_name in self.window_names:
             trans_to_plot = all_trans[self.metric_range_graph_num]
             for i, data_store in enumerate(self.data_stores):
-                    if 'range' in self.widget_row[window_name][i]['metrics'].keys():
-                        axes = self.widget_row[window_name][i]['metrics']['range']['data']
-                        plot = plot_utils.get_transform_range_plots(self.metric_over_range_results[i], trans_to_plot, axes, self.plot_data_lim)
-                        plot.show()
+                if 'range' in self.widget_row[window_name][i]['metrics'].keys():
+                    axes = self.widget_row[window_name][i]['metrics']['range']['data']
+                    plot = plot_utils.get_transform_range_plots(self.metric_over_range_results[i], trans_to_plot, axes, self.plot_data_lim)
+                    plot.show()
 
     def change_metric_range_graph(self, add=1):
         max_graph_num = len(list(self.checked_transformations.keys()))
@@ -200,6 +202,34 @@ class images:
                 axes = self.widget_row[window_name][i]['metrics']['avg']['data']
                 radar_plotter = plot_utils.get_radar_plots_avg_plots(results, metrics_names, transformation_names, axes, self.plot_data_lim)
                 radar_plotter.show()
+
+    '''
+    metric correlation plots
+    '''
+    def display_metric_correlation_plot(self):
+        ''' uncomment and finish this off:
+                    - store scores
+                    - only calc scores that havent already been
+                    - plot scatter
+        '''
+        # for window_name in self.window_names:
+        #     for i, data_store in enumerate(self.data_stores):
+        #         scores = plot_utils.compute_metric_for_human_correlation(data_store,
+        #                 self.checked_transformations,
+        #                 self.params_from_sliders[window_name]['metric_params'],
+        #                 data_store.human_scores,
+        #                 self.checked_metrics[self.metric_correlation_graph_num])
+        #         print(scores)
+        pass
+
+    def change_metric_correlations_graph(self, add=1):
+        max_graph_num = len(self.checked_metrics)
+        self.metric_correlation_graph_num += add
+        if self.metric_correlation_graph_num >= max_graph_num:
+            self.metric_correlation_graph_num = max_graph_num - 1
+        elif self.metric_correlation_graph_num < 0:
+            self.metric_correlation_graph_num = 0
+        self.display_metric_correlation_plot()
 
     '''
     metric image updaters
