@@ -59,11 +59,6 @@ class images:
 
             QApplication.processEvents()   # force to change otherwise the UI wont respond
 
-    def update_image_widgets(self):
-        # display images
-        for i in self.widget_row:
-            gui_utils.change_im(self.widgets['image'][key], self.image_data[key], resize=self.image_display_size[window_name])
-
     '''
     metric graph updaters
     '''
