@@ -3,9 +3,7 @@ main entry point to initialise the UI
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 import time
-from PyQt6.QtWidgets import QLabel, QApplication, QCheckBox, QMessageBox
-from PyQt6.QtGui import QIcon, QAction, QCloseEvent
-from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QApplication, QMessageBox
 from IQM_Vis.UI import layout, widgets, images, ProgressBar
 
 class make_app(widgets, layout, images):
@@ -107,7 +105,6 @@ class make_app(widgets, layout, images):
                                        self.menu_options['metrics'],
                                        self.construct_UI)
 
-
     def make_status_bar(self):
         self.status_bar = self.statusBar()
         self.pbar = ProgressBar(self, minimum=0, maximum=100, textVisible=False,
@@ -150,6 +147,16 @@ class make_app(widgets, layout, images):
         else:
             main_tabs_index = 0
 
+        # reset any range/correlation calcs
+        self.metric_range_graph_num = 0
+        self.metric_correlation_graph_num = 0
+        self.correlation_data = {}
+        for window_name in self.window_names:
+            self.correlation_data[window_name] = {}
+            for i, _ in enumerate(self.data_stores):
+                self.correlation_data[window_name][i] = {}
+
+        # init the UI widgets and layouts
         self.init_style()     # layout.py
         self.init_widgets()   # widgets.py
         self.init_layout()    # layout.py
@@ -160,8 +167,10 @@ class make_app(widgets, layout, images):
             # self.experiments_tab.setCurrentIndex(experi_tabs_index)
             self.display_images(window_name) # images.py
             self.reset_sliders(window_name)  # widgets.py
+        
 
         # self.setMinimumSize(self.main_window.sizeHint())
+        self.resize(self.main_window.sizeHint())
 
     def _single_image_or_dataset(self):
         '''set whether dataset or single image used for data_store'''

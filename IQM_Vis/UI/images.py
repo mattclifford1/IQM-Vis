@@ -15,8 +15,6 @@ class images:
     request_range_work = pyqtSignal(dict)
 
     def __init__(self):
-        self.metric_range_graph_num = 0
-        self.metric_correlation_graph_num = 0
         self.init_worker_thread()
 
     def init_worker_thread(self):
@@ -71,6 +69,8 @@ class images:
     change image in dataset
     '''
     def change_data(self, i, window_name):
+        # reset any range/correlation data stored
+        self.correlation_data = {}
         self.data_num += i
         # check the num is legal
         if self.data_num < 0:
@@ -203,19 +203,29 @@ class images:
     '''
     def display_metric_correlation_plot(self):
         ''' uncomment and finish this off:
-                    - store scores
-                    - only calc scores that havent already been
                     - plot scatter
         '''
-        # for window_name in self.window_names:
-        #     for i, data_store in enumerate(self.data_stores):
-        #         scores = plot_utils.compute_metric_for_human_correlation(data_store,
-        #                 self.checked_transformations,
-        #                 self.params_from_sliders[window_name]['metric_params'],
-        #                 data_store.human_scores,
-        #                 self.checked_metrics[self.metric_correlation_graph_num])
-        #         print(scores)
-        pass
+        if self.checked_metrics == []:
+            return
+        metric = self.checked_metrics[self.metric_correlation_graph_num]
+        # calculate the metric values at the human score test values
+        for window_name in self.window_names:
+            # if window_name == 'Experiment':
+            #     continue
+            for i, data_store in enumerate(self.data_stores):
+                if metric not in self.correlation_data[window_name][i].keys():
+                    scores = plot_utils.compute_metric_for_human_correlation(data_store,
+                                            self.checked_transformations,
+                                            self.params_from_sliders[window_name]['metric_params'],
+                                            data_store.human_scores,
+                                            metric)
+                    self.correlation_data[window_name][i][metric] = scores
+                plot = plot_utils.get_correlation_plot(data_store.human_scores, 
+                                                self.correlation_data[window_name][i], 
+                                                self.widget_row[window_name][i]['metrics']['correlation']['data'],
+                                                metric)
+                plot.show()
+
 
     def change_metric_correlations_graph(self, add=1):
         max_graph_num = len(self.checked_metrics)

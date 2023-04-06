@@ -5,20 +5,15 @@ create experiment window
 import os
 import random
 import threading
+import warnings
 
 import numpy as np
-from PyQt6.QtWidgets import QPushButton, QLabel, QSlider, QCheckBox, QComboBox, QLineEdit, QMessageBox
-from PyQt6.QtWidgets import (QWidget,
-                             QMainWindow,
-                             QGridLayout,
+from PyQt6.QtWidgets import QPushButton, QLabel, QMessageBox
+from PyQt6.QtWidgets import (QMainWindow,
                              QHBoxLayout,
                              QVBoxLayout,
-                             QStackedLayout,
-                             QTabWidget,
-                             QWidget,
-                             QApplication)
+                             QTabWidget)
 
-from PyQt6.QtGui import QIntValidator
 from PyQt6.QtCore import Qt
 
 import IQM_Vis

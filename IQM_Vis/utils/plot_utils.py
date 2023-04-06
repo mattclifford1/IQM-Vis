@@ -112,6 +112,36 @@ class radar_plotter:
         self.ax.axes.set_ylim(top= max(self.lim, y_lims[1]))
 
 '''
+scatter plotter on matplotlib qt widget
+'''
+class scatter_plotter:
+    def __init__(self, ax, x_label, y_label, lim=1):
+        self.ax = ax
+        self.ax.axes.clear()
+        self.x_label = x_label
+        self.y_label = y_label
+        self.lim = lim
+    
+    def plot(self, x, y, annotations=None):
+        self.ax.axes.scatter(x, y)
+        if annotations is not None:
+            pass
+
+    def show(self):
+        self.set_style()
+        self.ax.draw()
+
+    def set_style(self):
+        self.ax.axes.set_xlabel(self.x_label)
+        self.ax.axes.set_ylabel(self.y_label)
+        # self.set_plot_lims()
+        self.ax.figure.tight_layout()
+
+    def set_plot_lims(self):
+        y_lims = self.ax.axes.get_ylim()
+        self.ax.axes.set_ylim(top=max(self.lim, y_lims[1]))
+
+'''
 metric averaging functions to get metric values over a range of transformation
 '''
 def get_all_slider_values(transforms, num_steps=10):
@@ -294,3 +324,20 @@ def get_transform_range_plots(results, transform, axes, lim=1):
     for metric in results:
         plot.plot(results[metric][transform]['param_values'], results[metric][transform]['scores'], metric)
     return plot
+
+def get_correlation_plot(human_scores, metric_scores, axes, metric):
+    '''
+    scatter plot for correlations 
+    '''
+    sp = scatter_plotter(axes, 
+                x_label=metric, 
+                y_label='Human Score')
+    x = []
+    y = []
+    labels = []
+    for trans in human_scores:
+        x.append(metric_scores[metric][trans])
+        y.append(human_scores[trans])
+        labels.append(trans)
+    sp.plot(x, y)
+    return sp
