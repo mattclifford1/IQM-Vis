@@ -3,6 +3,8 @@ matplotlib plotting helpers
 TODO: write docs how to use these (currently just have to look at the UI code)
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+from functools import partial
+
 import numpy as np
 from IQM_Vis.utils import image_utils
 
@@ -123,9 +125,9 @@ class scatter_plotter:
         self.lim = lim
     
     def plot(self, x, y, annotations=None):
-        self.ax.axes.scatter(x, y)
+        self.sc = self.ax.axes.scatter(x, y, picker=True)
         if annotations is not None:
-            pass
+            self.annotations = annotations
 
     def show(self):
         self.set_style()
@@ -339,5 +341,50 @@ def get_correlation_plot(human_scores, metric_scores, axes, metric):
         x.append(metric_scores[metric][trans])
         y.append(human_scores[trans])
         labels.append(trans)
-    sp.plot(x, y)
+    sp.plot(x, y, annotations=labels)
+    annot = sp.ax.axes.annotate("", xy=(0, 0), xytext=(0, 0), textcoords="offset points",
+                        bbox=dict(boxstyle="round", fc="w"),
+                        arrowprops=dict(arrowstyle="->")
+                        )
+    
+
+
+    annot.set_visible(False)
+    sp.ax.figure.canvas.mpl_connect(
+        "motion_notify_event", partial(hover_scatter, sp, annot))
+    sp.ax.figure.canvas.mpl_connect(
+        "pick_event", partial(click_scatter, sp))
     return sp
+
+def click_scatter(_plot, event):
+    print(f"Need to impliment moving sliders to {_plot.annotations[0]}")
+
+def hover_scatter(_plot, annot, event):
+    vis = annot.get_visible()
+    # if event.inaxes == _plot.ax.axes:
+    cont, ind = _plot.sc.contains(event)
+    if cont:
+        update_annot(ind, _plot, annot)
+        annot.set_visible(True)
+        _plot.ax.figure.canvas.draw_idle()
+    else:
+        if vis:
+            annot.set_visible(False)
+            _plot.ax.figure.canvas.draw_idle()
+
+
+def update_annot(ind, _plot, annot):
+    pos = _plot.sc.get_offsets()[ind["ind"][0]].copy()
+    xlims = _plot.ax.axes.get_xlim()
+    xlim = xlims[1] - xlims[0]
+    if pos[0] > xlim/2:
+        pos[0] -= xlim/3
+    # else:
+    #     pos[0] += xlim/5
+    annot.xy = pos
+    text = ""
+    for i in ind['ind']:
+        if text != "":
+            text += "\n"
+        text += f"{_plot.annotations[i]}"
+    annot.set_text(text)

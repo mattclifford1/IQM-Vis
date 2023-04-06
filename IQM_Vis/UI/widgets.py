@@ -93,7 +93,7 @@ class widgets():
                 self.widget_row[window_name][i]['metrics']['correlation']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
                 self.widget_row[window_name][i]['metrics']['correlation']['label'].setText('Human Correlation')
                 self.widget_row[window_name][i]['metrics']['correlation']['data'] = gui_utils.MplCanvas(self)
-                self.widget_row[window_name][i]['metrics']['correlation']['data'].setToolTip('Human scores versus IQMs.')
+                self.widget_row[window_name][i]['metrics']['correlation']['label'].setToolTip('Human scores versus IQMs.')
 
 
         '''buttons'''
