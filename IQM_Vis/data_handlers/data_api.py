@@ -75,7 +75,6 @@ class dataset_holder(base_dataset_loader):
         if hasattr(self, 'human_exp_df'):
             if self.image_name in self.human_exp_df.index:
                 self.human_scores = self.human_exp_df.loc[self.image_name].to_dict()
-                print(f'{self.human_scores=}')
 
     def __len__(self):
         return len(self.image_list)
