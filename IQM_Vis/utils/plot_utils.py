@@ -6,7 +6,7 @@ TODO: write docs how to use these (currently just have to look at the UI code)
 from functools import partial
 
 import numpy as np
-from IQM_Vis.utils import image_utils
+from IQM_Vis.utils import image_utils, gui_utils
 
 '''
 plot bar chart on matplotlib qt qidget
@@ -123,7 +123,7 @@ class scatter_plotter:
         self.x_label = x_label
         self.y_label = y_label
         self.lim = lim
-    
+
     def plot(self, x, y, annotations=None):
         self.sc = self.ax.axes.scatter(x, y, picker=True)
         if annotations is not None:
@@ -170,15 +170,13 @@ def get_all_single_transform_params(transforms, num_steps=10):
 def compute_metric_for_human_correlation(data_store, transforms, metric_params, human_scores, metric):
     scores = {}
     for trans_str in human_scores:
-        trans = ' '.join(trans_str.split(' ')[:-1])
-        trans_value = float(trans_str.split(' ')[-1])
+        trans, trans_value = gui_utils.get_trans_dict_from_str(trans_str)
         single_trans = {trans: transforms[trans]}
         single_param_dict = {trans: trans_value}
         trans_im = image_utils.get_transform_image(data_store, single_trans, single_param_dict) # initialse image
         metric_scores = data_store.get_metrics(trans_im, metric, **metric_params)
         scores[trans_str] = metric_scores[metric]
     return scores
-
 
 def compute_metrics_over_range_single_trans(data_store, transforms, metric_params, metrics_to_use, pbar_signal=None, stop_flag=None):
     ''' compute metrics over a range of trans
@@ -327,12 +325,12 @@ def get_transform_range_plots(results, transform, axes, lim=1):
         plot.plot(results[metric][transform]['param_values'], results[metric][transform]['scores'], metric)
     return plot
 
-def get_correlation_plot(human_scores, metric_scores, axes, metric):
+def get_correlation_plot(human_scores, metric_scores, axes, metric, change_trans_value_signal):
     '''
-    scatter plot for correlations 
+    scatter plot for correlations
     '''
-    sp = scatter_plotter(axes, 
-                x_label=metric, 
+    sp = scatter_plotter(axes,
+                x_label=metric,
                 y_label='Human Score')
     x = []
     y = []
@@ -346,18 +344,16 @@ def get_correlation_plot(human_scores, metric_scores, axes, metric):
                         bbox=dict(boxstyle="round", fc="w"),
                         arrowprops=dict(arrowstyle="->")
                         )
-    
-
-
     annot.set_visible(False)
     sp.ax.figure.canvas.mpl_connect(
         "motion_notify_event", partial(hover_scatter, sp, annot))
     sp.ax.figure.canvas.mpl_connect(
-        "pick_event", partial(click_scatter, sp))
+        "pick_event", partial(click_scatter, sp, change_trans_value_signal))
     return sp
 
-def click_scatter(_plot, event):
-    print(f"Need to impliment moving sliders to {_plot.annotations[0]}")
+def click_scatter(_plot, change_trans_value_signal, event):
+    ''' send signal of which data point was clicked '''
+    change_trans_value_signal.emit(_plot.annotations[event.ind[0]])
 
 def hover_scatter(_plot, annot, event):
     vis = annot.get_visible()
@@ -371,7 +367,6 @@ def hover_scatter(_plot, annot, event):
         if vis:
             annot.set_visible(False)
             _plot.ax.figure.canvas.draw_idle()
-
 
 def update_annot(ind, _plot, annot):
     pos = _plot.sc.get_offsets()[ind["ind"][0]].copy()

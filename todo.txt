@@ -1,10 +1,6 @@
 Needs doing:
   - add NLPD
   - add support for inputting human experiment results
-  ###########################################
-  - add SCATTER plot of correlations (display_metric_correlation_plot)
-    - interactive to get which images fail the correlation
-  ###########################################
 
   - load human experiment data in the visualise tab
 
@@ -16,6 +12,9 @@ UI
   - Tool bar
      - luminance calibration
   - Separate metric range plots based on window_name (same range_worker thought?)
+  - save to the class an attr which window tab currently on so 
+    no need to pass around window_name so much
+
 
 
 Experiment:

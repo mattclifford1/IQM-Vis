@@ -13,9 +13,11 @@ from IQM_Vis.utils import gui_utils, plot_utils, image_utils
 # sub class used by IQM_Vis.main.make_app to control all of the image widgets
 class images:
     request_range_work = pyqtSignal(dict)
+    view_correlation_instance = pyqtSignal(str)
 
     def __init__(self):
         self.init_worker_thread()
+        self.view_correlation_instance.connect(self.change_to_specific_trans)
 
     def init_worker_thread(self):
         ''' set up thread for smoother range plot calculation '''
@@ -220,12 +222,12 @@ class images:
                                             data_store.human_scores,
                                             metric)
                     self.correlation_data[window_name][i][metric] = scores
-                plot = plot_utils.get_correlation_plot(data_store.human_scores, 
-                                                self.correlation_data[window_name][i], 
+                plot = plot_utils.get_correlation_plot(data_store.human_scores,
+                                                self.correlation_data[window_name][i],
                                                 self.widget_row[window_name][i]['metrics']['correlation']['data'],
-                                                metric)
+                                                metric,
+                                                self.view_correlation_instance)
                 plot.show()
-
 
     def change_metric_correlations_graph(self, add=1):
         max_graph_num = len(self.checked_metrics)
@@ -235,6 +237,19 @@ class images:
         elif self.metric_correlation_graph_num < 0:
             self.metric_correlation_graph_num = 0
         self.display_metric_correlation_plot()
+
+    def change_to_specific_trans(self, trans_str):
+        trans, trans_value = gui_utils.get_trans_dict_from_str(trans_str)
+        for window_name in self.window_names:
+            for _, slider_group in self.sliders[window_name].items():
+                for key, item_sliders in slider_group.items():
+                    if key == trans:
+                        self.widget_controls[window_name]['slider'][key]['data'].setValue(
+                            int(np.where(self.sliders[window_name]['transforms'][key]['values']==trans_value)[0]))
+                    else:
+                        self.widget_controls[window_name]['slider'][key]['data'].setValue(item_sliders['init_ind'])
+            self.display_images(window_name)
+            self.redo_plots(calc_range=False)
 
     '''
     metric image updaters

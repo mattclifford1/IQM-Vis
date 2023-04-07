@@ -63,6 +63,14 @@ def str_to_len(string, length=5, append_char='0', plus=False):
 def get_metric_image_name(metric, data_store):
     return metric+get_image_pair_name(data_store)
 
+def get_trans_dict_from_str(trans_str, return_dict=False):
+    trans = ' '.join(trans_str.split(' ')[:-1])
+    trans_value = float(trans_str.split(' ')[-1])
+    if return_dict == True:
+        return {trans: trans_value}
+    else:
+        return trans, trans_value
+
 def get_transformed_image_name(data_store):
     return 'T('+data_store.get_image_to_transform_name()+')'
 
