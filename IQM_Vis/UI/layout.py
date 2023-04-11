@@ -4,14 +4,11 @@ UI create layout
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 import os
 import warnings
-from PyQt6.QtWidgets import (QWidget,
-                             QMainWindow,
+from PyQt6.QtWidgets import (QMainWindow,
                              QGridLayout,
                              QHBoxLayout,
                              QVBoxLayout,
-                             QStackedLayout,
-                             QTabWidget,
-                             QWidget)
+                             QTabWidget)
 from IQM_Vis.UI import utils
 
 # sub class used by IQM_Vis.main.make_app to initialise layout of the UI
@@ -50,12 +47,6 @@ class layout(QMainWindow):
         # sizes
         im_width = 10
         im_height = 4
-        button = 1
-        slider_width = 2
-        check_box_width = 1
-        # horizonal start values
-        start_im = button
-        start_controls = 0 # im_width*2+button
         # save window tabs to self
         self.tabs[window_name] = {}
 
@@ -174,8 +165,8 @@ class layout(QMainWindow):
         # reset sliders button
         reset_button = QHBoxLayout()
         reset_button.addWidget(self.widget_controls[window_name]['button']['reset_sliders'])
-        if window_name == 'Experiment':
-            reset_button.addWidget(self.widget_controls[window_name]['button']['launch_exp'])
+        # if window_name == 'Experiment':
+        reset_button.addWidget(self.widget_controls[window_name]['button']['launch_exp'])
         reset_button.addStretch()
 
         '''re calc graphs button'''

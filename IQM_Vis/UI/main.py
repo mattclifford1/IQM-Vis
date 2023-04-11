@@ -29,7 +29,8 @@ class make_app(widgets, layout, images):
         self.data_lims = {'fixed': 1, 'range_data': 1}
         self.plot_data_lim = 1
 
-        self.window_names = ['Visualise', 'Experiment']
+        self.window_names = ['Visualise']
+        # self.window_names = ['Visualise', 'Experiment']
         self.dataset = self._single_image_or_dataset()
         self.setWindowTitle('IQM-Vis')
 

@@ -3,12 +3,12 @@ UI image functions
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 
-import os
 import numpy as np
 from PyQt6.QtWidgets import QApplication
 from PyQt6.QtCore import pyqtSignal, QThread
 import IQM_Vis
 from IQM_Vis.utils import gui_utils, plot_utils, image_utils
+import matplotlib.pyplot as plt
 
 # sub class used by IQM_Vis.main.make_app to control all of the image widgets
 class images:
@@ -70,11 +70,15 @@ class images:
     '''
     change image in dataset
     '''
-    def change_data(self, i, window_name):
+    def change_data(self, ival, window_name):
         # reset any range/correlation data stored
-        self.correlation_data = {}
-        self.data_num += i
-        # check the num is legal
+        for window_name in self.window_names:
+            if hasattr(self, 'correlation_data'):
+                self.correlation_data[window_name] = {}
+                for i, data_store in enumerate(self.data_stores):
+                    self.correlation_data[window_name][i] = {}
+        self.data_num += ival
+        # check the num is within the data limits
         if self.data_num < 0:
             self.data_num = 0
             return
@@ -140,8 +144,7 @@ class images:
             self.display_radar_plots()
         if self.metric_range_graph:
             self.display_metric_range_plot()
-        if hasattr(self.data_stores[0], 'human_scores'):
-            self.display_metric_correlation_plot()
+        self.display_metric_correlation_plot()
 
     '''
     metric range plot (line plots of range of all sliders)
@@ -204,9 +207,6 @@ class images:
     metric correlation plots
     '''
     def display_metric_correlation_plot(self):
-        ''' uncomment and finish this off:
-                    - plot scatter
-        '''
         if self.checked_metrics == []:
             return
         metric = self.checked_metrics[self.metric_correlation_graph_num]
@@ -215,19 +215,26 @@ class images:
             # if window_name == 'Experiment':
             #     continue
             for i, data_store in enumerate(self.data_stores):
-                if metric not in self.correlation_data[window_name][i].keys():
-                    scores = plot_utils.compute_metric_for_human_correlation(data_store,
-                                            self.checked_transformations,
-                                            self.params_from_sliders[window_name]['metric_params'],
-                                            data_store.human_scores,
-                                            metric)
-                    self.correlation_data[window_name][i][metric] = scores
-                plot = plot_utils.get_correlation_plot(data_store.human_scores,
-                                                self.correlation_data[window_name][i],
-                                                self.widget_row[window_name][i]['metrics']['correlation']['data'],
-                                                metric,
-                                                self.view_correlation_instance)
-                plot.show()
+                if hasattr(data_store , 'human_scores'):
+                    # calculate metric at HIQM values (if not already cached)
+                    if metric not in self.correlation_data[window_name][i].keys():
+                        scores = plot_utils.compute_metric_for_human_correlation(data_store,
+                                                self.checked_transformations,
+                                                self.params_from_sliders[window_name]['metric_params'],
+                                                data_store.human_scores,
+                                                metric)
+                        # cache it
+                        self.correlation_data[window_name][i][metric] = scores
+                    plot = plot_utils.get_correlation_plot(data_store.human_scores,
+                                                    self.correlation_data[window_name][i],
+                                                    self.widget_row[window_name][i]['metrics']['correlation']['data'],
+                                                    metric,
+                                                    self.view_correlation_instance)
+                    plot.show()
+                else:
+                    self.widget_row[window_name][i]['metrics']['correlation']['data'].axes.clear()
+                    self.widget_row[window_name][i]['metrics']['correlation']['data'].draw()
+
 
     def change_metric_correlations_graph(self, add=1):
         max_graph_num = len(self.checked_metrics)

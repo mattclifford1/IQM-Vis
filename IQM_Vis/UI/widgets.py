@@ -134,9 +134,9 @@ class widgets():
             self.widget_controls[window_name]['label']['data'] = QLabel(self)
             self.widget_controls[window_name]['label']['data'].setText('Change Image:')
         # launch experiment button
-        if window_name == 'Experiment':
-            self.widget_controls[window_name]['button']['launch_exp'] = QPushButton('Run Experiment', self)
-            self.widget_controls[window_name]['button']['launch_exp'].clicked.connect(partial(self.launch_experiment, window_name))
+        # if window_name == 'Experiment':
+        self.widget_controls[window_name]['button']['launch_exp'] = QPushButton('Run Experiment', self)
+        self.widget_controls[window_name]['button']['launch_exp'].clicked.connect(partial(self.launch_experiment, window_name))
 
 
         '''sliders'''

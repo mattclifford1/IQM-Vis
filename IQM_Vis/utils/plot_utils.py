@@ -52,7 +52,7 @@ class bar_plotter:
 line plot of matplotlib qt widget
 '''
 class line_plotter:
-    def __init__(self, ax, x_label, y_label, lim=1):
+    def __init__(self, ax, x_label='', y_label='', lim=1):
         self.ax = ax
         self.ax.axes.clear()
         self.x_label = x_label
@@ -117,7 +117,7 @@ class radar_plotter:
 scatter plotter on matplotlib qt widget
 '''
 class scatter_plotter:
-    def __init__(self, ax, x_label, y_label, lim=1):
+    def __init__(self, ax, x_label='', y_label='', lim=1):
         self.ax = ax
         self.ax.axes.clear()
         self.x_label = x_label
