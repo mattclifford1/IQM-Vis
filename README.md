@@ -105,8 +105,8 @@ conda activate IQM_Vis
 
 ### Clone repo
 ```
-git clone git@github.com:mattclifford1/IQM_Vis.git
-cd IQM_Vis
+git clone git@github.com:mattclifford1/IQM-Vis.git
+cd IQM-Vis
 ```
 ### Install requirements
 ```

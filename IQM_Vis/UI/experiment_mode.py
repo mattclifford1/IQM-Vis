@@ -15,6 +15,7 @@ from PyQt6.QtWidgets import (QMainWindow,
                              QTabWidget)
 
 from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QShortcut, QKeySequence
 
 import IQM_Vis
 from IQM_Vis.UI.custom_widgets import ClickLabel
@@ -31,8 +32,8 @@ class make_experiment(QMainWindow):
         self.clicked_event = threading.Event()
         self.stop_event = threading.Event()
         self.saved = False
-        self.get_all_images()
         self._init_experiment_window_widgets()
+        self.get_all_images()
         self.experiment_layout()
         self.setCentralWidget(self.experiments_tab)
         # move to centre of the screen
@@ -40,6 +41,9 @@ class make_experiment(QMainWindow):
         cp = self.screen().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
+
+        self.show_all_images()
+        
 
     def closeEvent(self, event):
         # Ask for confirmation if not saved
@@ -62,6 +66,19 @@ class make_experiment(QMainWindow):
     def quit(self):
         self.close()
 
+    def show_all_images(self):
+        self.widget_experiments['preamble']['images'].axes.axis('off')
+        rows = 2
+        cols = int(np.ceil(len(self.experiment_transforms)//rows))
+        for i, trans in enumerate(self.experiment_transforms):
+            ax = self.widget_experiments['preamble']['images'].figure.add_subplot(
+                rows, cols, i+1)
+            ax.imshow(trans['image'])
+            ax.axis('off')
+        # self.widget_experiments['preamble']['images'].figure.tight_layout()
+            # self.widget_experiments['preamble']['images'].axes.imshow(
+            #     trans['image'])
+            
     def get_all_images(self):
         ''' load all transformed images and sort them via MSE '''
         experiment_transforms = plot_utils.get_all_single_transform_params(self.checked_transformations, num_steps=5)
@@ -83,7 +100,7 @@ class make_experiment(QMainWindow):
         # load all images
         self.experiment_transforms = []
         # save all data
-        for single_trans in experiment_transforms:
+        for i, single_trans in enumerate(experiment_transforms):
             trans_name = list(single_trans.keys())[0]
             param = single_trans[trans_name]
             img = self.get_single_transform_im(single_trans)
@@ -108,9 +125,12 @@ class make_experiment(QMainWindow):
         self.widget_experiments['preamble']['start_button'] = QPushButton('Start', self)
         self.running_experiment = False
         self.widget_experiments['preamble']['start_button'].clicked.connect(self.toggle_experiment)
+        self.widget_experiments['preamble']['images'] = gui_utils.MplCanvas(self)
 
         self.widget_experiments['exp']['quit_button'] = QPushButton('Quit', self)
         self.widget_experiments['exp']['quit_button'].clicked.connect(self.quit)
+        QShortcut(QKeySequence("Ctrl+Q"),
+                  self.widget_experiments['exp']['quit_button'], self.quit)
 
         ''' images '''
         for image in ['Reference', 'A', 'B']:
@@ -123,6 +143,7 @@ class make_experiment(QMainWindow):
         self.widget_experiments['exp']['A']['data'].clicked.connect(self.clicked_image)
         self.widget_experiments['exp']['B']['data'].clicked.connect(self.clicked_image)
 
+    ''' experiment running functions'''
     def toggle_experiment(self):
         if self.running_experiment:
             self.reset_experiment()
@@ -231,6 +252,7 @@ class make_experiment(QMainWindow):
         gui_utils.change_im(self.widget_experiments['exp']['B']['data'], B, resize=self.image_display_size)
         self.widget_experiments['exp']['B']['data'].setObjectName(f'{self.data_store.get_reference_image_name()}-{make_name_for_trans(B_trans)}')
 
+    ''' UI '''
     def init_style(self, style='light', css_file=None):
         if css_file == None:
             dir = os.path.dirname(os.path.abspath(__file__))
@@ -249,6 +271,7 @@ class make_experiment(QMainWindow):
         experiment_mode_info.addWidget(self.widget_experiments['preamble']['text'])
         experiment_mode_info.addWidget(self.widget_experiments['preamble']['start_button'])
         experiment_mode_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        experiment_mode_info.addWidget(self.widget_experiments['preamble']['images'])
 
 
         # experiment
