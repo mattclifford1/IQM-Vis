@@ -233,6 +233,8 @@ class images:
                     plot.show()
                 else:
                     self.widget_row[window_name][i]['metrics']['correlation']['data'].axes.clear()
+                    self.widget_row[window_name][i]['metrics']['correlation']['data'].axes.text(
+                        0.5, 0.5, 'No Human Scores Provided', horizontalalignment='center', verticalalignment='center')
                     self.widget_row[window_name][i]['metrics']['correlation']['data'].draw()
 
 

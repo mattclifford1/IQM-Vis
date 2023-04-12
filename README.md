@@ -90,7 +90,10 @@ IQM_Vis.examples.multiple.run()
 # Quick testing with our web version
 To use a stripped down version of the application, feel free to first use our [web version](https://huggingface.co/spaces/mattclifford1/IQM-Vis). Here you can upload your own image and choose from a selection of transformations and metrics.
 
-# Dev Setup
+# Dev Setup (only use if editting the package)
+See the [installation](https://github.com/mattclifford1/IQM-Vis#installation) section if you are just using IQM-Vis.
+
+### Python Environment
 First create a new python venv, eg. using conda
 ```
 conda create -n IQM_Vis python=3.9
@@ -99,24 +102,26 @@ Activate env:
 ```
 conda activate IQM_Vis
 ```
-Clone repo
+
+### Clone repo
 ```
 git clone git@github.com:mattclifford1/IQM_Vis.git
 cd IQM_Vis
 ```
-Install requirements
+### Install requirements
 ```
 pip install -r requirements-dev.txt
 ```
-Install package in editable mode
+### Install IQM-Vis in editable mode
 ```
 pip install -e .
 ```
-Run MWEs
+### Run MWEs
 ```
-python IQM_Vis/examples/simple.py
-python IQM_Vis/examples/multiple.py
+python IQM_Vis/examples/dataset.py
 ```
+
+### Extras
 To be able to generate documentation you will also need pandoc bins via:
 ```
 conda install pandoc

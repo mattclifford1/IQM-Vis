@@ -31,6 +31,7 @@ class make_experiment(QMainWindow):
         self.clicked_event = threading.Event()
         self.stop_event = threading.Event()
         self.saved = False
+        self.get_all_images()
         self._init_experiment_window_widgets()
         self.experiment_layout()
         self.setCentralWidget(self.experiments_tab)
@@ -60,6 +61,36 @@ class make_experiment(QMainWindow):
 
     def quit(self):
         self.close()
+
+    def get_all_images(self):
+        ''' load all transformed images and sort them via MSE '''
+        experiment_transforms = plot_utils.get_all_single_transform_params(self.checked_transformations, num_steps=5)
+        self.ref_image = self.data_store.get_reference_image()
+        # get MSE for experiments to get a rough sorting
+        mses = []
+        mse = IQM_Vis.IQMs.MSE()
+        for trans in experiment_transforms:
+            mses.append(
+                mse(self.ref_image, self.get_single_transform_im(trans)))
+        # put median MSE at the end (best for quick sort)
+        experiment_transforms = sort_list(
+            experiment_transforms, mses)  # sort array
+        # take median out and get random shuffle for the rest
+        median = experiment_transforms.pop(
+            len(experiment_transforms)//2)
+        random.shuffle(experiment_transforms)
+        experiment_transforms.append(median)
+        # load all images
+        self.experiment_transforms = []
+        # save all data
+        for single_trans in experiment_transforms:
+            trans_name = list(single_trans.keys())[0]
+            param = single_trans[trans_name]
+            img = self.get_single_transform_im(single_trans)
+            data = {'transform_name': trans_name,
+                    'transform_value': param,
+                    'image': img}
+            self.experiment_transforms.append(data)
 
     def _init_experiment_window_widgets(self):
         self.widget_experiments = {'exp': {}, 'preamble': {}}
@@ -111,22 +142,10 @@ class make_experiment(QMainWindow):
     def start_experiment(self):
         self.init_style('dark')
         self.experiments_tab.setCurrentIndex(1)
-        experiment_transforms = plot_utils.get_all_single_transform_params(self.checked_transformations, num_steps=5)
 
-        ''' quick proto type to display some images '''
-        ref = self.data_store.get_reference_image()
-        gui_utils.change_im(self.widget_experiments['exp']['Reference']['data'], ref, resize=self.image_display_size)
+        # Display reference image
+        gui_utils.change_im(self.widget_experiments['exp']['Reference']['data'], self.ref_image, resize=self.image_display_size)
 
-        # get MSE for experiments to get a rough sorting
-        mses = []
-        mse = IQM_Vis.IQMs.MSE()
-        for trans in experiment_transforms:
-            mses.append(mse(ref, self.get_single_transform_im(trans)))
-        # put median MSE at the end (best for quick sort)
-        self.experiment_transforms = sort_list(experiment_transforms, mses) # sort array
-        median = self.experiment_transforms.pop(len(self.experiment_transforms)//2)
-        random.shuffle(self.experiment_transforms)
-        self.experiment_transforms.append(median)
         # get user sorting
         self.sorting_thread = threading.Thread(target=self.quick_sort)
         self.sorting_thread.start()
@@ -136,7 +155,8 @@ class make_experiment(QMainWindow):
     def quick_sort(self):
         self._quick_sort(0, len(self.experiment_transforms)-1)
         print('Finished sort!')
-        print(self.experiment_transforms)
+        for trans in self.experiment_transforms:
+            print(trans['transform_name'], trans['transform_value'])
 
     def _quick_sort(self, low, high):
         if low < high:
@@ -185,9 +205,11 @@ class make_experiment(QMainWindow):
 
     def clicked_image(self, image_name, widget_name):
         trans_str = image_name[len(self.data_store.get_reference_image_name())+1:]
-        if trans_str != str(self.pivot): # lower value
+        if trans_str != make_name_for_trans(self.pivot): # lower value
             # If element smaller than pivot is found swap it with the greater element pointed by i
             self.less_than_pivot = True
+        else:
+            self.less_than_pivot = False
         # unlock the wait
         self.clicked_event.set()
 
@@ -201,13 +223,13 @@ class make_experiment(QMainWindow):
                                         single_trans_dict)
 
     def change_experiment_images(self, A_trans, B_trans):
-        A = self.get_single_transform_im(A_trans)
-        B = self.get_single_transform_im(B_trans)
+        A = A_trans['image']
+        B = B_trans['image']
 
         gui_utils.change_im(self.widget_experiments['exp']['A']['data'], A, resize=self.image_display_size)
-        self.widget_experiments['exp']['A']['data'].setObjectName(f'{self.data_store.get_reference_image_name()}-{A_trans}')
+        self.widget_experiments['exp']['A']['data'].setObjectName(f'{self.data_store.get_reference_image_name()}-{make_name_for_trans(A_trans)}')
         gui_utils.change_im(self.widget_experiments['exp']['B']['data'], B, resize=self.image_display_size)
-        self.widget_experiments['exp']['B']['data'].setObjectName(f'{self.data_store.get_reference_image_name()}-{B_trans}')
+        self.widget_experiments['exp']['B']['data'].setObjectName(f'{self.data_store.get_reference_image_name()}-{make_name_for_trans(B_trans)}')
 
     def init_style(self, style='light', css_file=None):
         if css_file == None:
@@ -273,3 +295,6 @@ def sort_list(list1, list2):
     for i in inds:
         sorted_list1.append(list1[i])
     return sorted_list1
+
+def make_name_for_trans(trans):
+    return f"{trans['transform_name']}-{trans['transform_value']}"

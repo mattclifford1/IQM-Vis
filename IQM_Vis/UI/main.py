@@ -10,7 +10,7 @@ class make_app(widgets, layout, images):
     def __init__(self, app,
                 data_stores: list,
                 transformations: dict,
-                metrics_info_format='graph',    # graph or text
+                metrics_info_format='graph', # graph or text
                 metrics_avg_graph=False,
                 metric_range_graph=True,
                 metric_params: dict={},
