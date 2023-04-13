@@ -9,7 +9,7 @@ from PyQt6.QtWidgets import (QMainWindow,
                              QHBoxLayout,
                              QVBoxLayout,
                              QTabWidget,
-                             QLabel)
+                             QWidget)
 from IQM_Vis.UI import utils
 
 # sub class used by IQM_Vis.main.make_app to initialise layout of the UI
@@ -22,7 +22,7 @@ class layout(QMainWindow):
     def init_layout(self):
         self.tabs = {}
         self._init_generic_layout()
-        self.main_widget = QLabel()
+        self.main_widget = QWidget()
         self.main_widget.setLayout(self.main_layout)
         self.setCentralWidget(self.main_widget)
         self.show()
