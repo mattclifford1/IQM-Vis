@@ -8,7 +8,6 @@ from PyQt6.QtWidgets import QApplication
 from PyQt6.QtCore import pyqtSignal, QThread
 import IQM_Vis
 from IQM_Vis.utils import gui_utils, plot_utils, image_utils
-import matplotlib.pyplot as plt
 
 # sub class used by IQM_Vis.main.make_app to control all of the image widgets
 class images:
@@ -104,7 +103,6 @@ class images:
             self.display_metrics_text(metrics, i)
 
     def display_metrics_graph(self, metrics, i):
-        print(metrics)
         bar_plt = plot_utils.bar_plotter(bar_names=[''],
                                         var_names=list(metrics.keys()),
                                         ax=self.widget_row[i]['metrics']['info']['data'],

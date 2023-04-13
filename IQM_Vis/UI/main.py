@@ -35,7 +35,6 @@ class make_app(widgets, layout, images):
         self.make_status_bar()
         self.make_menu()
 
-
         self.widget_settings = {}
         self.image_display_size = {}
         self.image_display_size = image_display_size
@@ -132,7 +131,6 @@ class make_app(widgets, layout, images):
         ''' update these '''
         # get any current tabs showing so we can keep them showing on a remake
         tabs_index = {}
-        tabs_index = {}
         if hasattr(self, 'tabs'):
             tabs_index['slider'] = self.tabs['slider'].currentIndex()
             tabs_index['graph'] = self.tabs['graph'].currentIndex()
@@ -140,10 +138,9 @@ class make_app(widgets, layout, images):
             tabs_index['slider'] = 0
             tabs_index['graph'] = 1
 
-        # reset any range/correlation calcs
+        # reset any range/correlation calc cache
         self.metric_range_graph_num = 0
         self.metric_correlation_graph_num = 0
-        self.correlation_data = {}
         self.correlation_data = {}
         for i, _ in enumerate(self.data_stores):
             self.correlation_data[i] = {}
@@ -157,7 +154,6 @@ class make_app(widgets, layout, images):
         # self.experiments_tab.setCurrentIndex(experi_tabs_index)
         self.display_images() # images.py
         self.reset_sliders()  # widgets.py
-        
 
         # self.setMinimumSize(self.main_widget.sizeHint())
         self.resize(self.main_widget.sizeHint())

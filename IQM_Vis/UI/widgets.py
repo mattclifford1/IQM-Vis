@@ -23,10 +23,10 @@ class widgets():
         self.sliders = {}
         self.widget_row = {}
         self.params_from_sliders = {}
-        self._init_generic_widgets()
+        self.init_widgets()
         self.set_image_name_text()
 
-    def _init_generic_widgets(self):
+    def init_widgets(self):
         '''
         create all the widgets we need and init params
         '''
@@ -86,13 +86,12 @@ class widgets():
                 self.widget_row[i]['metrics']['range']['label'].setText('Response Profiles')
                 self.widget_row[i]['metrics']['range']['data'] = gui_utils.MplCanvas(self)
                 self.widget_row[i]['metrics']['range']['data'].setToolTip('Single tranformation value range for all metrics.')
-            if hasattr(data_store, 'human_scores'):
-                self.widget_row[i]['metrics']['correlation'] = {}
-                self.widget_row[i]['metrics']['correlation']['label'] = QLabel(self)
-                self.widget_row[i]['metrics']['correlation']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-                self.widget_row[i]['metrics']['correlation']['label'].setText('Human Correlation')
-                self.widget_row[i]['metrics']['correlation']['data'] = gui_utils.MplCanvas(self)
-                self.widget_row[i]['metrics']['correlation']['label'].setToolTip('Human scores versus IQMs.')
+            self.widget_row[i]['metrics']['correlation'] = {}
+            self.widget_row[i]['metrics']['correlation']['label'] = QLabel(self)
+            self.widget_row[i]['metrics']['correlation']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+            self.widget_row[i]['metrics']['correlation']['label'].setText('Human Correlation')
+            self.widget_row[i]['metrics']['correlation']['data'] = gui_utils.MplCanvas(self)
+            self.widget_row[i]['metrics']['correlation']['label'].setToolTip('Human scores versus IQMs.')
 
 
         '''buttons'''
@@ -117,12 +116,11 @@ class widgets():
             self.widget_controls['button']['next_metric_graph'].clicked.connect(partial(self.change_metric_range_graph, 1))
             self.widget_controls['button']['prev_metric_graph'] = QPushButton('<-', self)
             self.widget_controls['button']['prev_metric_graph'].clicked.connect(partial(self.change_metric_range_graph, -1))
-        if hasattr(data_store, 'human_scores'):
-            # buttons to control which correlation graph to show
-            self.widget_controls['button']['next_correlation_graph'] = QPushButton('->', self)
-            self.widget_controls['button']['next_correlation_graph'].clicked.connect(partial(self.change_metric_correlations_graph, 1))
-            self.widget_controls['button']['prev_correlation_graph'] = QPushButton('<-', self)
-            self.widget_controls['button']['prev_correlation_graph'].clicked.connect(partial(self.change_metric_correlations_graph, -1))
+        # buttons to control which correlation graph to show
+        self.widget_controls['button']['next_correlation_graph'] = QPushButton('->', self)
+        self.widget_controls['button']['next_correlation_graph'].clicked.connect(partial(self.change_metric_correlations_graph, 1))
+        self.widget_controls['button']['prev_correlation_graph'] = QPushButton('<-', self)
+        self.widget_controls['button']['prev_correlation_graph'].clicked.connect(partial(self.change_metric_correlations_graph, -1))
 
         if self.dataset:
             # control what image is used from the dataset
