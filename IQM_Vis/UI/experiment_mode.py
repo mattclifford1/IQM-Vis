@@ -68,16 +68,15 @@ class make_experiment(QMainWindow):
 
     def show_all_images(self):
         self.widget_experiments['preamble']['images'].axes.axis('off')
-        rows = 2
+        rows = int(len(self.experiment_transforms)**0.5)
         cols = int(np.ceil(len(self.experiment_transforms)/rows))
         for i, trans in enumerate(self.experiment_transforms):
             ax = self.widget_experiments['preamble']['images'].figure.add_subplot(
                 rows, cols, i+1)
             ax.imshow(trans['image'])
             ax.axis('off')
-        # self.widget_experiments['preamble']['images'].figure.tight_layout()
-            # self.widget_experiments['preamble']['images'].axes.imshow(
-            #     trans['image'])
+            ax.set_title(make_name_for_trans(trans), fontsize=6)
+        self.widget_experiments['preamble']['images'].figure.tight_layout()
             
     def get_all_images(self):
         ''' load all transformed images and sort them via MSE '''
@@ -100,7 +99,7 @@ class make_experiment(QMainWindow):
         # load all images
         self.experiment_transforms = []
         # save all data
-        for i, single_trans in enumerate(experiment_transforms):
+        for single_trans in experiment_transforms:
             trans_name = list(single_trans.keys())[0]
             param = single_trans[trans_name]
             img = self.get_single_transform_im(single_trans)
@@ -125,7 +124,7 @@ class make_experiment(QMainWindow):
         self.widget_experiments['preamble']['start_button'] = QPushButton('Start', self)
         self.running_experiment = False
         self.widget_experiments['preamble']['start_button'].clicked.connect(self.toggle_experiment)
-        self.widget_experiments['preamble']['images'] = gui_utils.MplCanvas(self)
+        self.widget_experiments['preamble']['images'] = gui_utils.MplCanvas(size=None)
 
         self.widget_experiments['exp']['quit_button'] = QPushButton('Quit', self)
         self.widget_experiments['exp']['quit_button'].clicked.connect(self.quit)

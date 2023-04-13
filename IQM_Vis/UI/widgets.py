@@ -66,7 +66,7 @@ class widgets():
             self.widget_row[i]['metrics']['info']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.widget_row[i]['metrics']['info']['label'].setText('Metrics '+im_pair_name)
             if self.metrics_info_format == 'graph':
-                self.widget_row[i]['metrics']['info']['data'] = gui_utils.MplCanvas(self)
+                self.widget_row[i]['metrics']['info']['data'] = gui_utils.MplCanvas()
             else:
                 self.widget_row[i]['metrics']['info']['data'] = QLabel(self)
                 self.widget_row[i]['metrics']['info']['data'].setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -77,20 +77,20 @@ class widgets():
                 self.widget_row[i]['metrics']['avg']['label'] = QLabel(self)
                 self.widget_row[i]['metrics']['avg']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
                 self.widget_row[i]['metrics']['avg']['label'].setText('IQM Averages')
-                self.widget_row[i]['metrics']['avg']['data'] = gui_utils.MplCanvas(self, polar=True)
+                self.widget_row[i]['metrics']['avg']['data'] = gui_utils.MplCanvas(polar=True)
                 self.widget_row[i]['metrics']['avg']['data'].setToolTip('Mean metric value over the range of each transform.')
             if self.metric_range_graph:
                 self.widget_row[i]['metrics']['range'] = {}
                 self.widget_row[i]['metrics']['range']['label'] = QLabel(self)
                 self.widget_row[i]['metrics']['range']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
                 self.widget_row[i]['metrics']['range']['label'].setText('Response Profiles')
-                self.widget_row[i]['metrics']['range']['data'] = gui_utils.MplCanvas(self)
+                self.widget_row[i]['metrics']['range']['data'] = gui_utils.MplCanvas()
                 self.widget_row[i]['metrics']['range']['data'].setToolTip('Single tranformation value range for all metrics.')
             self.widget_row[i]['metrics']['correlation'] = {}
             self.widget_row[i]['metrics']['correlation']['label'] = QLabel(self)
             self.widget_row[i]['metrics']['correlation']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.widget_row[i]['metrics']['correlation']['label'].setText('Human Correlation')
-            self.widget_row[i]['metrics']['correlation']['data'] = gui_utils.MplCanvas(self)
+            self.widget_row[i]['metrics']['correlation']['data'] = gui_utils.MplCanvas()
             self.widget_row[i]['metrics']['correlation']['label'].setToolTip('Human scores versus IQMs.')
 
 
