@@ -36,6 +36,7 @@ class make_experiment(QMainWindow):
         self.get_all_images()
         self.experiment_layout()
         self.setCentralWidget(self.experiments_tab)
+        self.setWindowTitle('Experiment')
         # move to centre of the screen
         qr = self.frameGeometry()
         cp = self.screen().availableGeometry().center()
@@ -51,7 +52,8 @@ class make_experiment(QMainWindow):
             answer = QMessageBox.question(self,
             "Confirm Exit...",
             "Are you sure you want to exit?\nAll unsaved data will be lost.",
-            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+            QMessageBox.StandardButton.No | QMessageBox.StandardButton.Yes, 
+                                          QMessageBox.StandardButton.Yes)
         else:
             answer = QMessageBox.StandardButton.Yes
 
@@ -130,6 +132,10 @@ class make_experiment(QMainWindow):
         self.widget_experiments['exp']['quit_button'].clicked.connect(self.quit)
         QShortcut(QKeySequence("Ctrl+Q"),
                   self.widget_experiments['exp']['quit_button'], self.quit)
+        self.widget_experiments['preamble']['quit_button'] = QPushButton('Quit', self)
+        self.widget_experiments['preamble']['quit_button'].clicked.connect(self.quit)
+        QShortcut(QKeySequence("Ctrl+Q"),
+                  self.widget_experiments['preamble']['quit_button'], self.quit)
 
         ''' images '''
         for image in ['Reference', 'A', 'B']:
@@ -266,11 +272,16 @@ class make_experiment(QMainWindow):
     def experiment_layout(self):
 
         # info
+        experiment_mode_buttons = QHBoxLayout()
+        experiment_mode_buttons.addWidget(self.widget_experiments['preamble']['start_button'])
+        experiment_mode_buttons.addWidget(self.widget_experiments['preamble']['quit_button'])
+
         experiment_mode_info = QVBoxLayout()
         experiment_mode_info.addWidget(self.widget_experiments['preamble']['text'])
-        experiment_mode_info.addWidget(self.widget_experiments['preamble']['start_button'])
         experiment_mode_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
         experiment_mode_info.addWidget(self.widget_experiments['preamble']['images'])
+        experiment_mode_info.addLayout(experiment_mode_buttons)
+
 
 
         # experiment

@@ -72,7 +72,8 @@ class make_app(widgets, layout, images):
         answer = QMessageBox.question(self,
         "Confirm Exit...",
         "Are you sure you want to exit?\nAll unsaved data will be lost.",
-        QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+                                      QMessageBox.StandardButton.Yes)
 
         event.ignore()
         if answer == QMessageBox.StandardButton.Yes:
