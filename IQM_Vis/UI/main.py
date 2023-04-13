@@ -29,8 +29,6 @@ class make_app(widgets, layout, images):
         self.data_lims = {'fixed': 1, 'range_data': 1}
         self.plot_data_lim = 1
 
-        self.window_names = ['Visualise']
-        # self.window_names = ['Visualise', 'Experiment']
         self.dataset = self._single_image_or_dataset()
         self.setWindowTitle('IQM-Vis')
 
@@ -40,9 +38,8 @@ class make_app(widgets, layout, images):
 
         self.widget_settings = {}
         self.image_display_size = {}
-        for window_name in self.window_names:
-            self.image_display_size[window_name] = image_display_size
-            self._init_image_settings(window_name)
+        self.image_display_size = image_display_size
+        self._init_image_settings()
         self.construct_UI()
 
     def make_menu(self):
@@ -135,43 +132,35 @@ class make_app(widgets, layout, images):
         ''' update these '''
         # get any current tabs showing so we can keep them showing on a remake
         tabs_index = {}
-        for window_name in self.window_names:
-            tabs_index[window_name] = {}
-            if hasattr(self, 'tabs'):
-                tabs_index[window_name]['slider'] = self.tabs[window_name]['slider'].currentIndex()
-                tabs_index[window_name]['graph'] = self.tabs[window_name]['graph'].currentIndex()
-            else:
-                tabs_index[window_name]['slider'] = 0
-                tabs_index[window_name]['graph'] = 1
-        if hasattr(self, 'main_window'):
-            main_tabs_index = self.main_window.currentIndex()
+        tabs_index = {}
+        if hasattr(self, 'tabs'):
+            tabs_index['slider'] = self.tabs['slider'].currentIndex()
+            tabs_index['graph'] = self.tabs['graph'].currentIndex()
         else:
-            main_tabs_index = 0
+            tabs_index['slider'] = 0
+            tabs_index['graph'] = 1
 
         # reset any range/correlation calcs
         self.metric_range_graph_num = 0
         self.metric_correlation_graph_num = 0
         self.correlation_data = {}
-        for window_name in self.window_names:
-            self.correlation_data[window_name] = {}
-            for i, _ in enumerate(self.data_stores):
-                self.correlation_data[window_name][i] = {}
+        self.correlation_data = {}
+        for i, _ in enumerate(self.data_stores):
+            self.correlation_data[i] = {}
 
         # init the UI widgets and layouts
         self.init_style()     # layout.py
         self.init_widgets()   # widgets.py
         self.init_layout()    # layout.py
-        self.main_window.setCurrentIndex(main_tabs_index)
-        for window_name in self.window_names:
-            self.tabs[window_name]['slider'].setCurrentIndex(tabs_index[window_name]['slider'])
-            self.tabs[window_name]['graph'].setCurrentIndex(tabs_index[window_name]['graph'])
-            # self.experiments_tab.setCurrentIndex(experi_tabs_index)
-            self.display_images(window_name) # images.py
-            self.reset_sliders(window_name)  # widgets.py
+        self.tabs['slider'].setCurrentIndex(tabs_index['slider'])
+        self.tabs['graph'].setCurrentIndex(tabs_index['graph'])
+        # self.experiments_tab.setCurrentIndex(experi_tabs_index)
+        self.display_images() # images.py
+        self.reset_sliders()  # widgets.py
         
 
-        # self.setMinimumSize(self.main_window.sizeHint())
-        self.resize(self.main_window.sizeHint())
+        # self.setMinimumSize(self.main_widget.sizeHint())
+        self.resize(self.main_widget.sizeHint())
 
     def _single_image_or_dataset(self):
         '''set whether dataset or single image used for data_store'''

@@ -11,9 +11,7 @@ UI
     -  graphs
   - Tool bar
      - luminance calibration
-  - Separate metric range plots based on window_name (same range_worker thought?)
   - save to the class an attr which window tab currently on so 
-    no need to pass around window_name so much
 
 
 
@@ -38,6 +36,5 @@ minor:
 
 
 CODE styling
-  - make the whole self.window_names setup more polished
   - make a base class for QMainWindow for each window with set style, close event etc.
   - make a deepcopy of datastore for experiments
