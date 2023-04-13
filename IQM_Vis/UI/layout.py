@@ -180,17 +180,27 @@ class layout(QMainWindow):
         image_left_side = QVBoxLayout()
         image_left_side.addLayout(image_layouts)
         image_left_side.addLayout(dataset_layout)
-        image_left_side.addWidget(self.tabs[window_name]['slider'])
-        image_left_side.addLayout(reset_button)
         image_middle = QVBoxLayout()
         image_middle.addLayout(metric_layouts)
+
+        all_images = QHBoxLayout()
+        all_images.addLayout(image_left_side)
+        all_images.addLayout(image_middle)
+
+        controls = QVBoxLayout()
+        controls.addWidget(self.tabs[window_name]['slider'])
+        controls.addLayout(reset_button)
+
+        images_plus_controls = QVBoxLayout()
+        images_plus_controls.addLayout(all_images)
+        images_plus_controls.addLayout(controls)
+
         graph_right = QVBoxLayout()
         graph_right.addLayout(graph_layouts)
         graph_right.addLayout(graph_button)
 
         self.main_layouts[window_name] = QHBoxLayout()
-        self.main_layouts[window_name].addLayout(image_left_side)
-        self.main_layouts[window_name].addLayout(image_middle)
+        self.main_layouts[window_name].addLayout(images_plus_controls)
         self.main_layouts[window_name].addLayout(graph_right)
 
         # self.main_layouts[window_name].setColumnStretch(1, 1)

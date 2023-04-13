@@ -69,7 +69,7 @@ class make_experiment(QMainWindow):
     def show_all_images(self):
         self.widget_experiments['preamble']['images'].axes.axis('off')
         rows = 2
-        cols = int(np.ceil(len(self.experiment_transforms)//rows))
+        cols = int(np.ceil(len(self.experiment_transforms)/rows))
         for i, trans in enumerate(self.experiment_transforms):
             ax = self.widget_experiments['preamble']['images'].figure.add_subplot(
                 rows, cols, i+1)
