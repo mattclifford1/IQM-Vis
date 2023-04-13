@@ -56,7 +56,7 @@ class images:
             metric_images = data_store.get_metric_images(trans_im, self.checked_metric_images, **self.params_from_sliders['metric_params'])
             self.display_metric_images(metric_images, i)
 
-            QApplication.processEvents()   # force to change otherwise the UI wont respond
+            QApplication.processEvents()   # make figures become the correct size
 
     '''
     metric graph updaters
