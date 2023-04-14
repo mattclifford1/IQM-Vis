@@ -3,6 +3,7 @@ main entry point to initialise the UI
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 import time
+from functools import partial
 from PyQt6.QtWidgets import QApplication, QMessageBox
 from IQM_Vis.UI import layout, widgets, images, ProgressBar
 
@@ -52,7 +53,7 @@ class make_app(widgets, layout, images):
         reload_action.setShortcut('Ctrl+R')
         reload_action.setStatusTip('')
         # reload_action.triggered.connect(self.display_images)
-        reload_action.triggered.connect(self.redo_plots)
+        reload_action.triggered.connect(partial(self.redo_plots, True))
 
         quit_action.setShortcut('Ctrl+Q')
         quit_action.setStatusTip('Exit application')
