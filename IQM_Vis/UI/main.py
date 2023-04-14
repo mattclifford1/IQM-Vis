@@ -153,7 +153,7 @@ class make_app(widgets, layout, images):
         self.tabs['slider'].setCurrentIndex(tabs_index['slider'])
         self.tabs['graph'].setCurrentIndex(tabs_index['graph'])
         # self.experiments_tab.setCurrentIndex(experi_tabs_index)
-        self.display_images() # images.py
+        self.set_image_name_text()  # images.py
         self.reset_sliders()  # widgets.py
 
         # self.setMinimumSize(self.main_widget.sizeHint())
