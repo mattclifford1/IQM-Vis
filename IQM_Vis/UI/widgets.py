@@ -358,6 +358,8 @@ class widgets():
     def launch_experiment(self):
         self.experiment = IQM_Vis.UI.make_experiment(self.checked_transformations,
                                                      self.data_stores[0],
-                                                     self.image_display_size)
+                                                     self.image_display_size,
+                                                     self.rgb_brightness,
+                                                     self.display_brightness)
         self.experiment.show()
         self.experiment.showFullScreen()

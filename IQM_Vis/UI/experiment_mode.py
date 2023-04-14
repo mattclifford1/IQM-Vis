@@ -24,11 +24,18 @@ from IQM_Vis.utils import gui_utils, plot_utils, image_utils
 
 
 class make_experiment(QMainWindow):
-    def __init__(self, checked_transformations, data_store, image_display_size):
+    def __init__(self, 
+                 checked_transformations, 
+                 data_store, 
+                 image_display_size,
+                 rgb_brightness,
+                 display_brightness):
         super().__init__()
         self.checked_transformations = checked_transformations
         self.data_store = data_store
         self.image_display_size = image_display_size
+        self.rgb_brightness = rgb_brightness
+        self.display_brightness = display_brightness
         self.clicked_event = threading.Event()
         self.stop_event = threading.Event()
         self.saved = False
@@ -75,7 +82,7 @@ class make_experiment(QMainWindow):
         for i, trans in enumerate(self.experiment_transforms):
             ax = self.widget_experiments['preamble']['images'].figure.add_subplot(
                 rows, cols, i+1)
-            ax.imshow(trans['image'])
+            ax.imshow(image_utils.calibrate_brightness(trans['image']*255, self.rgb_brightness, self.display_brightness))
             ax.axis('off')
             ax.set_title(make_name_for_trans(trans), fontsize=6)
         self.widget_experiments['preamble']['images'].figure.tight_layout()
@@ -170,7 +177,8 @@ class make_experiment(QMainWindow):
         self.experiments_tab.setCurrentIndex(1)
 
         # Display reference image
-        gui_utils.change_im(self.widget_experiments['exp']['Reference']['data'], self.ref_image, resize=self.image_display_size)
+        gui_utils.change_im(self.widget_experiments['exp']['Reference']['data'], self.ref_image,
+                            resize=self.image_display_size, rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
 
         # get user sorting
         self.sorting_thread = threading.Thread(target=self.quick_sort)
@@ -252,9 +260,11 @@ class make_experiment(QMainWindow):
         A = A_trans['image']
         B = B_trans['image']
 
-        gui_utils.change_im(self.widget_experiments['exp']['A']['data'], A, resize=self.image_display_size)
+        gui_utils.change_im(self.widget_experiments['exp']['A']['data'], A, resize=self.image_display_size,
+                            rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
         self.widget_experiments['exp']['A']['data'].setObjectName(f'{self.data_store.get_reference_image_name()}-{make_name_for_trans(A_trans)}')
-        gui_utils.change_im(self.widget_experiments['exp']['B']['data'], B, resize=self.image_display_size)
+        gui_utils.change_im(self.widget_experiments['exp']['B']['data'], B, resize=self.image_display_size,
+                            rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
         self.widget_experiments['exp']['B']['data'].setObjectName(f'{self.data_store.get_reference_image_name()}-{make_name_for_trans(B_trans)}')
 
     ''' UI '''
