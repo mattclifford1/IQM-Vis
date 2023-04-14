@@ -122,6 +122,8 @@ class layout(QMainWindow):
             tran_layout.addWidget(self.widget_controls['slider'][key]['value'])
             image_controls.addLayout(tran_layout)
             image_controls.addStretch()
+        image_controls.addWidget(
+            self.widget_controls['button']['transforms']['reset_sliders'])
 
         '''metric_param controls'''
         metric_controls = QVBoxLayout()
@@ -131,6 +133,8 @@ class layout(QMainWindow):
             inner_metric_layout.addWidget(self.widget_controls['slider'][key]['data'])
             inner_metric_layout.addWidget(self.widget_controls['slider'][key]['value'])
             metric_controls.addLayout(inner_metric_layout)
+        metric_controls.addWidget(
+            self.widget_controls['button']['metric_params']['reset_sliders'])
         metric_controls.addStretch()
 
         '''settings controls'''
@@ -155,7 +159,7 @@ class layout(QMainWindow):
         ''' reset sliders button'''
         # reset sliders button
         reset_button = QHBoxLayout()
-        reset_button.addWidget(self.widget_controls['button']['reset_sliders'])
+        # reset_button.addWidget(self.widget_controls['button']['reset_sliders'])
         reset_button.addWidget(self.widget_controls['button']['launch_exp'])
         reset_button.addStretch()
 

@@ -96,8 +96,7 @@ class widgets():
 
         '''buttons'''
         self.widget_controls = {'button': {}, 'slider': {}, 'label': {}, 'check_box': {}}
-        self.widget_controls['button']['reset_sliders'] = QPushButton('Reset', self)
-        self.widget_controls['button']['reset_sliders'].clicked.connect(self.reset_sliders)
+        
         if (self.metrics_avg_graph or self.metric_range_graph):
             # Update graphs
             self.widget_controls['button']['force_update'] = QPushButton('Update Graphs', self)
@@ -130,6 +129,7 @@ class widgets():
             self.widget_controls['button']['prev_data'].clicked.connect(partial(self.change_data, -1))
             self.widget_controls['label']['data'] = QLabel(self)
             self.widget_controls['label']['data'].setText('Change Image:')
+
         # launch experiment button
         self.widget_controls['button']['launch_exp'] = QPushButton('Run Experiment', self)
         self.widget_controls['button']['launch_exp'].clicked.connect(self.launch_experiment)
@@ -139,6 +139,15 @@ class widgets():
         self.params_from_sliders = {}
         for param_group, slider_group in self.sliders.items():
             self.params_from_sliders[param_group] = {}
+            self.widget_controls['button'][param_group] = {}
+            self.widget_controls['button'][param_group]['reset_sliders'] = QPushButton('Reset', self)
+            if param_group == 'metric_params':
+                redo_graphs = True
+            else:
+                redo_graphs = False
+            self.widget_controls['button'][param_group]['reset_sliders'].clicked.connect(
+                partial(self.reset_slider_group, param_group, redo_graphs))
+
             for key, item_sliders in slider_group.items():
                 self.widget_controls['slider'][key] = {}
                 self.widget_controls['slider'][key]['data'] = QSlider(Qt.Orientation.Horizontal)
@@ -236,10 +245,17 @@ class widgets():
         value_str = gui_utils.str_to_len(value_str, disp_len, '0', plus=True)
         self.widget_controls['slider'][key]['value'].setText(value_str)
 
+    def reset_slider_group(self, param_group, redo_plots=False, display_images=True):
+        for key, item_sliders in self.sliders[param_group].items():
+            self.widget_controls['slider'][key]['data'].setValue(item_sliders['init_ind'])
+        if display_images == True:
+            self.display_images()
+        if redo_plots == True:
+            self.redo_plots()
+
     def reset_sliders(self):
-        for _, slider_group in self.sliders.items():
-            for key, item_sliders in slider_group.items():
-                self.widget_controls['slider'][key]['data'].setValue(item_sliders['init_ind'])
+        for param_group in self.sliders:
+            self.reset_slider_group(param_group, False, False)
         self.display_images()
         self.redo_plots()
 
