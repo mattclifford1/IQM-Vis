@@ -215,7 +215,7 @@ class widgets():
         self.widget_settings['image_display_size'] = {'widget': lineedit, 'label': QLabel('Image Display Size:')}
 
         # image screen calibration
-
+        
 
         # update settings button
         self.widget_settings['update_button'] = QPushButton('Apply Settings', self)
