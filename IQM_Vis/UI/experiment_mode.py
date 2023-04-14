@@ -6,13 +6,17 @@ import os
 import random
 import threading
 import warnings
+import time
 
 import numpy as np
-from PyQt6.QtWidgets import QPushButton, QLabel, QMessageBox
 from PyQt6.QtWidgets import (QMainWindow,
                              QHBoxLayout,
                              QVBoxLayout,
-                             QTabWidget)
+                             QTabWidget,
+                             QApplication,
+                             QPushButton,
+                             QLabel,
+                             QMessageBox)
 
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QShortcut, QKeySequence
@@ -39,6 +43,7 @@ class make_experiment(QMainWindow):
         self.clicked_event = threading.Event()
         self.stop_event = threading.Event()
         self.saved = False
+        self.quit_experiment = False
         self._init_experiment_window_widgets()
         self.get_all_images()
         self.experiment_layout()
@@ -49,12 +54,11 @@ class make_experiment(QMainWindow):
         cp = self.screen().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
-
         self.show_all_images()
-        
 
     def closeEvent(self, event):
         # Ask for confirmation if not saved
+        self.quit_experiment = True
         if not self.saved:
             answer = QMessageBox.question(self,
             "Confirm Exit...",
@@ -75,17 +79,20 @@ class make_experiment(QMainWindow):
     def quit(self):
         self.close()
 
-    def show_all_images(self):
-        self.widget_experiments['preamble']['images'].axes.axis('off')
+    def show_all_images(self, tab='setup'):
+        self.widget_experiments[tab]['images'].axes.axis('off')
         rows = int(len(self.experiment_transforms)**0.5)
         cols = int(np.ceil(len(self.experiment_transforms)/rows))
         for i, trans in enumerate(self.experiment_transforms):
-            ax = self.widget_experiments['preamble']['images'].figure.add_subplot(
+            ax = self.widget_experiments[tab]['images'].figure.add_subplot(
                 rows, cols, i+1)
-            ax.imshow(image_utils.calibrate_brightness(trans['image']*255, self.rgb_brightness, self.display_brightness))
+            ax.imshow(image_utils.calibrate_brightness(trans['image'], self.rgb_brightness, self.display_brightness))
             ax.axis('off')
             ax.set_title(make_name_for_trans(trans), fontsize=6)
-        self.widget_experiments['preamble']['images'].figure.tight_layout()
+        # self.widget_experiments[tab]['images'].figure.tight_layout()
+
+        # time.sleep(5)
+        # QApplication.processEvents()
             
     def get_all_images(self):
         ''' load all transformed images and sort them via MSE '''
@@ -118,8 +125,30 @@ class make_experiment(QMainWindow):
             self.experiment_transforms.append(data)
 
     def _init_experiment_window_widgets(self):
-        self.widget_experiments = {'exp': {}, 'preamble': {}}
-        ''' pre experiments screen '''
+        self.widget_experiments = {'exp': {}, 'preamble': {}, 'setup': {}, 'final':{}}
+        ''' setup tab '''
+        self.widget_experiments['setup']['start_button'] = QPushButton(
+            'Setup', self)
+        self.widget_experiments['setup']['start_button'].clicked.connect(self.setup_experiment)
+        self.widget_experiments['setup']['quit_button'] = QPushButton('Quit', self)
+        self.widget_experiments['setup']['quit_button'].clicked.connect(self.quit)
+        QShortcut(QKeySequence("Ctrl+Q"),
+                  self.widget_experiments['setup']['quit_button'], self.quit)
+        self.widget_experiments['setup']['images'] = gui_utils.MplCanvas(size=None)
+        self.widget_experiments['setup']['text'] = QLabel(self)
+        self.widget_experiments['setup']['text'].setText(f'''
+        Expeiment to be setup with the above images using the settings:
+            Image Display Size: {self.image_display_size}
+            Image Calibration:
+                Max RGB Brightness: {self.rgb_brightness}
+                Max Display Brightness: {self.display_brightness}
+
+        Click the Setup button to setup up the experiment and hand over to the test subject.
+        ''')
+        self.widget_experiments['setup']['text'].setAlignment(
+            Qt.AlignmentFlag.AlignCenter)
+
+        ''' info tab '''
         self.widget_experiments['preamble']['text'] = QLabel(self)
         self.widget_experiments['preamble']['text'].setText('''
         For this experiment you will be shown a reference image and two similar images.
@@ -130,21 +159,17 @@ class make_experiment(QMainWindow):
 
 
         When you are ready, click the Start button to begin the experiment ''')
-        self.widget_experiments['preamble']['start_button'] = QPushButton('Start', self)
         self.running_experiment = False
+        self.widget_experiments['preamble']['start_button'] = QPushButton('Start', self)
         self.widget_experiments['preamble']['start_button'].clicked.connect(self.toggle_experiment)
-        self.widget_experiments['preamble']['images'] = gui_utils.MplCanvas(size=None)
 
-        self.widget_experiments['exp']['quit_button'] = QPushButton('Quit', self)
-        self.widget_experiments['exp']['quit_button'].clicked.connect(self.quit)
-        QShortcut(QKeySequence("Ctrl+Q"),
-                  self.widget_experiments['exp']['quit_button'], self.quit)
         self.widget_experiments['preamble']['quit_button'] = QPushButton('Quit', self)
-        self.widget_experiments['preamble']['quit_button'].clicked.connect(self.quit)
+        self.widget_experiments['preamble']['quit_button'].clicked.connect(
+            self.quit)
         QShortcut(QKeySequence("Ctrl+Q"),
                   self.widget_experiments['preamble']['quit_button'], self.quit)
 
-        ''' images '''
+        ''' experiment tab '''
         for image in ['Reference', 'A', 'B']:
             self.widget_experiments['exp'][image] = {}
             self.widget_experiments['exp'][image]['data'] = ClickLabel(image)
@@ -154,27 +179,118 @@ class make_experiment(QMainWindow):
             self.widget_experiments['exp'][image]['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.widget_experiments['exp']['A']['data'].clicked.connect(self.clicked_image)
         self.widget_experiments['exp']['B']['data'].clicked.connect(self.clicked_image)
+        self.widget_experiments['exp']['quit_button'] = QPushButton('Quit', self)
+        self.widget_experiments['exp']['quit_button'].clicked.connect(self.quit)
+        QShortcut(QKeySequence("Ctrl+Q"),
+                  self.widget_experiments['exp']['quit_button'], self.quit)
+
+        ''' finish tab '''
+        self.widget_experiments['final']['images'] = gui_utils.MplCanvas(size=None)
+        self.widget_experiments['final']['quit_button'] = QPushButton('Quit', self)
+        self.widget_experiments['final']['quit_button'].clicked.connect(
+            self.quit)
+        QShortcut(QKeySequence("Ctrl+Q"),
+                self.widget_experiments['final']['quit_button'], self.quit)
+
+    def experiment_layout(self):
+        # setup 
+        experiment_text = QVBoxLayout()
+        experiment_text.addWidget(self.widget_experiments['setup']['text'])
+        experiment_setup_buttons = QHBoxLayout()
+        experiment_setup_buttons.addWidget(
+            self.widget_experiments['setup']['start_button'])
+        experiment_setup_buttons.addWidget(
+            self.widget_experiments['setup']['quit_button'])
+        experiment_text.addLayout(experiment_setup_buttons)
+
+        experiment_mode_setup = QVBoxLayout()
+        experiment_mode_setup.addWidget(self.widget_experiments['setup']['images'])
+        experiment_mode_setup.addLayout(experiment_text)
+
+
+        # info
+        experiment_info_buttons = QHBoxLayout()
+        experiment_info_buttons.addWidget(
+            self.widget_experiments['preamble']['start_button'])
+        experiment_info_buttons.addWidget(
+            self.widget_experiments['preamble']['quit_button'])
+
+        experiment_mode_info = QVBoxLayout()
+        experiment_mode_info.addWidget(
+            self.widget_experiments['preamble']['text'])
+        experiment_mode_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        experiment_mode_info.addLayout(experiment_info_buttons)
+
+        # experiment
+        reference = QVBoxLayout()
+        for name, widget in self.widget_experiments['exp']['Reference'].items():
+            reference.addWidget(widget)
+        reference.setAlignment(Qt.AlignmentFlag.AlignBottom)
+        A = QVBoxLayout()
+        for name, widget in self.widget_experiments['exp']['A'].items():
+            A.addWidget(widget)
+        A.setAlignment(Qt.AlignmentFlag.AlignTop)
+        B = QVBoxLayout()
+        for name, widget in self.widget_experiments['exp']['B'].items():
+            B.addWidget(widget)
+        B.setAlignment(Qt.AlignmentFlag.AlignTop)
+
+        distorted_images = QHBoxLayout()
+        distorted_images.addLayout(A)
+        distorted_images.addLayout(B)
+        distorted_images.setAlignment(Qt.AlignmentFlag.AlignTop)
+
+        experiment_mode_images = QVBoxLayout()
+        experiment_mode_images.addLayout(reference)
+        experiment_mode_images.addLayout(distorted_images)
+        experiment_mode_images.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        run_experiment = QVBoxLayout()
+        run_experiment.addLayout(experiment_mode_images)
+        run_experiment.addWidget(self.widget_experiments['exp']['quit_button'])
+        run_experiment.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        finish_experiment = QVBoxLayout()
+        finish_experiment.addWidget(self.widget_experiments['final']['images'])
+        finish_experiment.addWidget(self.widget_experiments['final']['quit_button'])
+
+        self.experiments_tab = QTabWidget()
+        for tab_layout, tab_name in zip([experiment_mode_setup, experiment_mode_info, run_experiment, finish_experiment],
+                                        ['setup', 'info', 'run', 'finish']):
+            utils.add_layout_to_tab(self.experiments_tab, tab_layout, tab_name)
+        # experiment_mode_layout = QVBoxLayout()
+        # experiment_mode_layout.addWidget(self.experiments_tab)
+        # return experiment_mode_layout
 
     ''' experiment running functions'''
+    def setup_experiment(self):
+        self.experiments_tab.setCurrentIndex(1)
+        self.experiments_tab.setTabEnabled(0, False)
+        self.experiments_tab.setTabEnabled(2, False)
+
     def toggle_experiment(self):
         if self.running_experiment:
             self.reset_experiment()
             self.experiments_tab.setTabEnabled(0, True)
+            self.experiments_tab.setTabEnabled(1, True)
             self.running_experiment = False
-            self.widget_experiments['preamble']['start_button'].setText('Start')
+            # self.widget_experiments['preamble']['start_button'].setText('Start')
 
         else:
+            self.experiments_tab.setTabEnabled(2, True)
             self.start_experiment()
             self.experiments_tab.setTabEnabled(0, False)
-            self.widget_experiments['preamble']['start_button'].setText('Reset')
+            self.experiments_tab.setTabEnabled(1, False)
+            # self.widget_experiments['preamble']['start_button'].setText('Reset')
             self.running_experiment = True
 
     def reset_experiment(self):
+        self.experiments_tab.setCurrentIndex(1)
         self.init_style('light')
 
     def start_experiment(self):
         self.init_style('dark')
-        self.experiments_tab.setCurrentIndex(1)
+        self.experiments_tab.setCurrentIndex(2)
 
         # Display reference image
         gui_utils.change_im(self.widget_experiments['exp']['Reference']['data'], self.ref_image,
@@ -185,12 +301,20 @@ class make_experiment(QMainWindow):
         self.sorting_thread.start()
         # self.quick_sort(0, len(self.experiment_transforms)-1)
 
+    def finish_experiment(self):
+        self.experiments_tab.setTabEnabled(3, True)
+        self.init_style('light')
+        self.show_all_images(tab='final')
+        self.experiments_tab.setCurrentIndex(3)
+        self.experiments_tab.setTabEnabled(2, False)
+
     ''' sorting algorithm resource: https://www.geeksforgeeks.org/quick-sort/'''
     def quick_sort(self):
         self._quick_sort(0, len(self.experiment_transforms)-1)
-        print('Finished sort!')
-        for trans in self.experiment_transforms:
-            print(trans['transform_name'], trans['transform_value'])
+        if self.quit_experiment != True:
+            self.finish_experiment()
+            # for trans in self.experiment_transforms:
+            #     print(trans['transform_name'], trans['transform_value'])
 
     def _quick_sort(self, low, high):
         if low < high:
@@ -279,57 +403,6 @@ class make_experiment(QMainWindow):
         else:
             warnings.warn('Cannot load css style sheet - file not found')
 
-    def experiment_layout(self):
-
-        # info
-        experiment_mode_buttons = QHBoxLayout()
-        experiment_mode_buttons.addWidget(self.widget_experiments['preamble']['start_button'])
-        experiment_mode_buttons.addWidget(self.widget_experiments['preamble']['quit_button'])
-
-        experiment_mode_info = QVBoxLayout()
-        experiment_mode_info.addWidget(self.widget_experiments['preamble']['text'])
-        experiment_mode_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        experiment_mode_info.addWidget(self.widget_experiments['preamble']['images'])
-        experiment_mode_info.addLayout(experiment_mode_buttons)
-
-
-
-        # experiment
-        reference = QVBoxLayout()
-        for name, widget in self.widget_experiments['exp']['Reference'].items():
-            reference.addWidget(widget)
-        reference.setAlignment(Qt.AlignmentFlag.AlignBottom)
-        A = QVBoxLayout()
-        for name, widget in self.widget_experiments['exp']['A'].items():
-            A.addWidget(widget)
-        A.setAlignment(Qt.AlignmentFlag.AlignTop)
-        B = QVBoxLayout()
-        for name, widget in self.widget_experiments['exp']['B'].items():
-            B.addWidget(widget)
-        B.setAlignment(Qt.AlignmentFlag.AlignTop)
-
-        distorted_images = QHBoxLayout()
-        distorted_images.addLayout(A)
-        distorted_images.addLayout(B)
-        distorted_images.setAlignment(Qt.AlignmentFlag.AlignTop)
-
-        experiment_mode_images = QVBoxLayout()
-        experiment_mode_images.addLayout(reference)
-        experiment_mode_images.addLayout(distorted_images)
-        experiment_mode_images.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-        all_experiment = QVBoxLayout()
-        all_experiment.addLayout(experiment_mode_images)
-        all_experiment.addWidget(self.widget_experiments['exp']['quit_button'])
-        all_experiment.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-        self.experiments_tab = QTabWidget()
-        for tab_layout, tab_name in zip([experiment_mode_info, all_experiment],
-                                        ['info', 'run']):
-            utils.add_layout_to_tab(self.experiments_tab, tab_layout, tab_name)
-        # experiment_mode_layout = QVBoxLayout()
-        # experiment_mode_layout.addWidget(self.experiments_tab)
-        # return experiment_mode_layout
 
 def sort_list(list1, list2):
     # sort list1 based on list2
