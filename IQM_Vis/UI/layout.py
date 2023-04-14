@@ -111,6 +111,7 @@ class layout(QMainWindow):
             dataset_layout.addWidget(self.widget_controls['label']['data'])
             dataset_layout.addWidget(self.widget_controls['button']['prev_data'])
             dataset_layout.addWidget(self.widget_controls['button']['next_data'])
+
         '''transform controls'''
         image_controls = QVBoxLayout()
         # transform sliders
@@ -136,8 +137,11 @@ class layout(QMainWindow):
         settings_controls = QVBoxLayout()
         for key, item in self.widget_settings.items():
             inner_layout = QHBoxLayout()
-            inner_layout.addWidget(item['label'])
-            inner_layout.addWidget(item['widget'])
+            if isinstance(item, dict):
+                inner_layout.addWidget(item['label'])
+                inner_layout.addWidget(item['widget'])
+            else:
+                inner_layout.addWidget(item)
             settings_controls.addLayout(inner_layout)
         settings_controls.addStretch()
 

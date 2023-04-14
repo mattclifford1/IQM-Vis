@@ -214,6 +214,13 @@ class widgets():
         lineedit.textChanged.connect(self.change_display_im_size)
         self.widget_settings['image_display_size'] = {'widget': lineedit, 'label': QLabel('Image Display Size:')}
 
+        # image screen calibration
+
+
+        # update settings button
+        self.widget_settings['update_button'] = QPushButton('Apply Settings', self)
+        self.widget_settings['update_button'].clicked.connect(self.update_image_settings)
+
     '''
     ==================== functions to bind to sliders/widgets ====================
     '''
@@ -254,13 +261,23 @@ class widgets():
             self.plot_data_lim = self.data_lims['fixed']
         self.redo_plots(calc_range=False)
 
-    def change_post_processing(self, i):
+    def change_post_processing(self, *args):
         option = self.widget_settings['image_post_processing']['widget'].currentText()
         for data_store in self.data_stores:
             if hasattr(data_store, 'image_post_processing'):
                 data_store.image_post_processing = self.post_processing_options[option]
+        self.image_settings_update_plots = True
+        # self.display_images()
+        # self.redo_plots()
+
+    def update_image_settings(self):
+        ''' button to apply new image settings '''
         self.display_images()
-        self.redo_plots()
+        if hasattr(self, 'image_settings_update_plots'):
+            if self.image_settings_update_plots == True:
+                # only redo the graphs if nessesary
+                self.redo_plots()
+        self.image_settings_update_plots = False
 
     def change_display_im_size(self, txt):
         if txt == '':
@@ -268,7 +285,7 @@ class widgets():
         old_size = self.image_display_size
         self.image_display_size = max(1, int(txt))
         # self.construct_UI()
-        self.display_images()
+        # self.display_images()
         # if old_size > self.image_display_size:
         #     self.setMaximumSize(self.main_widget.sizeHint())
         # if old_size < self.image_display_size:
