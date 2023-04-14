@@ -86,7 +86,8 @@ class make_experiment(QMainWindow):
         for i, trans in enumerate(self.experiment_transforms):
             ax = self.widget_experiments[tab]['images'].figure.add_subplot(
                 rows, cols, i+1)
-            ax.imshow(image_utils.calibrate_brightness(trans['image'], self.rgb_brightness, self.display_brightness))
+            ax.imshow(image_utils.calibrate_brightness(
+                trans['image'], self.rgb_brightness, self.display_brightness, ubyte=False))
             ax.axis('off')
             ax.set_title(make_name_for_trans(trans), fontsize=6)
         # self.widget_experiments[tab]['images'].figure.tight_layout()
@@ -303,8 +304,8 @@ class make_experiment(QMainWindow):
 
     def finish_experiment(self):
         self.experiments_tab.setTabEnabled(3, True)
-        self.init_style('light')
         self.show_all_images(tab='final')
+        self.init_style('light')
         self.experiments_tab.setCurrentIndex(3)
         self.experiments_tab.setTabEnabled(2, False)
 

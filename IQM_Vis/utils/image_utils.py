@@ -98,12 +98,17 @@ def crop_centre(image, scale_factor=2):
 
     return image
 
-def calibrate_brightness(im, rgb_brightness, display_brightness):
+def calibrate_brightness(im, rgb_brightness, display_brightness, ubyte=True):
     if rgb_brightness == display_brightness:
         return im
-    im_lab = rgb2lab(im/255)
+    if ubyte == True:
+        im = im/255
+    im_lab = rgb2lab(im)
     scale = rgb_brightness/display_brightness
     scaled_brightness = im_lab[:, :, 0]*scale
     clipped = np.clip(scaled_brightness, 0, 100)
     im_lab[:, :, 0] = clipped
-    return img_as_ubyte(lab2rgb(im_lab))
+    rgb = lab2rgb(im_lab)
+    if ubyte == True:
+        rgb = img_as_ubyte(rgb)
+    return rgb
