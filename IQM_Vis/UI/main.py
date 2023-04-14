@@ -37,9 +37,10 @@ class make_app(widgets, layout, images):
         self.make_menu()
 
         self.widget_settings = {}
-        self.image_display_size = {}
         self.image_display_size = image_display_size
-        self._init_image_settings()
+        self.graph_size = 35
+        self.rgb_brightness = 250  # max candela/m2 of rbg image
+        self.display_brightness = 250  # max candela/m2 of display
         self.construct_UI()
 
     def make_menu(self):
@@ -150,11 +151,11 @@ class make_app(widgets, layout, images):
         # init the UI widgets and layouts
         self.init_style()     # layout.py
         self.init_widgets()   # widgets.py
+        self._init_image_settings()   # widgets.py
         self.init_layout()    # layout.py
         self.tabs['slider'].setCurrentIndex(tabs_index['slider'])
         self.tabs['graph'].setCurrentIndex(tabs_index['graph'])
         # self.experiments_tab.setCurrentIndex(experi_tabs_index)
-        self.set_image_name_text()  # images.py
         self.reset_sliders()  # widgets.py
 
         # self.setMinimumSize(self.main_widget.sizeHint())

@@ -19,14 +19,10 @@ class widgets():
         '''
         create all the widgets we need and init params
         '''
-        self.widget_controls = {}
-        self.sliders = {}
-        self.widget_row = {}
-        self.params_from_sliders = {}
-        self.init_widgets()
+        self._init_widgets()
         self.set_image_name_text()
 
-    def init_widgets(self):
+    def _init_widgets(self):
         '''
         create all the widgets we need and init params
         '''
@@ -66,7 +62,7 @@ class widgets():
             self.widget_row[i]['metrics']['info']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.widget_row[i]['metrics']['info']['label'].setText('Metrics '+im_pair_name)
             if self.metrics_info_format == 'graph':
-                self.widget_row[i]['metrics']['info']['data'] = gui_utils.MplCanvas()
+                self.widget_row[i]['metrics']['info']['data'] = gui_utils.MplCanvas(size=(self.graph_size/10, self.graph_size/10))
             else:
                 self.widget_row[i]['metrics']['info']['data'] = QLabel(self)
                 self.widget_row[i]['metrics']['info']['data'].setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -77,20 +73,20 @@ class widgets():
                 self.widget_row[i]['metrics']['avg']['label'] = QLabel(self)
                 self.widget_row[i]['metrics']['avg']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
                 self.widget_row[i]['metrics']['avg']['label'].setText('IQM Averages')
-                self.widget_row[i]['metrics']['avg']['data'] = gui_utils.MplCanvas(polar=True)
+                self.widget_row[i]['metrics']['avg']['data'] = gui_utils.MplCanvas(size=(self.graph_size/10, self.graph_size/10), polar=True)
                 self.widget_row[i]['metrics']['avg']['data'].setToolTip('Mean metric value over the range of each transform.')
             if self.metric_range_graph:
                 self.widget_row[i]['metrics']['range'] = {}
                 self.widget_row[i]['metrics']['range']['label'] = QLabel(self)
                 self.widget_row[i]['metrics']['range']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
                 self.widget_row[i]['metrics']['range']['label'].setText('Response Profiles')
-                self.widget_row[i]['metrics']['range']['data'] = gui_utils.MplCanvas()
+                self.widget_row[i]['metrics']['range']['data'] = gui_utils.MplCanvas(size=(self.graph_size/10, self.graph_size/10))
                 self.widget_row[i]['metrics']['range']['data'].setToolTip('Single tranformation value range for all metrics.')
             self.widget_row[i]['metrics']['correlation'] = {}
             self.widget_row[i]['metrics']['correlation']['label'] = QLabel(self)
             self.widget_row[i]['metrics']['correlation']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.widget_row[i]['metrics']['correlation']['label'].setText('Human Correlation')
-            self.widget_row[i]['metrics']['correlation']['data'] = gui_utils.MplCanvas()
+            self.widget_row[i]['metrics']['correlation']['data'] = gui_utils.MplCanvas(size=(self.graph_size/10, self.graph_size/10))
             self.widget_row[i]['metrics']['correlation']['label'].setToolTip('Human scores versus IQMs.')
 
 
@@ -216,15 +212,37 @@ class widgets():
         self.widget_settings['image_post_processing'] = {'widget': combobox, 'label': QLabel('Image Post Processing:')}
 
         # image display size
-        lineedit = QLineEdit()
-        lineedit.setValidator(QIntValidator())
-        lineedit.setMaxLength(3)
-        lineedit.setText(str(self.image_display_size))
-        lineedit.textChanged.connect(self.change_display_im_size)
-        self.widget_settings['image_display_size'] = {'widget': lineedit, 'label': QLabel('Image Display Size:')}
+        line_edit_display = QLineEdit()
+        line_edit_display.setValidator(QIntValidator())
+        line_edit_display.setMaxLength(3)
+        line_edit_display.setText(str(self.image_display_size))
+        line_edit_display.textChanged.connect(self.change_display_im_size)
+        self.widget_settings['image_display_size'] = {'widget': line_edit_display, 'label': QLabel('Image Display Size:')}
+
+        # graph display size
+        line_edit_graph = QLineEdit()
+        line_edit_graph.setValidator(QIntValidator())
+        line_edit_graph.setMaxLength(2)
+        line_edit_graph.setText(str(self.graph_size))
+        line_edit_graph.textChanged.connect(self.change_graph_size)
+        self.widget_settings['graph_display_size'] = {'widget': line_edit_graph, 'label': QLabel('Graph Display Size:')}
 
         # image screen calibration
-        
+        line_edit_rgb = QLineEdit()
+        line_edit_rgb.setValidator(QIntValidator())
+        line_edit_rgb.setMaxLength(4)
+        line_edit_rgb.setText(str(self.rgb_brightness))
+        line_edit_rgb.textChanged.connect(self.change_display_im_rgb_brightness)
+        self.widget_settings['image_display_rgb_brightness'] = {
+            'widget': line_edit_rgb, 'label': QLabel('RGB Max Brightness:')}
+
+        line_edit_display = QLineEdit()
+        line_edit_display.setValidator(QIntValidator())
+        line_edit_display.setMaxLength(4)
+        line_edit_display.setText(str(self.display_brightness))
+        line_edit_display.textChanged.connect(self.change_display_im_display_brightness)
+        self.widget_settings['image_display_display_brightness'] = {
+            'widget': line_edit_display, 'label': QLabel('Display Max Brightness:')}
 
         # update settings button
         self.widget_settings['update_button'] = QPushButton('Apply Settings', self)
@@ -289,11 +307,15 @@ class widgets():
     def update_image_settings(self):
         ''' button to apply new image settings '''
         self.display_images()
-        if hasattr(self, 'image_settings_update_plots'):
+        if hasattr(self, 'update_UI'):
+            if self.update_UI == True:
+                self.construct_UI()
+        elif hasattr(self, 'image_settings_update_plots'):
             if self.image_settings_update_plots == True:
                 # only redo the graphs if nessesary
                 self.redo_plots()
         self.image_settings_update_plots = False
+        self.update_UI = False
 
     def change_display_im_size(self, txt):
         if txt == '':
@@ -306,6 +328,24 @@ class widgets():
         #     self.setMaximumSize(self.main_widget.sizeHint())
         # if old_size < self.image_display_size:
         #     self.setMinimumSize(self.main_widget.sizeHint())
+
+    def change_graph_size(self, txt):
+        if txt == '':
+            txt = 1
+        self.graph_size = max(1, int(txt))
+        self.update_UI = True
+    
+    def change_display_im_rgb_brightness(self, txt):
+        if txt == '':
+            txt = 1
+        self.rgb_brightness = max(1, int(txt))
+        pass
+    
+    def change_display_im_display_brightness(self, txt):
+        if txt == '':
+            txt = 1
+        self.display_brightness = max(1, int(txt))
+        pass
 
     def update_progress(self, v):
         self.pbar.setValue(v)

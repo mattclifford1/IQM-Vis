@@ -17,7 +17,7 @@ import numpy as np
 from skimage.util import img_as_ubyte
 from skimage.transform import resize
 import cv2
-from IQM_Vis.utils.image_utils import resize_to_longest_side
+from IQM_Vis.utils.image_utils import resize_to_longest_side, calibrate_brightness
 
 '''
 image helper functions
@@ -26,7 +26,8 @@ image helper functions
 #     down_im = resize(np_array, size)
 #     return img_as_ubyte(down_im)
 
-def change_im(widget, im, resize=False):
+
+def change_im(widget, im, resize=False, rgb_brightness=250, display_brightness=250):
     '''
     given a numpy image, changes the given widget Frame
     '''
@@ -38,6 +39,7 @@ def change_im(widget, im, resize=False):
     if resize:
         im = resize_to_longest_side(im, resize)
         im = img_as_ubyte(im)
+    im = calibrate_brightness(im, rgb_brightness, display_brightness)
     qimage = QImage(im,
                     im.shape[1],
                     im.shape[0],

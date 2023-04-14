@@ -6,6 +6,8 @@ import os
 import cv2
 import numpy as np
 from skimage.transform import resize
+from skimage.color import rgb2lab, lab2rgb
+from skimage.util import img_as_ubyte
 
 def get_transform_image(data_store, transform_functions, transform_params):
     '''transform image with image post processing
@@ -95,3 +97,13 @@ def crop_centre(image, scale_factor=2):
         image = zoomed_out
 
     return image
+
+def calibrate_brightness(im, rgb_brightness, display_brightness):
+    if rgb_brightness == display_brightness:
+        return im
+    im_lab = rgb2lab(im/255)
+    scale = rgb_brightness/display_brightness
+    scaled_brightness = im_lab[:, :, 0]*scale
+    clipped = np.clip(scaled_brightness, 0, 100)
+    im_lab[:, :, 0] = clipped
+    return img_as_ubyte(lab2rgb(im_lab))
