@@ -3,8 +3,10 @@ UI image functions
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 
+import os
+import glob
 import numpy as np
-from PyQt6.QtWidgets import QApplication
+from PyQt6.QtWidgets import QApplication, QFileDialog
 from PyQt6.QtCore import pyqtSignal, QThread
 import IQM_Vis
 from IQM_Vis.utils import gui_utils, plot_utils, image_utils
@@ -93,6 +95,28 @@ class images:
             self.display_images()
             self.set_image_name_text()
             self.redo_plots()
+
+    def load_new_images_folder(self):
+        ''' change the image dataset we are using '''
+        # get the file opener for the user
+        try:
+            start_dir = os.path.expanduser("~")
+            dir = QFileDialog.getExistingDirectory(self, 
+                                                   'Choose Image folder',
+                                                   start_dir)
+        except:
+            return
+        
+        print(dir)
+        image_list = glob.glob(os.path.join(dir, '*'))
+        # remove and folders
+        image_list = [f for f in image_list if os.path.isfile(f)]
+        # change image dataset
+        if hasattr(self.data_stores[0], 'load_image_list') and len(image_list) != 0:
+            self.data_stores[0].load_image_list(image_list)
+            self.data_num = 0
+            self.construct_UI()
+            self.max_data_ind = len(image_list) - 1
 
     '''
     metric updaters

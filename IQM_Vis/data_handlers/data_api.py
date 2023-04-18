@@ -39,15 +39,11 @@ class dataset_holder(base_dataset_loader):
                        image_list_to_transform=None, # if you want to use a different image to transform than reference
                        human_exp_csv=None    # csv for where the human experiments file is
                        ):
-        self.image_list = image_list
-        if image_list_to_transform == None:
-            self.image_list_to_transform = image_list
-        else:
-            self.image_list_to_transform = image_list_to_transform
-        if len(self.image_list) == 0:
-            raise ValueError(f'image_list is empty')
         self.image_loader = image_loader
-        self._load_image_data(0)   # load the first image
+        self.load_image_list(image_list)
+        if image_list_to_transform != None:
+            self.image_list_to_transform = image_list_to_transform
+            self._load_image_data(0)   # load the first transform image
         self.metrics = metrics
         self.metric_images = metric_images
         self.image_post_processing = image_post_processing
@@ -55,6 +51,17 @@ class dataset_holder(base_dataset_loader):
             self.human_exp_df = pd.read_csv(human_exp_csv, index_col=0)
 
         self._check_inputs()
+
+    def load_image_list(self, image_list):
+        if len(image_list) == 0:
+            if not hasattr(self, 'image_list'):
+                raise ValueError(f'image_list is empty')
+            else:
+                return
+        self.image_list = image_list
+        self.image_list_to_transform = image_list
+        self._load_image_data(0)
+
 
     def _load_image_data(self, i):
         # reference image

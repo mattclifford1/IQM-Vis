@@ -53,8 +53,12 @@ class make_app(widgets, layout, images):
 
         # make file menu
         self.file_menu = self.menu_bar.addMenu('File')
+        load_images_action = self.file_menu.addAction('Load New Images')
         reload_action = self.file_menu.addAction('Redo Graphs')
         quit_action = self.file_menu.addAction('Quit')
+
+        load_images_action.setStatusTip('Choose a folder of images to load')
+        load_images_action.triggered.connect(self.load_new_images_folder)
 
         reload_action.setShortcut('Ctrl+R')
         reload_action.setStatusTip('')
