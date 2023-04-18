@@ -104,6 +104,12 @@ class make_experiment(QMainWindow):
         ''' load all transformed images and sort them via MSE '''
         self.experiment_trans_params = plot_utils.get_all_single_transform_params(
             self.checked_transformations, num_steps=self.num_trans_values)
+
+        # remove any params with value 0 
+        self.experiment_trans_params = [
+            x for x in self.experiment_trans_params if not x[list(x.keys())[0]] == 0]
+        print(self.experiment_trans_params)
+
         # save the experiment ordering before reordering (for saving to csv col ordering)
         self.original_params_order = []
         for single_trans in self.experiment_trans_params:
