@@ -39,6 +39,10 @@ def load_image(image_path):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     return image.astype(np.float32) / 255.0
 
+def save_image(img, path):
+    ''' save image as ubyte '''
+    cv2.imwrite(path, img_as_ubyte(img))
+
 def resize_to_longest_side(im, side=128):
     '''
     resize image to longest side

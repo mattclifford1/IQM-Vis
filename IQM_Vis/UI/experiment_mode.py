@@ -316,7 +316,23 @@ class make_experiment(QMainWindow):
         self.init_style('light')
         self.experiments_tab.setCurrentIndex(3)
         self.experiments_tab.setTabEnabled(2, False)
-        self.widget_experiments['final']['save_label'].setText(f'Saved to {self.default_save_dir}')
+        self.save_experiment()
+        if self.saved == True:
+            self.widget_experiments['final']['save_label'].setText(f'Saved to {self.default_save_dir}')
+
+    def save_experiment(self):
+        # make the experiment directory
+        self.default_save_dir = os.path.join(
+            self.default_save_dir, self.data_store.get_reference_image_name())
+        os.makedirs(self.default_save_dir, exist_ok=True)
+        os.makedirs(os.path.join(self.default_save_dir, 'images'), exist_ok=True)
+        # save experiment images
+        for trans in self.experiment_transforms:
+            image_utils.save_image(
+                trans['image'], os.path.join(self.default_save_dir, 'images', f'{make_name_for_trans(trans)}.png'))
+        
+        self.saved = True
+
 
     ''' sorting algorithm resource: https://www.geeksforgeeks.org/quick-sort/'''
     def quick_sort(self):
