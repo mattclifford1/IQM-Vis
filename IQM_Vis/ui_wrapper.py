@@ -26,13 +26,15 @@ class make_UI:
                  metrics_info_format: str='graph',
                  metrics_avg_graph: bool=True,
                  metric_params: dict={},
-                 default_save_dir=IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR):
+                 default_save_dir=IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR,
+                 restrict_options=None):
         self.data_store = data_store
         self.transformations = transformations
         self.metrics_info_format = metrics_info_format
         self.metrics_avg_graph = metrics_avg_graph
         self.metric_params = metric_params
         self.default_save_dir = default_save_dir
+        self.restrict_options = restrict_options
         self.show()
 
     def show(self):
@@ -45,7 +47,8 @@ class make_UI:
                           metrics_info_format=self.metrics_info_format,
                           metrics_avg_graph=self.metrics_avg_graph,
                           metric_params=self.metric_params,
-                          default_save_dir=self.default_save_dir)
+                          default_save_dir=self.default_save_dir,
+                          restrict_options=self.restrict_options)
         sys.exit(app.exec())
 
     def _check_data_store(self):

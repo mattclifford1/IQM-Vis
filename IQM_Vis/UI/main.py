@@ -17,7 +17,8 @@ class make_app(widgets, layout, images):
                  metric_range_graph=True,
                  metric_params: dict={},
                  image_display_size=150,
-                 default_save_dir=IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR
+                 default_save_dir=IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR,
+                 restrict_options=None
                  ):
         super().__init__()
         self.app = app
@@ -29,6 +30,7 @@ class make_app(widgets, layout, images):
         self.metric_range_graph = metric_range_graph
         self.metric_params = metric_params
         self.default_save_dir = default_save_dir
+        self.restrict_options = restrict_options
 
         self.data_lims = {'fixed': 1, 'range_data': 1}
         self.plot_data_lim = 1
@@ -96,17 +98,20 @@ class make_app(widgets, layout, images):
                                        self.transformations,
                                        'Transforms',
                                        self.menu_options['transforms'],
-                                       self.construct_UI)
+                                       self.construct_UI,
+                                       self.restrict_options)
         set_checked_menu_from_iterable(self.menu_bar,
                                        self.data_stores[0].metric_images,
                                        'Metric Images',
                                        self.menu_options['metric_images'],
-                                       self.construct_UI)
+                                       self.construct_UI,
+                                       self.restrict_options)
         set_checked_menu_from_iterable(self.menu_bar,
                                        self.data_stores[0].metrics,
                                        'Metrics',
                                        self.menu_options['metrics'],
-                                       self.construct_UI)
+                                       self.construct_UI,
+                                       self.restrict_options)
 
     def make_status_bar(self):
         self.status_bar = self.statusBar()
@@ -189,10 +194,16 @@ class make_app(widgets, layout, images):
         return dataset_found
 
 
-def set_checked_menu_from_iterable(main_menu, iterable, name, action_store, connect_func):
+def set_checked_menu_from_iterable(main_menu, iterable, name, action_store, connect_func, restrict_options=None):
     _menu = main_menu.addMenu(name)
     _menu.triggered.connect(connect_func)
-    for trans in iterable:
+    for i, trans in enumerate(iterable):
         action_store[trans] = _menu.addAction(trans)
         action_store[trans].setCheckable(True)
-        action_store[trans].setChecked(True)
+        if isinstance(restrict_options, int):
+            if i  < restrict_options:
+                action_store[trans].setChecked(True)
+            else:
+                action_store[trans].setChecked(False)
+        else:
+            action_store[trans].setChecked(True)

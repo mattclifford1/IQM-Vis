@@ -9,7 +9,8 @@ def run():
 
 
     IQM_Vis.make_UI(data,
-                    IQM_Vis.transformations.get_all_transforms()
+                    IQM_Vis.transformations.get_all_transforms(),
+                    restrict_options=3
                     )
 
 
