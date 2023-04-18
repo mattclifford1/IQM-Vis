@@ -195,21 +195,38 @@ class widgets():
     def _init_image_settings(self):
         self.widget_settings = {}
 
+        # pre processing
+        self.pre_processing_options = {'None': None,
+                                       'Resize 128': IQM_Vis.utils.image_utils.resize_to_longest_side}
+        init_val = 'Resize 128'
+        for i, data_store in enumerate(self.data_stores):
+            if hasattr(data_store, 'image_pre_processing'):
+                if data_store.image_pre_processing not in list(self.pre_processing_options.values()):
+                    print(data_store.image_pre_processing)
+                    name = f"Custom {i}"
+                    self.pre_processing_options[name] = data_store.image_pre_processing
+                    init_val = name
+        combobox_pre = QComboBox()
+        combobox_pre.addItems(list(self.pre_processing_options.keys()))
+        combobox_pre.setCurrentText(init_val)
+        combobox_pre.activated.connect(self.change_pre_processing)
+        self.widget_settings['image_pre_processing'] = {'widget': combobox_pre, 'label': QLabel('Image Pre Processing:')}
+
         # post processing
         self.post_processing_options = {'None': None,
                                         'Crop Centre': IQM_Vis.utils.image_utils.crop_centre}
         init_val = 'None'
         for i, data_store in enumerate(self.data_stores):
             if hasattr(data_store, 'image_post_processing'):
-                if data_store.image_post_processing != None:
+                if data_store.image_post_processing not in list(self.post_processing_options.values()):
                     name = f"Custom {i}"
                     self.post_processing_options[name] = data_store.image_post_processing
                     init_val = name
-        combobox = QComboBox()
-        combobox.addItems(list(self.post_processing_options.keys()))
-        combobox.setCurrentText(init_val)
-        combobox.activated.connect(self.change_post_processing)
-        self.widget_settings['image_post_processing'] = {'widget': combobox, 'label': QLabel('Image Post Processing:')}
+        combobox_post = QComboBox()
+        combobox_post.addItems(list(self.post_processing_options.keys()))
+        combobox_post.setCurrentText(init_val)
+        combobox_post.activated.connect(self.change_post_processing)
+        self.widget_settings['image_post_processing'] = {'widget': combobox_post, 'label': QLabel('Image Post Processing:')}
 
         # image display size
         line_edit_display = QLineEdit()
@@ -302,6 +319,13 @@ class widgets():
         else:
             self.plot_data_lim = self.data_lims['fixed']
         self.redo_plots(calc_range=False)
+
+    def change_pre_processing(self, *args):
+        option = self.widget_settings['image_pre_processing']['widget'].currentText()
+        for data_store in self.data_stores:
+            if hasattr(data_store, 'image_pre_processing'):
+                data_store.image_pre_processing = self.pre_processing_options[option]
+        self.image_settings_update_plots = True
 
     def change_post_processing(self, *args):
         option = self.widget_settings['image_post_processing']['widget'].currentText()

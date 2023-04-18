@@ -35,11 +35,13 @@ class dataset_holder(base_dataset_loader):
                        metrics: dict={},
                        metric_images: dict={},
                        image_loader=IQM_Vis.utils.load_image,     # function to load image files
+                       image_pre_processing=None,  # apply a function to the image before transformations (e.g. resize to smaller)
                        image_post_processing=None,  # apply a function to the image after transformations (e.g. zoom to help with black boarders on rotation)
                        image_list_to_transform=None, # if you want to use a different image to transform than reference
                        human_exp_csv=None    # csv for where the human experiments file is
                        ):
         self.image_loader = image_loader
+        self.image_pre_processing = image_pre_processing
         self.load_image_list(image_list)
         if image_list_to_transform != None:
             self.image_list_to_transform = image_list_to_transform
@@ -68,6 +70,8 @@ class dataset_holder(base_dataset_loader):
         self.current_file = self.image_list[i]
         self.image_name = os.path.splitext(os.path.basename(self.current_file))[0]
         image_data = self.image_loader(self.current_file)
+        if self.image_pre_processing is not None:
+            image_data = self.image_pre_processing(image_data)
         self.image_reference = (self.image_name, image_data)
         # image to transform
         if self.current_file == self.image_list_to_transform[i]:
@@ -75,6 +79,8 @@ class dataset_holder(base_dataset_loader):
         else:
             image_name = os.path.splitext(os.path.basename(self.image_list_to_transform[i]))[0]
             image_data = self.image_loader(self.image_list_to_transform[i])
+            if self.image_pre_processing is not None:
+                image_data = self.image_pre_processing(image_data)
             self.image_reference = (self.image_name, image_data)
         # Human experiments
         if hasattr(self, 'human_scores'):
