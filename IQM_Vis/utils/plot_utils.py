@@ -147,6 +147,7 @@ class scatter_plotter:
 metric averaging functions to get metric values over a range of transformation
 '''
 def get_all_slider_values(transforms, num_steps=10):
+    float_stabiliser = 100
     range = transforms['max'] - transforms['min']
     # make sure if it's an int then we dont return step values that are floats
     if isinstance(transforms['min'], int) and isinstance(transforms['max'], int):
@@ -154,7 +155,10 @@ def get_all_slider_values(transforms, num_steps=10):
     steps = range/num_steps
     if type(transforms['min']) == int:
         steps = int(steps)
-    values = list(np.arange(start=transforms['min'], stop=transforms['max'], step=steps))
+    values = np.arange(start=transforms['min']*float_stabiliser,
+                       stop=transforms['max']*float_stabiliser, 
+                       step=steps*float_stabiliser)
+    values = list(values/float_stabiliser)
     values.append(transforms['max'])
     return values
 
