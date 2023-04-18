@@ -360,6 +360,7 @@ class widgets():
                                                      self.data_stores[0],
                                                      self.image_display_size,
                                                      self.rgb_brightness,
-                                                     self.display_brightness)
+                                                     self.display_brightness,
+                                                     self.default_save_dir)
         self.experiment.show()
         self.experiment.showFullScreen()

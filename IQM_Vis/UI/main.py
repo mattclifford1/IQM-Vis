@@ -5,18 +5,20 @@ main entry point to initialise the UI
 import time
 from functools import partial
 from PyQt6.QtWidgets import QApplication, QMessageBox
+import IQM_Vis
 from IQM_Vis.UI import layout, widgets, images, ProgressBar
 
 class make_app(widgets, layout, images):
     def __init__(self, app,
-                data_stores: list,
-                transformations: dict,
-                metrics_info_format='graph', # graph or text
-                metrics_avg_graph=False,
-                metric_range_graph=True,
-                metric_params: dict={},
-                image_display_size=150,
-                ):
+                 data_stores: list,
+                 transformations: dict,
+                 metrics_info_format='graph', # graph or text
+                 metrics_avg_graph=False,
+                 metric_range_graph=True,
+                 metric_params: dict={},
+                 image_display_size=150,
+                 default_save_dir=IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR
+                 ):
         super().__init__()
         self.app = app
         self.data_stores = data_stores
@@ -26,6 +28,7 @@ class make_app(widgets, layout, images):
         self.metrics_avg_graph = metrics_avg_graph
         self.metric_range_graph = metric_range_graph
         self.metric_params = metric_params
+        self.default_save_dir = default_save_dir
 
         self.data_lims = {'fixed': 1, 'range_data': 1}
         self.plot_data_lim = 1

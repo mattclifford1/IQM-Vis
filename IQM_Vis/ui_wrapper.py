@@ -3,6 +3,7 @@ API to access making the PyQt6 UI for IQM-Vis
 TODO: write docs on example usage/ what inputs etc. and what attributes that the data_store class needs
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+import os
 import sys
 import warnings
 import types
@@ -10,6 +11,7 @@ import numpy as np
 
 try:
     from PyQt6.QtWidgets import QApplication
+    import IQM_Vis
     from IQM_Vis.UI.main import make_app
     from IQM_Vis.utils import image_utils
     import matplotlib
@@ -18,16 +20,19 @@ except ImportError:
     warnings.warn('Cannot load PyQt6 library - running IQM_Vis package in headless mode')
 
 class make_UI:
-    def __init__(self, data_store,
-                       transformations: dict,
-                       metrics_info_format: str='graph',
-                       metrics_avg_graph: bool=True,
-                       metric_params: dict={}):
+    def __init__(self, 
+                 data_store,
+                 transformations: dict,
+                 metrics_info_format: str='graph',
+                 metrics_avg_graph: bool=True,
+                 metric_params: dict={},
+                 default_save_dir=IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR):
         self.data_store = data_store
         self.transformations = transformations
         self.metrics_info_format = metrics_info_format
         self.metrics_avg_graph = metrics_avg_graph
         self.metric_params = metric_params
+        self.default_save_dir = default_save_dir
         self.show()
 
     def show(self):
@@ -39,7 +44,8 @@ class make_UI:
                           self.transformations,
                           metrics_info_format=self.metrics_info_format,
                           metrics_avg_graph=self.metrics_avg_graph,
-                          metric_params=self.metric_params)
+                          metric_params=self.metric_params,
+                          default_save_dir=self.default_save_dir)
         sys.exit(app.exec())
 
     def _check_data_store(self):

@@ -33,13 +33,15 @@ class make_experiment(QMainWindow):
                  data_store, 
                  image_display_size,
                  rgb_brightness,
-                 display_brightness):
+                 display_brightness,
+                 default_save_dir=IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR):
         super().__init__()
         self.checked_transformations = checked_transformations
         self.data_store = data_store
         self.image_display_size = image_display_size
         self.rgb_brightness = rgb_brightness
         self.display_brightness = display_brightness
+        self.default_save_dir = default_save_dir
         self.clicked_event = threading.Event()
         self.stop_event = threading.Event()
         self.saved = False
