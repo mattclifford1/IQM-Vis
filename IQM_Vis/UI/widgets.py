@@ -227,6 +227,14 @@ class widgets():
         line_edit_graph.textChanged.connect(self.change_graph_size)
         self.widget_settings['graph_display_size'] = {'widget': line_edit_graph, 'label': QLabel('Graph Display Size:')}
 
+        # graph/experiment number of steps in the range
+        line_edit_num_steps = QLineEdit()
+        line_edit_num_steps.setValidator(QIntValidator())
+        line_edit_num_steps.setMaxLength(4)
+        line_edit_num_steps.setText(str(self.num_steps_range))
+        line_edit_num_steps.textChanged.connect(self.change_num_steps)
+        self.widget_settings['graph_num_steps'] = {'widget': line_edit_num_steps, 'label': QLabel('Graph/Experiment Step Size:')}
+
         # image screen calibration
         line_edit_rgb = QLineEdit()
         line_edit_rgb.setValidator(QIntValidator())
@@ -322,6 +330,7 @@ class widgets():
             txt = 1
         old_size = self.image_display_size
         self.image_display_size = max(1, int(txt))
+        self.update_UI = True
         # self.construct_UI()
         # self.display_images()
         # if old_size > self.image_display_size:
@@ -334,18 +343,22 @@ class widgets():
             txt = 1
         self.graph_size = max(1, int(txt))
         self.update_UI = True
+
+    def change_num_steps(self, txt):
+        if txt == '':
+            txt = 1
+        self.num_steps_range = max(2, int(txt))
+        self.update_UI = True
     
     def change_display_im_rgb_brightness(self, txt):
         if txt == '':
             txt = 1
         self.rgb_brightness = max(1, int(txt))
-        pass
     
     def change_display_im_display_brightness(self, txt):
         if txt == '':
             txt = 1
         self.display_brightness = max(1, int(txt))
-        pass
 
     def update_progress(self, v):
         self.pbar.setValue(v)
@@ -361,6 +374,7 @@ class widgets():
                                                      self.image_display_size,
                                                      self.rgb_brightness,
                                                      self.display_brightness,
-                                                     self.default_save_dir)
+                                                     self.default_save_dir,
+                                                     self.num_steps_range)
         self.experiment.show()
         self.experiment.showFullScreen()

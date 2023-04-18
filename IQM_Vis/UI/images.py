@@ -15,6 +15,7 @@ class images:
     view_correlation_instance = pyqtSignal(str)
 
     def __init__(self):
+        self.num_steps_range = 11
         self.init_worker_thread()
         self.view_correlation_instance.connect(self.change_to_specific_trans)
 
@@ -126,7 +127,8 @@ class images:
         data = {'trans': self.checked_transformations,
                 'metric_params': self.params_from_sliders['metric_params'],
                 'metrics_to_use': self.checked_metrics,
-                'data_stores': self.data_stores
+                'data_stores': self.data_stores,
+                'num_steps': self.num_steps_range,
                 }
         # start the worker working
         self.worker_working = True

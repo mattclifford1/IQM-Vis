@@ -34,7 +34,8 @@ class make_experiment(QMainWindow):
                  image_display_size,
                  rgb_brightness,
                  display_brightness,
-                 default_save_dir=IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR):
+                 default_save_dir=IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR,
+                 num_trans_values=6):
         super().__init__()
         self.checked_transformations = checked_transformations
         self.data_store = data_store
@@ -42,6 +43,8 @@ class make_experiment(QMainWindow):
         self.rgb_brightness = rgb_brightness
         self.display_brightness = display_brightness
         self.default_save_dir = default_save_dir
+        self.num_trans_values = num_trans_values
+
         self.clicked_event = threading.Event()
         self.stop_event = threading.Event()
         self.saved = False
@@ -99,7 +102,8 @@ class make_experiment(QMainWindow):
             
     def get_all_images(self):
         ''' load all transformed images and sort them via MSE '''
-        self.experiment_trans_params = plot_utils.get_all_single_transform_params(self.checked_transformations, num_steps=5)
+        self.experiment_trans_params = plot_utils.get_all_single_transform_params(
+            self.checked_transformations, num_steps=self.num_trans_values)
         # save the experiment ordering before reordering (for saving to csv col ordering)
         self.original_params_order = []
         for single_trans in self.experiment_trans_params:

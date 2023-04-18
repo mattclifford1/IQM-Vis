@@ -19,11 +19,12 @@ class get_range_results_worker(QObject):
         for i, data_store in enumerate(data['data_stores']):
             self.current_image.emit(f'Getting range plot values for {data_store.get_reference_image_name()} progress:')
             results = plot_utils.compute_metrics_over_range_single_trans(data_store,
-                                                            data['trans'],
-                                                            data['metric_params'],
-                                                            data['metrics_to_use'],
-                                                            pbar_signal=self.progress,
-                                                            stop_flag=self.stop_flag)
+                data['trans'],
+                data['metric_params'],
+                data['metrics_to_use'],
+                pbar_signal=self.progress,
+                stop_flag=self.stop_flag,
+                num_steps=data['num_steps'])
             if self.stop_flag[0] == True:
                 self.stopped.emit(True)
                 return

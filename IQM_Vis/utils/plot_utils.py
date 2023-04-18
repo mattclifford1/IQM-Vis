@@ -146,8 +146,9 @@ class scatter_plotter:
 '''
 metric averaging functions to get metric values over a range of transformation
 '''
-def get_all_slider_values(transforms, num_steps=10):
-    float_stabiliser = 100
+def get_all_slider_values(transforms, num_steps=11):
+    float_stabiliser = 100    # work around since computer can't represent e.g. 0.2 very well
+    num_steps -= 1    # since we are using steps then appending stop value
     range = transforms['max'] - transforms['min']
     # make sure if it's an int then we dont return step values that are floats
     if isinstance(transforms['min'], int) and isinstance(transforms['max'], int):
@@ -162,7 +163,7 @@ def get_all_slider_values(transforms, num_steps=10):
     values.append(transforms['max'])
     return values
 
-def get_all_single_transform_params(transforms, num_steps=10):
+def get_all_single_transform_params(transforms, num_steps=11):
     ''' get a list of all the individual transforms with a single parameter value
         useful when doing experiments to make a dataset '''
     list_of_single_trans = []
@@ -182,7 +183,7 @@ def compute_metric_for_human_correlation(data_store, transforms, metric_params, 
         scores[trans_str] = metric_scores[metric]
     return scores
 
-def compute_metrics_over_range_single_trans(data_store, transforms, metric_params, metrics_to_use, pbar_signal=None, stop_flag=None):
+def compute_metrics_over_range_single_trans(data_store, transforms, metric_params, metrics_to_use, pbar_signal=None, stop_flag=None, num_steps=11):
     ''' compute metrics over a range of trans
 
     Args:
@@ -205,14 +206,15 @@ def compute_metrics_over_range_single_trans(data_store, transforms, metric_param
     if pbar_signal != None:
         len_loop = 0
         for i, curr_trans in enumerate(transforms):
-            for trans_value in get_all_slider_values(transforms[curr_trans]):
+            for trans_value in get_all_slider_values(transforms[curr_trans], num_steps=num_steps):
                 len_loop += 1
     pbar_counter = 0
 
     # compute over all image transformations
     for curr_trans in transforms:  # loop over all transformations
         single_trans = {curr_trans: transforms[curr_trans]}
-        all_param_values = get_all_slider_values(transforms[curr_trans])
+        all_param_values = get_all_slider_values(
+            transforms[curr_trans], num_steps=num_steps)
         for trans_value in all_param_values:
             single_param_dict = {curr_trans: trans_value}
             trans_im = image_utils.get_transform_image(data_store, single_trans, single_param_dict) # initialse image
@@ -239,7 +241,7 @@ def compute_metrics_over_range_single_trans(data_store, transforms, metric_param
                     pbar_signal.emit(int(((pbar_counter)/len_loop)*100))
     return results
 
-def compute_metrics_over_range(data_store, transforms, transform_values, metric_params, metrics_to_use, pbar_signal=None, stop_flag=None):
+def compute_metrics_over_range(data_store, transforms, transform_values, metric_params, metrics_to_use, pbar_signal=None, stop_flag=None, num_steps=11):
     '''
     compute metrics over a range of trans (when using non initial values for other transforms)
     currently this method is not being used and instead using the simpler compute_metrics_over_range_single_trans
@@ -265,13 +267,13 @@ def compute_metrics_over_range(data_store, transforms, transform_values, metric_
     if pbar_signal != None:
         len_loop = 0
         for i, curr_trans in enumerate(transforms):
-            for trans_value in get_all_slider_values(transforms[curr_trans]):
+            for trans_value in get_all_slider_values(transforms[curr_trans], num_steps=num_steps):
                 len_loop += 1
     pbar_counter = 0
 
     # compute over all image transformations
     for curr_trans in transforms:  # loop over all transformations
-        for trans_value in get_all_slider_values(transforms[curr_trans]):   # all values of the parameter
+        for trans_value in get_all_slider_values(transforms[curr_trans], num_steps=num_steps):   # all values of the parameter
             vary_one_value = transform_values.copy()
             vary_one_value[curr_trans] = trans_value   # set to the varying value in this range loop
             trans_im = image_utils.get_transform_image(data_store, transforms, vary_one_value)     # initialse image
@@ -279,7 +281,8 @@ def compute_metrics_over_range(data_store, transforms, transform_values, metric_
             for metric in metric_scores:
                 results[metric][curr_trans]['scores'].append(float(metric_scores[metric]))
                 # and store the input trans values for plotting
-                results[metric][curr_trans]['param_values'] = get_all_slider_values(transforms[curr_trans])
+                results[metric][curr_trans]['param_values'] = get_all_slider_values(
+                    transforms[curr_trans], num_steps=num_steps)
 
                 # end if flag says to stop
                 if stop_flag != None:
