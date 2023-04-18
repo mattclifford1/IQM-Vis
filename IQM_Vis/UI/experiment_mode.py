@@ -108,7 +108,6 @@ class make_experiment(QMainWindow):
         # remove any params with value 0 
         self.experiment_trans_params = [
             x for x in self.experiment_trans_params if not x[list(x.keys())[0]] == 0]
-        print(self.experiment_trans_params)
 
         # save the experiment ordering before reordering (for saving to csv col ordering)
         self.original_params_order = []
