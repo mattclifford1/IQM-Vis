@@ -99,26 +99,35 @@ class make_experiment(QMainWindow):
             
     def get_all_images(self):
         ''' load all transformed images and sort them via MSE '''
-        experiment_transforms = plot_utils.get_all_single_transform_params(self.checked_transformations, num_steps=5)
+        self.experiment_trans_params = plot_utils.get_all_single_transform_params(self.checked_transformations, num_steps=5)
+        # save the experiment ordering before reordering (for saving to csv col ordering)
+        self.original_params_order = []
+        for single_trans in self.experiment_trans_params:
+            trans_name = list(single_trans.keys())[0]
+            param = single_trans[trans_name]
+            data = {'transform_name': trans_name,
+                    'transform_value': param}
+            self.original_params_order.append(make_name_for_trans(data))
+
         self.ref_image = self.data_store.get_reference_image()
         # get MSE for experiments to get a rough sorting
         mses = []
         mse = IQM_Vis.IQMs.MSE()
-        for trans in experiment_transforms:
+        for trans in self.experiment_trans_params:
             mses.append(
                 mse(self.ref_image, self.get_single_transform_im(trans)))
         # put median MSE at the end (best for quick sort)
-        experiment_transforms = sort_list(
-            experiment_transforms, mses)  # sort array
+        self.experiment_trans_params = sort_list(
+            self.experiment_trans_params, mses)  # sort array
         # take median out and get random shuffle for the rest
-        median = experiment_transforms.pop(
-            len(experiment_transforms)//2)
-        random.shuffle(experiment_transforms)
-        experiment_transforms.append(median)
+        median = self.experiment_trans_params.pop(
+            len(self.experiment_trans_params)//2)
+        random.shuffle(self.experiment_trans_params)
+        self.experiment_trans_params.append(median)
         # load all images
         self.experiment_transforms = []
         # save all data
-        for single_trans in experiment_transforms:
+        for single_trans in self.experiment_trans_params:
             trans_name = list(single_trans.keys())[0]
             param = single_trans[trans_name]
             img = self.get_single_transform_im(single_trans)
@@ -126,6 +135,7 @@ class make_experiment(QMainWindow):
                     'transform_value': param,
                     'image': img}
             self.experiment_transforms.append(data)
+        
 
     def _init_experiment_window_widgets(self):
         self.widget_experiments = {'exp': {}, 'preamble': {}, 'setup': {}, 'final':{}}
@@ -196,7 +206,7 @@ class make_experiment(QMainWindow):
             self.quit)
         QShortcut(QKeySequence("Ctrl+Q"),
                 self.widget_experiments['final']['quit_button'], self.quit)
-        self.widget_experiments['final']['save_label'] = QLabel('', self)
+        self.widget_experiments['final']['save_label'] = QLabel('Warning: experiment couldnt save!', self)
 
     def experiment_layout(self):
         # setup 
@@ -321,16 +331,61 @@ class make_experiment(QMainWindow):
             self.widget_experiments['final']['save_label'].setText(f'Saved to {self.default_save_dir}')
 
     def save_experiment(self):
+        # get the current transform functions
+        trans_funcs = {}
+        for single_trans in self.experiment_trans_params:
+            trans_name = list(single_trans.keys())[0]
+            trans_funcs[trans_name] = self.checked_transformations[trans_name]['function']
         # make the experiment directory
         self.default_save_dir = os.path.join(
             self.default_save_dir, self.data_store.get_reference_image_name())
+        # get a unique directory (same image with diff trans need a new dir)
+        i = 1
+        unique_dir_found = False
+        new_dir = True
+        while unique_dir_found == False:
+            exp_save_dir = f'{self.default_save_dir}-experiment-{i}'
+            if os.path.exists(exp_save_dir):
+                # check if experiment is the same
+                exp_trans_params = IQM_Vis.utils.save_utils.load_obj(
+                    os.path.join(exp_save_dir, 'transforms', 'transform_params.pkl'))
+                exp_trans_funcs = IQM_Vis.utils.save_utils.load_obj(
+                    os.path.join(exp_save_dir, 'transforms', 'transform_functions.pkl'))
+                if (exp_trans_params == self.original_params_order) and (trans_funcs == exp_trans_funcs):
+                    self.default_save_dir = exp_save_dir
+                    unique_dir_found = True
+                    new_dir = False
+                else:
+                    i += 1
+            else:
+                self.default_save_dir = exp_save_dir
+                unique_dir_found = True
+        # make all the dirs and subdirs
         os.makedirs(self.default_save_dir, exist_ok=True)
         os.makedirs(os.path.join(self.default_save_dir, 'images'), exist_ok=True)
-        # save experiment images
-        for trans in self.experiment_transforms:
+        os.makedirs(os.path.join(self.default_save_dir, 'transforms'), exist_ok=True)
+        if new_dir == True:
+            # save experiment images
             image_utils.save_image(
-                trans['image'], os.path.join(self.default_save_dir, 'images', f'{make_name_for_trans(trans)}.png'))
-        
+                self.ref_image, os.path.join(self.default_save_dir, f'original.png'))
+            for trans in self.experiment_transforms:
+                image_utils.save_image(
+                    trans['image'], os.path.join(self.default_save_dir, 'images', f'{make_name_for_trans(trans)}.png'))
+            # save the transformations
+            IQM_Vis.utils.save_utils.save_obj(
+                os.path.join(self.default_save_dir, 'transforms', 'transform_params.pkl'),
+                self.original_params_order)
+            IQM_Vis.utils.save_utils.save_obj(
+                os.path.join(self.default_save_dir, 'transforms', 'transform_functions.pkl'),
+                dict(sorted(trans_funcs.items())))
+        # save the experiment results
+        exp_order = []
+        for trans in self.experiment_transforms:
+            exp_order.append(make_name_for_trans(trans))
+        IQM_Vis.utils.save_utils.save_experiment_results(
+            self.original_params_order,
+            exp_order,
+            os.path.join(self.default_save_dir, f'{self.data_store.get_reference_image_name()}-results.csv'))
         self.saved = True
 
 
@@ -439,4 +494,4 @@ def sort_list(list1, list2):
     return sorted_list1
 
 def make_name_for_trans(trans):
-    return f"{trans['transform_name']}-{trans['transform_value']}"
+    return f"{trans['transform_name']}::{trans['transform_value']}"

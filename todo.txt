@@ -9,9 +9,6 @@ UI
     - ref
     - all distortions
     -  graphs
-  - Tool bar
-     - luminance calibration
-  - save to the class an attr which window tab currently on so 
 
 
 
@@ -19,8 +16,6 @@ Experiment:
   -
 
   - expose num_steps to experimetnal setup in plot_utils.get_all_slider_values
-  - store results - good naming structre for images/QLabels
-  - save results
   - timer
   -
 
@@ -28,13 +23,7 @@ minor:
   - install package correct docs
 
   - fix metric images being stretched (muliptle rows)
-  - Option to change screen calibration
   - move redo graphs menu to separete menu tab
 
   - get metrics and metric images from all data stores
 
-
-
-CODE styling
-  - make a base class for QMainWindow for each window with set style, close event etc.
-  - make a deepcopy of datastore for experiments
