@@ -60,7 +60,6 @@ class make_experiment(QMainWindow):
 
     def closeEvent(self, event):
         # Ask for confirmation if not saved
-        self.quit_experiment = True
         if not self.saved:
             answer = QMessageBox.question(self,
             "Confirm Exit...",
@@ -72,6 +71,7 @@ class make_experiment(QMainWindow):
 
         event.ignore()
         if answer == QMessageBox.StandardButton.Yes:
+            self.quit_experiment = True
             if hasattr(self, 'range_worker'):
                 self.range_worker.stop()
             self.stop_event.set()
@@ -188,12 +188,15 @@ class make_experiment(QMainWindow):
                   self.widget_experiments['exp']['quit_button'], self.quit)
 
         ''' finish tab '''
+        self.widget_experiments['final']['order_text'] = QLabel(
+            'Experiment Sorting Order:', self)
         self.widget_experiments['final']['images'] = gui_utils.MplCanvas(size=None)
         self.widget_experiments['final']['quit_button'] = QPushButton('Quit', self)
         self.widget_experiments['final']['quit_button'].clicked.connect(
             self.quit)
         QShortcut(QKeySequence("Ctrl+Q"),
                 self.widget_experiments['final']['quit_button'], self.quit)
+        self.widget_experiments['final']['save_label'] = QLabel('', self)
 
     def experiment_layout(self):
         # setup 
@@ -254,7 +257,9 @@ class make_experiment(QMainWindow):
         run_experiment.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         finish_experiment = QVBoxLayout()
+        finish_experiment.addWidget(self.widget_experiments['final']['order_text'])
         finish_experiment.addWidget(self.widget_experiments['final']['images'])
+        finish_experiment.addWidget(self.widget_experiments['final']['save_label'])
         finish_experiment.addWidget(self.widget_experiments['final']['quit_button'])
 
         self.experiments_tab = QTabWidget()
@@ -270,6 +275,7 @@ class make_experiment(QMainWindow):
         self.experiments_tab.setCurrentIndex(1)
         self.experiments_tab.setTabEnabled(0, False)
         self.experiments_tab.setTabEnabled(2, False)
+        self.experiments_tab.setTabEnabled(3, False)
 
     def toggle_experiment(self):
         if self.running_experiment:
@@ -310,6 +316,7 @@ class make_experiment(QMainWindow):
         self.init_style('light')
         self.experiments_tab.setCurrentIndex(3)
         self.experiments_tab.setTabEnabled(2, False)
+        self.widget_experiments['final']['save_label'].setText(f'Saved to {self.default_save_dir}')
 
     ''' sorting algorithm resource: https://www.geeksforgeeks.org/quick-sort/'''
     def quick_sort(self):
