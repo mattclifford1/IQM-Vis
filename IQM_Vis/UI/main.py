@@ -54,11 +54,15 @@ class make_app(widgets, layout, images):
         # make file menu
         self.file_menu = self.menu_bar.addMenu('File')
         load_images_action = self.file_menu.addAction('Load New Images')
+        load_human_action = self.file_menu.addAction('Load Human Scores')
         reload_action = self.file_menu.addAction('Redo Graphs')
         quit_action = self.file_menu.addAction('Quit')
 
         load_images_action.setStatusTip('Choose a folder of images to load')
         load_images_action.triggered.connect(self.load_new_images_folder)
+
+        load_human_action.setStatusTip('Choose a human scores experiment')
+        load_human_action.triggered.connect(self.load_human_experiment)
 
         reload_action.setShortcut('Ctrl+R')
         reload_action.setStatusTip('')
@@ -156,9 +160,7 @@ class make_app(widgets, layout, images):
         # reset any range/correlation calc cache
         self.metric_range_graph_num = 0
         self.metric_correlation_graph_num = 0
-        self.correlation_data = {}
-        for i, _ in enumerate(self.data_stores):
-            self.correlation_data[i] = {}
+        self.reset_correlation_data()
 
         # init the UI widgets and layouts
         self.change_data(0)   # images.py   - load first data instance
@@ -173,6 +175,11 @@ class make_app(widgets, layout, images):
 
         # self.setMinimumSize(self.main_widget.sizeHint())
         self.resize(self.main_widget.sizeHint())
+
+    def reset_correlation_data(self):
+        self.correlation_data = {}
+        for i, _ in enumerate(self.data_stores):
+            self.correlation_data[i] = {}
 
     def _single_image_or_dataset(self):
         '''set whether dataset or single image used for data_store'''

@@ -5,7 +5,7 @@ import IQM_Vis
 
 def run():
     # metrics functions must return a single value
-    metric = {}
+    metric = IQM_Vis.metrics.get_all_metrics()
 
     # metrics images return a numpy image
     metric_images = {}
@@ -19,7 +19,6 @@ def run():
                                   metric,
                                   metric_images,
                                   IQM_Vis.utils.load_image,
-                                  human_exp_csv=os.path.join(file_path, 'images', 'HIQM.csv'),
                                   )
 
     # define the transformations
@@ -36,6 +35,7 @@ def run():
     IQM_Vis.make_UI(data,
                     transformations,
                     metric_params=ssim_params,
+                    restrict_options=3
                     )
 
 if __name__ == '__main__':

@@ -6,6 +6,7 @@ UI image functions
 import os
 import glob
 import numpy as np
+import pandas as pd
 from PyQt6.QtWidgets import QApplication, QFileDialog
 from PyQt6.QtCore import pyqtSignal, QThread
 import IQM_Vis
@@ -114,7 +115,6 @@ class images:
         except:
             return
         
-        print(dir)
         image_list = glob.glob(os.path.join(dir, '*'))
         # remove and folders
         image_list = [f for f in image_list if os.path.isfile(f)]
@@ -124,6 +124,33 @@ class images:
             self.data_num = 0
             self.construct_UI()
             self.max_data_ind = len(image_list) - 1
+
+    def load_human_experiment(self):
+        ''' change the image dataset we are using '''
+        # get the file opener for the user
+        try:
+            if os.path.exists(self.default_save_dir):
+                start_dir = self.default_save_dir
+            else:
+                start_dir = os.path.expanduser("~")
+            file, _ = QFileDialog.getOpenFileName(
+                self,
+                "Open Human Experiments File for Current Image",
+                start_dir,
+                "CSV Files (*.csv)",)
+        except:
+            return
+        
+        # load the csv human scores file and take mean of all experiments
+        if os.path.exists(file):
+            df = pd.read_csv(file)
+            experiment = df.mean().to_dict()
+            for i, _ in enumerate(self.data_stores):
+                self.human_experiment_scores[i] = experiment
+        
+        # clear cache and update correlation plot
+        self.reset_correlation_data()
+        self.display_metric_correlation_plot()
 
     '''
     metric updaters
