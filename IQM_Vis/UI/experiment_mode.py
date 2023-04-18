@@ -159,7 +159,8 @@ class make_experiment(QMainWindow):
         self.widget_experiments['setup']['images'] = gui_utils.MplCanvas(size=None)
         self.widget_experiments['setup']['text'] = QLabel(self)
         self.widget_experiments['setup']['text'].setText(f'''
-        Expeiment to be setup with the above images using the settings:
+        Experiment to be setup with the above images using the settings:
+            Number of steps per transform: {self.num_trans_values}
             Image Display Size: {self.image_display_size}
             Image Calibration:
                 Max RGB Brightness: {self.rgb_brightness}
@@ -167,8 +168,8 @@ class make_experiment(QMainWindow):
 
         Click the Setup button to setup up the experiment and hand over to the test subject.
         ''')
-        self.widget_experiments['setup']['text'].setAlignment(
-            Qt.AlignmentFlag.AlignCenter)
+        # self.widget_experiments['setup']['text'].setAlignment(
+        #     Qt.AlignmentFlag.AlignCenter)
 
         ''' info tab '''
         self.widget_experiments['preamble']['text'] = QLabel(self)
