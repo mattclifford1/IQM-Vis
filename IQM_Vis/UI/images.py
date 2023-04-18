@@ -246,8 +246,8 @@ class images:
         for _, slider_group in self.sliders.items():
             for key, item_sliders in slider_group.items():
                 if key == trans:
-                    self.widget_controls['slider'][key]['data'].setValue(
-                        int(np.where(self.sliders['transforms'][key]['values']==trans_value)[0]))
+                    closest_slider_val = np.argmin(np.abs(self.sliders['transforms'][key]['values']-trans_value))
+                    self.widget_controls['slider'][key]['data'].setValue(closest_slider_val)
                 else:
                     self.widget_controls['slider'][key]['data'].setValue(item_sliders['init_ind'])
         self.display_images()
