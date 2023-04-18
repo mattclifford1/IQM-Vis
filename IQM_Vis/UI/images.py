@@ -87,14 +87,21 @@ class images:
             self.data_num = self.max_data_ind
             return
         self.range_worker.stop() # stop any calculations on the old image
-        for data_store in self.data_stores:
-            try:
-                data_store[self.data_num]
-            except:
-                pass # some datasets will be shorter than others - this is fine though
-            self.display_images()
-            self.set_image_name_text()
-            self.redo_plots()
+        if ival != 0:
+            for data_store in self.data_stores:
+                try:
+                    data_store[self.data_num]
+                except:
+                    pass # some datasets will be shorter than others - this is fine though
+                self.display_images()
+                self.set_image_name_text()
+                self.redo_plots()
+        # load human experiment if any
+        self.human_experiment_scores = {}
+        for i, data_store in enumerate(self.data_stores):
+            if hasattr(data_store, 'human_scores'):
+                self.human_experiment_scores[i] = data_store.human_scores
+
 
     def load_new_images_folder(self):
         ''' change the image dataset we are using '''
@@ -233,17 +240,17 @@ class images:
         metric = self.checked_metrics[self.metric_correlation_graph_num]
         # calculate the metric values at the human score test values
         for i, data_store in enumerate(self.data_stores):
-            if hasattr(data_store , 'human_scores'):
+            if i in self.human_experiment_scores.keys():
                 # calculate metric at HIQM values (if not already cached)
                 if metric not in self.correlation_data[i].keys():
                     scores = plot_utils.compute_metric_for_human_correlation(data_store,
                                             self.checked_transformations,
                                             self.params_from_sliders['metric_params'],
-                                            data_store.human_scores,
+                                            self.human_experiment_scores[i],
                                             metric)
                     # cache it
                     self.correlation_data[i][metric] = scores
-                plot = plot_utils.get_correlation_plot(data_store.human_scores,
+                plot = plot_utils.get_correlation_plot(self.human_experiment_scores[i],
                                                 self.correlation_data[i],
                                                 self.widget_row[i]['metrics']['correlation']['data'],
                                                 metric,
@@ -254,7 +261,6 @@ class images:
                 self.widget_row[i]['metrics']['correlation']['data'].axes.text(
                     0.5, 0.5, 'No Human Scores Provided', horizontalalignment='center', verticalalignment='center')
                 self.widget_row[i]['metrics']['correlation']['data'].draw()
-
 
     def change_metric_correlations_graph(self, add=1):
         max_graph_num = len(self.checked_metrics)

@@ -161,6 +161,7 @@ class make_app(widgets, layout, images):
             self.correlation_data[i] = {}
 
         # init the UI widgets and layouts
+        self.change_data(0)   # images.py   - load first data instance
         self.init_style()     # layout.py
         self.init_widgets()   # widgets.py
         self._init_image_settings()   # widgets.py
