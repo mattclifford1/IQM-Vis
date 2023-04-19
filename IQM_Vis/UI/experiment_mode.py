@@ -160,6 +160,7 @@ class make_experiment(QMainWindow):
         self.widget_experiments['setup']['text'] = QLabel(self)
         self.widget_experiments['setup']['text'].setText(f'''
         Experiment to be setup with the above images using the settings:
+            Save folder: {self.default_save_dir}
             Number of steps per transform: {self.num_trans_values}
             Image Display Size: {self.image_display_size}
             Image Calibration:
@@ -232,6 +233,8 @@ class make_experiment(QMainWindow):
         experiment_mode_setup = QVBoxLayout()
         experiment_mode_setup.addWidget(self.widget_experiments['setup']['images'])
         experiment_mode_setup.addLayout(experiment_text)
+        experiment_mode_setup.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        experiment_mode_setup.addStretch()
 
 
         # info
@@ -281,6 +284,8 @@ class make_experiment(QMainWindow):
         finish_experiment.addWidget(self.widget_experiments['final']['images'])
         finish_experiment.addWidget(self.widget_experiments['final']['save_label'])
         finish_experiment.addWidget(self.widget_experiments['final']['quit_button'])
+        finish_experiment.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        finish_experiment.addStretch()
 
         self.experiments_tab = QTabWidget()
         for tab_layout, tab_name in zip([experiment_mode_setup, experiment_mode_info, run_experiment, finish_experiment],

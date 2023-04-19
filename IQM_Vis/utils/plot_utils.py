@@ -6,6 +6,7 @@ TODO: write docs how to use these (currently just have to look at the UI code)
 from functools import partial
 
 import numpy as np
+import IQM_Vis
 from IQM_Vis.utils import image_utils, gui_utils
 
 '''
@@ -176,7 +177,14 @@ def compute_metric_for_human_correlation(data_store, transforms, metric_params, 
     scores = {}
     for trans_str in human_scores:
         trans, trans_value = gui_utils.get_trans_dict_from_str(trans_str)
-        single_trans = {trans: transforms[trans]}
+        if trans in transforms.keys():
+            single_trans = {trans: transforms[trans]}
+        else:
+            iqm_vis_trans = IQM_Vis.transformations.get_all_transforms()
+            if trans in iqm_vis_trans.keys():
+                single_trans = {trans: iqm_vis_trans[trans]}
+            else:
+                raise Exception(f"Cannot find transformation {trans} in provided transforms or any default transforms, please provide an implimentation of {trans} when contructing the UI.")
         single_param_dict = {trans: trans_value}
         trans_im = image_utils.get_transform_image(data_store, single_trans, single_param_dict) # initialse image
         metric_scores = data_store.get_metrics(trans_im, metric, **metric_params)

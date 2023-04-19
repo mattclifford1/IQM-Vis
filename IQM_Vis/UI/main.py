@@ -2,9 +2,11 @@
 main entry point to initialise the UI
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+
+import os
 import time
 from functools import partial
-from PyQt6.QtWidgets import QApplication, QMessageBox
+from PyQt6.QtWidgets import QApplication, QMessageBox, QFileDialog
 import IQM_Vis
 from IQM_Vis.UI import layout, widgets, images, ProgressBar
 
@@ -53,10 +55,14 @@ class make_app(widgets, layout, images):
 
         # make file menu
         self.file_menu = self.menu_bar.addMenu('File')
+        save_dir_action = self.file_menu.addAction('Set Save Folder')
         load_images_action = self.file_menu.addAction('Load New Images')
         load_human_action = self.file_menu.addAction('Load Human Scores')
         reload_action = self.file_menu.addAction('Redo Graphs')
         quit_action = self.file_menu.addAction('Quit')
+
+        save_dir_action.setStatusTip('Choose a folder to save project/experiments')
+        save_dir_action.triggered.connect(self.change_save_folder)
 
         load_images_action.setStatusTip('Choose a folder of images to load')
         load_images_action.triggered.connect(self.load_new_images_folder)
@@ -204,6 +210,26 @@ class make_app(widgets, layout, images):
                 raise AttributeError(f'{obj_name} needs to have __len__ attribute to be a dataset')
         self.max_data_ind = max_length - 1
         return dataset_found
+    
+    def change_save_folder(self):
+        ''' change the save folder we are using '''
+        # get the file opener for the user
+        if os.path.exists(self.default_save_dir):
+            start_dir = self.default_save_dir
+        else:
+            start_dir = os.path.expanduser("~")
+        try:
+            dir = QFileDialog.getExistingDirectory(self,
+                                                   'Choose Save folder',
+                                                   start_dir)
+        except:
+            return
+
+        if dir == '':
+            return
+        
+        self.default_save_dir = dir
+        self.status_bar.showMessage(f'Changed save dir to: {self.default_save_dir}', 8000)
 
 
 def set_checked_menu_from_iterable(main_menu, iterable, name, action_store, connect_func, restrict_options=None):

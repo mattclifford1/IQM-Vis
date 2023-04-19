@@ -114,7 +114,10 @@ class images:
                                                    start_dir)
         except:
             return
-        
+
+        if dir == '':
+            return
+
         image_list = glob.glob(os.path.join(dir, '*'))
         # remove and folders
         image_list = [f for f in image_list if os.path.isfile(f)]
@@ -128,11 +131,11 @@ class images:
     def load_human_experiment(self):
         ''' change the image dataset we are using '''
         # get the file opener for the user
+        if os.path.exists(self.default_save_dir):
+            start_dir = self.default_save_dir
+        else:
+            start_dir = os.path.expanduser("~")
         try:
-            if os.path.exists(self.default_save_dir):
-                start_dir = self.default_save_dir
-            else:
-                start_dir = os.path.expanduser("~")
             file, _ = QFileDialog.getOpenFileName(
                 self,
                 "Open Human Experiments File for Current Image",

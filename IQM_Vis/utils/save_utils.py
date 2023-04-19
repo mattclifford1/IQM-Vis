@@ -6,7 +6,7 @@ import os
 import pickle
 import pandas as pd
 
-DEFAULT_SAVE_DIR = os.path.join(os.path.expanduser("~"), 'IQM-Vis-saves')
+DEFAULT_SAVE_DIR = os.path.join(os.path.expanduser("~"), 'IQM-Vis-experiments')
 
 def save_obj(pickle_path, trans):
     ''' save transforms as pickle file '''
