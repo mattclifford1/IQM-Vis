@@ -230,11 +230,8 @@ class DISTS:
 
     '''
     def __init__(self):
-        with warnings.catch_warnings():    # we don't care about the warnings these give
-            warnings.simplefilter("ignore")
-            self.metric = dists_original()
+        self.initialised = False   # initialse fully on first __call__ to save load up time
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.metric.to(self.device)
         self.preproccess_function = _numpy_to_torch_image
 
     def __call__(self, im_ref, im_comp, **kwargs):
@@ -248,6 +245,14 @@ class DISTS:
         Returns:
             score (np.array): DISTS score
         '''
+        # load model on first time called
+        if self.initialised == False:
+            with warnings.catch_warnings():    # we don't care about the warnings these give
+                warnings.simplefilter("ignore")
+                self.metric = dists_original()
+            self.metric.to(self.device)
+            self.initialised = True
+            
         _check_shapes(im_ref, im_comp)
         im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
         im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)
