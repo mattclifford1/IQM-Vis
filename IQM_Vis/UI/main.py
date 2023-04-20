@@ -113,19 +113,19 @@ class make_app(widgets, layout, images):
                                        'Transforms',
                                        self.menu_options['transforms'],
                                        self.construct_UI,
-                                       self.restrict_options)
+                                       self.restrict_options['transforms'])
         set_checked_menu_from_iterable(self.menu_bar,
                                        self.data_stores[0].metric_images,
                                        'Metric Images',
                                        self.menu_options['metric_images'],
                                        self.construct_UI,
-                                       self.restrict_options)
+                                       self.restrict_options['metric_images'])
         set_checked_menu_from_iterable(self.menu_bar,
                                        self.data_stores[0].metrics,
                                        'Metrics',
                                        self.menu_options['metrics'],
                                        self.construct_UI,
-                                       self.restrict_options)
+                                       self.restrict_options['metrics'])
 
     def make_status_bar(self):
         self.status_bar = self.statusBar()
@@ -169,10 +169,9 @@ class make_app(widgets, layout, images):
         self.reset_correlation_data()
 
         # init the UI widgets and layouts
-        self.change_data(0)   # images.py   - load first data instance
         self.init_style()     # layout.py
         self.init_widgets()   # widgets.py
-        self._init_image_settings()   # widgets.py
+        self.change_data(0)   # images.py   - load first data instance
         self.init_layout()    # layout.py
         self.tabs['slider'].setCurrentIndex(tabs_index['slider'])
         self.tabs['graph'].setCurrentIndex(tabs_index['graph'])

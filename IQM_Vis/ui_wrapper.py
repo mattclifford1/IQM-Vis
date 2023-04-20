@@ -21,8 +21,8 @@ except ImportError:
 
 class make_UI:
     def __init__(self, 
-                 data_store,
-                 transformations: dict,
+                 data_store=None,
+                 transformations=None,
                  metrics_info_format: str='graph',
                  metrics_avg_graph: bool=True,
                  metric_params: dict={},
@@ -38,7 +38,9 @@ class make_UI:
         self.show()
 
     def show(self):
+        self._check_restrict_options()
         self._check_data_store()
+        self._check_trans()
         self._check_inputs()
         app = QApplication(sys.argv)
         window = make_app(app,
@@ -51,10 +53,40 @@ class make_UI:
                           restrict_options=self.restrict_options)
         sys.exit(app.exec())
 
+    def _check_restrict_options(self):
+        if self.restrict_options == None:
+            trans = len(self.transformations) if self.transformations != None else 0
+            if isinstance(self.data_store, list):
+                metrics = len(self.data_store[0].metrics)
+                metric_images = len(self.data_store[0].metric_images)
+            else:
+                metrics = len(self.data_store.metrics) if self.data_store != None else 0
+                metric_images = len(self.data_store.metric_images) if self.data_store != None else 0
+
+            self.restrict_options = {'transforms': trans,
+                                     'metrics': metrics,
+                                     'metric_images': metric_images}
+        if isinstance(self.restrict_options, int):
+            self.restrict_options = {'transforms': self.restrict_options,
+                                     'metrics': self.restrict_options,
+                                     'metric_images': self.restrict_options}
+
+
+
     def _check_data_store(self):
         '''data store checking'''
-        if type(self.data_store) != list:
+        if self.data_store == None:
+            self.data_store = IQM_Vis.dataset_holder(IQM_Vis.examples.images.DEFAULT_IMAGES,
+                IQM_Vis.metrics.get_all_metrics(),
+                IQM_Vis.metrics.get_all_metric_images()
+                )
+            if self.metric_params == {}:
+                self.metric_params = IQM_Vis.metrics.get_all_IQM_params()
+        if not isinstance(self.data_store, list):
             self.data_store = [self.data_store]
+    def _check_trans(self):
+        if self.transformations == None:
+            self.transformations = IQM_Vis.transformations.get_all_transforms()
 
     def _check_inputs(self):
         for item in self.data_store:

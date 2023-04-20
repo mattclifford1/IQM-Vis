@@ -54,16 +54,16 @@ def resize_to_longest_side(im, side=128):
     else:
         scale = shape[1]/side
         size = (int(shape[0]/scale), side)
-    im = resize(im, size)
+    im = resize_image(im, size)
     return im
 
 def resize_image(im, size=128):
     '''
     resize image to square or specified size
     '''
-    if type(size) != tuple or type(size) != list:
+    if isinstance(size, int):
         size = (size, size)
-    im = resize(im, size)
+    im = cv2.resize(im, size, interpolation=cv2.INTER_LINEAR)  # cv2 much faster than skimage
     return im
 
 def crop_centre(image, scale_factor=2):

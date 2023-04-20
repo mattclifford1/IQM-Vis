@@ -91,7 +91,7 @@ class SSIM:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.preproccess_function = _numpy_to_torch_image
 
-    def __call__(self, im_ref, im_comp, **kwargs):
+    def __call__(self, im_ref, im_comp, sigma=1.5, k1=0.01, k2=0.03, **kwargs):
         '''When an instance is called
 
         Args:
@@ -110,9 +110,10 @@ class SSIM:
         with warnings.catch_warnings():    # we don't care about the warnings these give
             warnings.simplefilter("ignore")
             if self.return_image:
-                _metric = self.metric(return_full_image=True, reduction=None, **kwargs)
+                _metric = self.metric(
+                    sigma=sigma, k1=k1, k2=k2, return_full_image=True, reduction=None)
             else:
-                _metric = self.metric(**kwargs)
+                _metric = self.metric(sigma=sigma, k1=k1, k2=k2)
             _metric.to(self.device)
         if self.return_image:
             _, ssim_full_im = _metric(im_ref, im_comp)
@@ -141,7 +142,7 @@ class MS_SSIM:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.preproccess_function = _numpy_to_torch_image
 
-    def __call__(self, im_ref, im_comp, **kwargs):
+    def __call__(self, im_ref, im_comp, sigma=1.5, k1=0.01, k2=0.03, mssim_kernel_size=11, ** kwargs):
         '''When an instance is called
 
         Args:
@@ -160,9 +161,13 @@ class MS_SSIM:
         with warnings.catch_warnings():    # we don't care about the warnings these give
             warnings.simplefilter("ignore")
             if self.return_image:
-                _metric = self.metric(return_full_image=True, reduction=None, **kwargs)
+                _metric = self.metric(sigma=sigma, k1=k1, k2=k2, 
+                                      return_full_image=True, 
+                                      kernel_size=int(mssim_kernel_size), 
+                                      reduction=None)
             else:
-                _metric = self.metric(**kwargs)
+                _metric = self.metric(
+                    sigma=sigma, k1=k1, k2=k2, kernel_size=int(mssim_kernel_size))
             _metric.to(self.device)
         if self.return_image:
             _, ssim_full_im = _metric(im_ref, im_comp)
@@ -252,7 +257,7 @@ class DISTS:
                 self.metric = dists_original()
             self.metric.to(self.device)
             self.initialised = True
-            
+
         _check_shapes(im_ref, im_comp)
         im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
         im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)

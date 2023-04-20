@@ -88,15 +88,15 @@ class images:
             self.data_num = self.max_data_ind
             return
         self.range_worker.stop() # stop any calculations on the old image
-        if ival != 0:
-            for data_store in self.data_stores:
-                try:
-                    data_store[self.data_num]
-                except:
-                    pass # some datasets will be shorter than others - this is fine though
-                self.display_images()
-                self.set_image_name_text()
-                self.redo_plots()
+        # if ival != 0:
+        for data_store in self.data_stores:
+            try:
+                data_store[self.data_num]
+            except:
+                pass # some datasets will be shorter than others - this is fine though
+            self.display_images()
+            self.set_image_name_text()
+        self.redo_plots()
         # load human experiment if any
         self.human_experiment_scores = {}
         for i, data_store in enumerate(self.data_stores):
@@ -289,7 +289,7 @@ class images:
             else:
                 self.widget_row[i]['metrics']['correlation']['data'].axes.clear()
                 self.widget_row[i]['metrics']['correlation']['data'].axes.text(
-                    0.5, 0.5, 'No Human Scores Provided', horizontalalignment='center', verticalalignment='center')
+                    0.5, 0.5, 'Go to: File->Load Human Scores', horizontalalignment='center', verticalalignment='center')
                 self.widget_row[i]['metrics']['correlation']['data'].draw()
 
     def change_metric_correlations_graph(self, add=1):

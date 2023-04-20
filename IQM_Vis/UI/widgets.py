@@ -21,6 +21,7 @@ class widgets():
         '''
         self._init_widgets()
         self.set_image_name_text()
+        self._init_image_settings()
 
     def _init_widgets(self):
         '''
@@ -197,25 +198,31 @@ class widgets():
 
         # pre processing
         self.pre_processing_options = {'None': None,
-                                       'Resize 128': IQM_Vis.utils.image_utils.resize_to_longest_side}
-        init_val = 'Resize 128'
+                                       'Resize 64': partial(IQM_Vis.utils.image_utils.resize_to_longest_side, side=64),
+                                       'Resize 128': partial(IQM_Vis.utils.image_utils.resize_to_longest_side, side=128),
+                                       'Resize 256': partial(IQM_Vis.utils.image_utils.resize_to_longest_side, side=256),
+                                       'Resize 512': partial(IQM_Vis.utils.image_utils.resize_to_longest_side, side=512)}
+        if not hasattr(self, 'pre_processing_option'):
+            self.pre_processing_option = 'Resize 128'  # init_val
+
         for i, data_store in enumerate(self.data_stores):
             if hasattr(data_store, 'image_pre_processing'):
-                if data_store.image_pre_processing not in list(self.pre_processing_options.values()):
-                    print(data_store.image_pre_processing)
+                if str(data_store.image_pre_processing) not in [str(f) for f in self.pre_processing_options.values()]:
                     name = f"Custom {i}"
                     self.pre_processing_options[name] = data_store.image_pre_processing
                     init_val = name
         combobox_pre = QComboBox()
         combobox_pre.addItems(list(self.pre_processing_options.keys()))
-        combobox_pre.setCurrentText(init_val)
+        combobox_pre.setCurrentText(self.pre_processing_option)
         combobox_pre.activated.connect(self.change_pre_processing)
         self.widget_settings['image_pre_processing'] = {'widget': combobox_pre, 'label': QLabel('Image Pre Processing:')}
+        self.change_pre_processing()   # apply default
 
         # post processing
         self.post_processing_options = {'None': None,
                                         'Crop Centre': IQM_Vis.utils.image_utils.crop_centre}
-        init_val = 'None'
+        if not hasattr(self, 'post_processing_option'):
+            self.post_processing_option = 'None'  # init_val
         for i, data_store in enumerate(self.data_stores):
             if hasattr(data_store, 'image_post_processing'):
                 if data_store.image_post_processing not in list(self.post_processing_options.values()):
@@ -224,9 +231,10 @@ class widgets():
                     init_val = name
         combobox_post = QComboBox()
         combobox_post.addItems(list(self.post_processing_options.keys()))
-        combobox_post.setCurrentText(init_val)
+        combobox_post.setCurrentText(self.post_processing_option)
         combobox_post.activated.connect(self.change_post_processing)
         self.widget_settings['image_post_processing'] = {'widget': combobox_post, 'label': QLabel('Image Post Processing:')}
+        self.change_post_processing()    # apply default
 
         # image display size
         line_edit_display = QLineEdit()
@@ -321,23 +329,24 @@ class widgets():
         self.redo_plots(calc_range=False)
 
     def change_pre_processing(self, *args):
-        option = self.widget_settings['image_pre_processing']['widget'].currentText()
+        self.pre_processing_option = self.widget_settings['image_pre_processing']['widget'].currentText()
         for data_store in self.data_stores:
             if hasattr(data_store, 'image_pre_processing'):
-                data_store.image_pre_processing = self.pre_processing_options[option]
+                data_store.image_pre_processing = self.pre_processing_options[self.pre_processing_option]
         self.image_settings_update_plots = True
 
     def change_post_processing(self, *args):
-        option = self.widget_settings['image_post_processing']['widget'].currentText()
+        self.post_processing_option = self.widget_settings['image_post_processing']['widget'].currentText()
         for data_store in self.data_stores:
             if hasattr(data_store, 'image_post_processing'):
-                data_store.image_post_processing = self.post_processing_options[option]
+                data_store.image_post_processing = self.post_processing_options[self.post_processing_option]
         self.image_settings_update_plots = True
         # self.display_images()
         # self.redo_plots()
 
     def update_image_settings(self):
         ''' button to apply new image settings '''
+        self.change_data(0)  # update the image data settings
         self.display_images()
         if hasattr(self, 'update_UI'):
             if self.update_UI == True:
