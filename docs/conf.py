@@ -72,3 +72,5 @@ nbsphinx_thumbnails = {
     'gallery/*-rst': 'images/jupyter_logo.png',
     # 'orphan': '_static/favicon.svg',
 }
+
+nbsphinx_execute = 'never'

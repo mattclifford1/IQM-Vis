@@ -13,9 +13,9 @@
   
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/nbsphinx-gallery.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/nbsphinx-code-cells.css" type="text/css" />
 
   
   
@@ -32,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
@@ -86,15 +87,15 @@
               
             
             
-              <p><span class="caption-text">Getting Started:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
 </ul>
-<p><span class="caption-text">Tutorials:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../Tutorials.html">Tutorials</a></li>
 </ul>
-<p><span class="caption-text">Contents:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
@@ -167,27 +168,36 @@
 <span></span><span class="kn">from</span> <span class="nn">.IQMs</span> <span class="kn">import</span> <span class="n">MAE</span><span class="p">,</span> <span class="n">MSE</span><span class="p">,</span> <span class="n">SSIM</span><span class="p">,</span> <span class="n">MS_SSIM</span><span class="p">,</span> <span class="n">LPIPS</span><span class="p">,</span> <span class="n">DISTS</span>
 
 <div class="viewcode-block" id="get_all_metrics"><a class="viewcode-back" href="../../IQM_Vis.metrics.html#IQM_Vis.metrics.get_all_metrics">[docs]</a><span class="k">def</span> <span class="nf">get_all_metrics</span><span class="p">():</span>
-    <span class="sd">&#39;&#39;&#39; Get all available IQMs provided by IQM_Vis &#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; Get all available IQMs provided by IQM_Vis &#39;&#39;&#39;</span>
     <span class="n">all_metrics</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;MAE&#39;</span><span class="p">:</span> <span class="n">MAE</span><span class="p">(),</span>
         <span class="s1">&#39;MSE&#39;</span><span class="p">:</span> <span class="n">MSE</span><span class="p">(),</span>
         <span class="s1">&#39;SSIM&#39;</span><span class="p">:</span> <span class="n">SSIM</span><span class="p">(),</span>
+        <span class="s1">&#39;MS_SSIM&#39;</span><span class="p">:</span> <span class="n">MS_SSIM</span><span class="p">(),</span>
         <span class="s1">&#39;DISTS&#39;</span><span class="p">:</span> <span class="n">DISTS</span><span class="p">(),</span>
         <span class="s1">&#39;SSIM&#39;</span><span class="p">:</span> <span class="n">SSIM</span><span class="p">(),</span>
-        <span class="s1">&#39;MS_SSIM&#39;</span><span class="p">:</span> <span class="n">MS_SSIM</span><span class="p">(),</span>
         <span class="s1">&#39;LPIPS&#39;</span><span class="p">:</span> <span class="n">LPIPS</span><span class="p">(),</span>
+        <span class="s1">&#39;MAE&#39;</span><span class="p">:</span> <span class="n">MAE</span><span class="p">(),</span>
     <span class="p">}</span>
     <span class="k">return</span> <span class="n">all_metrics</span></div>
 
 <div class="viewcode-block" id="get_all_metric_images"><a class="viewcode-back" href="../../IQM_Vis.metrics.html#IQM_Vis.metrics.get_all_metric_images">[docs]</a><span class="k">def</span> <span class="nf">get_all_metric_images</span><span class="p">():</span>
-    <span class="sd">&#39;&#39;&#39; Get all available IQMs provided by IQM_Vis that return an image &#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; Get all available IQMs provided by IQM_Vis that return an image &#39;&#39;&#39;</span>
     <span class="n">all_metrics</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;MAE&#39;</span><span class="p">:</span> <span class="n">MAE</span><span class="p">(</span><span class="n">return_image</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
     <span class="s1">&#39;MSE&#39;</span><span class="p">:</span> <span class="n">MSE</span><span class="p">(</span><span class="n">return_image</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
     <span class="s1">&#39;SSIM&#39;</span><span class="p">:</span> <span class="n">SSIM</span><span class="p">(</span><span class="n">return_image</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-    <span class="c1"># &#39;MSSIM&#39;: MSSIM(return_image=True),</span>
+    <span class="s1">&#39;MAE&#39;</span><span class="p">:</span> <span class="n">MAE</span><span class="p">(</span><span class="n">return_image</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="c1"># &#39;MS_SSIM&#39;: MS_SSIM(return_image=True),</span>
     <span class="p">}</span>
     <span class="k">return</span> <span class="n">all_metrics</span></div>
+
+<div class="viewcode-block" id="get_all_IQM_params"><a class="viewcode-back" href="../../IQM_Vis.metrics.html#IQM_Vis.metrics.get_all_IQM_params">[docs]</a><span class="k">def</span> <span class="nf">get_all_IQM_params</span><span class="p">():</span>
+    <span class="n">all_params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;sigma&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;min&#39;</span><span class="p">:</span><span class="mf">0.25</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span><span class="mf">5.25</span><span class="p">,</span> <span class="s1">&#39;init_value&#39;</span><span class="p">:</span> <span class="mf">1.5</span><span class="p">},</span>  <span class="c1"># for the guassian kernel</span>
+        <span class="s1">&#39;k1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;min&#39;</span><span class="p">:</span><span class="mf">0.01</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span><span class="mf">0.21</span><span class="p">,</span> <span class="s1">&#39;init_value&#39;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">},</span>
+        <span class="s1">&#39;k2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;min&#39;</span><span class="p">:</span><span class="mf">0.01</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span><span class="mf">0.21</span><span class="p">,</span> <span class="s1">&#39;init_value&#39;</span><span class="p">:</span> <span class="mf">0.03</span><span class="p">},</span>
+        <span class="c1"># &#39;mssim_kernel_size&#39;: {&#39;min&#39;:3, &#39;max&#39;:15, &#39;normalise&#39;:&#39;odd&#39;, &#39;init_value&#39;: 11},  # ignored if guassian kernel used</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">all_params</span></div>
 </pre></div>
 
            </div>

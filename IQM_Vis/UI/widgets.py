@@ -203,7 +203,7 @@ class widgets():
                                        'Resize 256': partial(IQM_Vis.utils.image_utils.resize_to_longest_side, side=256),
                                        'Resize 512': partial(IQM_Vis.utils.image_utils.resize_to_longest_side, side=512)}
         if not hasattr(self, 'pre_processing_option'):
-            self.pre_processing_option = 'Resize 128'  # init_val
+            self.pre_processing_option = 'Resize 256'  # init_val
 
         for i, data_store in enumerate(self.data_stores):
             if hasattr(data_store, 'image_pre_processing'):
