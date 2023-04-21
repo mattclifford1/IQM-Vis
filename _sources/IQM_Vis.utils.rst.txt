@@ -28,6 +28,14 @@ IQM\_Vis.utils.plot\_utils module
    :undoc-members:
    :show-inheritance:
 
+IQM\_Vis.utils.save\_utils module
+---------------------------------
+
+.. automodule:: IQM_Vis.utils.save_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

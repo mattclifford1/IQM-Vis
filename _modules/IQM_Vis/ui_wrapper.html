@@ -13,9 +13,9 @@
   
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/nbsphinx-gallery.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/nbsphinx-code-cells.css" type="text/css" />
 
   
   
@@ -32,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
@@ -86,15 +87,15 @@
               
             
             
-              <p><span class="caption-text">Getting Started:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
 </ul>
-<p><span class="caption-text">Tutorials:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../Tutorials.html">Tutorials</a></li>
 </ul>
-<p><span class="caption-text">Contents:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
@@ -169,6 +170,7 @@
 <span class="sd">TODO: write docs on example usage/ what inputs etc. and what attributes that the data_store class needs</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="c1"># Author: Matt Clifford &lt;matt.clifford@bristol.ac.uk&gt;</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">import</span> <span class="nn">types</span>
@@ -176,26 +178,36 @@
 
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">PyQt6.QtWidgets</span> <span class="kn">import</span> <span class="n">QApplication</span>
+    <span class="kn">import</span> <span class="nn">IQM_Vis</span>
     <span class="kn">from</span> <span class="nn">IQM_Vis.UI.main</span> <span class="kn">import</span> <span class="n">make_app</span>
     <span class="kn">from</span> <span class="nn">IQM_Vis.utils</span> <span class="kn">import</span> <span class="n">image_utils</span>
+    <span class="kn">import</span> <span class="nn">matplotlib</span>
+    <span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;Qt5Agg&quot;</span><span class="p">)</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Cannot load PyQt6 library - running IQM_Vis package in headless mode&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="make_UI"><a class="viewcode-back" href="../../IQM_Vis.html#IQM_Vis.ui_wrapper.make_UI">[docs]</a><span class="k">class</span> <span class="nc">make_UI</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_store</span><span class="p">,</span>
-                       <span class="n">transformations</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
-                       <span class="n">metrics_info_format</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;graph&#39;</span><span class="p">,</span>
-                       <span class="n">metrics_avg_graph</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                       <span class="n">metric_params</span><span class="p">:</span> <span class="nb">dict</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                 <span class="n">data_store</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">transformations</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">metrics_info_format</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;graph&#39;</span><span class="p">,</span>
+                 <span class="n">metrics_avg_graph</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">metric_params</span><span class="p">:</span> <span class="nb">dict</span><span class="o">=</span><span class="p">{},</span>
+                 <span class="n">default_save_dir</span><span class="o">=</span><span class="n">IQM_Vis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">save_utils</span><span class="o">.</span><span class="n">DEFAULT_SAVE_DIR</span><span class="p">,</span>
+                 <span class="n">restrict_options</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_store</span> <span class="o">=</span> <span class="n">data_store</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span> <span class="o">=</span> <span class="n">transformations</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metrics_info_format</span> <span class="o">=</span> <span class="n">metrics_info_format</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metrics_avg_graph</span> <span class="o">=</span> <span class="n">metrics_avg_graph</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metric_params</span> <span class="o">=</span> <span class="n">metric_params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span> <span class="o">=</span> <span class="n">default_save_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">restrict_options</span> <span class="o">=</span> <span class="n">restrict_options</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
 <div class="viewcode-block" id="make_UI.show"><a class="viewcode-back" href="../../IQM_Vis.html#IQM_Vis.ui_wrapper.make_UI.show">[docs]</a>    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_restrict_options</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_data_store</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_trans</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_inputs</span><span class="p">()</span>
         <span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
         <span class="n">window</span> <span class="o">=</span> <span class="n">make_app</span><span class="p">(</span><span class="n">app</span><span class="p">,</span>
@@ -203,18 +215,50 @@
                           <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span><span class="p">,</span>
                           <span class="n">metrics_info_format</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics_info_format</span><span class="p">,</span>
                           <span class="n">metrics_avg_graph</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics_avg_graph</span><span class="p">,</span>
-                          <span class="n">metric_params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_params</span><span class="p">)</span>
+                          <span class="n">metric_params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_params</span><span class="p">,</span>
+                          <span class="n">default_save_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span><span class="p">,</span>
+                          <span class="n">restrict_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">restrict_options</span><span class="p">)</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">())</span></div>
 
+    <span class="k">def</span> <span class="nf">_check_restrict_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">restrict_options</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">trans</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transformations</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span> <span class="o">!=</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_store</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">metrics</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_store</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">metrics</span><span class="p">)</span>
+                <span class="n">metric_images</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_store</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">metric_images</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">metrics</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_store</span><span class="o">.</span><span class="n">metrics</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_store</span> <span class="o">!=</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">0</span>
+                <span class="n">metric_images</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_store</span><span class="o">.</span><span class="n">metric_images</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_store</span> <span class="o">!=</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">0</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">restrict_options</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;transforms&#39;</span><span class="p">:</span> <span class="n">trans</span><span class="p">,</span>
+                                     <span class="s1">&#39;metrics&#39;</span><span class="p">:</span> <span class="n">metrics</span><span class="p">,</span>
+                                     <span class="s1">&#39;metric_images&#39;</span><span class="p">:</span> <span class="n">metric_images</span><span class="p">}</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">restrict_options</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">restrict_options</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;transforms&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">restrict_options</span><span class="p">,</span>
+                                     <span class="s1">&#39;metrics&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">restrict_options</span><span class="p">,</span>
+                                     <span class="s1">&#39;metric_images&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">restrict_options</span><span class="p">}</span>
+
+
+
     <span class="k">def</span> <span class="nf">_check_data_store</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;data store checking&#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_store</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;data store checking&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_store</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_store</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">dataset_holder</span><span class="p">(</span><span class="n">IQM_Vis</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">DEFAULT_IMAGES</span><span class="p">,</span>
+                <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">get_all_metrics</span><span class="p">(),</span>
+                <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">get_all_metric_images</span><span class="p">()</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric_params</span> <span class="o">==</span> <span class="p">{}:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metric_params</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">get_all_IQM_params</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_store</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">data_store</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_store</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">_check_trans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">transformations</span><span class="o">.</span><span class="n">get_all_transforms</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_check_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_store</span><span class="p">:</span>
             <span class="n">test_datastore_attributes</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-        <span class="sd">&#39;&#39;&#39;input items that should be dictionaries&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;input items that should be dictionaries&#39;&#39;&#39;</span>
         <span class="n">should_be_dict</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">transformations</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric_params</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">should_be_dict</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
@@ -224,7 +268,7 @@
             <span class="c1">#     var_name = f&#39;{item=}&#39;.split(&#39;=&#39;)[0]</span>
             <span class="c1">#     warnings.warn(f&#39;make_UI input: {var_name} is empty&#39;)</span>
 
-        <span class="sd">&#39;&#39;&#39;extra input option checks&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;extra input option checks&#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics_info_format</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">:</span>
             <span class="n">var_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics_info_format</span><span class="si">=}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;make_UI input: &#39;</span><span class="o">+</span><span class="n">var_name</span><span class="o">+</span><span class="s1">&#39; should be a string not &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics_info_format</span><span class="p">)))</span>
@@ -234,7 +278,7 @@
 
 
 <div class="viewcode-block" id="test_datastore_attributes"><a class="viewcode-back" href="../../IQM_Vis.html#IQM_Vis.ui_wrapper.test_datastore_attributes">[docs]</a><span class="k">def</span> <span class="nf">test_datastore_attributes</span><span class="p">(</span><span class="n">data_store</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;get the data handler class to make sure its properties are correct&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;get the data handler class to make sure its properties are correct&#39;&#39;&#39;</span>
     <span class="n">obj_name</span> <span class="o">=</span> <span class="n">data_store</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
     <span class="n">attributes</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">(</span><span class="s1">&#39;get_reference_image&#39;</span><span class="p">,</span> <span class="s1">&#39;gets the input reference image&#39;</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">MethodType</span><span class="p">),</span>

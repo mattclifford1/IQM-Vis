@@ -13,9 +13,9 @@
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/nbsphinx-gallery.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/nbsphinx-code-cells.css" type="text/css" />
 
   
   
@@ -32,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -86,15 +87,15 @@
               
             
             
-              <p><span class="caption-text">Getting Started:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
 </ul>
-<p><span class="caption-text">Tutorials:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../Tutorials.html">Tutorials</a></li>
 </ul>
-<p><span class="caption-text">Contents:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
@@ -177,7 +178,7 @@
 
 
 <div class="viewcode-block" id="dataset_holder"><a class="viewcode-back" href="../../../IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api.dataset_holder">[docs]</a><span class="k">class</span> <span class="nc">dataset_holder</span><span class="p">(</span><span class="n">base_dataset_loader</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Stores images and metrics to communicate with the UI via the IQM-Vis data</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Stores images and metrics to communicate with the UI via the IQM-Vis data</span>
 <span class="sd">       API.</span>
 
 <span class="sd">       Args:</span>
@@ -201,19 +202,17 @@
                        <span class="n">metrics</span><span class="p">:</span> <span class="nb">dict</span><span class="o">=</span><span class="p">{},</span>
                        <span class="n">metric_images</span><span class="p">:</span> <span class="nb">dict</span><span class="o">=</span><span class="p">{},</span>
                        <span class="n">image_loader</span><span class="o">=</span><span class="n">IQM_Vis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">load_image</span><span class="p">,</span>     <span class="c1"># function to load image files</span>
+                       <span class="n">image_pre_processing</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># apply a function to the image before transformations (e.g. resize to smaller)</span>
                        <span class="n">image_post_processing</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># apply a function to the image after transformations (e.g. zoom to help with black boarders on rotation)</span>
                        <span class="n">image_list_to_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="c1"># if you want to use a different image to transform than reference</span>
                        <span class="n">human_exp_csv</span><span class="o">=</span><span class="kc">None</span>    <span class="c1"># csv for where the human experiments file is</span>
                        <span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">image_list</span> <span class="o">=</span> <span class="n">image_list</span>
-        <span class="k">if</span> <span class="n">image_list_to_transform</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">image_list_to_transform</span> <span class="o">=</span> <span class="n">image_list</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">image_list_to_transform</span> <span class="o">=</span> <span class="n">image_list_to_transform</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;image_list is empty&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image_loader</span> <span class="o">=</span> <span class="n">image_loader</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_load_image_data</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>   <span class="c1"># load the first image</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_pre_processing</span> <span class="o">=</span> <span class="n">image_pre_processing</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_image_list</span><span class="p">(</span><span class="n">image_list</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">image_list_to_transform</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image_list_to_transform</span> <span class="o">=</span> <span class="n">image_list_to_transform</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_load_image_data</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>   <span class="c1"># load the first transform image</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span> <span class="o">=</span> <span class="n">metrics</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metric_images</span> <span class="o">=</span> <span class="n">metric_images</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image_post_processing</span> <span class="o">=</span> <span class="n">image_post_processing</span>
@@ -222,11 +221,24 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_inputs</span><span class="p">()</span>
 
+<div class="viewcode-block" id="dataset_holder.load_image_list"><a class="viewcode-back" href="../../../IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api.dataset_holder.load_image_list">[docs]</a>    <span class="k">def</span> <span class="nf">load_image_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_list</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">image_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;image_list&#39;</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;image_list is empty&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_list</span> <span class="o">=</span> <span class="n">image_list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_list_to_transform</span> <span class="o">=</span> <span class="n">image_list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_load_image_data</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+
+
     <span class="k">def</span> <span class="nf">_load_image_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
         <span class="c1"># reference image</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_file</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">image_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_loader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_pre_processing</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">image_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_pre_processing</span><span class="p">(</span><span class="n">image_data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image_reference</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_name</span><span class="p">,</span> <span class="n">image_data</span><span class="p">)</span>
         <span class="c1"># image to transform</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_file</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_list_to_transform</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
@@ -234,6 +246,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">image_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_list_to_transform</span><span class="p">[</span><span class="n">i</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">image_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_loader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_list_to_transform</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_pre_processing</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">image_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_pre_processing</span><span class="p">(</span><span class="n">image_data</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">image_reference</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_name</span><span class="p">,</span> <span class="n">image_data</span><span class="p">)</span>
         <span class="c1"># Human experiments</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;human_scores&#39;</span><span class="p">):</span>
@@ -241,7 +255,6 @@
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;human_exp_df&#39;</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">human_exp_df</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">human_scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">human_exp_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">image_name</span><span class="p">]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">human_scores</span><span class="si">=}</span><span class="s1">&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_list</span><span class="p">)</span>
