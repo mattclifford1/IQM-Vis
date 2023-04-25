@@ -26,3 +26,30 @@ Run a demonstration example by running the python code:
 
     import IQM_Vis
     IQM_Vis.examples.dataset.run()
+
+
+Common Issues
+=============
+There are some know issues with some work arounds.
+
+If you are getting the error 
+
+..  code-block:: bash
+    
+    "Could not load the Qt platform plugin"
+
+This is often to do with mismatched PyQt versions linked to different packages. First make sure you are using the latest version of IQM-Vis. This may require you to create a new python virtual environment from scratch and reinstall IQM-Vis.
+
+then try first to uninstall opencv and change for opencv headless.
+
+..  code-block:: bash
+    
+    pip uninstall opencv-python
+    pip install opencv-python-headless
+
+you can also try to install the extra libraries if you are using linux e.g.:
+
+..  code-block:: bash
+
+    sudo apt install libxcb-cursor0 
+
