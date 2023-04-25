@@ -3,6 +3,7 @@ image helper functions
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 import os
+import PIL
 import cv2
 import numpy as np
 from skimage.transform import resize
@@ -35,13 +36,16 @@ def load_image(image_path):
     '''
     if not os.path.isfile(image_path):
         raise ValueError(f'Image file: {image_path} does not exist')
-    image = cv2.imread(image_path)
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    return image.astype(np.float32) / 255.0
+    img = PIL.Image.open(image_path)
+    img = np.array(img)
+    if img.dtype == 'uint8':
+        img = img/255
+    return img
 
 def save_image(img, path):
     ''' save image as ubyte '''
-    cv2.imwrite(path, img_as_ubyte(img))
+    img = PIL.Image.fromarray(img_as_ubyte(img))
+    img.save(path)
 
 def resize_to_longest_side(im, side=128):
     '''
@@ -57,14 +61,20 @@ def resize_to_longest_side(im, side=128):
     im = resize_image(im, size)
     return im
 
-def resize_image(im, size=128):
+def resize_image(img, size=128):
     '''
     resize image to square or specified size
     '''
     if isinstance(size, int):
         size = (size, size)
-    im = cv2.resize(im, size, interpolation=cv2.INTER_LINEAR)  # cv2 much faster than skimage
-    return im
+    img = cv2.resize(img, size, interpolation=cv2.INTER_LINEAR)  # cv2 much faster than skimage
+
+    # can change to PIL code below but only works with uint8 images
+    # img = PIL.Image.fromarray(img_as_ubyte(img))
+    # img = img.resize(size)
+    # img = np.array(img)/255
+
+    return img
 
 def crop_centre(image, scale_factor=2):
     ''' crop to the centre of the image, note this will return a small image size
