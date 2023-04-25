@@ -1,6 +1,7 @@
 numpy
 PyQt6
 opencv-python-headless
+pillow
 scikit-image
 matplotlib
 torch
