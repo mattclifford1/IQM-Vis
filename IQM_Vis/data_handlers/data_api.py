@@ -4,6 +4,7 @@ both use the same image for reference and transformed
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 import os
+from collections import namedtuple
 import numpy as np
 import pandas as pd
 import IQM_Vis
@@ -40,6 +41,7 @@ class dataset_holder(base_dataset_loader):
                        image_list_to_transform=None, # if you want to use a different image to transform than reference
                        human_exp_csv=None    # csv for where the human experiments file is
                        ):
+        self.image_storer = namedtuple('image', ['name', 'data'])
         self.image_loader = image_loader
         self.image_pre_processing = image_pre_processing
         self.load_image_list(image_list)
@@ -68,26 +70,28 @@ class dataset_holder(base_dataset_loader):
     def _load_image_data(self, i):
         # reference image
         self.current_file = self.image_list[i]
-        self.image_name = os.path.splitext(os.path.basename(self.current_file))[0]
-        image_data = self.image_loader(self.current_file)
+        image_name_ref = os.path.splitext(os.path.basename(self.current_file))[0]
+        image_data_ref = self.image_loader(self.current_file)
         if self.image_pre_processing is not None:
-            image_data = self.image_pre_processing(image_data)
-        self.image_reference = (self.image_name, image_data)
+            image_data_ref = self.image_pre_processing(image_data_ref)
+        self.image_reference = self.image_storer(image_name_ref, image_data_ref)
+
         # image to transform
         if self.current_file == self.image_list_to_transform[i]:
-            self.image_to_transform = (self.image_name, image_data)
+            self.image_to_transform = self.image_storer( image_name_ref, image_data_ref)
         else:
-            image_name = os.path.splitext(os.path.basename(self.image_list_to_transform[i]))[0]
-            image_data = self.image_loader(self.image_list_to_transform[i])
+            image_name_trans = os.path.splitext(os.path.basename(self.image_list_to_transform[i]))[0]
+            image_data_trans = self.image_loader(self.image_list_to_transform[i])
             if self.image_pre_processing is not None:
-                image_data = self.image_pre_processing(image_data)
-            self.image_reference = (self.image_name, image_data)
+                image_data_trans = self.image_pre_processing(image_data_trans)
+            self.image_reference = self.image_storer(image_name_trans, image_data_trans)
+
         # Human experiments
         if hasattr(self, 'human_scores'):
             del self.human_scores  # delete old scores (incase we dont have ones for new image)
         if hasattr(self, 'human_exp_df'):
-            if self.image_name in self.human_exp_df.index:
-                self.human_scores = self.human_exp_df.loc[self.image_name].to_dict()
+            if image_name_ref in self.human_exp_df.index:
+                self.human_scores = self.human_exp_df.loc[image_name_ref].to_dict()
 
     def __len__(self):
         return len(self.image_list)
@@ -96,19 +100,19 @@ class dataset_holder(base_dataset_loader):
         self._load_image_data(i)
 
     def get_reference_image_name(self):
-        return self.image_reference[0]
+        return self.image_reference.name
 
     def get_reference_image(self):
-        im = self.image_reference[1]
+        im = self.image_reference.data
         if self.image_post_processing is not None:
             im = self.image_post_processing(im)
         return im
 
     def get_image_to_transform_name(self):
-        return self.image_to_transform[0]
+        return self.image_to_transform.name
 
     def get_image_to_transform(self):
-        return self.image_to_transform[1]
+        return self.image_to_transform.data
 
     def get_metrics(self, transformed_image, metrics_to_use='all', **kwargs):
         results = {}
@@ -125,8 +129,8 @@ class dataset_holder(base_dataset_loader):
         return results
 
     def _check_inputs(self):
-        input_types = [(self.image_reference[0], str),
-                       (self.image_reference[1], np.ndarray),
+        input_types = [(self.image_reference.name, str),
+                       (self.image_reference.data, np.ndarray),
                        (self.metrics, dict),
                        (self.metric_images, dict)]
         for item in input_types:
