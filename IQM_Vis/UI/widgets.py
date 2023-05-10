@@ -121,9 +121,9 @@ class widgets():
         if self.dataset:
             # control what image is used from the dataset
             self.widget_controls['button']['next_data'] = QPushButton('->', self)
-            self.widget_controls['button']['next_data'].clicked.connect(partial(self.change_data, 1))
+            self.widget_controls['button']['next_data'].clicked.connect(partial(self.change_data, 1, True))
             self.widget_controls['button']['prev_data'] = QPushButton('<-', self)
-            self.widget_controls['button']['prev_data'].clicked.connect(partial(self.change_data, -1))
+            self.widget_controls['button']['prev_data'].clicked.connect(partial(self.change_data, -1, True))
             self.widget_controls['label']['data'] = QLabel(self)
             self.widget_controls['label']['data'].setText('Change Image:')
 
@@ -198,10 +198,16 @@ class widgets():
 
         # pre processing
         self.pre_processing_options = {'None': None,
+                                       'Resize 32': partial(IQM_Vis.utils.image_utils.resize_to_longest_side, side=32),
                                        'Resize 64': partial(IQM_Vis.utils.image_utils.resize_to_longest_side, side=64),
                                        'Resize 128': partial(IQM_Vis.utils.image_utils.resize_to_longest_side, side=128),
                                        'Resize 256': partial(IQM_Vis.utils.image_utils.resize_to_longest_side, side=256),
-                                       'Resize 512': partial(IQM_Vis.utils.image_utils.resize_to_longest_side, side=512)}
+                                       'Resize 512': partial(IQM_Vis.utils.image_utils.resize_to_longest_side, side=512),
+                                       'Resize 1280': partial(IQM_Vis.utils.image_utils.resize_to_longest_side, side=1280),
+                                       'Resize 1920': partial(IQM_Vis.utils.image_utils.resize_to_longest_side, side=1920),
+                                       'Resize 2560': partial(IQM_Vis.utils.image_utils.resize_to_longest_side, side=2560),
+                                       'Resize 3840': partial(IQM_Vis.utils.image_utils.resize_to_longest_side, side=3840),
+                                       }
         if not hasattr(self, 'pre_processing_option'):
             self.pre_processing_option = 'Resize 256'  # init_val
 

@@ -53,11 +53,11 @@ def resize_to_longest_side(im, side=128):
     '''
     shape = im.shape
     if shape[0] > shape[1]:
-        scale = shape[0]/side
-        size = (side, int(shape[1]/scale))
+        scale = side/shape[0]
+        size = (side, int(shape[1]*scale))
     else:
-        scale = shape[1]/side
-        size = (int(shape[0]/scale), side)
+        scale = side/shape[1]
+        size = (int(shape[0]*scale), side)
     im = resize_image(im, size)
     return im
 
@@ -67,7 +67,7 @@ def resize_image(img, size=128):
     '''
     if isinstance(size, int):
         size = (size, size)
-    img = cv2.resize(img, size, interpolation=cv2.INTER_LINEAR)  # cv2 much faster than skimage
+    img = cv2.resize(img, (size[1], size[0]), interpolation=cv2.INTER_LINEAR)  # cv2 much faster than skimage
 
     # can change to PIL code below but only works with uint8 images
     # img = PIL.Image.fromarray(img_as_ubyte(img))

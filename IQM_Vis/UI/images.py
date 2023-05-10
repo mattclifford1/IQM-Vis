@@ -73,7 +73,7 @@ class images:
     '''
     change image in dataset
     '''
-    def change_data(self, ival):
+    def change_data(self, ival, _redo_plots=True):
         # reset any range/correlation data stored
         if hasattr(self, 'correlation_data'):
             self.correlation_data = {}
@@ -96,7 +96,8 @@ class images:
                 pass # some datasets will be shorter than others - this is fine though
             self.display_images()
             self.set_image_name_text()
-        self.redo_plots()
+        if _redo_plots == True:
+            self.redo_plots()
         # load human experiment if any
         self.human_experiment_scores = {}
         for i, data_store in enumerate(self.data_stores):

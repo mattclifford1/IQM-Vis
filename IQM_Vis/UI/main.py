@@ -171,7 +171,7 @@ class make_app(widgets, layout, images):
         # init the UI widgets and layouts
         self.init_style()     # layout.py
         self.init_widgets()   # widgets.py
-        self.change_data(0)   # images.py   - load first data instance
+        self.change_data(0,_redo_plots=False)   # images.py   - load first data instance
         self.init_layout()    # layout.py
         self.tabs['slider'].setCurrentIndex(tabs_index['slider'])
         self.tabs['graph'].setCurrentIndex(tabs_index['graph'])
