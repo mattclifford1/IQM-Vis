@@ -12,6 +12,18 @@ Image Quality Metric Visualision. An extendable user interface for the assessmen
 
 Head over to the [DOCUMENTATION](https://mattclifford1.github.io/IQM-Vis/) for tutorials and package reference.
 
+### IQM's average sensitivity to tranforms
+![Alt text](https://github.com/mattclifford1/IQM-Vis/blob/main/pics/data_graphs.gif?raw=true "Dataset UI") 
+
+### IQM's sensitivity to tranforms specific parameters
+![Alt text](https://github.com/mattclifford1/IQM-Vis/blob/main/pics/params.gif?raw=true "Dataset UI") 
+
+### IQM's correlation to human scores
+![Alt text](https://github.com/mattclifford1/IQM-Vis/blob/main/pics/correlation.gif?raw=true "Dataset UI") 
+
+
+
+
 # Installation
 First create a new python venv, eg. using conda
 ```
@@ -67,8 +79,8 @@ IQM_Vis.make_UI(data,
               metrics_avg_graph=True)
 ```
 
-# UI Example
-![Alt text](https://github.com/mattclifford1/IQM-Vis/blob/main/pics/UI-all.png?raw=true "Dataset UI")
+<!-- # UI Example
+![Alt text](https://github.com/mattclifford1/IQM-Vis/blob/main/pics/UI-all.png?raw=true "Dataset UI") -->
 <!--
 ## UI Examples (section needs pictures updating)
 Simple UI with single image and image metric

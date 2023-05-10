@@ -59,7 +59,7 @@ jobs:
       #     make html
 
       - name: Deploy
-        if: env.code_version != env.pypi_version
+        # if: env.code_version != env.pypi_version
         uses: peaceiris/actions-gh-pages@v3
         with:
           publish_branch: gh-pages

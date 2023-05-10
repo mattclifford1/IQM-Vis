@@ -30,7 +30,9 @@ def change_im(widget, im, resize=False, rgb_brightness=250, display_brightness=2
     '''
     given a numpy image, changes the given widget Frame
     '''
-    # first convert to three channel
+    # clip image to safe bounds
+    im = np.clip(im, 0, 1)
+    # convert to three channel
     if len(im.shape) == 2:
         im = im[..., np.newaxis]
     if im.shape[2] == 1:

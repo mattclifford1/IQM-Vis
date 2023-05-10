@@ -402,12 +402,15 @@ class widgets():
         self.status_bar.showMessage(v)
 
     def launch_experiment(self):
-        self.experiment = IQM_Vis.UI.make_experiment(self.checked_transformations,
-                                                     self.data_stores[0],
-                                                     self.image_display_size,
-                                                     self.rgb_brightness,
-                                                     self.display_brightness,
-                                                     self.default_save_dir,
-                                                     self.num_steps_range)
-        self.experiment.show()
-        self.experiment.showFullScreen()
+        if self.checked_transformations != {}:
+            self.experiment = IQM_Vis.UI.make_experiment(self.checked_transformations,
+                                                        self.data_stores[0],
+                                                        self.image_display_size,
+                                                        self.rgb_brightness,
+                                                        self.display_brightness,
+                                                        self.default_save_dir,
+                                                        self.num_steps_range)
+            self.experiment.show()
+            self.experiment.showFullScreen()
+        else:
+            self.status_bar.showMessage('Cannot make experiment without transforms', 5000)

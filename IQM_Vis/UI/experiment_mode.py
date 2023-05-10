@@ -38,6 +38,8 @@ class make_experiment(QMainWindow):
                  num_trans_values=6):
         super().__init__()
         self.checked_transformations = checked_transformations
+        if self.checked_transformations == {}:
+            return
         self.data_store = data_store
         self.image_display_size = image_display_size
         self.rgb_brightness = rgb_brightness

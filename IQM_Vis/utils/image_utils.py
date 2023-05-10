@@ -76,7 +76,7 @@ def resize_image(img, size=128):
 
     return img
 
-def crop_centre(image, scale_factor=2):
+def crop_centre(image, scale_factor=2, keep_size=True):
     ''' crop to the centre of the image, note this will return a small image size
         so it best used as post processing
 
@@ -87,6 +87,7 @@ def crop_centre(image, scale_factor=2):
                               1 = normal size
                               2 = 2x zoom in
                               (Defaults to 2 - half the size)
+        keep_size (bool): resize image to the original size after cropping (Defaults to True)
 
     Returns:
         image (np.array): cropeed image
@@ -109,6 +110,9 @@ def crop_centre(image, scale_factor=2):
                    start_point_y:start_point_y+original_size[1],
                    :] = image
         image = zoomed_out
+    
+    if keep_size == True:
+        image = resize_image(image, (original_size[0], original_size[1]))
 
     return image
 
