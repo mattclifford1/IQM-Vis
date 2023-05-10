@@ -1,10 +1,9 @@
-[![Documentation https://mattclifford1.github.io/IQM-Vis/](https://img.shields.io/website-up-down-green-red/http/mattclifford1.github.io/IQM-Vis.svg)](https://mattclifford1.github.io/IQM-Vis/)
+| Software | ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white) ![OpenCV](https://img.shields.io/badge/opencv-%23white.svg?style=for-the-badge&logo=opencv&logoColor=white) |
+| Download | [![PyPI version](https://badge.fury.io/py/IQM-Vis.svg)](https://badge.fury.io/py/IQM-Vis) [![PyPI download month](https://img.shields.io/pypi/dm/IQM-Vis.svg)](https://pypi.python.org/pypi/IQM-Vis/) |
 
-[![PyPI version](https://badge.fury.io/py/IQM-Vis.svg)](https://badge.fury.io/py/IQM-Vis)
+| Documentation | [![Generic badge](https://img.shields.io/badge/<DOCS>-<Read>-<GREEN>.svg)](https://mattclifford1.github.io/IQM-Vis/) |     
 
-[![PyPI download month](https://img.shields.io/pypi/dm/IQM-Vis.svg)](https://pypi.python.org/pypi/IQM-Vis/)
 
-[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
 # IQM-Vis
 Image Quality Metric Visualision. An extendable user interface for the assessment of transformations on image metrics.
