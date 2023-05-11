@@ -410,12 +410,14 @@ class widgets():
     def launch_experiment(self):
         if self.checked_transformations != {}:
             self.experiment = IQM_Vis.UI.make_experiment(self.checked_transformations,
-                                                        self.data_stores[0],
-                                                        self.image_display_size,
-                                                        self.rgb_brightness,
-                                                        self.display_brightness,
-                                                        self.default_save_dir,
-                                                        self.num_steps_range)
+                                                         self.data_stores[0],
+                                                         self.image_display_size,
+                                                         self.rgb_brightness,
+                                                         self.display_brightness,
+                                                         self.default_save_dir,
+                                                         self.num_steps_range,
+                                                         self.pre_processing_option,
+                                                         self.post_processing_option)
             self.experiment.show()
             self.experiment.showFullScreen()
         else:

@@ -35,7 +35,9 @@ class make_experiment(QMainWindow):
                  rgb_brightness,
                  display_brightness,
                  default_save_dir=IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR,
-                 num_trans_values=6):
+                 num_trans_values=6,
+                 image_preprocessing='None',
+                 image_postprocessing='None'):
         super().__init__()
         self.checked_transformations = checked_transformations
         if self.checked_transformations == {}:
@@ -46,6 +48,8 @@ class make_experiment(QMainWindow):
         self.display_brightness = display_brightness
         self.default_save_dir = default_save_dir
         self.num_trans_values = num_trans_values
+        self.processing = {'pre': image_preprocessing,
+                           'post': image_postprocessing}
 
         self.clicked_event = threading.Event()
         self.stop_event = threading.Event()
@@ -363,12 +367,22 @@ class make_experiment(QMainWindow):
         while unique_dir_found == False:
             exp_save_dir = f'{self.default_save_dir}-experiment-{i}'
             if os.path.exists(exp_save_dir):
-                # check if experiment is the same
+                # get transform funcs and params
                 exp_trans_params = IQM_Vis.utils.save_utils.load_obj(
                     os.path.join(exp_save_dir, 'transforms', 'transform_params.pkl'))
                 exp_trans_funcs = IQM_Vis.utils.save_utils.load_obj(
                     os.path.join(exp_save_dir, 'transforms', 'transform_functions.pkl'))
-                if (exp_trans_params == self.original_params_order) and (trans_funcs == exp_trans_funcs):
+                
+                # get image processing saved params
+                processing_file = os.path.join(exp_save_dir, 'transforms', 'processing.json')
+                procesing_same = False
+                if os.path.exists(processing_file):
+                    processing = IQM_Vis.utils.save_utils.load_json_dict(processing_file)
+                    if processing == self.processing:
+                        procesing_same = True
+
+                # check if experiment is the same
+                if (exp_trans_params == self.original_params_order) and (trans_funcs == exp_trans_funcs) and procesing_same:
                     self.default_save_dir = exp_save_dir
                     unique_dir_found = True
                     new_dir = False
@@ -395,6 +409,13 @@ class make_experiment(QMainWindow):
             IQM_Vis.utils.save_utils.save_obj(
                 os.path.join(self.default_save_dir, 'transforms', 'transform_functions.pkl'),
                 dict(sorted(trans_funcs.items())))
+            # save the image pre/post processing options
+            IQM_Vis.utils.save_utils.save_json_dict(
+                os.path.join(self.default_save_dir, 'transforms', 'processing.json'),
+                self.processing)
+            
+
+
         # save the experiment results
         exp_order = []
         for trans in self.experiment_transforms:

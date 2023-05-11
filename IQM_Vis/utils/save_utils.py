@@ -3,6 +3,7 @@ utils for saving experiments, images and figures
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 import os
+import json
 import pickle
 import pandas as pd
 
@@ -40,3 +41,11 @@ def save_experiment_results(trans_names, results_order, file):
         df_saved = pd.read_csv(file)
         df = pd.concat([df_saved, df])
     df.to_csv(file, index=False)
+
+def save_json_dict(path, dict_):
+    with open(path, 'w') as fp:
+        json.dump(dict_, fp)
+
+def load_json_dict(path):
+    with open(path, 'r') as fp:
+        return json.load(fp)
