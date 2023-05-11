@@ -144,14 +144,43 @@ class images:
                 "CSV Files (*.csv)",)
         except:
             return
+        self._change_human_exp(file)
         
+    def _change_human_exp(self, file):
         # load the csv human scores file and take mean of all experiments
         if os.path.exists(file):
             df = pd.read_csv(file)
             experiment = df.mean().to_dict()
             for i, _ in enumerate(self.data_stores):
                 self.human_experiment_scores[i] = experiment
+            self.human_scores_file = file
+        else:
+            self.update_status_bar(f'No file: {file}')
+            return
         
+        # load the image processing if available
+        processing_file = os.path.join(os.path.dirname(file), 'transforms', 'processing.json')
+        if os.path.exists(processing_file):
+            processing = IQM_Vis.utils.save_utils.load_json_dict(
+                processing_file)
+            updated = False
+            for name, options_var, change_func in zip(['pre', 'post'], 
+                                                      [self.pre_processing_options, self.post_processing_options], 
+                                                      [self.change_pre_processing, self.change_post_processing]):
+                if processing[name] in options_var:
+                    if processing[name] != self.widget_settings[f'image_{name}_processing']['widget'].currentText():
+                        self.widget_settings[f'image_{name}_processing']['widget'].setCurrentText(
+                            processing[name])
+                        change_func()
+                        updated = True
+                else:
+                    self.update_status_bar(
+                        f'Could not load image setting: {processing[name]}')
+            if updated == True:
+                self.update_image_settings()
+        else:
+            self.update_status_bar('Warning: Could not find an image settings file in folder, make sure image pre/post processing settings are correct')
+
         # clear cache and update correlation plot
         self.reset_correlation_data()
         self.display_metric_correlation_plot()
@@ -286,6 +315,8 @@ class images:
                                                 self.widget_row[i]['metrics']['correlation']['data'],
                                                 metric,
                                                 self.view_correlation_instance)
+                if hasattr(self, 'human_scores_file'):
+                    plot.ax.axes.set_title(self.human_scores_file, fontsize=6)
                 plot.show()
             else:
                 self.widget_row[i]['metrics']['correlation']['data'].axes.clear()

@@ -7,7 +7,7 @@ from functools import partial
 import numpy as np
 from PyQt6.QtWidgets import QPushButton, QLabel, QSlider, QCheckBox, QComboBox, QLineEdit
 from PyQt6.QtGui import QIntValidator
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, pyqtSlot
 
 import IQM_Vis
 from IQM_Vis.UI.custom_widgets import ClickLabel
@@ -418,7 +418,13 @@ class widgets():
                                                          self.num_steps_range,
                                                          self.pre_processing_option,
                                                          self.post_processing_option)
+            self.experiment.saved_experiment.connect(
+                self.change_human_scores_after_exp)
             self.experiment.show()
             self.experiment.showFullScreen()
         else:
             self.status_bar.showMessage('Cannot make experiment without transforms', 5000)
+
+    @pyqtSlot(str)
+    def change_human_scores_after_exp(self, path):
+        self._change_human_exp(path)

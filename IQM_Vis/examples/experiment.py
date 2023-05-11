@@ -5,7 +5,7 @@ import IQM_Vis
 
 def run():
     # metrics functions must return a single value
-    metric = {} #IQM_Vis.metrics.get_all_metrics()
+    metric = {'MSE': IQM_Vis.IQMs.MSE()}
 
     # metrics images return a numpy image
     metric_images = {}

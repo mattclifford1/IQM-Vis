@@ -18,7 +18,7 @@ from PyQt6.QtWidgets import (QMainWindow,
                              QLabel,
                              QMessageBox)
 
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, pyqtSignal
 from PyQt6.QtGui import QShortcut, QKeySequence
 
 import IQM_Vis
@@ -28,6 +28,8 @@ from IQM_Vis.utils import gui_utils, plot_utils, image_utils
 
 
 class make_experiment(QMainWindow):
+    saved_experiment = pyqtSignal(str)
+
     def __init__(self, 
                  checked_transformations, 
                  data_store, 
@@ -413,18 +415,18 @@ class make_experiment(QMainWindow):
             IQM_Vis.utils.save_utils.save_json_dict(
                 os.path.join(self.default_save_dir, 'transforms', 'processing.json'),
                 self.processing)
-            
-
 
         # save the experiment results
         exp_order = []
         for trans in self.experiment_transforms:
             exp_order.append(make_name_for_trans(trans))
+        csv_file = os.path.join(self.default_save_dir, f'{self.data_store.get_reference_image_name()}-results.csv')
         IQM_Vis.utils.save_utils.save_experiment_results(
             self.original_params_order,
             exp_order,
-            os.path.join(self.default_save_dir, f'{self.data_store.get_reference_image_name()}-results.csv'))
+            csv_file)
         self.saved = True
+        self.saved_experiment.emit(csv_file)
 
 
     ''' sorting algorithm resource: https://www.geeksforgeeks.org/quick-sort/'''
