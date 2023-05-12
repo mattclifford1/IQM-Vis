@@ -3,8 +3,9 @@ Getting Started
 
 Installation
 ============
-It is first recommended to create a new python virtual environment, for examaple
-using conda:
+It is important to run IQM-Vis in a fresh python virtual environment. This is so that there will be no dependancy clashes with the required libraries. Python version 3.9 is recommended, but newer versions should work as well.
+
+You can make a new environment by using anaconda (conda):
 
 ..  code-block:: bash
 

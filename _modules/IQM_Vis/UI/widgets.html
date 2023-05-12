@@ -13,9 +13,10 @@
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/nbsphinx-gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/nbsphinx-code-cells.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/nbsphinx-code-cells.css" type="text/css" />
 
   
   
@@ -32,7 +33,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -87,15 +87,15 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+              <p><span class="caption-text">Getting Started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
+<p><span class="caption-text">Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../Tutorials.html">Tutorials</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<p><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
@@ -174,7 +174,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">PyQt6.QtWidgets</span> <span class="kn">import</span> <span class="n">QPushButton</span><span class="p">,</span> <span class="n">QLabel</span><span class="p">,</span> <span class="n">QSlider</span><span class="p">,</span> <span class="n">QCheckBox</span><span class="p">,</span> <span class="n">QComboBox</span><span class="p">,</span> <span class="n">QLineEdit</span>
 <span class="kn">from</span> <span class="nn">PyQt6.QtGui</span> <span class="kn">import</span> <span class="n">QIntValidator</span>
-<span class="kn">from</span> <span class="nn">PyQt6.QtCore</span> <span class="kn">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">PyQt6.QtCore</span> <span class="kn">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">pyqtSlot</span>
 
 <span class="kn">import</span> <span class="nn">IQM_Vis</span>
 <span class="kn">from</span> <span class="nn">IQM_Vis.UI.custom_widgets</span> <span class="kn">import</span> <span class="n">ClickLabel</span>
@@ -183,7 +183,7 @@
 <span class="c1"># sub class used by IQM_Vis.main.make_app to initialise widgets and general UI functions for widgets</span>
 <div class="viewcode-block" id="widgets"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets">[docs]</a><span class="k">class</span> <span class="nc">widgets</span><span class="p">():</span>
 <div class="viewcode-block" id="widgets.init_widgets"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.init_widgets">[docs]</a>    <span class="k">def</span> <span class="nf">init_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        create all the widgets we need and init params</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_init_widgets</span><span class="p">()</span>
@@ -191,7 +191,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_init_image_settings</span><span class="p">()</span></div>
 
     <span class="k">def</span> <span class="nf">_init_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        create all the widgets we need and init params</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="c1"># first setup the slider data</span>
@@ -202,7 +202,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">data_store</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">):</span>   <span class="c1"># create each row of the widgets</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;images&#39;</span><span class="p">:{},</span> <span class="s1">&#39;metrics&#39;</span><span class="p">:{},</span> <span class="s1">&#39;metric_images&#39;</span><span class="p">:{}}</span>
-<span class="w">            </span><span class="sd">&#39;&#39;&#39;image and transformed image&#39;&#39;&#39;</span>
+            <span class="sd">&#39;&#39;&#39;image and transformed image&#39;&#39;&#39;</span>
             <span class="k">for</span> <span class="n">image_name</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;original&#39;</span><span class="p">,</span> <span class="s1">&#39;transformed&#39;</span><span class="p">]:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;images&#39;</span><span class="p">][</span><span class="n">image_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
                 <span class="c1"># image widget</span>
@@ -213,7 +213,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;images&#39;</span><span class="p">][</span><span class="n">image_name</span><span class="p">][</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignmentFlag</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;images&#39;</span><span class="p">][</span><span class="n">image_name</span><span class="p">][</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">image_name</span><span class="p">)</span>
 
-<span class="w">            </span><span class="sd">&#39;&#39;&#39;metric images&#39;&#39;&#39;</span>
+            <span class="sd">&#39;&#39;&#39;metric images&#39;&#39;&#39;</span>
             <span class="k">for</span> <span class="n">metric_image</span> <span class="ow">in</span> <span class="n">data_store</span><span class="o">.</span><span class="n">metric_images</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">metric_image</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked_metric_images</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metric_images&#39;</span><span class="p">][</span><span class="n">metric_image</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
@@ -223,7 +223,7 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metric_images&#39;</span><span class="p">][</span><span class="n">metric_image</span><span class="p">][</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metric_images&#39;</span><span class="p">][</span><span class="n">metric_image</span><span class="p">][</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignmentFlag</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
 
-<span class="w">            </span><span class="sd">&#39;&#39;&#39;metrics graphs&#39;&#39;&#39;</span>
+            <span class="sd">&#39;&#39;&#39;metrics graphs&#39;&#39;&#39;</span>
             <span class="n">im_pair_name</span> <span class="o">=</span> <span class="n">gui_utils</span><span class="o">.</span><span class="n">get_image_pair_name</span><span class="p">(</span><span class="n">data_store</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">][</span><span class="s1">&#39;info&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">][</span><span class="s1">&#39;info&#39;</span><span class="p">][</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -258,7 +258,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">][</span><span class="s1">&#39;correlation&#39;</span><span class="p">][</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s1">&#39;Human scores versus IQMs.&#39;</span><span class="p">)</span>
 
 
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;buttons&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;buttons&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_controls</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;button&#39;</span><span class="p">:</span> <span class="p">{},</span> <span class="s1">&#39;slider&#39;</span><span class="p">:</span> <span class="p">{},</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="p">{},</span> <span class="s1">&#39;check_box&#39;</span><span class="p">:</span> <span class="p">{}}</span>
         
         <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics_avg_graph</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric_range_graph</span><span class="p">):</span>
@@ -288,9 +288,9 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">:</span>
             <span class="c1"># control what image is used from the dataset</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">widget_controls</span><span class="p">[</span><span class="s1">&#39;button&#39;</span><span class="p">][</span><span class="s1">&#39;next_data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s1">&#39;-&gt;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">widget_controls</span><span class="p">[</span><span class="s1">&#39;button&#39;</span><span class="p">][</span><span class="s1">&#39;next_data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">change_data</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">widget_controls</span><span class="p">[</span><span class="s1">&#39;button&#39;</span><span class="p">][</span><span class="s1">&#39;next_data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">change_data</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">widget_controls</span><span class="p">[</span><span class="s1">&#39;button&#39;</span><span class="p">][</span><span class="s1">&#39;prev_data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s1">&#39;&lt;-&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">widget_controls</span><span class="p">[</span><span class="s1">&#39;button&#39;</span><span class="p">][</span><span class="s1">&#39;prev_data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">change_data</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">widget_controls</span><span class="p">[</span><span class="s1">&#39;button&#39;</span><span class="p">][</span><span class="s1">&#39;prev_data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">change_data</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">widget_controls</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">widget_controls</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;Change Image:&#39;</span><span class="p">)</span>
 
@@ -299,7 +299,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_controls</span><span class="p">[</span><span class="s1">&#39;button&#39;</span><span class="p">][</span><span class="s1">&#39;launch_exp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">launch_experiment</span><span class="p">)</span>
 
 
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;sliders&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;sliders&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">params_from_sliders</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">param_group</span><span class="p">,</span> <span class="n">slider_group</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">params_from_sliders</span><span class="p">[</span><span class="n">param_group</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
@@ -329,11 +329,11 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">widget_controls</span><span class="p">[</span><span class="s1">&#39;slider&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignmentFlag</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">widget_controls</span><span class="p">[</span><span class="s1">&#39;slider&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params_from_sliders</span><span class="p">[</span><span class="s1">&#39;transforms&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">]))</span>
 
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    setup/helper functions</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="nf">_init_sliders</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sliders_dict</span><span class="p">,</span> <span class="n">info_dict</span><span class="p">,</span> <span class="n">param_group</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        generic initialiser of sliders (will change the dicts input rather than returning - like C++ pointers &amp;)</span>
 <span class="sd">            sliders_dict: holds the slider widgets</span>
 <span class="sd">            info_dict: info to initialise the sliders</span>
@@ -365,10 +365,16 @@
 
         <span class="c1"># pre processing</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pre_processing_options</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;None&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                                       <span class="s1">&#39;Resize 32&#39;</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">IQM_Vis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">image_utils</span><span class="o">.</span><span class="n">resize_to_longest_side</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="mi">32</span><span class="p">),</span>
                                        <span class="s1">&#39;Resize 64&#39;</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">IQM_Vis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">image_utils</span><span class="o">.</span><span class="n">resize_to_longest_side</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="mi">64</span><span class="p">),</span>
                                        <span class="s1">&#39;Resize 128&#39;</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">IQM_Vis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">image_utils</span><span class="o">.</span><span class="n">resize_to_longest_side</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="mi">128</span><span class="p">),</span>
                                        <span class="s1">&#39;Resize 256&#39;</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">IQM_Vis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">image_utils</span><span class="o">.</span><span class="n">resize_to_longest_side</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="mi">256</span><span class="p">),</span>
-                                       <span class="s1">&#39;Resize 512&#39;</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">IQM_Vis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">image_utils</span><span class="o">.</span><span class="n">resize_to_longest_side</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="mi">512</span><span class="p">)}</span>
+                                       <span class="s1">&#39;Resize 512&#39;</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">IQM_Vis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">image_utils</span><span class="o">.</span><span class="n">resize_to_longest_side</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="mi">512</span><span class="p">),</span>
+                                       <span class="s1">&#39;Resize 1280&#39;</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">IQM_Vis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">image_utils</span><span class="o">.</span><span class="n">resize_to_longest_side</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="mi">1280</span><span class="p">),</span>
+                                       <span class="s1">&#39;Resize 1920&#39;</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">IQM_Vis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">image_utils</span><span class="o">.</span><span class="n">resize_to_longest_side</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="mi">1920</span><span class="p">),</span>
+                                       <span class="s1">&#39;Resize 2560&#39;</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">IQM_Vis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">image_utils</span><span class="o">.</span><span class="n">resize_to_longest_side</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="mi">2560</span><span class="p">),</span>
+                                       <span class="s1">&#39;Resize 3840&#39;</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">IQM_Vis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">image_utils</span><span class="o">.</span><span class="n">resize_to_longest_side</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="mi">3840</span><span class="p">),</span>
+                                       <span class="p">}</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;pre_processing_option&#39;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pre_processing_option</span> <span class="o">=</span> <span class="s1">&#39;Resize 256&#39;</span>  <span class="c1"># init_val</span>
 
@@ -448,7 +454,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;update_button&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s1">&#39;Apply Settings&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;update_button&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_image_settings</span><span class="p">)</span>
 
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    ==================== functions to bind to sliders/widgets ====================</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="c1"># sliders value changes</span>
@@ -512,7 +518,7 @@
         <span class="c1"># self.redo_plots()</span>
 
 <div class="viewcode-block" id="widgets.update_image_settings"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.update_image_settings">[docs]</a>    <span class="k">def</span> <span class="nf">update_image_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39; button to apply new image settings &#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39; button to apply new image settings &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">change_data</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># update the image data settings</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">display_images</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;update_UI&#39;</span><span class="p">):</span>
@@ -571,16 +577,24 @@
 <div class="viewcode-block" id="widgets.launch_experiment"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.launch_experiment">[docs]</a>    <span class="k">def</span> <span class="nf">launch_experiment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked_transformations</span> <span class="o">!=</span> <span class="p">{}:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">UI</span><span class="o">.</span><span class="n">make_experiment</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">checked_transformations</span><span class="p">,</span>
-                                                        <span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                                                        <span class="bp">self</span><span class="o">.</span><span class="n">image_display_size</span><span class="p">,</span>
-                                                        <span class="bp">self</span><span class="o">.</span><span class="n">rgb_brightness</span><span class="p">,</span>
-                                                        <span class="bp">self</span><span class="o">.</span><span class="n">display_brightness</span><span class="p">,</span>
-                                                        <span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span><span class="p">,</span>
-                                                        <span class="bp">self</span><span class="o">.</span><span class="n">num_steps_range</span><span class="p">)</span>
+                                                         <span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                         <span class="bp">self</span><span class="o">.</span><span class="n">image_display_size</span><span class="p">,</span>
+                                                         <span class="bp">self</span><span class="o">.</span><span class="n">rgb_brightness</span><span class="p">,</span>
+                                                         <span class="bp">self</span><span class="o">.</span><span class="n">display_brightness</span><span class="p">,</span>
+                                                         <span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span><span class="p">,</span>
+                                                         <span class="bp">self</span><span class="o">.</span><span class="n">num_steps_range</span><span class="p">,</span>
+                                                         <span class="bp">self</span><span class="o">.</span><span class="n">pre_processing_option</span><span class="p">,</span>
+                                                         <span class="bp">self</span><span class="o">.</span><span class="n">post_processing_option</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">saved_experiment</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">change_human_scores_after_exp</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">showFullScreen</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">status_bar</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s1">&#39;Cannot make experiment without transforms&#39;</span><span class="p">,</span> <span class="mi">5000</span><span class="p">)</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">status_bar</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s1">&#39;Cannot make experiment without transforms&#39;</span><span class="p">,</span> <span class="mi">5000</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="widgets.change_human_scores_after_exp"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.change_human_scores_after_exp">[docs]</a>    <span class="nd">@pyqtSlot</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">change_human_scores_after_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_change_human_exp</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>
