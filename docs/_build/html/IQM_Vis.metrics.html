@@ -380,6 +380,37 @@ will return a scalar value)</p>
 </dd></dl>
 
 <dl class="py class">
+<dt id="IQM_Vis.metrics.IQMs.NLPD">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.IQMs.</span></code><code class="sig-name descname"><span class="pre">NLPD</span></code><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#NLPD"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.NLPD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Normalised Laplacian pyramid
+Proposed by Valero Laparra et al. <a class="reference external" href="https://www.uv.es/lapeva/papers/2016_HVEI.pdf">https://www.uv.es/lapeva/papers/2016_HVEI.pdf</a> .
+NLPD is an image quality metric based on the transformations associated with the
+early visual system: local luminance subtraction and local gain control.</p>
+<dl class="py method">
+<dt id="IQM_Vis.metrics.IQMs.NLPD.__call__">
+<code class="sig-name descname"><span class="pre">__call__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlpd_k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#NLPD.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.NLPD.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>When an instance is called</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>im_ref</strong> (<em>np.array</em>) – Reference image</p></li>
+<li><p><strong>im_comp</strong> (<em>np.array</em>) – Comparison image</p></li>
+<li><p><strong>**kwargs</strong> – Arbitrary keyword arguments</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>NLPD score</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>score (np.array)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt id="IQM_Vis.metrics.IQMs.SSIM">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.IQMs.</span></code><code class="sig-name descname"><span class="pre">SSIM</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#SSIM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.SSIM" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
