@@ -185,6 +185,7 @@
 <span class="c1"># from torchmetrics import SpectralDistortionIndex as SDI</span>
 <span class="kn">from</span> <span class="nn">torchmetrics.image.lpip</span> <span class="kn">import</span> <span class="n">LearnedPerceptualImagePatchSimilarity</span> <span class="k">as</span> <span class="n">lpips_torch</span>
 <span class="kn">from</span> <span class="nn">DISTS_pytorch</span> <span class="kn">import</span> <span class="n">DISTS</span> <span class="k">as</span> <span class="n">dists_original</span>
+<span class="kn">from</span> <span class="nn">.NLPD_torch.pyramids</span> <span class="kn">import</span> <span class="n">LaplacianPyramid</span>
 
 <div class="viewcode-block" id="MAE"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.MAE">[docs]</a><span class="k">class</span> <span class="nc">MAE</span><span class="p">:</span>
     <span class="sd">&#39;&#39;&#39;Mean Absolute Error between two images. Images must have the same</span>
@@ -435,6 +436,52 @@
         <span class="k">return</span> <span class="n">score</span></div></div>
 
 
+<div class="viewcode-block" id="NLPD"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.NLPD">[docs]</a><span class="k">class</span> <span class="nc">NLPD</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;Normalised Laplacian pyramid</span>
+<span class="sd">    Proposed by Valero Laparra et al. https://www.uv.es/lapeva/papers/2016_HVEI.pdf .</span>
+<span class="sd">    NLPD is an image quality metric based on the transformations associated with the </span>
+<span class="sd">    early visual system: local luminance subtraction and local gain control.</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialised</span> <span class="o">=</span> <span class="kc">False</span>   <span class="c1"># initialse fully on first __call__ to save load up time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span>
+            <span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">preproccess_function</span> <span class="o">=</span> <span class="n">_numpy_to_torch_image</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nlpd_k</span> <span class="o">=</span> <span class="mi">1</span>
+
+<div class="viewcode-block" id="NLPD.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.NLPD.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="n">nlpd_k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;When an instance is called</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            im_ref (np.array): Reference image</span>
+<span class="sd">            im_comp (np.array): Comparison image</span>
+<span class="sd">            **kwargs: Arbitrary keyword arguments</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            score (np.array): NLPD score</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># see if k has changed</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nlpd_k</span> <span class="o">!=</span> <span class="n">nlpd_k</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nlpd_k</span> <span class="o">=</span> <span class="n">nlpd_k</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initialised</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="c1"># load model on first time called</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialised</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>    <span class="c1"># we don&#39;t care about the warnings these give</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metric</span> <span class="o">=</span> <span class="n">LaplacianPyramid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nlpd_k</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initialised</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">_check_shapes</span><span class="p">(</span><span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">)</span>
+        <span class="n">im_ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preproccess_function</span><span class="p">(</span><span class="n">im_ref</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span>
+            <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+        <span class="n">im_comp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preproccess_function</span><span class="p">(</span><span class="n">im_comp</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span>
+            <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+        <span class="n">_score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">(</span><span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">)</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">score</span></div></div>
 
 
 <span class="sd">&#39;&#39;&#39; ============================================================================ &#39;&#39;&#39;</span>
