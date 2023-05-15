@@ -122,6 +122,7 @@ class images:
         image_list = glob.glob(os.path.join(dir, '*'))
         # remove and folders
         image_list = [f for f in image_list if os.path.isfile(f)]
+        image_list.sort()
         # change image dataset
         if hasattr(self.data_stores[0], 'load_image_list') and len(image_list) != 0:
             self.data_stores[0].load_image_list(image_list)
