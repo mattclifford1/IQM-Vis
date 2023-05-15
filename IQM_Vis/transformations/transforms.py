@@ -171,12 +171,15 @@ def jpeg_compression(image, compression=90):
 
     Args:
         image (np.array): image to be compressed
-        compression (int): amount of jpeg compression. 100 returns identity image.
+        compression (int): amount of jpeg compression, higher is better quality. 
+                     101 returns identity image.
                      (Defaults to 90)
 
     Returns:
         image (np.array): jpeg compressed image
     '''
+    if compression == 101:
+        return image
     encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), int(compression)]
     encoder = '.jpg'
     return _encode_compression(image, encoder, encode_param)
@@ -202,3 +205,55 @@ def _encode_compression(image, encoder, encode_param, uint=True):
     if image.shape != original_size:
         image = resize(image, original_size)
     return image
+
+
+def salt_and_pepper_noise(image, prob=0):
+    '''
+    Add salt and pepper noise to image
+
+    Args: 
+        image (np.array): image to be compressed
+        prob: Probability of the noise (Defaults to 0).
+
+    Returns:
+        image (np.array): image with salt and pepper noise
+    '''
+    print(image.max())
+    min_val = 0 
+    max_val = 1
+    image = image.copy()
+    if len(image.shape) == 2:
+        black = min_val
+        white = max_val
+    else:
+        colorspace = image.shape[2]
+        if colorspace == 3:  # RGB
+            black = np.array([min_val, min_val, min_val], dtype='float')
+            white = np.array([max_val, max_val, max_val], dtype='float')
+        else:  # RGBA
+            black = np.array([min_val, min_val, min_val, max_val], dtype='float')
+            white = np.array([max_val, max_val, max_val, max_val], dtype='float')
+    probs = np.random.random(image.shape[:2])
+    image[probs < (prob / 2)] = black
+    image[probs > 1 - (prob / 2)] = white
+    return image
+
+
+def contrast(image, contrast=1.0):
+    """adjust the contrast of an image
+
+    Args:
+        image (np.array): image to have contrast adjusted
+        contrast (float): amount of contrast to adjust by. 
+            Values less that 1 will decrease contrast, 
+            Values higher than 1 will increase the contrast.
+            (Defaults to 1.0).
+
+    Returns:
+        image (np.array): image with contrast adjusted
+    """
+    image = image*255 # convert to 255 max value
+    # need to zero center the data so we only adjust for contrast
+    brightness = int(round(255*(1-contrast)/2))
+    image = cv2.addWeighted(image, contrast, image, 0, brightness)
+    return image/255
