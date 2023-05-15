@@ -19,6 +19,8 @@ def rotation(image, angle=0):
     Returns:
         image (np.array): rotated image
     '''
+    if angle == 0:
+        return image
     return rotate(image, angle)
 
 def blur(image, kernel_size=7):
@@ -52,6 +54,8 @@ def x_shift(image, x_shift=0):
     Returns:
         image (np.array): shifted image
     '''
+    if x_shift == 0:
+        return image
     return _translate_image(image, x_shift, 0)
 
 def y_shift(image, y_shift=0):
@@ -65,6 +69,8 @@ def y_shift(image, y_shift=0):
     Returns:
         image (np.array): shifted image
     '''
+    if y_shift == 0:
+        return image
     return _translate_image(image, 0, y_shift)
 
 def brightness(image, value=0):
@@ -78,6 +84,8 @@ def brightness(image, value=0):
     Returns:
         image (np.array): adjusted image
     '''
+    if value == 0:
+        return image
     return np.clip(image + value, 0, 1)
 
 def _translate_image(image, x_shift=0, y_shift=0):
@@ -125,6 +133,8 @@ def zoom_image(image, scale_factor=1):
     Returns:
         image (np.array): zoomed image
     '''
+    if scale_factor == 1:
+        return image
     original_size = image.shape
     new_size_x = int(original_size[0]/scale_factor)
     new_size_y = int(original_size[1]/scale_factor)
@@ -218,7 +228,8 @@ def salt_and_pepper_noise(image, prob=0):
     Returns:
         image (np.array): image with salt and pepper noise
     '''
-    print(image.max())
+    if prob == 0:
+        return image
     min_val = 0 
     max_val = 1
     image = image.copy()
@@ -252,8 +263,10 @@ def contrast(image, contrast=1.0):
     Returns:
         image (np.array): image with contrast adjusted
     """
+    if contrast == 1:
+        return image
     image = image*255 # convert to 255 max value
     # need to zero center the data so we only adjust for contrast
     brightness = int(round(255*(1-contrast)/2))
     image = cv2.addWeighted(image, contrast, image, 0, brightness)
-    return image/255
+    return np.clip(image/255, 0, 1)
