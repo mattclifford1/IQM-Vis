@@ -13,10 +13,9 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
-  <link rel="stylesheet" href="_static/nbsphinx-gallery.css" type="text/css" />
-  <link rel="stylesheet" href="_static/nbsphinx-code-cells.css" type="text/css" />
-  <link rel="stylesheet" href="_static/nbsphinx-code-cells.css" type="text/css" />
 
   
   
@@ -33,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -87,15 +87,15 @@
               
             
             
-              <p><span class="caption-text">Getting Started:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 </ul>
-<p><span class="caption-text">Tutorials:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Tutorials.html">Tutorials</a></li>
 </ul>
-<p><span class="caption-text">Contents:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
@@ -182,6 +182,7 @@
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#Q"><strong>Q</strong></a>
  | <a href="#R"><strong>R</strong></a>
@@ -210,6 +211,8 @@
         <li><a href="IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.MSE.__call__">(IQM_Vis.metrics.IQMs.MSE method)</a>
 </li>
         <li><a href="IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.NLPD.__call__">(IQM_Vis.metrics.IQMs.NLPD method)</a>
+</li>
+        <li><a href="IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.one_over_PSNR.__call__">(IQM_Vis.metrics.IQMs.one_over_PSNR method)</a>
 </li>
         <li><a href="IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.SSIM.__call__">(IQM_Vis.metrics.IQMs.SSIM method)</a>
 </li>
@@ -241,6 +244,8 @@
       <li><a href="IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.blur">blur() (in module IQM_Vis.transformations.transforms)</a>
 </li>
       <li><a href="IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.brightness">brightness() (in module IQM_Vis.transformations.transforms)</a>
+</li>
+      <li><a href="IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.brightness_hsv">brightness_hsv() (in module IQM_Vis.transformations.transforms)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -309,6 +314,8 @@
       <li><a href="IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.compute_metrics_over_range_single_trans">compute_metrics_over_range_single_trans() (in module IQM_Vis.utils.plot_utils)</a>
 </li>
       <li><a href="IQM_Vis.UI.html#IQM_Vis.UI.main.make_app.construct_UI">construct_UI() (IQM_Vis.UI.main.make_app method)</a>
+</li>
+      <li><a href="IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.contrast">contrast() (in module IQM_Vis.transformations.transforms)</a>
 </li>
       <li><a href="IQM_Vis.examples.html#IQM_Vis.examples.dists.correct">correct() (in module IQM_Vis.examples.dists)</a>
 </li>
@@ -455,6 +462,10 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.hover_scatter">hover_scatter() (in module IQM_Vis.utils.plot_utils)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.hue">hue() (in module IQM_Vis.transformations.transforms)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -753,9 +764,9 @@
 </li>
       <li><a href="IQM_Vis.html#IQM_Vis.ui_wrapper.make_UI">make_UI (class in IQM_Vis.ui_wrapper)</a>
 </li>
-      <li><a href="IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.metric_images">metric_images() (IQM_Vis.data_handlers.data_api_abstract.base_dataloader property)</a>
+      <li><a href="IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.metric_images">metric_images (IQM_Vis.data_handlers.data_api_abstract.base_dataloader property)</a>
 </li>
-      <li><a href="IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.metrics">metrics() (IQM_Vis.data_handlers.data_api_abstract.base_dataloader property)</a>
+      <li><a href="IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.metrics">metrics (IQM_Vis.data_handlers.data_api_abstract.base_dataloader property)</a>
 </li>
       <li>
     module
@@ -841,6 +852,14 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.NLPD">NLPD (class in IQM_Vis.metrics.IQMs)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.one_over_PSNR">one_over_PSNR (class in IQM_Vis.metrics.IQMs)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -932,6 +951,10 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.salt_and_pepper_noise">salt_and_pepper_noise() (in module IQM_Vis.transformations.transforms)</a>
+</li>
+      <li><a href="IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.saturation">saturation() (in module IQM_Vis.transformations.transforms)</a>
+</li>
       <li><a href="IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.save_experiment">save_experiment() (IQM_Vis.UI.experiment_mode.make_experiment method)</a>
 </li>
       <li><a href="IQM_Vis.utils.html#IQM_Vis.utils.save_utils.save_experiment_results">save_experiment_results() (in module IQM_Vis.utils.save_utils)</a>
