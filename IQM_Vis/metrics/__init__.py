@@ -1,13 +1,20 @@
-from .IQMs import MAE, MSE, SSIM, MS_SSIM, LPIPS, DISTS, NLPD
+from .IQMs import (MAE, 
+                   MSE, 
+                   SSIM, 
+                   MS_SSIM, 
+                   LPIPS, 
+                   DISTS, 
+                   NLPD,
+                   one_over_PSNR)
 
 def get_all_metrics():
     ''' Get all available IQMs provided by IQM_Vis '''
     all_metrics = {
         'MSE': MSE(),
-        'SSIM': SSIM(),
-        'MS_SSIM': MS_SSIM(),
+        '1-SSIM': SSIM(),
+        '1-MS_SSIM': MS_SSIM(),
+        '1/PSNR': one_over_PSNR(),
         'DISTS': DISTS(),
-        'SSIM': SSIM(),
         'LPIPS': LPIPS(),
         'NLPD': NLPD(),
         'MAE': MAE(),
