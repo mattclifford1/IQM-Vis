@@ -170,15 +170,20 @@ class MS_SSIM:
                 _metric = self.metric(
                     sigma=sigma, k1=k1, k2=k2, kernel_size=int(mssim_kernel_size))
             _metric.to(self.device)
-        if self.return_image:
-            _, ssim_full_im = _metric(im_ref, im_comp)
-            ssim_full_im = torch.squeeze(ssim_full_im, axis=0)
-            ssim_full_im = ssim_full_im.permute(1, 2, 0)
-            ssim_full_im = torch.clip(ssim_full_im, 0, 1)
-            _score = ssim_full_im.cpu().detach().numpy()
-        else:
-            _score = _metric(im_ref, im_comp).cpu().detach().numpy()
-        _score = 1 - _score
+        try:
+            if self.return_image:
+                _, ssim_full_im = _metric(im_ref, im_comp)
+                ssim_full_im = torch.squeeze(ssim_full_im, axis=0)
+                ssim_full_im = ssim_full_im.permute(1, 2, 0)
+                ssim_full_im = torch.clip(ssim_full_im, 0, 1)
+                _score = ssim_full_im.cpu().detach().numpy()
+            else:
+                _score = _metric(im_ref, im_comp).cpu().detach().numpy()
+            _score = 1 - _score
+        except ValueError:
+            # get an error with small images that the torchmetrics package seems to advise the wrong larger than size for
+            print(f'MSSIM failed with image size: {im_ref.shape}')
+            _score = 0
         _metric.reset()
         return _score
     

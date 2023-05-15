@@ -11,12 +11,12 @@ def get_all_metrics():
     ''' Get all available IQMs provided by IQM_Vis '''
     all_metrics = {
         'MSE': MSE(),
+        'NLPD': NLPD(),
         '1-SSIM': SSIM(),
         '1-MS_SSIM': MS_SSIM(),
         '1/PSNR': one_over_PSNR(),
         'DISTS': DISTS(),
         'LPIPS': LPIPS(),
-        'NLPD': NLPD(),
         'MAE': MAE(),
     }
     return all_metrics

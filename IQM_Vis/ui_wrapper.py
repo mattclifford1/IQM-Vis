@@ -27,7 +27,8 @@ class make_UI:
                  metrics_avg_graph: bool=True,
                  metric_params: dict={},
                  default_save_dir=IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR,
-                 restrict_options=None):
+                 restrict_options=None,
+                 debug=False):
         self.data_store = data_store
         self.transformations = transformations
         self.metrics_info_format = metrics_info_format
@@ -35,13 +36,15 @@ class make_UI:
         self.metric_params = metric_params
         self.default_save_dir = default_save_dir
         self.restrict_options = restrict_options
+        self.debug = debug
         self.show()
 
     def show(self):
         self._check_restrict_options()
         self._check_data_store()
         self._check_trans()
-        self._check_inputs()
+        if self.debug:
+            self._check_inputs()
         app = QApplication(sys.argv)
         window = make_app(app,
                           self.data_store,
@@ -84,6 +87,7 @@ class make_UI:
                 self.metric_params = IQM_Vis.metrics.get_all_IQM_params()
         if not isinstance(self.data_store, list):
             self.data_store = [self.data_store]
+
     def _check_trans(self):
         if self.transformations == None:
             self.transformations = IQM_Vis.transformations.get_all_transforms()

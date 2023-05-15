@@ -326,9 +326,22 @@ def _adjust_HSV(image, value, channel):
     if value == 0:
         return image
     image = img_as_ubyte(image)
+    # convert to HSV
     hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
-    hsv = hsv.astype(np.float32)/255
+    # normalise between 0, 1
+    hsv = hsv.astype(np.float32)
+    hsv[:, :, 0] = hsv[:, :, 0]/179
+    hsv[:, :, 1:] = hsv[:, :, 1:]/255
+    # add the adjustment to the required channel
     hsv[:, :, channel] += value
+    # account for hue colours being radial
+    if channel == 0:
+        hsv[:, :, channel] = np.mod(
+            hsv[:, :, channel], 1)
+    # reset to 0, 1 bounds
     hsv = np.clip(hsv, 0, 1)
-    hsv = img_as_ubyte(hsv)
+    # convert back to RGB
+    hsv[:, :, 0] = hsv[:, :, 0]*179
+    hsv[:, :, 1:] = hsv[:, :, 1:]*255
+    hsv = hsv.astype(np.uint8)
     return cv2.cvtColor(hsv, cv2.COLOR_HSV2RGB)/255
