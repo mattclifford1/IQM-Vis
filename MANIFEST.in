@@ -7,4 +7,4 @@ include IQM_Vis/examples/images/HIQM.csv
 include IQM_Vis/UI/style-light.css
 include IQM_Vis/UI/style-dark.css
 include VERSION
-include IQM_Vis/examples/images/KODAK-dataset/*.png
+include IQM_Vis/examples/KODAK-dataset/*.png
