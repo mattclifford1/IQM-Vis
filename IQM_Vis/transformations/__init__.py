@@ -7,12 +7,18 @@ from .transforms import (rotation,
                          binary_threshold, 
                          jpeg_compression, 
                          salt_and_pepper_noise,
-                         contrast)
+                         contrast,
+                         hue,
+                         saturation,
+                         brightness_hsv)
 
 def get_all_transforms():
     all = {
         'brightness':{'min':-1.0, 'max':1.0, 'function':brightness},
         'contrast': {'min': 0.5, 'max': 2.5, 'init_value': 1.0, 'function': contrast},
+        'hue': {'min': -0.5, 'max': 0.5, 'function': hue},
+        'saturation': {'min': -0.5, 'max': 0.5, 'function': saturation},
+        # 'brightness_hsv': {'min': -1.0, 'max': 1, 'function': brightness_hsv},
         'blur':{'min':1, 'max':41, 'normalise':'odd', 'function':blur},
         'salt pepper.': {'init_value': 0.0, 'min': 0.0, 'max': 0.05, 'function': salt_and_pepper_noise},
         'jpg comp.':{'init_value':101, 'min':1, 'max':101, 'function':jpeg_compression},

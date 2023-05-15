@@ -265,8 +265,70 @@ def contrast(image, contrast=1.0):
     """
     if contrast == 1:
         return image
-    image = image*255 # convert to 255 max value
+    image = img_as_ubyte(image)  # convert to 255 max value
     # need to zero center the data so we only adjust for contrast
     brightness = int(round(255*(1-contrast)/2))
     image = cv2.addWeighted(image, contrast, image, 0, brightness)
     return np.clip(image/255, 0, 1)
+
+
+def hue(image, h=0):
+    """adjust the hue of an image
+
+    Args:
+        image (np.array): image to have hue adjusted
+        h (float): amount of hue to adjust by. 
+            (Defaults to 0).
+
+    Returns:
+        image (np.array): image with hue adjusted
+    """
+    return _adjust_HSV(image, h, channel=0)
+
+
+def saturation(image, sat=0):
+    """adjust the saturation of an image
+
+    Args:
+        image (np.array): image to have saturation adjusted
+        sat (float): amount of saturation to adjust by. 
+            (Defaults to 0).
+
+    Returns:
+        image (np.array): image with saturation adjusted
+    """
+    return _adjust_HSV(image, sat, channel=1)
+
+
+def brightness_hsv(image, b=0):
+    """adjust the brightness of an image
+
+    Args:
+        image (np.array): image to have brightness adjusted
+        b (float): amount of brightness to adjust by. 
+            (Defaults to 0).
+
+    Returns:
+        image (np.array): image with brightness adjusted
+    """
+    return _adjust_HSV(image, b, channel=2)
+
+
+def _adjust_HSV(image, value, channel):
+    '''
+    adjust hue, saturation or brightness of an image,
+    image is float between 0, 1 and value is between -1 and 1
+    channels:
+        0 = hue
+        1 = saturation
+        2 = brightness
+    '''
+    if value == 0:
+        return image
+    image = img_as_ubyte(image)
+    hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
+    hsv = hsv.astype(np.float32)/255
+    hsv[:, :, channel] += value
+    hsv = np.clip(hsv, 0, 1)
+    hsv = img_as_ubyte(hsv)
+    return cv2.cvtColor(hsv, cv2.COLOR_HSV2RGB)/255
