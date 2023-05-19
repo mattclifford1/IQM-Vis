@@ -1,9 +1,3 @@
-Needs doing:
-  - add NLPD
-  - add support for inputting human experiment results
-
-  - load human experiment data in the visualise tab
-
 UI
   - Export images
     - ref
@@ -13,17 +7,11 @@ UI
 
 
 Experiment:
-  -
-
   - expose num_steps to experimetnal setup in plot_utils.get_all_slider_values
   - timer
-  -
 
 minor:
-  - install package correct docs
-
   - fix metric images being stretched (muliptle rows)
   - move redo graphs menu to separete menu tab
-
   - get metrics and metric images from all data stores
 
