@@ -8,7 +8,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>IQM_Vis.examples.images package &mdash; IQM-Vis 0.2 documentation</title>
+  <title>IQMs &mdash; IQM-Vis 0.2 documentation</title>
   
 
   
@@ -44,7 +44,9 @@
     
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="About IQM-Vis" href="about.html" />
+    <link rel="prev" title="IQM-Vis documentation" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -90,8 +92,13 @@
             
             
               <p class="caption" role="heading"><span class="caption-text">What is an IQM?:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="what-are-IQMs.html">IQMs</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">IQMs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-is-an-iqm">What is an IQM?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#different-types-of-iqms">Different types of IQMs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-choose-an-iqm-for-your-task">How to Choose an IQM For Your Task?</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">About IQM-Vis:</span></p>
 <ul>
@@ -157,13 +164,13 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>IQM_Vis.examples.images package</li>
+      <li>IQMs</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/IQM_Vis.examples.images.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/what-are-IQMs.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -176,10 +183,26 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="iqm-vis-examples-images-package">
-<h1>IQM_Vis.examples.images package<a class="headerlink" href="#iqm-vis-examples-images-package" title="Permalink to this headline">¶</a></h1>
-<section id="module-IQM_Vis.examples.images">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-IQM_Vis.examples.images" title="Permalink to this headline">¶</a></h2>
+  <section id="iqms">
+<h1>IQMs<a class="headerlink" href="#iqms" title="Permalink to this headline">¶</a></h1>
+<section id="what-is-an-iqm">
+<h2>What is an IQM?<a class="headerlink" href="#what-is-an-iqm" title="Permalink to this headline">¶</a></h2>
+<p>Image quality metrics (IQMs) serve as an objective evaluation of the quality of an image and attempt to capture how humans perceive differences between images. Reference IQMs compare a reference image, and the same image with a distortion applied to it.
+The goal is to recreate how humans perceive this difference according to human psychophysical experiments.</p>
+<p>They are utilised in scenarios such as loss functions for deep learning models and benchmarking the performance of image processing algorithms where human evaluation is too expensive to obtain.</p>
+</section>
+<section id="different-types-of-iqms">
+<h2>Different types of IQMs<a class="headerlink" href="#different-types-of-iqms" title="Permalink to this headline">¶</a></h2>
+<p>There are a plethora of IQMs to choose from, the simplest being a metric in Euclidean space such as the mean squared error. In traditional perceptual literature, IQMs can be categorised into two groups.
+The first group consists of metrics, like the structural similarity (SSIM) index, which operate on the premise that the image’s structure remains unchanged despite the presence of distortion.
+These metrics adhere to the principle of structural similarity. The second group aims to measure how the visibility of error i.e. how much distortion is visible to humans. Recent literature utilises deep learning models in an attempt to mimic human perception by correlating the model’s response with image quality ratings from human experiments.</p>
+</section>
+<section id="how-to-choose-an-iqm-for-your-task">
+<h2>How to Choose an IQM For Your Task?<a class="headerlink" href="#how-to-choose-an-iqm-for-your-task" title="Permalink to this headline">¶</a></h2>
+<p>The process of evaluating IQMs is both qualitative and quantitative. It is necessary to gather empirical data on the response profiles of different IQMs with respect to  specific image distortions and parameter ranges.
+It is also important for a human to oversee the images produced from the distortion process to give context to the image data.
+The practitioner may also require specific behaviour from an IQM, which is not observable in just measuring correlation between human ratings and distances given by the IQM.
+For example, invariances are often extremely important. This type of evaluation and experimentation lends itself best to interactive and graphical software, which is why we have created IQM-Vis!</p>
 </section>
 </section>
 
@@ -188,6 +211,10 @@
            
           </div>
           <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="about.html" class="btn btn-neutral float-right" title="About IQM-Vis" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="IQM-Vis documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
 
   <hr/>
 

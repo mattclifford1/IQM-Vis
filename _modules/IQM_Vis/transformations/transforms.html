@@ -41,6 +41,7 @@
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
     
+    <link rel="author" title="About these documents" href="../../../about.html" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
@@ -87,7 +88,15 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">What is an IQM?:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../what-are-IQMs.html">IQMs</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About IQM-Vis:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About IQM-Vis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
 </ul>
@@ -95,7 +104,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../Tutorials.html">Tutorials</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
@@ -495,11 +504,24 @@
     <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">image</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">img_as_ubyte</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="c1"># convert to HSV</span>
     <span class="n">hsv</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGB2HSV</span><span class="p">)</span>
-    <span class="n">hsv</span> <span class="o">=</span> <span class="n">hsv</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">/</span><span class="mi">255</span>
+    <span class="c1"># normalise between 0, 1</span>
+    <span class="n">hsv</span> <span class="o">=</span> <span class="n">hsv</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">hsv</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">hsv</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">179</span>
+    <span class="n">hsv</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">hsv</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">:]</span><span class="o">/</span><span class="mi">255</span>
+    <span class="c1"># add the adjustment to the required channel</span>
     <span class="n">hsv</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">channel</span><span class="p">]</span> <span class="o">+=</span> <span class="n">value</span>
+    <span class="c1"># account for hue colours being radial</span>
+    <span class="k">if</span> <span class="n">channel</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">hsv</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">channel</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span>
+            <span class="n">hsv</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">channel</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># reset to 0, 1 bounds</span>
     <span class="n">hsv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">hsv</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">hsv</span> <span class="o">=</span> <span class="n">img_as_ubyte</span><span class="p">(</span><span class="n">hsv</span><span class="p">)</span>
+    <span class="c1"># convert back to RGB</span>
+    <span class="n">hsv</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">hsv</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">179</span>
+    <span class="n">hsv</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">hsv</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">:]</span><span class="o">*</span><span class="mi">255</span>
+    <span class="n">hsv</span> <span class="o">=</span> <span class="n">hsv</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">hsv</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_HSV2RGB</span><span class="p">)</span><span class="o">/</span><span class="mi">255</span>
 </pre></div>
 
