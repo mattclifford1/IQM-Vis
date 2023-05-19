@@ -1,0 +1,237 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "3a49ee24",
+   "metadata": {},
+   "source": [
+    "# Tutorial 3: Customisation Details\n",
+    "In this notebook we will expand on tutorial 2 by showing you exactly what form the transformations and IQMs need to be in.\n",
+    "\n",
+    "Let's start by importing the package."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "b1162501",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import IQM_Vis"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "4786d159",
+   "metadata": {},
+   "source": [
+    "## Metrics\n",
+    "A metric is defined as a callable object e.g. a function.\n",
+    "\n",
+    "Custom metrics need to take arguments:\n",
+    " - im_ref: the reference image (numpy array - float in the range 0-1)\n",
+    " - im_comp: the comparison/distorted image (numpy array - float in the range 0-1)\n",
+    " - **kwargs: peel off any extra key word arguments that might be called to the function\n",
+    " \n",
+    "Metrics need to return a single value (float) with the score\n",
+    "\n",
+    "We can make our own mean squared error function:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "263197ae",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "def custom_MAE_function(im_ref, im_comp, **kwargs):\n",
+    "    L1 = np.abs(im_ref - im_comp)\n",
+    "    return L1.mean()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f0da93aa",
+   "metadata": {},
+   "source": [
+    "We can also define metrics as class objects. This is useful if you need to store attributes. You will still need to class to be callable like the function above."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "47f9225d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "class custom_MAE_class:\n",
+    "    def __init__(self, att=0):\n",
+    "        self.att = att\n",
+    "        \n",
+    "    def __call__(self, im_ref, im_comp, **kwargs):\n",
+    "        L1 = np.abs(im_ref - im_comp)\n",
+    "        return L1.mean()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0a46b232",
+   "metadata": {},
+   "source": [
+    "Extra key word arguments can be included if the metric needs to take them. Make sure they have a default value and you can add them as parameters to the IQM-Vis UI"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "602d1b12",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def dummy_args(im_ref, im_comp, param1=0, **kwargs):\n",
+    "    # now we can use param here\n",
+    "    score = custom_MAE_function(im_ref, im_comp)\n",
+    "    return score + param1"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "7f216509",
+   "metadata": {},
+   "source": [
+    "Now we can add them to the dictionary to pass to the IQM-Vis UI as shown in tutorial 2. Note that the class metric need to initialised."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "8dd95119",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "metrics = {'MAE function': custom_MAE_function,\n",
+    "          'MAE class': custom_MAE_class(),\n",
+    "          'dummy args': dummy_args}"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "c8938ef3",
+   "metadata": {},
+   "source": [
+    "We also need to tell IQM-Vis about param1 to be used by our dummy_args function"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "ac5b1655",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "params = {'param1': {'min':-1.0, 'max':1.0, 'init_value': 0}}"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "45fbae7b",
+   "metadata": {},
+   "source": [
+    "## Transformations\n",
+    "Transforms/distortions are callable with the following arguments:\n",
+    " - image: image to be transformed (numpy array - float in the range 0-1)\n",
+    " - param: value of the parameter of the transformation\n",
+    "\n",
+    "Transforms need to return a numpy array of the same shape as the image input and be within the bounds 0-1.\n",
+    "\n",
+    "For example we can make our own brightness adjuster, note the parameter 'value' can be called anything:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "cce17a36",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def custom_brightness(image, value=0):\n",
+    "    return np.clip(image + value, 0, 1)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "4487ad14",
+   "metadata": {},
+   "source": [
+    "Then we put in a dictionary with the parameter range to tell the UI later"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "00ebecb1",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "transformations = {'brightness':{'min':-1.0, 'max':1.0, 'function':custom_brightness}}"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "cee8b094",
+   "metadata": {},
+   "source": [
+    "## Making the UI\n",
+    "Now make the UI as shown in tutorial 2"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ec3b343d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "images = ['/home/matt/datasets/kodak/kodim01.png', \n",
+    "          '/home/matt/datasets/kodak/kodim02.png']\n",
+    "data = IQM_Vis.dataset_holder(images,\n",
+    "                              metrics)\n",
+    "IQM_Vis.make_UI(data,\n",
+    "                transformations,\n",
+    "                metric_params=params)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "cdd47d68",
+   "metadata": {},
+   "source": [
+    "![](./resources/custom_UI_2.png)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.16"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
