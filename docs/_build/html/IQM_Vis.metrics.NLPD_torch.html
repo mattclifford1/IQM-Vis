@@ -1,0 +1,600 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>IQM_Vis.metrics.NLPD_torch package &mdash; IQM-Vis 0.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="IQM_Vis.metrics.NLPD_torch.layers package" href="IQM_Vis.metrics.NLPD_torch.layers.html" />
+    <link rel="prev" title="IQM_Vis.metrics package" href="IQM_Vis.metrics.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> IQM-Vis
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">What is an IQM?:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="what-are-IQMs.html">IQMs</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About IQM-Vis:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About IQM-Vis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="IQM_Vis.metrics.html">IQM_Vis.metrics package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="IQM_Vis.metrics.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">IQM_Vis.metrics.NLPD_torch package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-IQM_Vis.metrics.NLPD_torch.pyramids">IQM_Vis.metrics.NLPD_torch.pyramids module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-IQM_Vis.metrics.NLPD_torch">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="IQM_Vis.metrics.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IQM_Vis.metrics.html#module-IQM_Vis.metrics.IQMs">IQM_Vis.metrics.IQMs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IQM_Vis.metrics.html#module-IQM_Vis.metrics">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">IQM-Vis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="IQM_Vis.metrics.html">IQM_Vis.metrics package</a> &raquo;</li>
+        
+      <li>IQM_Vis.metrics.NLPD_torch package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/IQM_Vis.metrics.NLPD_torch.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="iqm-vis-metrics-nlpd-torch-package">
+<h1>IQM_Vis.metrics.NLPD_torch package<a class="headerlink" href="#iqm-vis-metrics-nlpd-torch-package" title="Permalink to this headline">¶</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="IQM_Vis.metrics.NLPD_torch.layers.html">IQM_Vis.metrics.NLPD_torch.layers package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="IQM_Vis.metrics.NLPD_torch.layers.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IQM_Vis.metrics.NLPD_torch.layers.html#module-IQM_Vis.metrics.NLPD_torch.layers.divisive_normalisation">IQM_Vis.metrics.NLPD_torch.layers.divisive_normalisation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IQM_Vis.metrics.NLPD_torch.layers.html#module-IQM_Vis.metrics.NLPD_torch.layers">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="IQM_Vis.metrics.NLPD_torch.utils.html">IQM_Vis.metrics.NLPD_torch.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="IQM_Vis.metrics.NLPD_torch.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IQM_Vis.metrics.NLPD_torch.utils.html#module-IQM_Vis.metrics.NLPD_torch.utils.conv">IQM_Vis.metrics.NLPD_torch.utils.conv module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IQM_Vis.metrics.NLPD_torch.utils.html#iqm-vis-metrics-nlpd-torch-utils-fourier-module">IQM_Vis.metrics.NLPD_torch.utils.fourier module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IQM_Vis.metrics.NLPD_torch.utils.html#module-IQM_Vis.metrics.NLPD_torch.utils.pyramid_filters">IQM_Vis.metrics.NLPD_torch.utils.pyramid_filters module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IQM_Vis.metrics.NLPD_torch.utils.html#module-IQM_Vis.metrics.NLPD_torch.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-IQM_Vis.metrics.NLPD_torch.pyramids">
+<span id="iqm-vis-metrics-nlpd-torch-pyramids-module"></span><h2>IQM_Vis.metrics.NLPD_torch.pyramids module<a class="headerlink" href="#module-IQM_Vis.metrics.NLPD_torch.pyramids" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">expert.layers.wavelet_transformation</span></code> module holds classes of
+layers for wavelet transformations.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.LaplacianPyramid">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.NLPD_torch.pyramids.</span></span><span class="sig-name descname"><span class="pre">LaplacianPyramid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dims</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/NLPD_torch/pyramids.html#LaplacianPyramid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.LaplacianPyramid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.LaplacianPyramid.DN_filters">
+<span class="sig-name descname"><span class="pre">DN_filters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/NLPD_torch/pyramids.html#LaplacianPyramid.DN_filters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.LaplacianPyramid.DN_filters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.LaplacianPyramid.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/NLPD_torch/pyramids.html#LaplacianPyramid.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.LaplacianPyramid.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.LaplacianPyramid.pyramid">
+<span class="sig-name descname"><span class="pre">pyramid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/NLPD_torch/pyramids.html#LaplacianPyramid.pyramid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.LaplacianPyramid.pyramid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.LaplacianPyramid.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.LaplacianPyramid.training" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.LaplacianPyramidGDN">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.NLPD_torch.pyramids.</span></span><span class="sig-name descname"><span class="pre">LaplacianPyramidGDN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dims</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/NLPD_torch/pyramids.html#LaplacianPyramidGDN"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.LaplacianPyramidGDN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.LaplacianPyramidGDN.compare">
+<span class="sig-name descname"><span class="pre">compare</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/NLPD_torch/pyramids.html#LaplacianPyramidGDN.compare"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.LaplacianPyramidGDN.compare" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.LaplacianPyramidGDN.pyramid">
+<span class="sig-name descname"><span class="pre">pyramid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/NLPD_torch/pyramids.html#LaplacianPyramidGDN.pyramid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.LaplacianPyramidGDN.pyramid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.LaplacianPyramidGDN.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.LaplacianPyramidGDN.training" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.SteerablePyramid">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.NLPD_torch.pyramids.</span></span><span class="sig-name descname"><span class="pre">SteerablePyramid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_orientations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pretrained</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/NLPD_torch/pyramids.html#SteerablePyramid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.SteerablePyramid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<p>Steerable pyramid model implemented in spatial domain, introduced in
+<span id="id1">[SIMON1995PYR]</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stages</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=4</em><em>)</em>) – Number of stages to be used in the pyramid.</p></li>
+<li><p><strong>num_orientations</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=2</em><em>)</em>) – Number of orientations to be used at each stage of the pyramid (number
+of subbands). If <code class="docutils literal notranslate"><span class="pre">pretrained</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code> then this must be 2 as the
+pretarined weights from the original implementation use 2 subbands.</p></li>
+<li><p><strong>pretrained</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default=False</em><em>)</em>) – Whether to load the pretrained filters, specified in the original paper
+<span id="id2">[SIMON1995PYR]</span>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">..</span> <span class="pre">[SIMON1995PYR]</span> <span class="pre">E</span> <span class="pre">P</span> <span class="pre">Simoncelli</span> <span class="pre">and</span> <span class="pre">W</span> <span class="pre">T</span> <span class="pre">Freeman,</span> <span class="pre">&quot;The</span> <span class="pre">Steerable</span> <span class="pre">Pyramid</span></span></dt>
+<dd><p>A Flexible Architecture for Multi-Scale Derivative Computation,” Second
+Int’l Conf on Image Processing, Washington, DC, Oct 1995.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.SteerablePyramid.TODO">
+<span class="sig-name descname"><span class="pre">TODO</span></span><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.SteerablePyramid.TODO" title="Permalink to this definition">¶</a></dt>
+<dd><p>that are rotated a different amounts, and optimise only over the
+amount of rotation for each filter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>implement an initialisation that sets <code class="docutils literal notranslate"><span class="pre">num_orientations</span></code> filters</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.SteerablePyramid.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch._VariableFunctionsClass.tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upsample_output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/IQM_Vis/metrics/NLPD_torch/pyramids.html#SteerablePyramid.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.SteerablePyramid.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Forward pass of the pyramid.</p>
+<p>This function returns a lit of Tensors for the subbands in each stage
+of the pyramid or, if <code class="docutils literal notranslate"><span class="pre">upsample_output</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>, a Tensor
+containing every subband at every level that has been upsampled to be
+the same size as the input Tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>torch.Tensor</em>) – Input to the pyramid.</p></li>
+<li><p><strong>upsample_output</strong> (<em>boolean</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> then the every subband will be upsampled to be the same
+size as the input and then stacked to be a singular tensor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>TypeError:</strong> – Input parameter <code class="docutils literal notranslate"><span class="pre">x</span></code> is not of dtype torch.float.</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>pyramid</strong> – List of tensors, where the first tensor is the high pass residual,
+and from thereon each entry contains the subbands at each stage of
+the pyramid. The low pass residual is the last element in the
+pyramid. If <code class="docutils literal notranslate"><span class="pre">upsample_output</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code> then this will be one
+Tensor where each subband has been upsample to be the same
+dimensions as the input.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Union[List[torch.Tensor], Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.SteerablePyramid.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.SteerablePyramid.training" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.NLPD_torch.pyramids.</span></span><span class="sig-name descname"><span class="pre">SteerableWavelet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">twidth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/NLPD_torch/pyramids.html#SteerableWavelet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<p>Steerable wavelet pyramid.</p>
+<p>Performs a high-pass and low-pass filtering. The low-pass filtered image
+is then passed through <code class="docutils literal notranslate"><span class="pre">wavelets</span></code> wavelet transformations, each
+with a different orientation. This is done at <code class="docutils literal notranslate"><span class="pre">scales</span></code> dfferent scales
+where each scale is downsampled by <code class="docutils literal notranslate"><span class="pre">downsampled</span></code>.</p>
+<dl class="simple">
+<dt>TODO<span class="classifier">pass dimension parameter into __init__ and precompute log_rad</span></dt><dd><p>and angle.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stages</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=4</em><em>)</em>) – Number of stages to be used in the pyramid.</p></li>
+<li><p><strong>order</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=3</em><em>)</em>) – Defined angular functions. Angular functions are
+<cite>cos(theta-orderpi/(order+1))^order</cite> (order is one less than the
+number of orientation bands).</p></li>
+<li><p><strong>twidth</strong> (<em>int</em><em>, </em><em>optional</em><em>(</em><em>default=1</em><em>)</em>) – width of the transition region of the radial lowpass function in
+octaves.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.num_orientations">
+<span class="sig-name descname"><span class="pre">num_orientations</span></span><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.num_orientations" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>integer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.harmincs">
+<span class="sig-name descname"><span class="pre">harmincs</span></span><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.harmincs" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.angles">
+<span class="sig-name descname"><span class="pre">angles</span></span><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.angles" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.steer_matrix">
+<span class="sig-name descname"><span class="pre">steer_matrix</span></span><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.steer_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.Xrcos">
+<span class="sig-name descname"><span class="pre">Xrcos</span></span><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.Xrcos" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.Yrcos">
+<span class="sig-name descname"><span class="pre">Yrcos</span></span><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.Yrcos" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.YIrcos">
+<span class="sig-name descname"><span class="pre">YIrcos</span></span><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.YIrcos" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.Xcosn">
+<span class="sig-name descname"><span class="pre">Xcosn</span></span><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.Xcosn" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.const">
+<span class="sig-name descname"><span class="pre">const</span></span><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.const" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.Ycosn">
+<span class="sig-name descname"><span class="pre">Ycosn</span></span><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.Ycosn" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch._VariableFunctionsClass.tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upsample_output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/IQM_Vis/metrics/NLPD_torch/pyramids.html#SteerableWavelet.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Forward pass of the pyramid.</p>
+<p>This function returns a lit of Tensors for the subbands in each stage
+of the pyramid or, if <code class="docutils literal notranslate"><span class="pre">upsample_output</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>, a Tensor
+containing every subband at every level that has been upsampled to be
+the same size as the input Tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>torch.Tensor</em>) – Input to the pyramid.</p></li>
+<li><p><strong>upsample_output</strong> (<em>boolean</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> then the every subband will be upsampled to be the same
+size as the input and then stacked to be a singular tensor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>TypeError:</strong> – Input parameter <code class="docutils literal notranslate"><span class="pre">x</span></code> is not of dtype torch.float.</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>pyramid</strong> – List of tensors, where the first tensor is the high pass residual,
+and from thereon each entry contains the subbands at each stage of
+the pyramid. The low pass residual is the last element in the
+pyramid. If <code class="docutils literal notranslate"><span class="pre">upsample_output</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code> then this will be one
+Tensor where each subband has been upsample to be the same
+dimensions as the input.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Union[List[torch.Tensor], Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.meshgrid_angle">
+<span class="sig-name descname"><span class="pre">meshgrid_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="_modules/IQM_Vis/metrics/NLPD_torch/pyramids.html#SteerableWavelet.meshgrid_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.meshgrid_angle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes meshgrid of input dimensions and angles</p>
+<p>Takes the dimensions of an image, and computes a meshgrid over these
+values. Then computes the angles and log radians of this meshgrid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dims</strong> (<em>List</em><em>[</em><em>Integer</em><em>]</em>) – List of length two sepcificy [h, w] of image.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>angle</strong> (<em>torch.Tensor</em>) – Angle of meshgrid.</p></li>
+<li><p><strong>log_rad</strong> (<em>torch.Tensor</em>) – Angle in log radians.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#IQM_Vis.metrics.NLPD_torch.pyramids.SteerableWavelet.training" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-IQM_Vis.metrics.NLPD_torch">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-IQM_Vis.metrics.NLPD_torch" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="IQM_Vis.metrics.NLPD_torch.layers.html" class="btn btn-neutral float-right" title="IQM_Vis.metrics.NLPD_torch.layers package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="IQM_Vis.metrics.html" class="btn btn-neutral float-left" title="IQM_Vis.metrics package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2023, Matt Clifford.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

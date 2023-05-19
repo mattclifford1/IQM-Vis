@@ -41,6 +41,7 @@
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
+    <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 </head>
@@ -87,7 +88,15 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">What is an IQM?:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../what-are-IQMs.html">IQMs</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About IQM-Vis:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About IQM-Vis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
 </ul>
@@ -95,7 +104,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../Tutorials.html">Tutorials</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
@@ -194,7 +203,8 @@
                  <span class="n">metrics_avg_graph</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                  <span class="n">metric_params</span><span class="p">:</span> <span class="nb">dict</span><span class="o">=</span><span class="p">{},</span>
                  <span class="n">default_save_dir</span><span class="o">=</span><span class="n">IQM_Vis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">save_utils</span><span class="o">.</span><span class="n">DEFAULT_SAVE_DIR</span><span class="p">,</span>
-                 <span class="n">restrict_options</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                 <span class="n">restrict_options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_store</span> <span class="o">=</span> <span class="n">data_store</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span> <span class="o">=</span> <span class="n">transformations</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metrics_info_format</span> <span class="o">=</span> <span class="n">metrics_info_format</span>
@@ -202,13 +212,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">metric_params</span> <span class="o">=</span> <span class="n">metric_params</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span> <span class="o">=</span> <span class="n">default_save_dir</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">restrict_options</span> <span class="o">=</span> <span class="n">restrict_options</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">debug</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
 <div class="viewcode-block" id="make_UI.show"><a class="viewcode-back" href="../../IQM_Vis.html#IQM_Vis.ui_wrapper.make_UI.show">[docs]</a>    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_restrict_options</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_data_store</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_trans</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_check_inputs</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_check_inputs</span><span class="p">()</span>
         <span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
         <span class="n">window</span> <span class="o">=</span> <span class="n">make_app</span><span class="p">(</span><span class="n">app</span><span class="p">,</span>
                           <span class="bp">self</span><span class="o">.</span><span class="n">data_store</span><span class="p">,</span>
@@ -251,6 +263,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">metric_params</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">get_all_IQM_params</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_store</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">data_store</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_store</span><span class="p">]</span>
+
     <span class="k">def</span> <span class="nf">_check_trans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">transformations</span><span class="o">.</span><span class="n">get_all_transforms</span><span class="p">()</span>

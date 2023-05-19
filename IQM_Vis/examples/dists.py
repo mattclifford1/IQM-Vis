@@ -79,7 +79,11 @@ def run():
     # metrics functions must return a single value
     metric = {'DISTS': IQM_Vis.IQMs.DISTS(),
               'MAE': IQM_Vis.IQMs.MAE(),
-              '1-SSIM': IQM_Vis.IQMs.SSIM()}
+              '1-SSIM': IQM_Vis.IQMs.SSIM(),
+              '1-MS_SSIM': IQM_Vis.IQMs.MS_SSIM(),
+              'NLPD': IQM_Vis.IQMs.NLPD(),
+              'LPIPS': IQM_Vis.IQMs.LPIPS(),
+              }
 
     # metrics images return a numpy image - dont include any for this example
     metric_images = {}
@@ -94,14 +98,17 @@ def run():
 
     # define the transformations
     transformations = {
-               'rotation':{'min':-180, 'max':180, 'function':IQM_Vis.transforms.rotation},    # normal input
-               'x_shift': {'min':-0.1, 'max':0.1, 'function':IQM_Vis.transforms.x_shift, 'init_value': 0.0},
-               'y_shift': {'min':-0.1, 'max':0.1, 'function':IQM_Vis.transforms.y_shift, 'init_value': 0.0},
-               # 'zoom':    {'min': 0.8, 'max':1.2, 'function':IQM_Vis.transforms.zoom_image, 'init_value': 1.0, 'num_values':21},  # requires non standard slider params
-               # 'blur':{'min':1, 'max':41, 'normalise':'odd', 'function':IQM_Vis.transforms.blur},  # only odd ints
-               # 'brightness':{'min':-1.0, 'max':1.0, 'function':IQM_Vis.transforms.brightness},   # normal but with float
-               # 'threshold':{'min':-40, 'max':40, 'function':IQM_Vis.transforms.binary_threshold},
-               # 'jpeg compression':{'init_value':100, 'min':1, 'max':100, 'function':IQM_Vis.transforms.jpeg_compression},
+        'rotation':{'min':-10, 'max':10, 'function':IQM_Vis.transforms.rotation},    # normal input
+        'x_shift': {'min':-0.1, 'max':0.1, 'function':IQM_Vis.transforms.x_shift, 'init_value': 0.0},
+        'y_shift': {'min':-0.1, 'max':0.1, 'function':IQM_Vis.transforms.y_shift, 'init_value': 0.0},
+        'zoom':    {'min': 0.8, 'max':1.2, 'function':IQM_Vis.transforms.zoom_image, 'init_value': 1.0},  # requires non standard slider params
+        'brightness':{'min':-1.0, 'max':1.0, 'function':IQM_Vis.transforms.brightness},   # normal but with float
+        'contrast': {'min': 0.5, 'max': 2.5, 'init_value': 1.0, 'function': IQM_Vis.transforms.contrast},
+        'hue': {'min': -0.5, 'max': 0.5, 'function': IQM_Vis.transforms.hue},
+        'saturation': {'min': -0.5, 'max': 0.5, 'function': IQM_Vis.transforms.saturation},
+        'jpg compr':{'init_value':101, 'min':1, 'max':101, 'function':IQM_Vis.transforms.jpeg_compression},
+        'blur':{'min':1, 'max':41, 'normalise':'odd', 'function':IQM_Vis.transforms.blur},  # only odd ints
+        # 'threshold':{'min':-40, 'max':40, 'function':IQM_Vis.transforms.binary_threshold},
                }
     # define any parameters that the metrics need (names shared across both metrics and metric_images)
     ssim_params = {'sigma': {'min':0.25, 'max':5.25, 'init_value': 1.5},  # for the guassian kernel

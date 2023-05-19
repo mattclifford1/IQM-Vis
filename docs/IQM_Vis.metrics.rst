@@ -1,6 +1,14 @@
 IQM\_Vis.metrics package
 ========================
 
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   IQM_Vis.metrics.NLPD_torch
+
 Submodules
 ----------
 

@@ -183,7 +183,7 @@ class widgets():
                 sliders_dict[key]['values'] = info_item['values']
             else:
                 if 'num_values' not in info_item.keys():
-                    info_item['num_values'] = 21   # make default value for steps in slider range
+                    info_item['num_values'] = 41   # make default value for steps in slider range
                 sliders_dict[key]['values'] = np.linspace(info_item['min'], info_item['max'], info_item['num_values'])
                 # see if we need to make odd numbers (for use with kernel sizes)
                 if 'normalise' in info_item.keys():

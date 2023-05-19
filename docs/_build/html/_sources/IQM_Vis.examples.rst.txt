@@ -44,6 +44,14 @@ IQM\_Vis.examples.experiment module
    :undoc-members:
    :show-inheritance:
 
+IQM\_Vis.examples.kodak module
+------------------------------
+
+.. automodule:: IQM_Vis.examples.kodak
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 IQM\_Vis.examples.multiple module
 ---------------------------------
 
