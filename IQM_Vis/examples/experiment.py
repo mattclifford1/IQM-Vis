@@ -23,7 +23,7 @@ def run():
 
     # define the transformations
     transformations = {
-    'x_shift': {'min':-1.0, 'max':1.0, 'function':IQM_Vis.transforms.brightness, 'init_value': 0.0},
+        'contrast': {'min': 0.5, 'max': 2.0, 'function': IQM_Vis.transforms.contrast, 'init_value': 1.0},
                }
     # define any parameters that the metrics need (names shared across both metrics and metric_images)
     ssim_params = {'sigma': {'min':0.25, 'max':5.25, 'init_value': 1.5},  # for the guassian kernel
