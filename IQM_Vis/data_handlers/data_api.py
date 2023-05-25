@@ -90,6 +90,7 @@ class dataset_holder(base_dataset_loader):
 
     def _load_image_data(self, i):
         # reference image
+        self.image_post_processing_hash = None
         self.current_file = self.image_list[i]
         image_name_ref = os.path.splitext(os.path.basename(self.current_file))[0]
         image_data_ref = self.image_loader(self.current_file)
@@ -126,22 +127,17 @@ class dataset_holder(base_dataset_loader):
         return self.image_reference.name
 
     def get_reference_image(self):
-        im = self.image_reference.data
-        if self.image_post_processing is not None:
-            im = self.image_post_processing(im)
-        return im
-
-        # if hash(self.image_post_processing) == self.image_post_processing_hash:
-        #     return self.image_reference_post_processed
-        # else:
-        #     # need to post process ref image as either first call or post processing has changed
-        #     self.image_reference_post_processed = self.image_reference.data.copy()
-        #     if self.image_post_processing is not None:
-        #         self.image_reference_post_processed = self.image_post_processing(
-        #             self.image_reference_post_processed)
-        #     # cache the hash so we can test if the post processing changes
-        #     self.image_post_processing_hash = hash(self.image_post_processing)
-        #     return self.image_reference_post_processed
+        if hash(self.image_post_processing) == self.image_post_processing_hash:
+            return self.image_reference_post_processed
+        else:
+            # need to post process ref image as either first call or post processing has changed
+            self.image_reference_post_processed = self.image_reference.data.copy()
+            if self.image_post_processing is not None:
+                self.image_reference_post_processed = self.image_post_processing(
+                    self.image_reference_post_processed)
+            # cache the hash so we can test if the post processing changes
+            self.image_post_processing_hash = hash(self.image_post_processing)
+            return self.image_reference_post_processed
 
     def get_image_to_transform_name(self):
         return self.image_to_transform.name
