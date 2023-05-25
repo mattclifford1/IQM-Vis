@@ -19,6 +19,7 @@ class images:
 
     def __init__(self):
         self.num_steps_range = 11
+        self.update_images = True
         self.init_worker_thread()
         self.view_correlation_instance.connect(self.change_to_specific_trans)
 
@@ -46,21 +47,22 @@ class images:
     #     return image
 
     def display_images(self):
-        for i, data_store in enumerate(self.data_stores):
-            # reference image
-            reference_image = data_store.get_reference_image()
-            gui_utils.change_im(self.widget_row[i]['images']['original']['data'], reference_image, resize=self.image_display_size, rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
-            # transform image
-            trans_im = image_utils.get_transform_image(data_store, self.sliders['transforms'], self.params_from_sliders['transforms'])
-            gui_utils.change_im(self.widget_row[i]['images']['transformed']['data'], trans_im, resize=self.image_display_size, rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
-            # metrics
-            metrics = data_store.get_metrics(trans_im, self.checked_metrics, **self.params_from_sliders['metric_params'])
-            self.display_metrics(metrics, i)
-            # metric images
-            metric_images = data_store.get_metric_images(trans_im, self.checked_metric_images, **self.params_from_sliders['metric_params'])
-            self.display_metric_images(metric_images, i)
+        if self.update_images == True:
+            for i, data_store in enumerate(self.data_stores):
+                # reference image
+                reference_image = data_store.get_reference_image()
+                gui_utils.change_im(self.widget_row[i]['images']['original']['data'], reference_image, resize=self.image_display_size, rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
+                # transform image
+                trans_im = image_utils.get_transform_image(data_store, self.sliders['transforms'], self.params_from_sliders['transforms'])
+                gui_utils.change_im(self.widget_row[i]['images']['transformed']['data'], trans_im, resize=self.image_display_size, rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
+                # metrics
+                metrics = data_store.get_metrics(trans_im, self.checked_metrics, **self.params_from_sliders['metric_params'])
+                self.display_metrics(metrics, i)
+                # metric images
+                metric_images = data_store.get_metric_images(trans_im, self.checked_metric_images, **self.params_from_sliders['metric_params'])
+                self.display_metric_images(metric_images, i)
 
-            QApplication.processEvents()   # make figures become the correct size
+                QApplication.processEvents()   # make figures become the correct size
 
     '''
     metric graph updaters

@@ -2,7 +2,7 @@
 sample metrics to use with the examples of the UI
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
-import sys; sys.path.append('..'); sys.path.append('.')
+# import sys; sys.path.append('..'); sys.path.append('.')
 import torch
 import torch.nn as nn
 import numpy as np

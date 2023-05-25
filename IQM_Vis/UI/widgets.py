@@ -311,8 +311,10 @@ class widgets():
             self.redo_plots()
 
     def reset_sliders(self):
+        self.update_images = False   # dont calc any images/metrics when updating sliders now is slow
         for param_group in self.sliders:
             self.reset_slider_group(param_group, False, False)
+        self.update_images = True  # make sure to return to calc images/metrics
         self.display_images()
         self.redo_plots()
 
