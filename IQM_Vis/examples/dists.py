@@ -82,7 +82,7 @@ def run():
               '1-SSIM': IQM_Vis.IQMs.SSIM(),
               '1-MS_SSIM': IQM_Vis.IQMs.MS_SSIM(),
               'NLPD': IQM_Vis.IQMs.NLPD(),
-              'LPIPS': IQM_Vis.IQMs.LPIPS(),
+            #   'LPIPS': IQM_Vis.IQMs.LPIPS(),
               }
 
     # metrics images return a numpy image - dont include any for this example

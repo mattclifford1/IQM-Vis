@@ -4,6 +4,8 @@
 from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot
 from IQM_Vis.utils import plot_utils
 
+import time
+
 
 class get_range_results_worker(QObject):
     progress = pyqtSignal(int)
@@ -13,6 +15,9 @@ class get_range_results_worker(QObject):
 
     @pyqtSlot(dict)
     def do_work(self, data):
+
+        t0 = time.time()
+
         metric_over_range_results = []
         max_val = 0
         self.stop_flag = [False]
@@ -37,6 +42,9 @@ class get_range_results_worker(QObject):
         data_return = {'metric_over_range_results': metric_over_range_results,
                        'max_val': max_val}
         self.completed.emit(data_return)
+
+        t1 = time.time()
+        print(f'time: {t1-t0}')
 
     def stop(self):
         if hasattr(self, 'stop_flag'):

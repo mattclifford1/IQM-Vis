@@ -4,11 +4,28 @@ both use the same image for reference and transformed
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 import os
+from functools import cache
 from collections import namedtuple
 import numpy as np
 import pandas as pd
 import IQM_Vis
 from IQM_Vis.data_handlers import base_dataloader, base_dataset_loader
+
+def numpy_cache_wrapper(np_arr):
+    bytes_arr = np.tobytes()
+    # do whatever
+    np_arr = np.frombuffer(bytes_arr, dtype=np_arr.dtype).reshape(np_arr.shape)
+
+class cache_metric_call:
+    def __init__(self, metric):
+        self.metric = metric
+    
+    @cache
+    def __call__(self, ref, trans, **kwargs):
+        # expect a hashable bytes array tuple as input with the data type and shape
+        ref = np.frombuffer(ref.bytes, dtype=ref.dtype).reshape(ref.shape)
+        trans = np.frombuffer(trans.bytes, dtype=trans.dtype).reshape(trans.shape)
+        return self.metric(ref, trans, **kwargs)
 
 
 class dataset_holder(base_dataset_loader):
@@ -42,6 +59,7 @@ class dataset_holder(base_dataset_loader):
                        human_exp_csv=None    # csv for where the human experiments file is
                        ):
         self.image_storer = namedtuple('image', ['name', 'data'])
+        self.bytes_arrays = namedtuple('arr', ['bytes', 'dtype', 'shape'])
         self.image_loader = image_loader
         self.image_pre_processing = image_pre_processing
         self.load_image_list(image_list)
@@ -49,8 +67,11 @@ class dataset_holder(base_dataset_loader):
             self.image_list_to_transform = image_list_to_transform
             self._load_image_data(0)   # load the first transform image
         self.metrics = metrics
+        for m in self.metrics:
+            self.metrics[m] = cache_metric_call(self.metrics[m])
         self.metric_images = metric_images
         self.image_post_processing = image_post_processing
+        self.image_post_processing_hash = None
         if human_exp_csv is not None:
             self.human_exp_df = pd.read_csv(human_exp_csv, index_col=0)
 
@@ -75,6 +96,8 @@ class dataset_holder(base_dataset_loader):
         if self.image_pre_processing is not None:
             image_data_ref = self.image_pre_processing(image_data_ref)
         self.image_reference = self.image_storer(image_name_ref, image_data_ref)
+        self.ref_bytes = self.bytes_arrays(
+            image_data_ref.tobytes(), image_data_ref.dtype, image_data_ref.shape)
 
         # image to transform
         if self.current_file == self.image_list_to_transform[i]:
@@ -108,6 +131,18 @@ class dataset_holder(base_dataset_loader):
             im = self.image_post_processing(im)
         return im
 
+        # if hash(self.image_post_processing) == self.image_post_processing_hash:
+        #     return self.image_reference_post_processed
+        # else:
+        #     # need to post process ref image as either first call or post processing has changed
+        #     self.image_reference_post_processed = self.image_reference.data.copy()
+        #     if self.image_post_processing is not None:
+        #         self.image_reference_post_processed = self.image_post_processing(
+        #             self.image_reference_post_processed)
+        #     # cache the hash so we can test if the post processing changes
+        #     self.image_post_processing_hash = hash(self.image_post_processing)
+        #     return self.image_reference_post_processed
+
     def get_image_to_transform_name(self):
         return self.image_to_transform.name
 
@@ -115,10 +150,15 @@ class dataset_holder(base_dataset_loader):
         return self.image_to_transform.data
 
     def get_metrics(self, transformed_image, metrics_to_use='all', **kwargs):
+        # convert array to hashable so we can cache already calc'ed
+        trans_bytes = self.bytes_arrays(
+            transformed_image.tobytes(), transformed_image.dtype, transformed_image.shape)
+        # get metrics
         results = {}
         for metric in self.metrics:
             if metric in metrics_to_use or metrics_to_use == 'all':
-                results[metric] = self.metrics[metric](self.get_reference_image(), transformed_image, **kwargs)
+                results[metric] = self.metrics[metric](
+                    self.ref_bytes, trans_bytes, **kwargs)
         return results
 
     def get_metric_images(self, transformed_image, metrics_to_use='all', **kwargs):
