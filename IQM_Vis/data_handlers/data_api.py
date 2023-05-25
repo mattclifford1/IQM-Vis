@@ -23,8 +23,8 @@ class cache_metric_call:
     @cache
     def __call__(self, ref, trans, **kwargs):
         # expect a hashable bytes array tuple as input with the data type and shape
-        ref = np.frombuffer(ref.bytes, dtype=ref.dtype).reshape(ref.shape)
-        trans = np.frombuffer(trans.bytes, dtype=trans.dtype).reshape(trans.shape)
+        ref = np.frombuffer(ref.bytes, dtype=ref.dtype).reshape(ref.shape).copy()
+        trans = np.frombuffer(trans.bytes, dtype=trans.dtype).reshape(trans.shape).copy()
         return self.metric(ref, trans, **kwargs)
 
 
