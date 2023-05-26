@@ -10,15 +10,18 @@ def run():
     # remove and folders
     image_list = [f for f in image_list if os.path.isfile(f)]
     image_list.sort()
+
+    metrs = IQM_Vis.metrics.get_all_metrics()
+    metrs.pop('1-MS_SSIM')
     data = IQM_Vis.dataset_holder(image_list,
-                                  IQM_Vis.metrics.get_all_metrics(),
+                                  metrs,
                                 #   IQM_Vis.metrics.get_all_metric_images()
                                   )
 
 
     IQM_Vis.make_UI(data,
                     IQM_Vis.transformations.get_all_transforms(),
-                    restrict_options=3
+                    # restrict_options=3
                     )
     IQM_Vis.make_UI()
 
