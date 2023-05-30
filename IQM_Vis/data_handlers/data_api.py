@@ -11,18 +11,20 @@ import pandas as pd
 import IQM_Vis
 from IQM_Vis.data_handlers import base_dataloader, base_dataset_loader
 
-def numpy_cache_wrapper(np_arr):
-    bytes_arr = np.tobytes()
-    # do whatever
-    np_arr = np.frombuffer(bytes_arr, dtype=np_arr.dtype).reshape(np_arr.shape)
 
 class cache_metric_call:
+    ''' cache metric fucntions that have been calculated already
+     to do this we need to convert numpy arrays to a hashable object (since arrs are mutable) 
+     to achieve this we convert to a bytes array (input to __call__) then load this from buffer
+     '''
     def __init__(self, metric):
         self.metric = metric
     
     @cache
     def __call__(self, ref, trans, **kwargs):
         # expect a hashable bytes array tuple as input with the data type and shape
+        #  N.B. we need to copy the array since from buffer gives a read only array since
+        #       it is a view of a bytes array (immutable)
         ref = np.frombuffer(ref.bytes, dtype=ref.dtype).reshape(ref.shape).copy()
         trans = np.frombuffer(trans.bytes, dtype=trans.dtype).reshape(trans.shape).copy()
         return self.metric(ref, trans, **kwargs)
@@ -102,7 +104,7 @@ class dataset_holder(base_dataset_loader):
 
         # image to transform
         if self.current_file == self.image_list_to_transform[i]:
-            self.image_to_transform = self.image_storer( image_name_ref, image_data_ref)
+            self.image_to_transform = self.image_storer(image_name_ref, image_data_ref)
         else:
             image_name_trans = os.path.splitext(os.path.basename(self.image_list_to_transform[i]))[0]
             image_data_trans = self.image_loader(self.image_list_to_transform[i])
@@ -127,9 +129,7 @@ class dataset_holder(base_dataset_loader):
         return self.image_reference.name
 
     def get_reference_image(self):
-        if hash(self.image_post_processing) == self.image_post_processing_hash:
-            return self.image_reference_post_processed
-        else:
+        if hash(self.image_post_processing) != self.image_post_processing_hash:
             # need to post process ref image as either first call or post processing has changed
             self.image_reference_post_processed = self.image_reference.data.copy()
             if self.image_post_processing is not None:
@@ -137,7 +137,12 @@ class dataset_holder(base_dataset_loader):
                     self.image_reference_post_processed)
             # cache the hash so we can test if the post processing changes
             self.image_post_processing_hash = hash(self.image_post_processing)
-            return self.image_reference_post_processed
+            # save the bytes array 
+            self.ref_bytes = self.bytes_arrays(
+                self.image_reference_post_processed.tobytes(), 
+                self.image_reference_post_processed.dtype, 
+                self.image_reference_post_processed.shape)
+        return self.image_reference_post_processed
 
     def get_image_to_transform_name(self):
         return self.image_to_transform.name
@@ -146,7 +151,7 @@ class dataset_holder(base_dataset_loader):
         return self.image_to_transform.data
 
     def get_metrics(self, transformed_image, metrics_to_use='all', **kwargs):
-        # convert array to hashable so we can cache already calc'ed
+        # convert array to hashable so we can cache already calculated
         trans_bytes = self.bytes_arrays(
             transformed_image.tobytes(), transformed_image.dtype, transformed_image.shape)
         # get metrics

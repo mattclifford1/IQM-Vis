@@ -89,7 +89,7 @@ def run():
     metric_images = {}
 
     # make dataset list of images
-    files = glob.glob('/home/matt/datasets/Textures/*')
+    files = sorted(glob.glob('/home/matt/datasets/Textures/*'))
     data = IQM_Vis.dataset_holder(files,
                                   metric,
                                   metric_images,

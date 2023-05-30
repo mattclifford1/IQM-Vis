@@ -226,7 +226,9 @@ class widgets():
 
         # post processing
         self.post_processing_options = {'None': None,
-                                        'Crop Centre': IQM_Vis.utils.image_utils.crop_centre}
+                                        'Crop Centre': partial(IQM_Vis.utils.image_utils.crop_centre, scale_factor=2, keep_size=True),
+                                        'Crop Centre (No Resize)': partial(IQM_Vis.utils.image_utils.crop_centre, scale_factor=2, keep_size=False),
+                                        }
         if not hasattr(self, 'post_processing_option'):
             self.post_processing_option = 'None'  # init_val
         for i, data_store in enumerate(self.data_stores):

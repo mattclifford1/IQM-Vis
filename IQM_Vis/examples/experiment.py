@@ -5,7 +5,13 @@ import IQM_Vis
 
 def run():
     # metrics functions must return a single value
-    metric = {'MSE': IQM_Vis.IQMs.MSE()}
+    metric = {'DISTS': IQM_Vis.IQMs.DISTS(),
+              'MAE': IQM_Vis.IQMs.MAE(),
+              '1-SSIM': IQM_Vis.IQMs.SSIM(),
+            #   '1-MS_SSIM': IQM_Vis.IQMs.MS_SSIM(),
+              'NLPD': IQM_Vis.IQMs.NLPD(),
+              #   'LPIPS': IQM_Vis.IQMs.LPIPS(),
+              }
 
     # metrics images return a numpy image
     metric_images = {}
@@ -24,6 +30,11 @@ def run():
     # define the transformations
     transformations = {
         'contrast': {'min': 0.5, 'max': 2.0, 'function': IQM_Vis.transforms.contrast, 'init_value': 1.0},
+        'hue': {'min': -0.5, 'max': 0.5, 'function': IQM_Vis.transforms.hue},
+        'saturation': {'min': -0.5, 'max': 0.5, 'function': IQM_Vis.transforms.saturation},
+        'jpg compr': {'init_value': 101, 'min': 1, 'max': 101, 'function': IQM_Vis.transforms.jpeg_compression},
+        # only odd ints
+        'blur': {'min': 1, 'max': 41, 'normalise': 'odd', 'function': IQM_Vis.transforms.blur},
                }
     # define any parameters that the metrics need (names shared across both metrics and metric_images)
     ssim_params = {'sigma': {'min':0.25, 'max':5.25, 'init_value': 1.5},  # for the guassian kernel
@@ -35,7 +46,7 @@ def run():
     IQM_Vis.make_UI(data,
                     transformations,
                     metric_params=ssim_params,
-                    restrict_options=3
+                    restrict_options=4
                     )
 
 if __name__ == '__main__':
