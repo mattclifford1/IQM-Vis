@@ -472,7 +472,7 @@ class widgets():
             self.experiment.saved_experiment.connect(
                 self.change_human_scores_after_exp)
             self.experiment.show()
-            self.experiment.showFullScreen()
+            # self.experiment.showFullScreen()
         else:
             self.status_bar.showMessage('Cannot make experiment without transforms', 5000)
 

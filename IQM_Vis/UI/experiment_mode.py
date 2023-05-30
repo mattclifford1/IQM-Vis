@@ -462,7 +462,7 @@ class make_experiment(QMainWindow):
         # Traverse through all elements and compare each element with pivot (by user clicking)
         while True:
             self.change_experiment_images(A_trans=self.experiment_transforms[self.current_comparision],
-            B_trans=self.pivot)
+                                          B_trans=self.pivot)
             # wait for image to be clicked
             self.clicked_event.clear()
             self.clicked_event.wait()
@@ -483,6 +483,24 @@ class make_experiment(QMainWindow):
         return self.comp_pointer + 1
 
     def clicked_image(self, image_name, widget_name):
+        # make clicked image green to show user
+        green_array = np.zeros([100, 100, 3])
+        # green_array[:, :, 1] = 1
+        gui_utils.change_im(self.widget_experiments['exp'][widget_name]['data'], 
+                            green_array,
+                            resize=self.image_display_size)
+        # not_clicked = ['A', 'B']
+        # not_clicked.remove(widget_name)
+        # not_clicked = not_clicked[0]
+        # red_array = np.zeros([100, 100, 3])
+        # red_array[:, :, 0] = 1
+        # gui_utils.change_im(self.widget_experiments['exp'][not_clicked]['data'],
+        #                     red_array,
+        #                     resize=self.image_display_size)
+        QApplication.processEvents()  # replace this with a wait from signal from thread event
+        time.sleep(0.1)
+
+        # get comparison to pivot
         trans_str = image_name[len(self.data_store.get_reference_image_name())+1:]
         if trans_str != make_name_for_trans(self.pivot): # lower value
             # If element smaller than pivot is found swap it with the greater element pointed by i
@@ -504,7 +522,7 @@ class make_experiment(QMainWindow):
     def change_experiment_images(self, A_trans, B_trans):
         A = A_trans['image']
         B = B_trans['image']
-
+        
         gui_utils.change_im(self.widget_experiments['exp']['A']['data'], A, resize=self.image_display_size,
                             rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
         self.widget_experiments['exp']['A']['data'].setObjectName(f'{self.data_store.get_reference_image_name()}-{make_name_for_trans(A_trans)}')
