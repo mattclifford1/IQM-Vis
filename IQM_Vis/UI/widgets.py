@@ -6,7 +6,7 @@ from functools import partial
 
 import numpy as np
 from PyQt6.QtWidgets import QPushButton, QLabel, QSlider, QCheckBox, QComboBox, QLineEdit
-from PyQt6.QtGui import QIntValidator
+from PyQt6.QtGui import QIntValidator, QPalette
 from PyQt6.QtCore import Qt, pyqtSlot
 
 import IQM_Vis
@@ -220,7 +220,7 @@ class widgets():
         combobox_pre = QComboBox()
         combobox_pre.addItems(list(self.pre_processing_options.keys()))
         combobox_pre.setCurrentText(self.pre_processing_option)
-        combobox_pre.activated.connect(self.change_pre_processing)
+        combobox_pre.activated.connect(self.enable_settings_button)
         self.widget_settings['image_pre_processing'] = {'widget': combobox_pre, 'label': QLabel('Image Pre Processing:')}
         self.change_pre_processing()   # apply default
 
@@ -240,7 +240,7 @@ class widgets():
         combobox_post = QComboBox()
         combobox_post.addItems(list(self.post_processing_options.keys()))
         combobox_post.setCurrentText(self.post_processing_option)
-        combobox_post.activated.connect(self.change_post_processing)
+        combobox_post.activated.connect(self.enable_settings_button)
         self.widget_settings['image_post_processing'] = {'widget': combobox_post, 'label': QLabel('Image Post Processing:')}
         self.change_post_processing()    # apply default
 
@@ -249,7 +249,7 @@ class widgets():
         line_edit_display.setValidator(QIntValidator())
         line_edit_display.setMaxLength(3)
         line_edit_display.setText(str(self.image_display_size))
-        line_edit_display.textChanged.connect(self.change_display_im_size)
+        line_edit_display.textChanged.connect(self.enable_settings_button)
         self.widget_settings['image_display_size'] = {'widget': line_edit_display, 'label': QLabel('Image Display Size:')}
 
         # graph display size
@@ -257,7 +257,7 @@ class widgets():
         line_edit_graph.setValidator(QIntValidator())
         line_edit_graph.setMaxLength(2)
         line_edit_graph.setText(str(self.graph_size))
-        line_edit_graph.textChanged.connect(self.change_graph_size)
+        line_edit_graph.textChanged.connect(self.enable_settings_button)
         self.widget_settings['graph_display_size'] = {'widget': line_edit_graph, 'label': QLabel('Graph Display Size:')}
 
         # graph/experiment number of steps in the range
@@ -265,7 +265,7 @@ class widgets():
         line_edit_num_steps.setValidator(QIntValidator())
         line_edit_num_steps.setMaxLength(4)
         line_edit_num_steps.setText(str(self.num_steps_range))
-        line_edit_num_steps.textChanged.connect(self.change_num_steps)
+        line_edit_num_steps.textChanged.connect(self.enable_settings_button)
         self.widget_settings['graph_num_steps'] = {'widget': line_edit_num_steps, 'label': QLabel('Graph/Experiment Step Size:')}
 
         # image screen calibration
@@ -273,7 +273,7 @@ class widgets():
         line_edit_rgb.setValidator(QIntValidator())
         line_edit_rgb.setMaxLength(4)
         line_edit_rgb.setText(str(self.rgb_brightness))
-        line_edit_rgb.textChanged.connect(self.change_display_im_rgb_brightness)
+        line_edit_rgb.textChanged.connect(self.enable_settings_button)
         self.widget_settings['image_display_rgb_brightness'] = {
             'widget': line_edit_rgb, 'label': QLabel('RGB Max Brightness:')}
 
@@ -281,13 +281,17 @@ class widgets():
         line_edit_display.setValidator(QIntValidator())
         line_edit_display.setMaxLength(4)
         line_edit_display.setText(str(self.display_brightness))
-        line_edit_display.textChanged.connect(self.change_display_im_display_brightness)
+        line_edit_display.textChanged.connect(self.enable_settings_button)
         self.widget_settings['image_display_display_brightness'] = {
             'widget': line_edit_display, 'label': QLabel('Display Max Brightness:')}
 
         # update settings button
         self.widget_settings['update_button'] = QPushButton('Apply Settings', self)
+        # self.settings_text_colour_original = self.widget_settings['update_button'].palette().color(
+        #     QPalette.ColorRole.Text).name()   # this doesn't work for some reason ...
+        self.settings_text_colour_original = 'black'
         self.widget_settings['update_button'].clicked.connect(self.update_image_settings)
+        self.disable_settings_button()
 
     '''
     ==================== functions to bind to sliders/widgets ====================
@@ -338,24 +342,31 @@ class widgets():
             self.plot_data_lim = self.data_lims['fixed']
         self.redo_plots(calc_range=False)
 
-    def change_pre_processing(self, *args):
-        self.pre_processing_option = self.widget_settings['image_pre_processing']['widget'].currentText()
-        for data_store in self.data_stores:
-            if hasattr(data_store, 'image_pre_processing'):
-                data_store.image_pre_processing = self.pre_processing_options[self.pre_processing_option]
-        self.image_settings_update_plots = True
+    '''
+    images settings apply
+    '''
+    def enable_settings_button(self):
+        self.widget_settings['update_button'].setEnabled(True)
+        if hasattr(self, 'settings_text_colour_original'):
+            self.widget_settings['update_button'].setStyleSheet(
+                f"QPushButton {{color: {self.settings_text_colour_original};}}")
 
-    def change_post_processing(self, *args):
-        self.post_processing_option = self.widget_settings['image_post_processing']['widget'].currentText()
-        for data_store in self.data_stores:
-            if hasattr(data_store, 'image_post_processing'):
-                data_store.image_post_processing = self.post_processing_options[self.post_processing_option]
-        self.image_settings_update_plots = True
-        # self.display_images()
-        # self.redo_plots()
-
+    def disable_settings_button(self):
+        self.widget_settings['update_button'].setEnabled(False)
+        self.widget_settings['update_button'].setStyleSheet(f"QPushButton {{color: gray;}}")
+    
     def update_image_settings(self):
         ''' button to apply new image settings '''
+
+        # apply changes to settings
+        self.change_pre_processing()
+        self.change_post_processing()
+        self.change_display_im_size()
+        self.change_graph_size()
+        self.change_num_steps()
+        self.change_display_im_rgb_brightness()
+        self.change_display_im_display_brightness()
+
         self.change_data(0)  # update the image data settings
         self.display_images()
         if hasattr(self, 'update_UI'):
@@ -367,8 +378,34 @@ class widgets():
                 self.redo_plots()
         self.image_settings_update_plots = False
         self.update_UI = False
+        self.disable_settings_button()
 
-    def change_display_im_size(self, txt):
+    '''
+    image settings setters
+    '''
+
+    def change_pre_processing(self, *args):
+        self.pre_processing_option = self.widget_settings['image_pre_processing']['widget'].currentText(
+        )
+        for data_store in self.data_stores:
+            if hasattr(data_store, 'image_pre_processing'):
+                data_store.image_pre_processing = self.pre_processing_options[
+                    self.pre_processing_option]
+        self.image_settings_update_plots = True
+
+    def change_post_processing(self, *args):
+        self.post_processing_option = self.widget_settings['image_post_processing']['widget'].currentText(
+        )
+        for data_store in self.data_stores:
+            if hasattr(data_store, 'image_post_processing'):
+                data_store.image_post_processing = self.post_processing_options[
+                    self.post_processing_option]
+        self.image_settings_update_plots = True
+        # self.display_images()
+        # self.redo_plots()
+
+    def change_display_im_size(self):
+        txt = self.widget_settings['image_display_size']['widget'].text()
         if txt == '':
             txt = 1
         old_size = self.image_display_size
@@ -381,28 +418,35 @@ class widgets():
         # if old_size < self.image_display_size:
         #     self.setMinimumSize(self.main_widget.sizeHint())
 
-    def change_graph_size(self, txt):
+    def change_graph_size(self):
+        txt = self.widget_settings['graph_display_size']['widget'].text()
         if txt == '':
             txt = 1
         self.graph_size = max(1, int(txt))
         self.update_UI = True
 
-    def change_num_steps(self, txt):
+    def change_num_steps(self):
+        txt = self.widget_settings['graph_num_steps']['widget'].text()
         if txt == '':
             txt = 1
         self.num_steps_range = max(2, int(txt))
         self.update_UI = True
     
-    def change_display_im_rgb_brightness(self, txt):
+    def change_display_im_rgb_brightness(self):
+        txt = self.widget_settings['image_display_rgb_brightness']['widget'].text()
         if txt == '':
             txt = 1
         self.rgb_brightness = max(1, int(txt))
     
-    def change_display_im_display_brightness(self, txt):
+    def change_display_im_display_brightness(self):
+        txt = self.widget_settings['image_display_display_brightness']['widget'].text()
         if txt == '':
             txt = 1
         self.display_brightness = max(1, int(txt))
 
+    '''
+    status bar
+    '''
     def update_progress(self, v):
         self.pbar.setValue(v)
         if v == 0:
@@ -411,6 +455,9 @@ class widgets():
     def update_status_bar(self, v):
         self.status_bar.showMessage(v)
 
+    '''
+    experimetns
+    '''
     def launch_experiment(self):
         if self.checked_transformations != {}:
             self.experiment = IQM_Vis.UI.make_experiment(self.checked_transformations,
