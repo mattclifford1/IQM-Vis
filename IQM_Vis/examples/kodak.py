@@ -15,13 +15,13 @@ def run():
     metrs.pop('1-MS_SSIM')
     data = IQM_Vis.dataset_holder(image_list,
                                   metrs,
-                                #   IQM_Vis.metrics.get_all_metric_images()
+                                  IQM_Vis.metrics.get_all_metric_images()
                                   )
 
 
     IQM_Vis.make_UI(data,
                     IQM_Vis.transformations.get_all_transforms(),
-                    # restrict_options=3
+                    restrict_options=3
                     )
     IQM_Vis.make_UI()
 
