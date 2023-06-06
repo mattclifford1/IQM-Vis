@@ -13,9 +13,11 @@
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/nbsphinx-gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/nbsphinx-code-cells.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/nbsphinx-code-cells.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/nbsphinx-code-cells.css" type="text/css" />
 
   
   
@@ -32,7 +34,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -88,23 +89,23 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">What is an IQM?:</span></p>
+              <p><span class="caption-text">What is an IQM?:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../what-are-IQMs.html">IQMs</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">About IQM-Vis:</span></p>
+<p><span class="caption-text">About IQM-Vis:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../about.html">About IQM-Vis</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<p><span class="caption-text">Getting Started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
+<p><span class="caption-text">Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../Tutorials.html">Tutorials</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
+<p><span class="caption-text">Documentation:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
@@ -180,6 +181,7 @@
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="c1"># Author: Matt Clifford &lt;matt.clifford@bristol.ac.uk&gt;</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cache</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -187,8 +189,26 @@
 <span class="kn">from</span> <span class="nn">IQM_Vis.data_handlers</span> <span class="kn">import</span> <span class="n">base_dataloader</span><span class="p">,</span> <span class="n">base_dataset_loader</span>
 
 
+<div class="viewcode-block" id="cache_metric_call"><a class="viewcode-back" href="../../../IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api.cache_metric_call">[docs]</a><span class="k">class</span> <span class="nc">cache_metric_call</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39; cache metric fucntions that have been calculated already</span>
+<span class="sd">     to do this we need to convert numpy arrays to a hashable object (since arrs are mutable) </span>
+<span class="sd">     to achieve this we convert to a bytes array (input to __call__) then load this from buffer</span>
+<span class="sd">     &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metric</span> <span class="o">=</span> <span class="n">metric</span>
+    
+<div class="viewcode-block" id="cache_metric_call.__call__"><a class="viewcode-back" href="../../../IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api.cache_metric_call.__call__">[docs]</a>    <span class="nd">@cache</span>
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">trans</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># expect a hashable bytes array tuple as input with the data type and shape</span>
+        <span class="c1">#  N.B. we need to copy the array since from buffer gives a read only array since</span>
+        <span class="c1">#       it is a view of a bytes array (immutable)</span>
+        <span class="n">ref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">bytes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">ref</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">trans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">trans</span><span class="o">.</span><span class="n">bytes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">trans</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">trans</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">trans</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+
+
 <div class="viewcode-block" id="dataset_holder"><a class="viewcode-back" href="../../../IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api.dataset_holder">[docs]</a><span class="k">class</span> <span class="nc">dataset_holder</span><span class="p">(</span><span class="n">base_dataset_loader</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Stores images and metrics to communicate with the UI via the IQM-Vis data</span>
+    <span class="sd">&#39;&#39;&#39;Stores images and metrics to communicate with the UI via the IQM-Vis data</span>
 <span class="sd">       API.</span>
 
 <span class="sd">       Args:</span>
@@ -218,6 +238,7 @@
                        <span class="n">human_exp_csv</span><span class="o">=</span><span class="kc">None</span>    <span class="c1"># csv for where the human experiments file is</span>
                        <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image_storer</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bytes_arrays</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;arr&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;bytes&#39;</span><span class="p">,</span> <span class="s1">&#39;dtype&#39;</span><span class="p">,</span> <span class="s1">&#39;shape&#39;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image_loader</span> <span class="o">=</span> <span class="n">image_loader</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image_pre_processing</span> <span class="o">=</span> <span class="n">image_pre_processing</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">load_image_list</span><span class="p">(</span><span class="n">image_list</span><span class="p">)</span>
@@ -225,8 +246,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">image_list_to_transform</span> <span class="o">=</span> <span class="n">image_list_to_transform</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_load_image_data</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>   <span class="c1"># load the first transform image</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span> <span class="o">=</span> <span class="n">metrics</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">cache_metric_call</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">[</span><span class="n">m</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metric_images</span> <span class="o">=</span> <span class="n">metric_images</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image_post_processing</span> <span class="o">=</span> <span class="n">image_post_processing</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_post_processing_hash</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">human_exp_csv</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">human_exp_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">human_exp_csv</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
@@ -245,16 +269,19 @@
 
     <span class="k">def</span> <span class="nf">_load_image_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
         <span class="c1"># reference image</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_post_processing_hash</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="n">image_name_ref</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_file</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">image_data_ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_loader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_file</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_pre_processing</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">image_data_ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_pre_processing</span><span class="p">(</span><span class="n">image_data_ref</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image_reference</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_storer</span><span class="p">(</span><span class="n">image_name_ref</span><span class="p">,</span> <span class="n">image_data_ref</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ref_bytes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bytes_arrays</span><span class="p">(</span>
+            <span class="n">image_data_ref</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span> <span class="n">image_data_ref</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">image_data_ref</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
         <span class="c1"># image to transform</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_file</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_list_to_transform</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">image_to_transform</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_storer</span><span class="p">(</span> <span class="n">image_name_ref</span><span class="p">,</span> <span class="n">image_data_ref</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image_to_transform</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_storer</span><span class="p">(</span><span class="n">image_name_ref</span><span class="p">,</span> <span class="n">image_data_ref</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">image_name_trans</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_list_to_transform</span><span class="p">[</span><span class="n">i</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">image_data_trans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_loader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_list_to_transform</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
@@ -279,10 +306,20 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_reference</span><span class="o">.</span><span class="n">name</span></div>
 
 <div class="viewcode-block" id="dataset_holder.get_reference_image"><a class="viewcode-back" href="../../../IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api.dataset_holder.get_reference_image">[docs]</a>    <span class="k">def</span> <span class="nf">get_reference_image</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">im</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_reference</span><span class="o">.</span><span class="n">data</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_post_processing</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">im</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_post_processing</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">im</span></div>
+        <span class="k">if</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_post_processing</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_post_processing_hash</span><span class="p">:</span>
+            <span class="c1"># need to post process ref image as either first call or post processing has changed</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image_reference_post_processed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_reference</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_post_processing</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">image_reference_post_processed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_post_processing</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">image_reference_post_processed</span><span class="p">)</span>
+            <span class="c1"># cache the hash so we can test if the post processing changes</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image_post_processing_hash</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_post_processing</span><span class="p">)</span>
+            <span class="c1"># save the bytes array </span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ref_bytes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bytes_arrays</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">image_reference_post_processed</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span> 
+                <span class="bp">self</span><span class="o">.</span><span class="n">image_reference_post_processed</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> 
+                <span class="bp">self</span><span class="o">.</span><span class="n">image_reference_post_processed</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_reference_post_processed</span></div>
 
 <div class="viewcode-block" id="dataset_holder.get_image_to_transform_name"><a class="viewcode-back" href="../../../IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api.dataset_holder.get_image_to_transform_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_image_to_transform_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_to_transform</span><span class="o">.</span><span class="n">name</span></div>
@@ -291,10 +328,15 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_to_transform</span><span class="o">.</span><span class="n">data</span></div>
 
 <div class="viewcode-block" id="dataset_holder.get_metrics"><a class="viewcode-back" href="../../../IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api.dataset_holder.get_metrics">[docs]</a>    <span class="k">def</span> <span class="nf">get_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transformed_image</span><span class="p">,</span> <span class="n">metrics_to_use</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># convert array to hashable so we can cache already calculated</span>
+        <span class="n">trans_bytes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bytes_arrays</span><span class="p">(</span>
+            <span class="n">transformed_image</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span> <span class="n">transformed_image</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">transformed_image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="c1"># get metrics</span>
         <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">metrics_to_use</span> <span class="ow">or</span> <span class="n">metrics_to_use</span> <span class="o">==</span> <span class="s1">&#39;all&#39;</span><span class="p">:</span>
-                <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">[</span><span class="n">metric</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">get_reference_image</span><span class="p">(),</span> <span class="n">transformed_image</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">[</span><span class="n">metric</span><span class="p">](</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">ref_bytes</span><span class="p">,</span> <span class="n">trans_bytes</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">results</span></div>
 
 <div class="viewcode-block" id="dataset_holder.get_metric_images"><a class="viewcode-back" href="../../../IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api.dataset_holder.get_metric_images">[docs]</a>    <span class="k">def</span> <span class="nf">get_metric_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transformed_image</span><span class="p">,</span> <span class="n">metrics_to_use</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>

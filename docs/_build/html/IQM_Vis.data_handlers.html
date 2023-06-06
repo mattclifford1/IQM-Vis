@@ -4,7 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
@@ -14,8 +14,6 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
 
   
@@ -33,7 +31,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -89,23 +86,23 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">What is an IQM?:</span></p>
+              <p><span class="caption-text">What is an IQM?:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="what-are-IQMs.html">IQMs</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">About IQM-Vis:</span></p>
+<p><span class="caption-text">About IQM-Vis:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="about.html">About IQM-Vis</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<p><span class="caption-text">Getting Started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
+<p><span class="caption-text">Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Tutorials.html">Tutorials</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
+<p><span class="caption-text">Documentation:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
@@ -186,13 +183,28 @@
 <p>generic image and metric data class constructor
 both use the same image for reference and transformed</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api.dataset_holder">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.data_handlers.data_api.</span></span><span class="sig-name descname"><span class="pre">dataset_holder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_list:</span> <span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_images:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_loader=&lt;function</span> <span class="pre">load_image&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_pre_processing=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_post_processing=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_list_to_transform=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">human_exp_csv=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.data_handlers.data_api.cache_metric_call">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">IQM_Vis.data_handlers.data_api.</span></code><code class="sig-name descname"><span class="pre">cache_metric_call</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#cache_metric_call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.cache_metric_call" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>cache metric fucntions that have been calculated already
+to do this we need to convert numpy arrays to a hashable object (since arrs are mutable)
+to achieve this we convert to a bytes array (input to __call__) then load this from buffer</p>
+<dl class="py method">
+<dt id="IQM_Vis.data_handlers.data_api.cache_metric_call.__call__">
+<code class="sig-name descname"><span class="pre">__call__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trans</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#cache_metric_call.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.cache_metric_call.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call self as a function.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="IQM_Vis.data_handlers.data_api.dataset_holder">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">IQM_Vis.data_handlers.data_api.</span></code><code class="sig-name descname"><span class="pre">dataset_holder</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">image_list:</span> <span class="pre">list</span></em>, <em class="sig-param"><span class="pre">metrics:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">{}</span></em>, <em class="sig-param"><span class="pre">metric_images:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">{}</span></em>, <em class="sig-param"><span class="pre">image_loader=&lt;function</span> <span class="pre">load_image&gt;</span></em>, <em class="sig-param"><span class="pre">image_pre_processing=None</span></em>, <em class="sig-param"><span class="pre">image_post_processing=None</span></em>, <em class="sig-param"><span class="pre">image_list_to_transform=None</span></em>, <em class="sig-param"><span class="pre">human_exp_csv=None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataset_loader" title="IQM_Vis.data_handlers.data_api_abstract.base_dataset_loader"><code class="xref py py-class docutils literal notranslate"><span class="pre">IQM_Vis.data_handlers.data_api_abstract.base_dataset_loader</span></code></a></p>
 <p>Stores images and metrics to communicate with the UI via the IQM-Vis data
 API.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>image_list</strong> (<em>list</em>) – list of image file paths</p></li>
 <li><p><strong>metrics</strong> (<em>dict</em>) – dictionary with keys of the metric names and values
@@ -213,38 +225,38 @@ the reference image. (Defaults to None)</p></li>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api.dataset_holder.get_image_to_transform">
-<span class="sig-name descname"><span class="pre">get_image_to_transform</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder.get_image_to_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder.get_image_to_transform" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.data_handlers.data_api.dataset_holder.get_image_to_transform">
+<code class="sig-name descname"><span class="pre">get_image_to_transform</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder.get_image_to_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder.get_image_to_transform" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api.dataset_holder.get_image_to_transform_name">
-<span class="sig-name descname"><span class="pre">get_image_to_transform_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder.get_image_to_transform_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder.get_image_to_transform_name" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.data_handlers.data_api.dataset_holder.get_image_to_transform_name">
+<code class="sig-name descname"><span class="pre">get_image_to_transform_name</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder.get_image_to_transform_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder.get_image_to_transform_name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api.dataset_holder.get_metric_images">
-<span class="sig-name descname"><span class="pre">get_metric_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transformed_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_to_use</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder.get_metric_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder.get_metric_images" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.data_handlers.data_api.dataset_holder.get_metric_images">
+<code class="sig-name descname"><span class="pre">get_metric_images</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transformed_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_to_use</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder.get_metric_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder.get_metric_images" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api.dataset_holder.get_metrics">
-<span class="sig-name descname"><span class="pre">get_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transformed_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_to_use</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder.get_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder.get_metrics" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.data_handlers.data_api.dataset_holder.get_metrics">
+<code class="sig-name descname"><span class="pre">get_metrics</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transformed_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_to_use</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder.get_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder.get_metrics" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api.dataset_holder.get_reference_image">
-<span class="sig-name descname"><span class="pre">get_reference_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder.get_reference_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder.get_reference_image" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.data_handlers.data_api.dataset_holder.get_reference_image">
+<code class="sig-name descname"><span class="pre">get_reference_image</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder.get_reference_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder.get_reference_image" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api.dataset_holder.get_reference_image_name">
-<span class="sig-name descname"><span class="pre">get_reference_image_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder.get_reference_image_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder.get_reference_image_name" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.data_handlers.data_api.dataset_holder.get_reference_image_name">
+<code class="sig-name descname"><span class="pre">get_reference_image_name</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder.get_reference_image_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder.get_reference_image_name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api.dataset_holder.load_image_list">
-<span class="sig-name descname"><span class="pre">load_image_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder.load_image_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder.load_image_list" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.data_handlers.data_api.dataset_holder.load_image_list">
+<code class="sig-name descname"><span class="pre">load_image_list</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder.load_image_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder.load_image_list" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -254,54 +266,54 @@ the reference image. (Defaults to None)</p></li>
 <span id="iqm-vis-data-handlers-data-api-abstract-module"></span><h2>IQM_Vis.data_handlers.data_api_abstract module<a class="headerlink" href="#module-IQM_Vis.data_handlers.data_api_abstract" title="Permalink to this headline">¶</a></h2>
 <p>blueprint for data loader API</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api_abstract.base_dataloader">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.data_handlers.data_api_abstract.</span></span><span class="sig-name descname"><span class="pre">base_dataloader</span></span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api_abstract.html#base_dataloader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.data_handlers.data_api_abstract.base_dataloader">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">IQM_Vis.data_handlers.data_api_abstract.</span></code><code class="sig-name descname"><span class="pre">base_dataloader</span></code><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api_abstract.html#base_dataloader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_image_to_transform">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_image_to_transform</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api_abstract.html#base_dataloader.get_image_to_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_image_to_transform" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_image_to_transform">
+<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">get_image_to_transform</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api_abstract.html#base_dataloader.get_image_to_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_image_to_transform" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_image_to_transform_name">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_image_to_transform_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api_abstract.html#base_dataloader.get_image_to_transform_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_image_to_transform_name" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_image_to_transform_name">
+<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">get_image_to_transform_name</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api_abstract.html#base_dataloader.get_image_to_transform_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_image_to_transform_name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_metric_images">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_metric_images</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api_abstract.html#base_dataloader.get_metric_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_metric_images" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_metric_images">
+<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">get_metric_images</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api_abstract.html#base_dataloader.get_metric_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_metric_images" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_metrics">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api_abstract.html#base_dataloader.get_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_metrics" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_metrics">
+<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">get_metrics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api_abstract.html#base_dataloader.get_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_metrics" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_reference_image">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_reference_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api_abstract.html#base_dataloader.get_reference_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_reference_image" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_reference_image">
+<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">get_reference_image</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api_abstract.html#base_dataloader.get_reference_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_reference_image" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_reference_image_name">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_reference_image_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api_abstract.html#base_dataloader.get_reference_image_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_reference_image_name" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_reference_image_name">
+<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">get_reference_image_name</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api_abstract.html#base_dataloader.get_reference_image_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_reference_image_name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api_abstract.base_dataloader.metric_images">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">metric_images</span></span><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.metric_images" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="IQM_Vis.data_handlers.data_api_abstract.base_dataloader.metric_images">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">metric_images</span></code><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.metric_images" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api_abstract.base_dataloader.metrics">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.metrics" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="IQM_Vis.data_handlers.data_api_abstract.base_dataloader.metrics">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">metrics</span></code><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.metrics" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api_abstract.base_dataset_loader">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.data_handlers.data_api_abstract.</span></span><span class="sig-name descname"><span class="pre">base_dataset_loader</span></span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api_abstract.html#base_dataset_loader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataset_loader" title="Permalink to this definition">¶</a></dt>
+<dt id="IQM_Vis.data_handlers.data_api_abstract.base_dataset_loader">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">IQM_Vis.data_handlers.data_api_abstract.</span></code><code class="sig-name descname"><span class="pre">base_dataset_loader</span></code><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api_abstract.html#base_dataset_loader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataset_loader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader" title="IQM_Vis.data_handlers.data_api_abstract.base_dataloader"><code class="xref py py-class docutils literal notranslate"><span class="pre">IQM_Vis.data_handlers.data_api_abstract.base_dataloader</span></code></a></p>
 </dd></dl>
 

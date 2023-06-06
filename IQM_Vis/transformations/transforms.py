@@ -88,6 +88,22 @@ def brightness(image, value=0):
         return image
     return np.clip(image + value, 0, 1)
 
+def Gaussian_noise(image, std=0):
+    '''Add Gaussian noise to image. Image is clipped to the range (0, 1)
+
+    Args:
+        image (np.array): image to have Gaussian noise added
+        std (float): Standard deviation of the Gaussian noise.
+                         (Defaults to 0)
+
+    Returns:
+        image (np.array): adjusted image
+    '''
+    if std == 0:
+        return image
+    noise = np.random.normal(loc=0, scale=std, size=image.shape)
+    return np.clip(image + noise, 0, 1)
+
 def _translate_image(image, x_shift=0, y_shift=0):
     '''Translate image vertically
 

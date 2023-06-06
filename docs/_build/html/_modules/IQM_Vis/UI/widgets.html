@@ -13,9 +13,11 @@
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/nbsphinx-gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/nbsphinx-code-cells.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/nbsphinx-code-cells.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/nbsphinx-code-cells.css" type="text/css" />
 
   
   
@@ -32,7 +34,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -88,23 +89,23 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">What is an IQM?:</span></p>
+              <p><span class="caption-text">What is an IQM?:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../what-are-IQMs.html">IQMs</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">About IQM-Vis:</span></p>
+<p><span class="caption-text">About IQM-Vis:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../about.html">About IQM-Vis</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<p><span class="caption-text">Getting Started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
+<p><span class="caption-text">Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../Tutorials.html">Tutorials</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
+<p><span class="caption-text">Documentation:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
@@ -182,7 +183,7 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">PyQt6.QtWidgets</span> <span class="kn">import</span> <span class="n">QPushButton</span><span class="p">,</span> <span class="n">QLabel</span><span class="p">,</span> <span class="n">QSlider</span><span class="p">,</span> <span class="n">QCheckBox</span><span class="p">,</span> <span class="n">QComboBox</span><span class="p">,</span> <span class="n">QLineEdit</span>
-<span class="kn">from</span> <span class="nn">PyQt6.QtGui</span> <span class="kn">import</span> <span class="n">QIntValidator</span>
+<span class="kn">from</span> <span class="nn">PyQt6.QtGui</span> <span class="kn">import</span> <span class="n">QIntValidator</span><span class="p">,</span> <span class="n">QPalette</span>
 <span class="kn">from</span> <span class="nn">PyQt6.QtCore</span> <span class="kn">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">pyqtSlot</span>
 
 <span class="kn">import</span> <span class="nn">IQM_Vis</span>
@@ -192,7 +193,7 @@
 <span class="c1"># sub class used by IQM_Vis.main.make_app to initialise widgets and general UI functions for widgets</span>
 <div class="viewcode-block" id="widgets"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets">[docs]</a><span class="k">class</span> <span class="nc">widgets</span><span class="p">():</span>
 <div class="viewcode-block" id="widgets.init_widgets"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.init_widgets">[docs]</a>    <span class="k">def</span> <span class="nf">init_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        create all the widgets we need and init params</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_init_widgets</span><span class="p">()</span>
@@ -200,7 +201,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_init_image_settings</span><span class="p">()</span></div>
 
     <span class="k">def</span> <span class="nf">_init_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        create all the widgets we need and init params</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="c1"># first setup the slider data</span>
@@ -211,7 +212,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">data_store</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">):</span>   <span class="c1"># create each row of the widgets</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;images&#39;</span><span class="p">:{},</span> <span class="s1">&#39;metrics&#39;</span><span class="p">:{},</span> <span class="s1">&#39;metric_images&#39;</span><span class="p">:{}}</span>
-<span class="w">            </span><span class="sd">&#39;&#39;&#39;image and transformed image&#39;&#39;&#39;</span>
+            <span class="sd">&#39;&#39;&#39;image and transformed image&#39;&#39;&#39;</span>
             <span class="k">for</span> <span class="n">image_name</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;original&#39;</span><span class="p">,</span> <span class="s1">&#39;transformed&#39;</span><span class="p">]:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;images&#39;</span><span class="p">][</span><span class="n">image_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
                 <span class="c1"># image widget</span>
@@ -222,7 +223,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;images&#39;</span><span class="p">][</span><span class="n">image_name</span><span class="p">][</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignmentFlag</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;images&#39;</span><span class="p">][</span><span class="n">image_name</span><span class="p">][</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">image_name</span><span class="p">)</span>
 
-<span class="w">            </span><span class="sd">&#39;&#39;&#39;metric images&#39;&#39;&#39;</span>
+            <span class="sd">&#39;&#39;&#39;metric images&#39;&#39;&#39;</span>
             <span class="k">for</span> <span class="n">metric_image</span> <span class="ow">in</span> <span class="n">data_store</span><span class="o">.</span><span class="n">metric_images</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">metric_image</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked_metric_images</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metric_images&#39;</span><span class="p">][</span><span class="n">metric_image</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
@@ -232,7 +233,7 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metric_images&#39;</span><span class="p">][</span><span class="n">metric_image</span><span class="p">][</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metric_images&#39;</span><span class="p">][</span><span class="n">metric_image</span><span class="p">][</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignmentFlag</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
 
-<span class="w">            </span><span class="sd">&#39;&#39;&#39;metrics graphs&#39;&#39;&#39;</span>
+            <span class="sd">&#39;&#39;&#39;metrics graphs&#39;&#39;&#39;</span>
             <span class="n">im_pair_name</span> <span class="o">=</span> <span class="n">gui_utils</span><span class="o">.</span><span class="n">get_image_pair_name</span><span class="p">(</span><span class="n">data_store</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">][</span><span class="s1">&#39;info&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">][</span><span class="s1">&#39;info&#39;</span><span class="p">][</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -267,7 +268,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">][</span><span class="s1">&#39;correlation&#39;</span><span class="p">][</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s1">&#39;Human scores versus IQMs.&#39;</span><span class="p">)</span>
 
 
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;buttons&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;buttons&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_controls</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;button&#39;</span><span class="p">:</span> <span class="p">{},</span> <span class="s1">&#39;slider&#39;</span><span class="p">:</span> <span class="p">{},</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="p">{},</span> <span class="s1">&#39;check_box&#39;</span><span class="p">:</span> <span class="p">{}}</span>
         
         <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics_avg_graph</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric_range_graph</span><span class="p">):</span>
@@ -308,7 +309,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_controls</span><span class="p">[</span><span class="s1">&#39;button&#39;</span><span class="p">][</span><span class="s1">&#39;launch_exp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">launch_experiment</span><span class="p">)</span>
 
 
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;sliders&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;sliders&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">params_from_sliders</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">param_group</span><span class="p">,</span> <span class="n">slider_group</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">params_from_sliders</span><span class="p">[</span><span class="n">param_group</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
@@ -338,11 +339,11 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">widget_controls</span><span class="p">[</span><span class="s1">&#39;slider&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignmentFlag</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">widget_controls</span><span class="p">[</span><span class="s1">&#39;slider&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params_from_sliders</span><span class="p">[</span><span class="s1">&#39;transforms&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">]))</span>
 
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    setup/helper functions</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="nf">_init_sliders</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sliders_dict</span><span class="p">,</span> <span class="n">info_dict</span><span class="p">,</span> <span class="n">param_group</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        generic initialiser of sliders (will change the dicts input rather than returning - like C++ pointers &amp;)</span>
 <span class="sd">            sliders_dict: holds the slider widgets</span>
 <span class="sd">            info_dict: info to initialise the sliders</span>
@@ -396,13 +397,15 @@
         <span class="n">combobox_pre</span> <span class="o">=</span> <span class="n">QComboBox</span><span class="p">()</span>
         <span class="n">combobox_pre</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_processing_options</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
         <span class="n">combobox_pre</span><span class="o">.</span><span class="n">setCurrentText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_processing_option</span><span class="p">)</span>
-        <span class="n">combobox_pre</span><span class="o">.</span><span class="n">activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">change_pre_processing</span><span class="p">)</span>
+        <span class="n">combobox_pre</span><span class="o">.</span><span class="n">activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">enable_settings_button</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;image_pre_processing&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;widget&#39;</span><span class="p">:</span> <span class="n">combobox_pre</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">QLabel</span><span class="p">(</span><span class="s1">&#39;Image Pre Processing:&#39;</span><span class="p">)}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">change_pre_processing</span><span class="p">()</span>   <span class="c1"># apply default</span>
 
         <span class="c1"># post processing</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">post_processing_options</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;None&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-                                        <span class="s1">&#39;Crop Centre&#39;</span><span class="p">:</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">image_utils</span><span class="o">.</span><span class="n">crop_centre</span><span class="p">}</span>
+                                        <span class="s1">&#39;Crop Centre&#39;</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">IQM_Vis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">image_utils</span><span class="o">.</span><span class="n">crop_centre</span><span class="p">,</span> <span class="n">scale_factor</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">keep_size</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                                        <span class="s1">&#39;Crop Centre (No Resize)&#39;</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">IQM_Vis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">image_utils</span><span class="o">.</span><span class="n">crop_centre</span><span class="p">,</span> <span class="n">scale_factor</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">keep_size</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+                                        <span class="p">}</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;post_processing_option&#39;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">post_processing_option</span> <span class="o">=</span> <span class="s1">&#39;None&#39;</span>  <span class="c1"># init_val</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">data_store</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">):</span>
@@ -414,7 +417,7 @@
         <span class="n">combobox_post</span> <span class="o">=</span> <span class="n">QComboBox</span><span class="p">()</span>
         <span class="n">combobox_post</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">post_processing_options</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
         <span class="n">combobox_post</span><span class="o">.</span><span class="n">setCurrentText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">post_processing_option</span><span class="p">)</span>
-        <span class="n">combobox_post</span><span class="o">.</span><span class="n">activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">change_post_processing</span><span class="p">)</span>
+        <span class="n">combobox_post</span><span class="o">.</span><span class="n">activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">enable_settings_button</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;image_post_processing&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;widget&#39;</span><span class="p">:</span> <span class="n">combobox_post</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">QLabel</span><span class="p">(</span><span class="s1">&#39;Image Post Processing:&#39;</span><span class="p">)}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">change_post_processing</span><span class="p">()</span>    <span class="c1"># apply default</span>
 
@@ -423,7 +426,7 @@
         <span class="n">line_edit_display</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">QIntValidator</span><span class="p">())</span>
         <span class="n">line_edit_display</span><span class="o">.</span><span class="n">setMaxLength</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
         <span class="n">line_edit_display</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_display_size</span><span class="p">))</span>
-        <span class="n">line_edit_display</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">change_display_im_size</span><span class="p">)</span>
+        <span class="n">line_edit_display</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">enable_settings_button</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;image_display_size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;widget&#39;</span><span class="p">:</span> <span class="n">line_edit_display</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">QLabel</span><span class="p">(</span><span class="s1">&#39;Image Display Size:&#39;</span><span class="p">)}</span>
 
         <span class="c1"># graph display size</span>
@@ -431,7 +434,7 @@
         <span class="n">line_edit_graph</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">QIntValidator</span><span class="p">())</span>
         <span class="n">line_edit_graph</span><span class="o">.</span><span class="n">setMaxLength</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">line_edit_graph</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph_size</span><span class="p">))</span>
-        <span class="n">line_edit_graph</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">change_graph_size</span><span class="p">)</span>
+        <span class="n">line_edit_graph</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">enable_settings_button</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;graph_display_size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;widget&#39;</span><span class="p">:</span> <span class="n">line_edit_graph</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">QLabel</span><span class="p">(</span><span class="s1">&#39;Graph Display Size:&#39;</span><span class="p">)}</span>
 
         <span class="c1"># graph/experiment number of steps in the range</span>
@@ -439,7 +442,7 @@
         <span class="n">line_edit_num_steps</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">QIntValidator</span><span class="p">())</span>
         <span class="n">line_edit_num_steps</span><span class="o">.</span><span class="n">setMaxLength</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
         <span class="n">line_edit_num_steps</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_steps_range</span><span class="p">))</span>
-        <span class="n">line_edit_num_steps</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">change_num_steps</span><span class="p">)</span>
+        <span class="n">line_edit_num_steps</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">enable_settings_button</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;graph_num_steps&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;widget&#39;</span><span class="p">:</span> <span class="n">line_edit_num_steps</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">QLabel</span><span class="p">(</span><span class="s1">&#39;Graph/Experiment Step Size:&#39;</span><span class="p">)}</span>
 
         <span class="c1"># image screen calibration</span>
@@ -447,7 +450,7 @@
         <span class="n">line_edit_rgb</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">QIntValidator</span><span class="p">())</span>
         <span class="n">line_edit_rgb</span><span class="o">.</span><span class="n">setMaxLength</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
         <span class="n">line_edit_rgb</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rgb_brightness</span><span class="p">))</span>
-        <span class="n">line_edit_rgb</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">change_display_im_rgb_brightness</span><span class="p">)</span>
+        <span class="n">line_edit_rgb</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">enable_settings_button</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;image_display_rgb_brightness&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;widget&#39;</span><span class="p">:</span> <span class="n">line_edit_rgb</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">QLabel</span><span class="p">(</span><span class="s1">&#39;RGB Max Brightness:&#39;</span><span class="p">)}</span>
 
@@ -455,15 +458,19 @@
         <span class="n">line_edit_display</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">QIntValidator</span><span class="p">())</span>
         <span class="n">line_edit_display</span><span class="o">.</span><span class="n">setMaxLength</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
         <span class="n">line_edit_display</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">display_brightness</span><span class="p">))</span>
-        <span class="n">line_edit_display</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">change_display_im_display_brightness</span><span class="p">)</span>
+        <span class="n">line_edit_display</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">enable_settings_button</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;image_display_display_brightness&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;widget&#39;</span><span class="p">:</span> <span class="n">line_edit_display</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">QLabel</span><span class="p">(</span><span class="s1">&#39;Display Max Brightness:&#39;</span><span class="p">)}</span>
 
         <span class="c1"># update settings button</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;update_button&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s1">&#39;Apply Settings&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="c1"># self.settings_text_colour_original = self.widget_settings[&#39;update_button&#39;].palette().color(</span>
+        <span class="c1">#     QPalette.ColorRole.Text).name()   # this doesn&#39;t work for some reason ...</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_text_colour_original</span> <span class="o">=</span> <span class="s1">&#39;black&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;update_button&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_image_settings</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">disable_settings_button</span><span class="p">()</span>
 
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    ==================== functions to bind to sliders/widgets ====================</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="c1"># sliders value changes</span>
@@ -487,8 +494,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">redo_plots</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="widgets.reset_sliders"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.reset_sliders">[docs]</a>    <span class="k">def</span> <span class="nf">reset_sliders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_images</span> <span class="o">=</span> <span class="kc">False</span>   <span class="c1"># dont calc any images/metrics when updating sliders now is slow</span>
         <span class="k">for</span> <span class="n">param_group</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">reset_slider_group</span><span class="p">(</span><span class="n">param_group</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_images</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># make sure to return to calc images/metrics</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">display_images</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">redo_plots</span><span class="p">()</span></div>
 
@@ -510,24 +519,31 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">plot_data_lim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_lims</span><span class="p">[</span><span class="s1">&#39;fixed&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">redo_plots</span><span class="p">(</span><span class="n">calc_range</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="widgets.change_pre_processing"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.change_pre_processing">[docs]</a>    <span class="k">def</span> <span class="nf">change_pre_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pre_processing_option</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;image_pre_processing&#39;</span><span class="p">][</span><span class="s1">&#39;widget&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">data_store</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">data_store</span><span class="p">,</span> <span class="s1">&#39;image_pre_processing&#39;</span><span class="p">):</span>
-                <span class="n">data_store</span><span class="o">.</span><span class="n">image_pre_processing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_processing_options</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_processing_option</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">image_settings_update_plots</span> <span class="o">=</span> <span class="kc">True</span></div>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    images settings apply</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+<div class="viewcode-block" id="widgets.enable_settings_button"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.enable_settings_button">[docs]</a>    <span class="k">def</span> <span class="nf">enable_settings_button</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;update_button&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;settings_text_colour_original&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;update_button&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;QPushButton </span><span class="se">{{</span><span class="s2">color: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">settings_text_colour_original</span><span class="si">}</span><span class="s2">;</span><span class="se">}}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="widgets.change_post_processing"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.change_post_processing">[docs]</a>    <span class="k">def</span> <span class="nf">change_post_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">post_processing_option</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;image_post_processing&#39;</span><span class="p">][</span><span class="s1">&#39;widget&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">data_store</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">data_store</span><span class="p">,</span> <span class="s1">&#39;image_post_processing&#39;</span><span class="p">):</span>
-                <span class="n">data_store</span><span class="o">.</span><span class="n">image_post_processing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_processing_options</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">post_processing_option</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">image_settings_update_plots</span> <span class="o">=</span> <span class="kc">True</span></div>
-        <span class="c1"># self.display_images()</span>
-        <span class="c1"># self.redo_plots()</span>
-
+<div class="viewcode-block" id="widgets.disable_settings_button"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.disable_settings_button">[docs]</a>    <span class="k">def</span> <span class="nf">disable_settings_button</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;update_button&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;update_button&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;QPushButton </span><span class="se">{{</span><span class="s2">color: gray;</span><span class="se">}}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+    
 <div class="viewcode-block" id="widgets.update_image_settings"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.update_image_settings">[docs]</a>    <span class="k">def</span> <span class="nf">update_image_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39; button to apply new image settings &#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39; button to apply new image settings &#39;&#39;&#39;</span>
+
+        <span class="c1"># apply changes to settings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">change_pre_processing</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">change_post_processing</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">change_display_im_size</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">change_graph_size</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">change_num_steps</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">change_display_im_rgb_brightness</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">change_display_im_display_brightness</span><span class="p">()</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">change_data</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># update the image data settings</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">display_images</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;update_UI&#39;</span><span class="p">):</span>
@@ -538,9 +554,35 @@
                 <span class="c1"># only redo the graphs if nessesary</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">redo_plots</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image_settings_update_plots</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">update_UI</span> <span class="o">=</span> <span class="kc">False</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_UI</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">disable_settings_button</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="widgets.change_display_im_size"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.change_display_im_size">[docs]</a>    <span class="k">def</span> <span class="nf">change_display_im_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">txt</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    image settings setters</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="widgets.change_pre_processing"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.change_pre_processing">[docs]</a>    <span class="k">def</span> <span class="nf">change_pre_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pre_processing_option</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;image_pre_processing&#39;</span><span class="p">][</span><span class="s1">&#39;widget&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">currentText</span><span class="p">(</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">data_store</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">data_store</span><span class="p">,</span> <span class="s1">&#39;image_pre_processing&#39;</span><span class="p">):</span>
+                <span class="n">data_store</span><span class="o">.</span><span class="n">image_pre_processing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_processing_options</span><span class="p">[</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">pre_processing_option</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_settings_update_plots</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="widgets.change_post_processing"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.change_post_processing">[docs]</a>    <span class="k">def</span> <span class="nf">change_post_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">post_processing_option</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;image_post_processing&#39;</span><span class="p">][</span><span class="s1">&#39;widget&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">currentText</span><span class="p">(</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">data_store</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">data_store</span><span class="p">,</span> <span class="s1">&#39;image_post_processing&#39;</span><span class="p">):</span>
+                <span class="n">data_store</span><span class="o">.</span><span class="n">image_post_processing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_processing_options</span><span class="p">[</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">post_processing_option</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_settings_update_plots</span> <span class="o">=</span> <span class="kc">True</span></div>
+        <span class="c1"># self.display_images()</span>
+        <span class="c1"># self.redo_plots()</span>
+
+<div class="viewcode-block" id="widgets.change_display_im_size"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.change_display_im_size">[docs]</a>    <span class="k">def</span> <span class="nf">change_display_im_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;image_display_size&#39;</span><span class="p">][</span><span class="s1">&#39;widget&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">txt</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
             <span class="n">txt</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="n">old_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_display_size</span>
@@ -553,28 +595,35 @@
         <span class="c1"># if old_size &lt; self.image_display_size:</span>
         <span class="c1">#     self.setMinimumSize(self.main_widget.sizeHint())</span>
 
-<div class="viewcode-block" id="widgets.change_graph_size"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.change_graph_size">[docs]</a>    <span class="k">def</span> <span class="nf">change_graph_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">txt</span><span class="p">):</span>
+<div class="viewcode-block" id="widgets.change_graph_size"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.change_graph_size">[docs]</a>    <span class="k">def</span> <span class="nf">change_graph_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;graph_display_size&#39;</span><span class="p">][</span><span class="s1">&#39;widget&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">txt</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
             <span class="n">txt</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">graph_size</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">txt</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_UI</span> <span class="o">=</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="widgets.change_num_steps"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.change_num_steps">[docs]</a>    <span class="k">def</span> <span class="nf">change_num_steps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">txt</span><span class="p">):</span>
+<div class="viewcode-block" id="widgets.change_num_steps"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.change_num_steps">[docs]</a>    <span class="k">def</span> <span class="nf">change_num_steps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;graph_num_steps&#39;</span><span class="p">][</span><span class="s1">&#39;widget&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">txt</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
             <span class="n">txt</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_steps_range</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">txt</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_UI</span> <span class="o">=</span> <span class="kc">True</span></div>
     
-<div class="viewcode-block" id="widgets.change_display_im_rgb_brightness"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.change_display_im_rgb_brightness">[docs]</a>    <span class="k">def</span> <span class="nf">change_display_im_rgb_brightness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">txt</span><span class="p">):</span>
+<div class="viewcode-block" id="widgets.change_display_im_rgb_brightness"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.change_display_im_rgb_brightness">[docs]</a>    <span class="k">def</span> <span class="nf">change_display_im_rgb_brightness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;image_display_rgb_brightness&#39;</span><span class="p">][</span><span class="s1">&#39;widget&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">txt</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
             <span class="n">txt</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rgb_brightness</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">txt</span><span class="p">))</span></div>
     
-<div class="viewcode-block" id="widgets.change_display_im_display_brightness"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.change_display_im_display_brightness">[docs]</a>    <span class="k">def</span> <span class="nf">change_display_im_display_brightness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">txt</span><span class="p">):</span>
+<div class="viewcode-block" id="widgets.change_display_im_display_brightness"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.change_display_im_display_brightness">[docs]</a>    <span class="k">def</span> <span class="nf">change_display_im_display_brightness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_settings</span><span class="p">[</span><span class="s1">&#39;image_display_display_brightness&#39;</span><span class="p">][</span><span class="s1">&#39;widget&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">txt</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
             <span class="n">txt</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">display_brightness</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">txt</span><span class="p">))</span></div>
 
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    status bar</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 <div class="viewcode-block" id="widgets.update_progress"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.update_progress">[docs]</a>    <span class="k">def</span> <span class="nf">update_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -583,6 +632,9 @@
 <div class="viewcode-block" id="widgets.update_status_bar"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.update_status_bar">[docs]</a>    <span class="k">def</span> <span class="nf">update_status_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">status_bar</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="n">v</span><span class="p">)</span></div>
 
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    experimetns</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 <div class="viewcode-block" id="widgets.launch_experiment"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.launch_experiment">[docs]</a>    <span class="k">def</span> <span class="nf">launch_experiment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked_transformations</span> <span class="o">!=</span> <span class="p">{}:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">UI</span><span class="o">.</span><span class="n">make_experiment</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">checked_transformations</span><span class="p">,</span>
