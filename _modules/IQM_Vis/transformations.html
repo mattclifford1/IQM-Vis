@@ -13,9 +13,11 @@
   
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/nbsphinx-gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/nbsphinx-code-cells.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/nbsphinx-code-cells.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/nbsphinx-code-cells.css" type="text/css" />
 
   
   
@@ -32,7 +34,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
@@ -88,23 +89,23 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">What is an IQM?:</span></p>
+              <p><span class="caption-text">What is an IQM?:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../what-are-IQMs.html">IQMs</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">About IQM-Vis:</span></p>
+<p><span class="caption-text">About IQM-Vis:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../about.html">About IQM-Vis</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<p><span class="caption-text">Getting Started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
+<p><span class="caption-text">Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../Tutorials.html">Tutorials</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
+<p><span class="caption-text">Documentation:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
@@ -186,7 +187,8 @@
                          <span class="n">contrast</span><span class="p">,</span>
                          <span class="n">hue</span><span class="p">,</span>
                          <span class="n">saturation</span><span class="p">,</span>
-                         <span class="n">brightness_hsv</span><span class="p">)</span>
+                         <span class="n">brightness_hsv</span><span class="p">,</span>
+                         <span class="n">Gaussian_noise</span><span class="p">)</span>
 
 <div class="viewcode-block" id="get_all_transforms"><a class="viewcode-back" href="../../IQM_Vis.transformations.html#IQM_Vis.transformations.get_all_transforms">[docs]</a><span class="k">def</span> <span class="nf">get_all_transforms</span><span class="p">():</span>
     <span class="nb">all</span> <span class="o">=</span> <span class="p">{</span>
@@ -196,7 +198,8 @@
         <span class="s1">&#39;saturation&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;function&#39;</span><span class="p">:</span> <span class="n">saturation</span><span class="p">},</span>
         <span class="c1"># &#39;brightness_hsv&#39;: {&#39;min&#39;: -1.0, &#39;max&#39;: 1, &#39;function&#39;: brightness_hsv},</span>
         <span class="s1">&#39;blur&#39;</span><span class="p">:{</span><span class="s1">&#39;min&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span><span class="mi">41</span><span class="p">,</span> <span class="s1">&#39;normalise&#39;</span><span class="p">:</span><span class="s1">&#39;odd&#39;</span><span class="p">,</span> <span class="s1">&#39;function&#39;</span><span class="p">:</span><span class="n">blur</span><span class="p">},</span>
-        <span class="s1">&#39;salt pepper.&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;init_value&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span> <span class="s1">&#39;function&#39;</span><span class="p">:</span> <span class="n">salt_and_pepper_noise</span><span class="p">},</span>
+        <span class="s1">&#39;Gaussian&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;init_value&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;function&#39;</span><span class="p">:</span> <span class="n">Gaussian_noise</span><span class="p">},</span>
+        <span class="s1">&#39;salt pepper&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;init_value&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span> <span class="s1">&#39;function&#39;</span><span class="p">:</span> <span class="n">salt_and_pepper_noise</span><span class="p">},</span>
         <span class="s1">&#39;jpg comp.&#39;</span><span class="p">:{</span><span class="s1">&#39;init_value&#39;</span><span class="p">:</span><span class="mi">101</span><span class="p">,</span> <span class="s1">&#39;min&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span><span class="mi">101</span><span class="p">,</span> <span class="s1">&#39;function&#39;</span><span class="p">:</span><span class="n">jpeg_compression</span><span class="p">},</span>
         <span class="s1">&#39;rotation&#39;</span><span class="p">:{</span><span class="s1">&#39;min&#39;</span><span class="p">:</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span><span class="mi">180</span><span class="p">,</span> <span class="s1">&#39;function&#39;</span><span class="p">:</span><span class="n">rotation</span><span class="p">},</span>
         <span class="s1">&#39;x_shift&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;min&#39;</span><span class="p">:</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span><span class="mf">0.1</span><span class="p">,</span> <span class="s1">&#39;function&#39;</span><span class="p">:</span><span class="n">x_shift</span><span class="p">,</span> <span class="s1">&#39;init_value&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">},</span>
