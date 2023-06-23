@@ -50,6 +50,9 @@ class make_experiment(QMainWindow):
         self.display_brightness = display_brightness
         self.default_save_dir = default_save_dir
         self.num_trans_values = num_trans_values
+        # calc expected number of comparisons - http://homepages.math.uic.edu/~leon/cs-mcs401-r07/handouts/quicksort-continued.pdf
+        self.expected_comps = 1.39 * self.num_trans_values * \
+            np.log(self.num_trans_values)
         self.processing = {'pre': image_preprocessing,
                            'post': image_postprocessing}
 
@@ -174,6 +177,8 @@ class make_experiment(QMainWindow):
             Image Calibration:
                 Max RGB Brightness: {self.rgb_brightness}
                 Max Display Brightness: {self.display_brightness}
+
+            MAX Expected Number of Comparisons: {int(self.expected_comps)}
 
         Click the Setup button to setup up the experiment and hand over to the test subject.
         ''')
@@ -348,7 +353,7 @@ class make_experiment(QMainWindow):
         self.show_all_images(tab='final')
         self.init_style('light')
         self.experiments_tab.setCurrentIndex(3)
-        self.experiments_tab.setTabEnabled(2, False)
+        # self.experiments_tab.setTabEnabled(2, False)
         self.save_experiment()
         if self.saved == True:
             self.widget_experiments['final']['save_label'].setText(f'Saved to {self.default_save_dir}')
@@ -461,8 +466,14 @@ class make_experiment(QMainWindow):
         self.comp_pointer = low - 1
         # Traverse through all elements and compare each element with pivot (by user clicking)
         while True:
-            self.change_experiment_images(A_trans=self.experiment_transforms[self.current_comparision],
-                                          B_trans=self.pivot)
+            # randomly assign to image A or B
+            ims_to_display = [
+                self.experiment_transforms[self.current_comparision], self.pivot]
+            random.shuffle(ims_to_display)
+            print((self.pivot['transform_value'] == ims_to_display[1]['transform_value']))
+            # display the images
+            self.change_experiment_images(A_trans=ims_to_display[0],
+                                          B_trans=ims_to_display[1])
             # wait for image to be clicked
             self.clicked_event.clear()
             self.clicked_event.wait()
