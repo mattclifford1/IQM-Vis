@@ -57,6 +57,7 @@ class make_experiment(QMainWindow):
                            'post': image_postprocessing}
 
         self.clicked_event = threading.Event()
+        self.able_to_click = False
         self.stop_event = threading.Event()
         self.saved = False
         self.quit_experiment = False
@@ -476,6 +477,7 @@ class make_experiment(QMainWindow):
                                           B_trans=ims_to_display[1])
             # wait for image to be clicked
             self.clicked_event.clear()
+            self.able_to_click = True
             self.clicked_event.wait()
             if self.stop_event.is_set():
                 return
@@ -494,11 +496,14 @@ class make_experiment(QMainWindow):
         return self.comp_pointer + 1
 
     def clicked_image(self, image_name, widget_name):
+        if self.able_to_click == False:
+            return
+        self.able_to_click = False
         # make clicked image green to show user
-        green_array = np.zeros([100, 100, 3])
-        # green_array[:, :, 1] = 1
+        black_array = np.zeros([100, 100, 3])
+        # black_array[:, :, 1] = 1
         gui_utils.change_im(self.widget_experiments['exp'][widget_name]['data'], 
-                            green_array,
+                            black_array,
                             resize=self.image_display_size)
         # not_clicked = ['A', 'B']
         # not_clicked.remove(widget_name)
