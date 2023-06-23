@@ -571,6 +571,7 @@ class black_image(QObject):
 
     @pyqtSlot(dict)
     def change_to_solid(self, data):
+        t_start = time.time()
         image_display_size = data['image_display_size']
         widget = data['widget']
         # make clicked image black to show user
@@ -579,31 +580,25 @@ class black_image(QObject):
         gui_utils.change_im(widget,
                             black_array,
                             resize=image_display_size)
-        
-        QApplication.processEvents()  # replace this with a wait from signal from thread event
-        time.sleep(self.time)
-
-        # TODO: get the image has been changed to black before emiting the completing signal 
-        # print(widget.pixmap())
-        # m = 2
-        # while m != 0:
-
-        #     pixmap = widget.pixmap()
-        #     q_img = pixmap.toImage()
-        #     ptr = q_img.bits()
-
-        #     ptr = q_img.constBits()
-        #     ptr.setsize(q_img.sizeInBytes())
-
-        #     # Convert the image into a numpy array in the 
-        #     # format PyOpenCV expects to operate on, explicitly
-        #     # copying to avoid potential lifetime bugs when it
-        #     # hasn't yet proven a performance issue for my uses.
-        #     np_img = np.array(ptr, copy=False).reshape(
-        #         q_img.height(), q_img.width(), 4)
-        #     print(np_img.mean())
-        #     m = np_img.mean()
-
+        # pause for half the time needed (will use the loop below to wait for full time and also see if image has turned black yet)
+        time.sleep(self.time/2)
+        m = 1
+        t_time = time.time() - t_start
+        # wait until black image is shown
+        while (not (m == 0 or m == 63.75)) and (t_time < self.time): # 63.75 is when 4th channel is all ones , rest are 0
+            time.sleep(self.time/10)
+            # get the image data from the widget to check if it's been made black yet
+            pixmap = widget.pixmap()
+            q_img = pixmap.toImage()
+            ptr = q_img.bits()
+            ptr = q_img.constBits()
+            ptr.setsize(q_img.sizeInBytes())
+            np_img = np.array(ptr, copy=False).reshape(
+                q_img.height(), q_img.width(), 4)
+            m = np_img.mean()
+            # calc if the time is up yet
+            t_time = time.time() - t_start
+        # all complete so send signal 
         self.completed.emit(1.0)
 
     def stop(self):
