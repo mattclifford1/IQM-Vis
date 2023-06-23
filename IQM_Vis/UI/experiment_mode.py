@@ -18,7 +18,7 @@ from PyQt6.QtWidgets import (QMainWindow,
                              QLabel,
                              QMessageBox)
 
-from PyQt6.QtCore import Qt, pyqtSignal
+from PyQt6.QtCore import Qt, pyqtSignal, pyqtSlot, QObject, QThread
 from PyQt6.QtGui import QShortcut, QKeySequence
 
 import IQM_Vis
@@ -29,6 +29,7 @@ from IQM_Vis.utils import gui_utils, plot_utils, image_utils
 
 class make_experiment(QMainWindow):
     saved_experiment = pyqtSignal(str)
+    request_click = pyqtSignal(dict)
 
     def __init__(self, 
                  checked_transformations, 
@@ -58,6 +59,14 @@ class make_experiment(QMainWindow):
 
         self.clicked_event = threading.Event()
         self.able_to_click = False
+
+        self.image_change_worker = black_image()
+        self.image_change_worker.completed.connect(self.click_completed)
+        self.image_worker_thread = QThread()
+        self.request_click.connect(self.image_change_worker.change_to_solid)
+        self.image_change_worker.moveToThread(self.image_worker_thread)
+        self.image_worker_thread.start()
+
         self.stop_event = threading.Event()
         self.saved = False
         self.quit_experiment = False
@@ -89,6 +98,10 @@ class make_experiment(QMainWindow):
             self.quit_experiment = True
             if hasattr(self, 'range_worker'):
                 self.range_worker.stop()
+            if hasattr(self, 'image_worker_thread'):
+                self.image_change_worker.stop()
+                self.image_worker_thread.quit()
+                self.image_worker_thread.wait()
             self.stop_event.set()
             self.clicked_event.set()
             event.accept()
@@ -471,7 +484,6 @@ class make_experiment(QMainWindow):
             ims_to_display = [
                 self.experiment_transforms[self.current_comparision], self.pivot]
             random.shuffle(ims_to_display)
-            print((self.pivot['transform_value'] == ims_to_display[1]['transform_value']))
             # display the images
             self.change_experiment_images(A_trans=ims_to_display[0],
                                           B_trans=ims_to_display[1])
@@ -499,23 +511,6 @@ class make_experiment(QMainWindow):
         if self.able_to_click == False:
             return
         self.able_to_click = False
-        # make clicked image green to show user
-        black_array = np.zeros([100, 100, 3])
-        # black_array[:, :, 1] = 1
-        gui_utils.change_im(self.widget_experiments['exp'][widget_name]['data'], 
-                            black_array,
-                            resize=self.image_display_size)
-        # not_clicked = ['A', 'B']
-        # not_clicked.remove(widget_name)
-        # not_clicked = not_clicked[0]
-        # red_array = np.zeros([100, 100, 3])
-        # red_array[:, :, 0] = 1
-        # gui_utils.change_im(self.widget_experiments['exp'][not_clicked]['data'],
-        #                     red_array,
-        #                     resize=self.image_display_size)
-        QApplication.processEvents()  # replace this with a wait from signal from thread event
-        time.sleep(0.1)
-
         # get comparison to pivot
         trans_str = image_name[len(self.data_store.get_reference_image_name())+1:]
         if trans_str != make_name_for_trans(self.pivot): # lower value
@@ -523,6 +518,12 @@ class make_experiment(QMainWindow):
             self.less_than_pivot = True
         else:
             self.less_than_pivot = False
+        # make clicked image black to show user
+        data = {'image_display_size': self.image_display_size,
+                'widget': self.widget_experiments['exp'][widget_name]['data']}
+        self.request_click.emit(data)  # change to black image, after x amount of time will change to experimetn image
+        
+    def click_completed(self):
         # unlock the wait
         self.clicked_event.set()
 
@@ -557,6 +558,60 @@ class make_experiment(QMainWindow):
                 self.setStyleSheet(file.read())
         else:
             warnings.warn('Cannot load css style sheet - file not found')
+
+
+class black_image(QObject):
+    ''' change clicked image to black and pause '''
+    completed = pyqtSignal(float)
+
+    def __init__(self, time=0.1):
+        super().__init__()
+        self.running = True
+        self.time = time
+
+    @pyqtSlot(dict)
+    def change_to_solid(self, data):
+        image_display_size = data['image_display_size']
+        widget = data['widget']
+        # make clicked image black to show user
+        black_array = np.zeros([100, 100, 3])
+        # black_array[:, :, 1] = 1
+        gui_utils.change_im(widget,
+                            black_array,
+                            resize=image_display_size)
+        
+        QApplication.processEvents()  # replace this with a wait from signal from thread event
+        time.sleep(self.time)
+
+        # TODO: get the image has been changed to black before emiting the completing signal 
+        # print(widget.pixmap())
+        # m = 2
+        # while m != 0:
+
+        #     pixmap = widget.pixmap()
+        #     q_img = pixmap.toImage()
+        #     ptr = q_img.bits()
+
+        #     ptr = q_img.constBits()
+        #     ptr.setsize(q_img.sizeInBytes())
+
+        #     # Convert the image into a numpy array in the 
+        #     # format PyOpenCV expects to operate on, explicitly
+        #     # copying to avoid potential lifetime bugs when it
+        #     # hasn't yet proven a performance issue for my uses.
+        #     np_img = np.array(ptr, copy=False).reshape(
+        #         q_img.height(), q_img.width(), 4)
+        #     print(np_img.mean())
+        #     m = np_img.mean()
+
+        self.completed.emit(1.0)
+
+    def stop(self):
+        self.running = False
+
+    def __del__(self):
+        # close app upon garbage collection
+        self.stop()
 
 
 def sort_list(list1, list2):
