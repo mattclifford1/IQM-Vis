@@ -101,6 +101,7 @@ def Gaussian_noise(image, std=0):
     '''
     if std == 0:
         return image
+    np.random.seed(42)
     noise = np.random.normal(loc=0, scale=std, size=image.shape)
     return np.clip(image + noise, 0, 1)
 
