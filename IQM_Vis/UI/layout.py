@@ -16,7 +16,7 @@ from IQM_Vis.UI import utils
 # uses widgets from IQM_Vis.widgets.app_widgets
 # class layout(QMainWindow):
 class layout(QMainWindow):
-    def __init__(self):
+    def __init__(self, **kwargs):
         super().__init__()
 
     def init_layout(self):

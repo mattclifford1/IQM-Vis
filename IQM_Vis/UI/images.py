@@ -17,8 +17,7 @@ class images:
     request_range_work = pyqtSignal(dict)
     view_correlation_instance = pyqtSignal(str)
 
-    def __init__(self):
-        self.num_steps_range = 11
+    def __init__(self, **kwargs):
         self.update_images = True
         self.init_worker_thread()
         self.view_correlation_instance.connect(self.change_to_specific_trans)

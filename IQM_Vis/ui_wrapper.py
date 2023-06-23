@@ -28,6 +28,7 @@ class make_UI:
                  metric_params: dict={},
                  default_save_dir=IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR,
                  restrict_options=None,
+                 num_steps_range=11,
                  debug=False):
         self.data_store = data_store
         self.transformations = transformations
@@ -36,6 +37,7 @@ class make_UI:
         self.metric_params = metric_params
         self.default_save_dir = default_save_dir
         self.restrict_options = restrict_options
+        self.num_steps_range = num_steps_range
         self.debug = debug
         self.show()
 
@@ -53,7 +55,8 @@ class make_UI:
                           metrics_avg_graph=self.metrics_avg_graph,
                           metric_params=self.metric_params,
                           default_save_dir=self.default_save_dir,
-                          restrict_options=self.restrict_options)
+                          restrict_options=self.restrict_options,
+                          num_steps_range=self.num_steps_range)
         sys.exit(app.exec())
 
     def _check_restrict_options(self):

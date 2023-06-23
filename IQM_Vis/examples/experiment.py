@@ -30,6 +30,7 @@ def run():
     # define the transformations
     transformations = {
         'contrast': {'min': 0.5, 'max': 2.5, 'function': IQM_Vis.transforms.contrast, 'init_value': 1.0},
+        # 'Gaussian Noise': {'min': 0, 'max': 0.3, 'function': IQM_Vis.transforms.Gaussian_noise, 'init_value': 0.0},
         # 'hue': {'min': -0.5, 'max': 0.5, 'function': IQM_Vis.transforms.hue},
         # 'saturation': {'min': -0.5, 'max': 0.5, 'function': IQM_Vis.transforms.saturation},
         # 'jpg compr': {'init_value': 101, 'min': 1, 'max': 101, 'function': IQM_Vis.transforms.jpeg_compression},
@@ -40,8 +41,8 @@ def run():
     # use the API to create the UI
     IQM_Vis.make_UI(data,
                     transformations,
-                    restrict_options=4
-                    )
+                    restrict_options=4,
+                    num_steps_range=6)
 
 if __name__ == '__main__':
     run()

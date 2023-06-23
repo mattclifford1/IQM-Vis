@@ -15,7 +15,7 @@ from IQM_Vis.utils import gui_utils, plot_utils, image_utils
 
 # sub class used by IQM_Vis.main.make_app to initialise widgets and general UI functions for widgets
 class widgets():
-    def init_widgets(self):
+    def init_widgets(self, **kwargs):
         '''
         create all the widgets we need and init params
         '''

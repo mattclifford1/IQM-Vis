@@ -20,12 +20,14 @@ class make_app(widgets, layout, images):
                  metric_params: dict={},
                  image_display_size=300,
                  default_save_dir=IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR,
-                 restrict_options=None
+                 restrict_options=None,
+                 num_steps_range=11
                  ):
         super().__init__()
         self.app = app
         self.data_stores = data_stores
         self.transformations = transformations
+        self.num_steps_range = num_steps_range
 
         self.metrics_info_format = metrics_info_format
         self.metrics_avg_graph = metrics_avg_graph
