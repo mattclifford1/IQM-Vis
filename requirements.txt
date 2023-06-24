@@ -12,4 +12,5 @@ lpips==0.1.4
 DISTS-pytorch==0.1
 torchvision==0.14.1
 pandas==2.0.0
+scipy==1.9.3
 notebook

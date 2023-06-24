@@ -11,8 +11,10 @@ def run():
               }
 
     # metrics images return a numpy image
-    metric_images = {'MSE': IQM_Vis.IQMs.MSE(return_image=True),
-                     'SSIM': IQM_Vis.IQMs.SSIM(return_image=True)}
+    metric_images = {
+        # 'MSE': IQM_Vis.IQMs.MSE(return_image=True),
+        # 'SSIM': IQM_Vis.IQMs.SSIM(return_image=True)
+                     }
 
     # make dataset list of images
     file_path = os.path.dirname(os.path.abspath(__file__))

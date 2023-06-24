@@ -6,6 +6,8 @@ TODO: write docs how to use these (currently just have to look at the UI code)
 from functools import partial
 
 import numpy as np
+import scipy.stats
+
 import IQM_Vis
 from IQM_Vis.utils import image_utils, gui_utils
 
@@ -359,6 +361,7 @@ def get_correlation_plot(human_scores, metric_scores, axes, metric, change_trans
         y.append(human_scores[trans])
         labels.append(trans)
     sp.plot(x, y, annotations=labels)
+    # make interactive hover for points
     annot = sp.ax.axes.annotate("", xy=(0, 0), xytext=(0, 0), textcoords="offset points",
                         bbox=dict(boxstyle="round", fc="w"),
                         arrowprops=dict(arrowstyle="->")
@@ -368,6 +371,11 @@ def get_correlation_plot(human_scores, metric_scores, axes, metric, change_trans
         "motion_notify_event", partial(hover_scatter, sp, annot))
     sp.ax.figure.canvas.mpl_connect(
         "pick_event", partial(click_scatter, sp, change_trans_value_signal))
+    # get correlation as title
+    pear = scipy.stats.pearsonr(x, y)
+    spear = scipy.stats.spearmanr(x, y)
+    sp.ax.axes.set_title(
+        f"Spearman's: {spear.correlation:.4f}\n  Pearson's: {pear.statistic:.4f}")
     return sp
 
 def click_scatter(_plot, change_trans_value_signal, event):
