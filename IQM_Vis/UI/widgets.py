@@ -314,7 +314,7 @@ class widgets():
         if display_images == True:
             self.display_images()
         if redo_plots == True:
-            self.redo_plots()
+            self.redo_plots(calc_range=False)
 
     def reset_sliders(self):
         self.update_images = False   # dont calc any images/metrics when updating sliders now is slow
@@ -322,7 +322,7 @@ class widgets():
             self.reset_slider_group(param_group, False, False)
         self.update_images = True  # make sure to return to calc images/metrics
         self.display_images()
-        self.redo_plots()
+        self.redo_plots(calc_range=False)
 
     def set_image_name_text(self):
         for i, data_store in enumerate(self.data_stores):
@@ -354,10 +354,12 @@ class widgets():
     def disable_settings_button(self):
         self.widget_settings['update_button'].setEnabled(False)
         self.widget_settings['update_button'].setStyleSheet(f"QPushButton {{color: gray;}}")
+
     
     def update_image_settings(self):
         ''' button to apply new image settings '''
-
+        if hasattr(self, 'range_worker'):
+            self.range_worker.stop()
         # apply changes to settings
         self.change_pre_processing()
         self.change_post_processing()
@@ -367,15 +369,15 @@ class widgets():
         self.change_display_im_rgb_brightness()
         self.change_display_im_display_brightness()
 
-        self.change_data(0)  # update the image data settings
+        self.change_data(0, _redo_plots=False)  # update the image data settings
         self.display_images()
         if hasattr(self, 'update_UI'):
             if self.update_UI == True:
                 self.construct_UI()
-        elif hasattr(self, 'image_settings_update_plots'):
+        if hasattr(self, 'image_settings_update_plots'):
             if self.image_settings_update_plots == True:
                 # only redo the graphs if nessesary
-                self.redo_plots()
+                self.redo_plots(calc_range=True)
         self.image_settings_update_plots = False
         self.update_UI = False
         self.disable_settings_button()
@@ -389,28 +391,31 @@ class widgets():
         )
         for data_store in self.data_stores:
             if hasattr(data_store, 'image_pre_processing'):
-                data_store.image_pre_processing = self.pre_processing_options[
-                    self.pre_processing_option]
-        self.image_settings_update_plots = True
+                if data_store.image_pre_processing != self.pre_processing_options[self.pre_processing_option]:
+                    data_store.image_pre_processing = self.pre_processing_options[
+                        self.pre_processing_option]
+                    self.image_settings_update_plots = True
 
     def change_post_processing(self, *args):
         self.post_processing_option = self.widget_settings['image_post_processing']['widget'].currentText(
         )
         for data_store in self.data_stores:
             if hasattr(data_store, 'image_post_processing'):
-                data_store.image_post_processing = self.post_processing_options[
-                    self.post_processing_option]
-        self.image_settings_update_plots = True
+                if data_store.image_post_processing != self.post_processing_options[self.post_processing_option]:
+                    data_store.image_post_processing = self.post_processing_options[
+                        self.post_processing_option]
+                    self.image_settings_update_plots = True
         # self.display_images()
-        # self.redo_plots()
+        # self.redo_plots(calc_range=False)
 
     def change_display_im_size(self):
         txt = self.widget_settings['image_display_size']['widget'].text()
         if txt == '':
             txt = 1
-        old_size = self.image_display_size
-        self.image_display_size = max(1, int(txt))
-        self.update_UI = True
+        new_size = max(1, int(txt))
+        if new_size != self.image_display_size:
+            self.image_display_size = new_size
+            self.update_UI = True
         # self.construct_UI()
         # self.display_images()
         # if old_size > self.image_display_size:
@@ -422,15 +427,19 @@ class widgets():
         txt = self.widget_settings['graph_display_size']['widget'].text()
         if txt == '':
             txt = 1
-        self.graph_size = max(1, int(txt))
-        self.update_UI = True
+        new_size = max(1, int(txt))
+        if new_size != self.graph_size:
+            self.graph_size = new_size
+            self.update_UI = True
 
     def change_num_steps(self):
         txt = self.widget_settings['graph_num_steps']['widget'].text()
         if txt == '':
             txt = 1
-        self.num_steps_range = max(2, int(txt))
-        self.update_UI = True
+        new_steps = max(2, int(txt))
+        if new_steps != self.num_steps_range:
+            self.num_steps_range = new_steps
+            self.update_UI = True
     
     def change_display_im_rgb_brightness(self):
         txt = self.widget_settings['image_display_rgb_brightness']['widget'].text()

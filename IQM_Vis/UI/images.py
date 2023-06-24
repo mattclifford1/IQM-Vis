@@ -29,7 +29,7 @@ class images:
         self.range_worker.progress.connect(self.update_progress)
         self.range_worker.current_image.connect(self.update_status_bar)
         self.range_worker.completed.connect(self.completed_range_results)
-        self.range_worker.stopped.connect(self.stopped_range_results)
+        self.range_worker.stopped.connect(self.stopped_range_worker)
         self.request_range_work.connect(self.range_worker.do_work)
         # move worker to the worker thread
         self.range_worker.moveToThread(self.range_worker_thread)
@@ -66,8 +66,8 @@ class images:
     '''
     metric graph updaters
     '''
-    def redo_plots(self, calc_range=True):
-        if calc_range:  # add an or metrics_range val not been calculated
+    def redo_plots(self, calc_range=False):
+        if calc_range == True:  # add an or metrics_range val not been calculated
             if self.metrics_avg_graph or self.metric_range_graph:
                 self.get_metrics_over_all_trans_with_init_values()
 
@@ -89,6 +89,8 @@ class images:
             self.data_num = self.max_data_ind
             return
         self.range_worker.stop() # stop any calculations on the old image
+        # if hasattr(self, 'wait_until_safe_to_change_image'):
+        #     self.wait_until_safe_to_change_image()
         # if ival != 0:
         for data_store in self.data_stores:
             try:
@@ -98,7 +100,7 @@ class images:
             self.display_images()
             self.set_image_name_text()
         if _redo_plots == True:
-            self.redo_plots()
+            self.redo_plots(calc_range=True)
         # load human experiment if any
         self.human_experiment_scores = {}
         for i, data_store in enumerate(self.data_stores):
@@ -229,7 +231,7 @@ class images:
 
     def completed_range_results(self, results):
         ''' data results sent from signal from thread worker '''
-        self.worker_working = False
+        self.stopped_range_worker()
         self.metric_over_range_results = results['metric_over_range_results']
         self.data_lims['range_data'] = results['max_val']
         if self.metrics_avg_graph:
@@ -358,5 +360,5 @@ class images:
     '''
     thread manegment
     '''
-    def stopped_range_results(self, signal):
+    def stopped_range_worker(self, signal=False):
         self.worker_working = False

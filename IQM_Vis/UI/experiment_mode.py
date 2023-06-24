@@ -29,7 +29,7 @@ from IQM_Vis.utils import gui_utils, plot_utils, image_utils
 
 class make_experiment(QMainWindow):
     saved_experiment = pyqtSignal(str)
-    request_click = pyqtSignal(dict)
+    reset_clicked_image = pyqtSignal(dict)
 
     def __init__(self, 
                  checked_transformations, 
@@ -60,10 +60,10 @@ class make_experiment(QMainWindow):
         self.clicked_event = threading.Event()
         self.able_to_click = False
 
-        self.image_change_worker = black_image()
+        self.image_change_worker = reset_image_widget_to_black()
         self.image_change_worker.completed.connect(self.click_completed)
         self.image_worker_thread = QThread()
-        self.request_click.connect(self.image_change_worker.change_to_solid)
+        self.reset_clicked_image.connect(self.image_change_worker.change_to_solid)
         self.image_change_worker.moveToThread(self.image_worker_thread)
         self.image_worker_thread.start()
 
@@ -521,7 +521,7 @@ class make_experiment(QMainWindow):
         # make clicked image black to show user
         data = {'image_display_size': self.image_display_size,
                 'widget': self.widget_experiments['exp'][widget_name]['data']}
-        self.request_click.emit(data)  # change to black image, after x amount of time will change to experimetn image
+        self.reset_clicked_image.emit(data)  # change to black image, after x amount of time will change to experimetn image
         
     def click_completed(self):
         # unlock the wait
@@ -560,7 +560,7 @@ class make_experiment(QMainWindow):
             warnings.warn('Cannot load css style sheet - file not found')
 
 
-class black_image(QObject):
+class reset_image_widget_to_black(QObject):
     ''' change clicked image to black and pause '''
     completed = pyqtSignal(float)
 

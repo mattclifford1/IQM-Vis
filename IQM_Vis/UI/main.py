@@ -139,6 +139,8 @@ class make_app(widgets, layout, images):
     def construct_UI(self):
         if hasattr(self, 'range_worker'):
             self.range_worker.stop() # stop any calculations on the old UI
+        # if hasattr(self, 'wait_until_safe_to_change_image'):
+        #     self.wait_until_safe_to_change_image()
         # get currently selected tranformations to use
         self.checked_transformations = {}
         for trans, item in self.transformations.items():
@@ -173,7 +175,7 @@ class make_app(widgets, layout, images):
         # init the UI widgets and layouts
         self.init_style()     # layout.py
         self.init_widgets()   # widgets.py
-        self.change_data(0,_redo_plots=False)   # images.py   - load first data instance
+        self.change_data(0, _redo_plots=True)   # images.py   - load first data instance
         self.init_layout()    # layout.py
         self.tabs['slider'].setCurrentIndex(tabs_index['slider'])
         self.tabs['graph'].setCurrentIndex(tabs_index['graph'])

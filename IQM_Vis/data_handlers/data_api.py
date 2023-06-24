@@ -158,8 +158,13 @@ class dataset_holder(base_dataset_loader):
         results = {}
         for metric in self.metrics:
             if metric in metrics_to_use or metrics_to_use == 'all':
-                results[metric] = self.metrics[metric](
-                    self.ref_bytes, trans_bytes, **kwargs)
+                if self.ref_bytes.shape != trans_bytes.shape:
+                    # There has been a change in the data so need to quit this calc ASAP
+                    results[metric] = 100
+                else:
+                    # calc as normal
+                    results[metric] = self.metrics[metric](
+                        self.ref_bytes, trans_bytes, **kwargs)
         return results
 
     def get_metric_images(self, transformed_image, metrics_to_use='all', **kwargs):
