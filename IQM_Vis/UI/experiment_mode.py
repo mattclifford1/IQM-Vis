@@ -439,17 +439,19 @@ class make_experiment(QMainWindow):
         exp_order = []
         for trans in self.experiment_transforms:
             exp_order.append(make_name_for_trans(trans))
-        csv_file = os.path.join(self.default_save_dir, f'{self.data_store.get_reference_image_name()}-results.csv')
-        IQM_Vis.utils.save_utils.save_experiment_results(
+        base_file = os.path.join(self.default_save_dir, f'{self.data_store.get_reference_image_name()}')
+        csv_file = IQM_Vis.utils.save_utils.save_experiment_results(
             self.original_params_order,
             exp_order,
-            csv_file)
+            base_file,
+            self.times_taken)
         self.saved = True
         self.saved_experiment.emit(csv_file)
 
 
     ''' sorting algorithm resource: https://www.geeksforgeeks.org/quick-sort/'''
     def quick_sort(self):
+        self.times_taken = []
         self._quick_sort(0, len(self.experiment_transforms)-1)
         if self.quit_experiment != True:
             self.finish_experiment()
@@ -480,6 +482,7 @@ class make_experiment(QMainWindow):
         self.comp_pointer = low - 1
         # Traverse through all elements and compare each element with pivot (by user clicking)
         while True:
+            time0 = time.time()
             # randomly assign to image A or B
             ims_to_display = [
                 self.experiment_transforms[self.current_comparision], self.pivot]
@@ -500,6 +503,7 @@ class make_experiment(QMainWindow):
                 # Swapping element at i with element at j
                 self.swap_inds(self.comp_pointer, self.current_comparision)
             self.current_comparision += 1
+            self.times_taken.append(time.time()-time0)
             if self.current_comparision == self.high:
                 break
         # Swap the pivot element with the greater element specified by i

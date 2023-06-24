@@ -25,7 +25,14 @@ def load_obj(pickle_path):
     except:
         return None
     
-def save_experiment_results(trans_names, results_order, file):
+def save_df_as_csv(df, file, index=False):
+    if os.path.exists(file):
+        df_saved = pd.read_csv(file)
+        df = pd.concat([df_saved, df])
+    df.to_csv(file, index=index)
+
+    
+def save_experiment_results(trans_names, results_order, base_file, times_taken=None):
     # make HIQM scores
     results = {}
     for i, trans_name in enumerate(results_order):
@@ -37,10 +44,18 @@ def save_experiment_results(trans_names, results_order, file):
     df = df[trans_names]
 
     # save results
-    if os.path.exists(file):
-        df_saved = pd.read_csv(file)
-        df = pd.concat([df_saved, df])
-    df.to_csv(file, index=False)
+    csv_file = f"{base_file}-results.csv"
+    save_df_as_csv(df, csv_file, index=False)
+    # save times taken
+    if times_taken != None:
+        times_file = f"{base_file}-times-taken.csv"
+        data = {'mean time (seconds)': [sum(times_taken)/len(times_taken)],
+                'total time (seconds)': [sum(times_taken)],
+                'number of comparisons': [len(times_taken)],
+                'individual times (seconds)': [str(times_taken)]}
+        save_df_as_csv(pd.DataFrame.from_dict(data), times_file)
+
+    return csv_file
 
 def save_json_dict(path, dict_):
     with open(path, 'w') as fp:
