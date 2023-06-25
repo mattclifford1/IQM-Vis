@@ -477,7 +477,8 @@ class widgets():
                                                          self.default_save_dir,
                                                          self.num_steps_range,
                                                          self.pre_processing_option,
-                                                         self.post_processing_option)
+                                                         self.post_processing_option,
+                                                         self.checked_metrics)
             self.experiment.saved_experiment.connect(
                 self.change_human_scores_after_exp)
             self.experiment.show()

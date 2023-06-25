@@ -31,31 +31,49 @@ def save_df_as_csv(df, file, index=False):
         df = pd.concat([df_saved, df])
     df.to_csv(file, index=index)
 
+
+def save_and_merge_df_as_csv(df, file):
+    '''df need to be indexed'''
+    if os.path.exists(file):
+        df_saved = pd.read_csv(file)
+        index_name = df.index.name
+        print(df)
+        print(df_saved)
+        df = pd.merge(df.reset_index(), df_saved, how='outer')
+        df.set_index(index_name, inplace=True)
+    df.to_csv(file, index=True)
+
     
-def save_experiment_results(trans_names, results_order, base_file, times_taken=None):
-    # make HIQM scores
+def save_experiment_results(trans_names, results_order, base_file, times_taken=None, IQM_scores_df=None):
+    '''save all the experiment reults as csvs'''
+    # make HIQM scores from ordering : HIQM = pos/num_pos
     results = {}
     for i, trans_name in enumerate(results_order):
         results[str(trans_name)] = [(i+1) / len(results_order)]
 
     # make df
     df = pd.DataFrame.from_dict(results)
-    # re order
+    # re order so that the trans_names are acending order as given
     df = df[trans_names]
-
     # save results
-    csv_file = f"{base_file}-results.csv"
-    save_df_as_csv(df, csv_file, index=False)
+    human_experiment_csv_file = f"{base_file}-HUMAN-scores.csv"
+    save_df_as_csv(df, human_experiment_csv_file, index=False)
+
     # save times taken
     if times_taken != None:
-        times_file = f"{base_file}-times-taken.csv"
+        times_file = f"{base_file}-HUMAN-times-taken.csv"
         data = {'mean time (seconds)': [sum(times_taken)/len(times_taken)],
                 'total time (seconds)': [sum(times_taken)],
                 'number of comparisons': [len(times_taken)],
                 'individual times (seconds)': [str(times_taken)]}
         save_df_as_csv(pd.DataFrame.from_dict(data), times_file)
 
-    return csv_file
+    # save IQM results
+    if not isinstance(IQM_scores_df, type(None)):
+        IQM_file = f"{base_file}-IQM-scores.csv"
+        save_and_merge_df_as_csv(IQM_scores_df, IQM_file)
+
+    return human_experiment_csv_file
 
 def save_json_dict(path, dict_):
     with open(path, 'w') as fp:

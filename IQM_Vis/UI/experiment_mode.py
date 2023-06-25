@@ -9,6 +9,7 @@ import warnings
 import time
 
 import numpy as np
+import pandas as pd
 from PyQt6.QtWidgets import (QMainWindow,
                              QHBoxLayout,
                              QVBoxLayout,
@@ -40,9 +41,11 @@ class make_experiment(QMainWindow):
                  default_save_dir=IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR,
                  num_trans_values=6,
                  image_preprocessing='None',
-                 image_postprocessing='None'):
+                 image_postprocessing='None',
+                 checked_metrics={}):
         super().__init__()
         self.checked_transformations = checked_transformations
+        self.checked_metrics = checked_metrics
         if self.checked_transformations == {}:
             return
         self.data_store = data_store
@@ -72,6 +75,7 @@ class make_experiment(QMainWindow):
         self.quit_experiment = False
         self._init_experiment_window_widgets()
         self.get_all_images()
+        self.get_metric_scores()
         self.experiment_layout()
         self.setCentralWidget(self.experiments_tab)
         self.setWindowTitle('Experiment')
@@ -160,7 +164,6 @@ class make_experiment(QMainWindow):
         self.experiment_trans_params.append(median)
         # load all images
         self.experiment_transforms = []
-        # save all data
         for single_trans in self.experiment_trans_params:
             trans_name = list(single_trans.keys())[0]
             param = single_trans[trans_name]
@@ -169,7 +172,22 @@ class make_experiment(QMainWindow):
                     'transform_value': param,
                     'image': img}
             self.experiment_transforms.append(data)
-        
+    
+    def get_metric_scores(self):
+        '''get IQM scores to save alongside the experiment for plotting/analysis purposes'''
+        IQM_scores = {}
+        for data in self.experiment_transforms:
+            score_dict = self.data_store.get_metrics(transformed_image=data['image'],
+                                                 metrics_to_use=self.checked_metrics)
+            scores = []
+            metrics = []
+            for name, score in score_dict.items():
+                metrics.append(name)
+                scores.append(float(score))
+            IQM_scores[make_name_for_trans(data)] = scores
+        IQM_scores['IQM'] = metrics
+        self.IQM_scores_df = pd.DataFrame.from_dict(IQM_scores)
+        self.IQM_scores_df.set_index('IQM', inplace=True)
 
     def _init_experiment_window_widgets(self):
         self.widget_experiments = {'exp': {}, 'preamble': {}, 'setup': {}, 'final':{}}
@@ -444,7 +462,8 @@ class make_experiment(QMainWindow):
             self.original_params_order,
             exp_order,
             base_file,
-            self.times_taken)
+            self.times_taken,
+            self.IQM_scores_df)
         self.saved = True
         self.saved_experiment.emit(csv_file)
 
