@@ -197,12 +197,14 @@
                  <span class="n">metric_params</span><span class="p">:</span> <span class="nb">dict</span><span class="o">=</span><span class="p">{},</span>
                  <span class="n">image_display_size</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
                  <span class="n">default_save_dir</span><span class="o">=</span><span class="n">IQM_Vis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">save_utils</span><span class="o">.</span><span class="n">DEFAULT_SAVE_DIR</span><span class="p">,</span>
-                 <span class="n">restrict_options</span><span class="o">=</span><span class="kc">None</span>
+                 <span class="n">restrict_options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">num_steps_range</span><span class="o">=</span><span class="mi">11</span>
                  <span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">app</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span> <span class="o">=</span> <span class="n">data_stores</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span> <span class="o">=</span> <span class="n">transformations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_steps_range</span> <span class="o">=</span> <span class="n">num_steps_range</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">metrics_info_format</span> <span class="o">=</span> <span class="n">metrics_info_format</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metrics_avg_graph</span> <span class="o">=</span> <span class="n">metrics_avg_graph</span>
@@ -314,6 +316,8 @@
 <div class="viewcode-block" id="make_app.construct_UI"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.main.make_app.construct_UI">[docs]</a>    <span class="k">def</span> <span class="nf">construct_UI</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;range_worker&#39;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span> <span class="c1"># stop any calculations on the old UI</span>
+        <span class="c1"># if hasattr(self, &#39;wait_until_safe_to_change_image&#39;):</span>
+        <span class="c1">#     self.wait_until_safe_to_change_image()</span>
         <span class="c1"># get currently selected tranformations to use</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">checked_transformations</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">trans</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -348,7 +352,7 @@
         <span class="c1"># init the UI widgets and layouts</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">init_style</span><span class="p">()</span>     <span class="c1"># layout.py</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">init_widgets</span><span class="p">()</span>   <span class="c1"># widgets.py</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">change_data</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">_redo_plots</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>   <span class="c1"># images.py   - load first data instance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">change_data</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">_redo_plots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>   <span class="c1"># images.py   - load first data instance</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">init_layout</span><span class="p">()</span>    <span class="c1"># layout.py</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tabs</span><span class="p">[</span><span class="s1">&#39;slider&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">tabs_index</span><span class="p">[</span><span class="s1">&#39;slider&#39;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tabs</span><span class="p">[</span><span class="s1">&#39;graph&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">tabs_index</span><span class="p">[</span><span class="s1">&#39;graph&#39;</span><span class="p">])</span>

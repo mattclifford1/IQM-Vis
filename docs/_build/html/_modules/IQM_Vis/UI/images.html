@@ -194,8 +194,7 @@
     <span class="n">request_range_work</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
     <span class="n">view_correlation_instance</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">num_steps_range</span> <span class="o">=</span> <span class="mi">11</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_images</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">init_worker_thread</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">view_correlation_instance</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">change_to_specific_trans</span><span class="p">)</span>
@@ -207,7 +206,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">progress</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_progress</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">current_image</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_status_bar</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">completed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">completed_range_results</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">stopped</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stopped_range_results</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">stopped</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stopped_range_worker</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">request_range_work</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">do_work</span><span class="p">)</span>
         <span class="c1"># move worker to the worker thread</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">moveToThread</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">range_worker_thread</span><span class="p">)</span>
@@ -244,8 +243,8 @@
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    metric graph updaters</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-<div class="viewcode-block" id="images.redo_plots"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.redo_plots">[docs]</a>    <span class="k">def</span> <span class="nf">redo_plots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">calc_range</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">calc_range</span><span class="p">:</span>  <span class="c1"># add an or metrics_range val not been calculated</span>
+<div class="viewcode-block" id="images.redo_plots"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.redo_plots">[docs]</a>    <span class="k">def</span> <span class="nf">redo_plots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">calc_range</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">calc_range</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>  <span class="c1"># add an or metrics_range val not been calculated</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics_avg_graph</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric_range_graph</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">get_metrics_over_all_trans_with_init_values</span><span class="p">()</span></div>
 
@@ -267,6 +266,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">data_num</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_data_ind</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span> <span class="c1"># stop any calculations on the old image</span>
+        <span class="c1"># if hasattr(self, &#39;wait_until_safe_to_change_image&#39;):</span>
+        <span class="c1">#     self.wait_until_safe_to_change_image()</span>
         <span class="c1"># if ival != 0:</span>
         <span class="k">for</span> <span class="n">data_store</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
@@ -276,7 +277,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">display_images</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_image_name_text</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">_redo_plots</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">redo_plots</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">redo_plots</span><span class="p">(</span><span class="n">calc_range</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="c1"># load human experiment if any</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">human_experiment_scores</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">data_store</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_stores</span><span class="p">):</span>
@@ -407,7 +408,7 @@
 
 <div class="viewcode-block" id="images.completed_range_results"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.completed_range_results">[docs]</a>    <span class="k">def</span> <span class="nf">completed_range_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">results</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; data results sent from signal from thread worker &#39;&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">worker_working</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stopped_range_worker</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metric_over_range_results</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;metric_over_range_results&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_lims</span><span class="p">[</span><span class="s1">&#39;range_data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;max_val&#39;</span><span class="p">]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics_avg_graph</span><span class="p">:</span>
@@ -536,7 +537,7 @@
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    thread manegment</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-<div class="viewcode-block" id="images.stopped_range_results"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.stopped_range_results">[docs]</a>    <span class="k">def</span> <span class="nf">stopped_range_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
+<div class="viewcode-block" id="images.stopped_range_worker"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.stopped_range_worker">[docs]</a>    <span class="k">def</span> <span class="nf">stopped_range_worker</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">worker_working</span> <span class="o">=</span> <span class="kc">False</span></div></div>
 </pre></div>
 

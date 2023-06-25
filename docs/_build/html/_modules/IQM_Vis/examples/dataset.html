@@ -188,8 +188,10 @@
               <span class="p">}</span>
 
     <span class="c1"># metrics images return a numpy image</span>
-    <span class="n">metric_images</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;MSE&#39;</span><span class="p">:</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">IQMs</span><span class="o">.</span><span class="n">MSE</span><span class="p">(</span><span class="n">return_image</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-                     <span class="s1">&#39;SSIM&#39;</span><span class="p">:</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">IQMs</span><span class="o">.</span><span class="n">SSIM</span><span class="p">(</span><span class="n">return_image</span><span class="o">=</span><span class="kc">True</span><span class="p">)}</span>
+    <span class="n">metric_images</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="c1"># &#39;MSE&#39;: IQM_Vis.IQMs.MSE(return_image=True),</span>
+        <span class="c1"># &#39;SSIM&#39;: IQM_Vis.IQMs.SSIM(return_image=True)</span>
+                     <span class="p">}</span>
 
     <span class="c1"># make dataset list of images</span>
     <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>

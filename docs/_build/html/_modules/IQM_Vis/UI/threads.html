@@ -192,7 +192,6 @@
 
 <div class="viewcode-block" id="get_range_results_worker.do_work"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.threads.get_range_results_worker.do_work">[docs]</a>    <span class="nd">@pyqtSlot</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">do_work</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-
         <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
         <span class="n">metric_over_range_results</span> <span class="o">=</span> <span class="p">[]</span>
@@ -218,10 +217,10 @@
                         <span class="n">max_val</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_val</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
         <span class="n">data_return</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;metric_over_range_results&#39;</span><span class="p">:</span> <span class="n">metric_over_range_results</span><span class="p">,</span>
                        <span class="s1">&#39;max_val&#39;</span><span class="p">:</span> <span class="n">max_val</span><span class="p">}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">completed</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">data_return</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">completed</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">data_return</span><span class="p">)</span></div>
 
-        <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;time: </span><span class="si">{</span><span class="n">t1</span><span class="o">-</span><span class="n">t0</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+        <span class="c1"># t1 = time.time()</span>
+        <span class="c1"># print(f&#39;time: {t1-t0}&#39;)</span>
 
 <div class="viewcode-block" id="get_range_results_worker.stop"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.threads.get_range_results_worker.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;stop_flag&#39;</span><span class="p">):</span>
