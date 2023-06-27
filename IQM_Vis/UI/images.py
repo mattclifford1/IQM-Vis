@@ -259,9 +259,21 @@ class images:
 
     def completed_range_results(self, results):
         ''' data results sent from signal from thread worker '''
+        self.update_status_bar('Completed Range Results', 3000)
         self.stopped_range_worker()
+        # first check if we have empty results (means we cannot plot)
+        if 'metric_over_range_results' in results:
+            if len(results['metric_over_range_results']) == 1:
+                if results['metric_over_range_results'][0] == {}:
+                    # dont plot
+                    return 
+        else:
+            # incorrect data
+            return
+        
         self.metric_over_range_results = results['metric_over_range_results']
-        self.data_lims['range_data'] = results['max_val']
+        if 'max_val' in results:
+            self.data_lims['range_data'] = results['max_val']
         if self.metrics_avg_graph:
             self.display_radar_plots()
         if self.metric_range_graph:
