@@ -37,8 +37,6 @@ def save_and_merge_df_as_csv(df, file):
     if os.path.exists(file):
         df_saved = pd.read_csv(file)
         index_name = df.index.name
-        print(df)
-        print(df_saved)
         df = pd.merge(df.reset_index(), df_saved, how='outer')
         df.set_index(index_name, inplace=True)
     df.to_csv(file, index=True)
