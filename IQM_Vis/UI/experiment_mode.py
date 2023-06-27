@@ -239,6 +239,8 @@ class make_experiment(QMainWindow):
                   self.widget_experiments['preamble']['quit_button'], self.quit)
 
         ''' experiment tab '''
+        self.widget_experiments['exp']['info'] = QLabel(
+            'Click on which image, A or B, is most similar to the reference image', self)
         for image in ['Reference', 'A', 'B']:
             self.widget_experiments['exp'][image] = {}
             self.widget_experiments['exp'][image]['data'] = ClickLabel(image)
@@ -265,7 +267,7 @@ class make_experiment(QMainWindow):
         self.widget_experiments['final']['save_label'] = QLabel('Warning: experiment couldnt save!', self)
 
     def experiment_layout(self):
-        # setup 
+        ''' setup '''
         experiment_text = QVBoxLayout()
         experiment_text.addWidget(self.widget_experiments['setup']['text'])
         experiment_setup_buttons = QHBoxLayout()
@@ -282,7 +284,7 @@ class make_experiment(QMainWindow):
         experiment_mode_setup.addStretch()
 
 
-        # info
+        ''' info '''
         experiment_info_buttons = QHBoxLayout()
         experiment_info_buttons.addWidget(
             self.widget_experiments['preamble']['start_button'])
@@ -295,35 +297,36 @@ class make_experiment(QMainWindow):
         experiment_mode_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
         experiment_mode_info.addLayout(experiment_info_buttons)
 
-        # experiment
-        reference = QVBoxLayout()
-        for name, widget in self.widget_experiments['exp']['Reference'].items():
-            reference.addWidget(widget)
-        reference.setAlignment(Qt.AlignmentFlag.AlignBottom)
-        A = QVBoxLayout()
-        for name, widget in self.widget_experiments['exp']['A'].items():
-            A.addWidget(widget)
-        A.setAlignment(Qt.AlignmentFlag.AlignTop)
-        B = QVBoxLayout()
-        for name, widget in self.widget_experiments['exp']['B'].items():
-            B.addWidget(widget)
-        B.setAlignment(Qt.AlignmentFlag.AlignTop)
+        ''' experiment '''
+        info = QVBoxLayout()
+        info.addWidget(self.widget_experiments['exp']['info'])
+        info.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        distorted_images = QHBoxLayout()
-        distorted_images.addLayout(A)
-        distorted_images.addLayout(B)
-        distorted_images.setAlignment(Qt.AlignmentFlag.AlignTop)
+        quit = QVBoxLayout()
+        quit.addWidget(self.widget_experiments['exp']['quit_button'])
+        quit.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        experiment_mode_images = QVBoxLayout()
-        experiment_mode_images.addLayout(reference)
-        experiment_mode_images.addLayout(distorted_images)
-        experiment_mode_images.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        layouts = []
+        for im in ['A', 'Reference', 'B']:
+            _layout = QVBoxLayout()
+            for _, widget in self.widget_experiments['exp'][im].items():
+                _layout.addWidget(widget)
+            _layout.setAlignment(Qt.AlignmentFlag.AlignTop)
+            layouts.append(_layout)
+
+        # add images to h box
+        experiment_images = QHBoxLayout()
+        for layout in layouts:
+            experiment_images.addLayout(layout)
+        experiment_images.setAlignment(Qt.AlignmentFlag.AlignTop)
 
         run_experiment = QVBoxLayout()
-        run_experiment.addLayout(experiment_mode_images)
-        run_experiment.addWidget(self.widget_experiments['exp']['quit_button'])
+        run_experiment.addLayout(info)
+        run_experiment.addLayout(experiment_images)
+        run_experiment.addLayout(quit)
         run_experiment.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
+        ''' finished '''
         finish_experiment = QVBoxLayout()
         finish_experiment.addWidget(self.widget_experiments['final']['order_text'])
         finish_experiment.addWidget(self.widget_experiments['final']['images'])
