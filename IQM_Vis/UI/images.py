@@ -107,6 +107,7 @@ class images:
         for i, data_store in enumerate(self.data_stores):
             if hasattr(data_store, 'human_scores'):
                 self.human_experiment_scores[i] = data_store.human_scores
+        self.widget_controls['label']['data_num'].setText(f'({self.data_num+1}/{self.max_data_ind+1})')
 
     def load_new_single_image(self):
         ''' change the image we are using '''

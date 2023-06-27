@@ -126,6 +126,8 @@ class widgets():
             self.widget_controls['button']['prev_data'].clicked.connect(partial(self.change_data, -1, True))
             self.widget_controls['label']['data'] = QLabel(self)
             self.widget_controls['label']['data'].setText('Change Image:')
+            self.widget_controls['label']['data_num'] = QLabel(self)
+            self.widget_controls['label']['data_num'].setText('1/1')
 
         # launch experiment button
         self.widget_controls['button']['launch_exp'] = QPushButton('Run Experiment', self)

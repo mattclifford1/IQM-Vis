@@ -111,6 +111,7 @@ class layout(QMainWindow):
             dataset_layout.addWidget(self.widget_controls['label']['data'])
             dataset_layout.addWidget(self.widget_controls['button']['prev_data'])
             dataset_layout.addWidget(self.widget_controls['button']['next_data'])
+            dataset_layout.addWidget(self.widget_controls['label']['data_num'])
 
         '''transform controls'''
         image_controls = QVBoxLayout()
