@@ -4,6 +4,7 @@ both use the same image for reference and transformed
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 import os
+import imghdr
 from functools import cache
 from collections import namedtuple
 import numpy as np
@@ -85,8 +86,17 @@ class dataset_holder(base_dataset_loader):
                 raise ValueError(f'image_list is empty')
             else:
                 return
-        self.image_list = image_list
-        self.image_list_to_transform = image_list
+        # remove any non image file paths
+        just_images = []
+        for image_file in image_list:
+            try:
+                image_format = imghdr.what(image_file)
+            except FileNotFoundError:
+                image_format = None
+            if image_format != None:
+                just_images.append(image_file)
+        self.image_list = just_images
+        self.image_list_to_transform = just_images
         self._load_image_data(0)
 
 

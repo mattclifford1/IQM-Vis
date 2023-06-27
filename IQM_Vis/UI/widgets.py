@@ -461,8 +461,11 @@ class widgets():
         if v == 0:
             self.status_bar.showMessage('Done', 3000)
 
-    def update_status_bar(self, v):
-        self.status_bar.showMessage(v)
+    def update_status_bar(self, v, time=None):
+        if time == None:
+            self.status_bar.showMessage(v)
+        elif isinstance(time, int):
+            self.status_bar.showMessage(v, time)
 
     '''
     experimetns

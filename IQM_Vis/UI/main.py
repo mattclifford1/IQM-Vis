@@ -58,7 +58,8 @@ class make_app(widgets, layout, images):
         # make file menu
         self.file_menu = self.menu_bar.addMenu('File')
         save_dir_action = self.file_menu.addAction('Set Save Folder')
-        load_images_action = self.file_menu.addAction('Load New Images')
+        load_image_action = self.file_menu.addAction('Load New Image')
+        load_images_action = self.file_menu.addAction('Load New Image Folder')
         load_human_action = self.file_menu.addAction('Load Human Scores')
         reload_action = self.file_menu.addAction('Redo Graphs')
         quit_action = self.file_menu.addAction('Quit')
@@ -66,6 +67,8 @@ class make_app(widgets, layout, images):
         save_dir_action.setStatusTip('Choose a folder to save project/experiments')
         save_dir_action.triggered.connect(self.change_save_folder)
 
+        load_image_action.setStatusTip('Choose an image to load')
+        load_image_action.triggered.connect(self.load_new_single_image)
         load_images_action.setStatusTip('Choose a folder of images to load')
         load_images_action.triggered.connect(self.load_new_images_folder)
 

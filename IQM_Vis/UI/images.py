@@ -4,6 +4,7 @@ UI image functions
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 
 import os
+import imghdr
 import glob
 import numpy as np
 import pandas as pd
@@ -107,6 +108,29 @@ class images:
             if hasattr(data_store, 'human_scores'):
                 self.human_experiment_scores[i] = data_store.human_scores
 
+    def load_new_single_image(self):
+        ''' change the image we are using '''
+        # get the file opener for the user
+        try:
+            start_dir = os.path.expanduser("~")
+            file, _ = QFileDialog.getOpenFileName(self,
+                                               "Choose Image",
+                                               start_dir,
+                                               "All Files (*);; PNG Files (*.png)")
+        except:
+            return
+        if file == ('', '') or file == '':
+            return
+        
+        if os.path.isfile(file):
+            image_format = imghdr.what(file)
+            if image_format == None:
+                self.update_status_bar(f'Not an image file: {file}', 10000)
+            else:
+                self.update_datastore_image_list([file])
+        else:
+            self.update_status_bar(f'Cannot find file: {file}', 10000)
+
 
     def load_new_images_folder(self):
         ''' change the image dataset we are using '''
@@ -126,12 +150,16 @@ class images:
         # remove and folders
         image_list = [f for f in image_list if os.path.isfile(f)]
         image_list.sort()
+
+        self.update_datastore_image_list(image_list)
+
+    def update_datastore_image_list(self, image_list):
         # change image dataset
         if hasattr(self.data_stores[0], 'load_image_list') and len(image_list) != 0:
             self.data_stores[0].load_image_list(image_list)
             self.data_num = 0
             self.construct_UI()
-            self.max_data_ind = len(image_list) - 1
+            self.max_data_ind = len(self.data_stores[0]) - 1
 
     def load_human_experiment(self):
         ''' change the image dataset we are using '''
