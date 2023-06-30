@@ -147,7 +147,10 @@ class make_experiment(QMainWindow):
                     'transform_value': param}
             self.original_params_order.append(make_name_for_trans(data))
 
+        # REFERENCE image
         self.ref_image = self.data_store.get_reference_image()
+        if hasattr(self.data_store, 'get_reference_unprocessed'):
+            self.ref_image_unprocessed = self.data_store.get_reference_unprocessed()
         # get MSE for experiments to get a rough sorting
         mses = []
         mse = IQM_Vis.IQMs.MSE()
@@ -264,7 +267,7 @@ class make_experiment(QMainWindow):
             self.quit)
         QShortcut(QKeySequence("Ctrl+Q"),
                 self.widget_experiments['final']['quit_button'], self.quit)
-        self.widget_experiments['final']['save_label'] = QLabel('Warning: experiment couldnt save!', self)
+        self.widget_experiments['final']['save_label'] = QLabel('Not saved yet', self)
 
     def experiment_layout(self):
         ''' setup '''
@@ -392,6 +395,9 @@ class make_experiment(QMainWindow):
         self.save_experiment()
         if self.saved == True:
             self.widget_experiments['final']['save_label'].setText(f'Saved to {self.default_save_dir}')
+        else:
+            self.widget_experiments['final']['save_label'].setText(f'Save failed to {self.default_save_dir}')
+
 
     def save_experiment(self):
         # get the current transform functions
@@ -416,7 +422,7 @@ class make_experiment(QMainWindow):
                     os.path.join(exp_save_dir, 'transforms', 'transform_functions.pkl'))
                 
                 # get image processing saved params
-                processing_file = os.path.join(exp_save_dir, 'transforms', 'processing.json')
+                processing_file = IQM_Vis.utils.save_utils.get_image_processing_file(exp_save_dir)
                 procesing_same = False
                 if os.path.exists(processing_file):
                     processing = IQM_Vis.utils.save_utils.load_json_dict(processing_file)
@@ -437,34 +443,39 @@ class make_experiment(QMainWindow):
         os.makedirs(self.default_save_dir, exist_ok=True)
         os.makedirs(os.path.join(self.default_save_dir, 'images'), exist_ok=True)
         os.makedirs(os.path.join(self.default_save_dir, 'transforms'), exist_ok=True)
+
+        # save experiment images
+        if not os.path.exists(IQM_Vis.utils.save_utils.get_original_image_file(self.default_save_dir)):
+            image_utils.save_image(self.ref_image,
+                                    IQM_Vis.utils.save_utils.get_original_image_file(self.default_save_dir))
+        if not os.path.exists(IQM_Vis.utils.save_utils.get_original_unprocessed_image_file(self.default_save_dir)):
+            if hasattr(self, 'ref_image_unprocessed'):
+                image_utils.save_image(self.ref_image_unprocessed,
+                                        IQM_Vis.utils.save_utils.get_original_unprocessed_image_file(self.default_save_dir))
         if new_dir == True:
-            # save experiment images
-            image_utils.save_image(
-                self.ref_image, os.path.join(self.default_save_dir, f'original.png'))
             for trans in self.experiment_transforms:
                 image_utils.save_image(
                     trans['image'], os.path.join(self.default_save_dir, 'images', f'{make_name_for_trans(trans)}.png'))
             # save the transformations
             IQM_Vis.utils.save_utils.save_obj(
-                os.path.join(self.default_save_dir, 'transforms', 'transform_params.pkl'),
+                IQM_Vis.utils.save_utils.get_transform_params_file(self.default_save_dir),
                 self.original_params_order)
             IQM_Vis.utils.save_utils.save_obj(
-                os.path.join(self.default_save_dir, 'transforms', 'transform_functions.pkl'),
+                IQM_Vis.utils.save_utils.get_transform_functions_file(self.default_save_dir),
                 dict(sorted(trans_funcs.items())))
             # save the image pre/post processing options
             IQM_Vis.utils.save_utils.save_json_dict(
-                os.path.join(self.default_save_dir, 'transforms', 'processing.json'),
+                IQM_Vis.utils.save_utils.get_image_processing_file(self.default_save_dir),
                 self.processing)
 
         # save the experiment results
         exp_order = []
         for trans in self.experiment_transforms:
             exp_order.append(make_name_for_trans(trans))
-        base_file = os.path.join(self.default_save_dir, f'{self.data_store.get_reference_image_name()}')
         csv_file = IQM_Vis.utils.save_utils.save_experiment_results(
             self.original_params_order,
             exp_order,
-            base_file,
+            self.default_save_dir,
             self.times_taken,
             self.IQM_scores_df)
         self.saved = True

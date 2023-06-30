@@ -9,6 +9,38 @@ import pandas as pd
 
 DEFAULT_SAVE_DIR = os.path.join(os.path.expanduser("~"), 'IQM-Vis-experiments')
 
+''' getters for experiment files from save dir '''
+def get_human_scores_file(dir):
+    last_dir = os.path.basename(os.path.normpath(dir))
+    prefix = last_dir.split('-')[0]
+    return os.path.join(dir, f'{prefix}-HUMAN-scores.csv')
+
+def get_human_times_file(dir):
+    last_dir = os.path.basename(os.path.normpath(dir))
+    prefix = last_dir.split('-')[0]
+    return os.path.join(dir, f'{prefix}-HUMAN-times-taken.csv')
+
+def get_IQM_file(dir):
+    last_dir = os.path.basename(os.path.normpath(dir))
+    prefix = last_dir.split('-')[0]
+    return os.path.join(dir, f'{prefix}-IQM-scores.csv')
+
+def get_original_image_file(dir):
+    return os.path.join(dir, 'original.png')
+
+def get_original_unprocessed_image_file(dir):
+    return os.path.join(dir, 'original-unprocessed.png')
+
+def get_image_processing_file(dir):
+    return os.path.join(dir, 'transforms', 'processing.json')
+
+def get_transform_params_file(dir):
+    return os.path.join(dir, 'transforms', 'transform_params.pkl')
+
+def get_transform_functions_file(dir):
+    return os.path.join(dir, 'transforms', 'transform_functions.pkl')
+
+''' other save helpers '''
 def save_obj(pickle_path, trans):
     ''' save transforms as pickle file '''
     with open(pickle_path, 'wb') as file:
@@ -42,7 +74,7 @@ def save_and_merge_df_as_csv(df, file):
     df.to_csv(file, index=True)
 
     
-def save_experiment_results(trans_names, results_order, base_file, times_taken=None, IQM_scores_df=None):
+def save_experiment_results(trans_names, results_order, save_dir, times_taken=None, IQM_scores_df=None):
     '''save all the experiment reults as csvs'''
     # make HIQM scores from ordering : HIQM = pos/num_pos
     results = {}
@@ -54,12 +86,12 @@ def save_experiment_results(trans_names, results_order, base_file, times_taken=N
     # re order so that the trans_names are acending order as given
     df = df[trans_names]
     # save results
-    human_experiment_csv_file = f"{base_file}-HUMAN-scores.csv"
+    human_experiment_csv_file = get_human_scores_file(save_dir)
     save_df_as_csv(df, human_experiment_csv_file, index=False)
 
     # save times taken
     if times_taken != None:
-        times_file = f"{base_file}-HUMAN-times-taken.csv"
+        times_file = get_human_times_file(save_dir)
         data = {'mean time (seconds)': [sum(times_taken)/len(times_taken)],
                 'total time (seconds)': [sum(times_taken)],
                 'number of comparisons': [len(times_taken)],
@@ -68,7 +100,7 @@ def save_experiment_results(trans_names, results_order, base_file, times_taken=N
 
     # save IQM results
     if not isinstance(IQM_scores_df, type(None)):
-        IQM_file = f"{base_file}-IQM-scores.csv"
+        IQM_file = get_IQM_file(save_dir)
         save_and_merge_df_as_csv(IQM_scores_df, IQM_file)
 
     return human_experiment_csv_file

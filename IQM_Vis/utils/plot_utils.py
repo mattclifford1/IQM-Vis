@@ -4,6 +4,7 @@ TODO: write docs how to use these (currently just have to look at the UI code)
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 from functools import partial
+import math
 
 import numpy as np
 import scipy.stats
@@ -127,10 +128,12 @@ class scatter_plotter:
         self.y_label = y_label
         self.lim = lim
 
-    def plot(self, x, y, annotations=None):
-        self.sc = self.ax.axes.scatter(x, y, picker=True)
-        if annotations is not None:
+    def plot(self, x, y, annotations=None, error=None):
+        self.sc = self.ax.axes.scatter(x, y, picker=True, color='blue')
+        if annotations != None:
             self.annotations = annotations
+        if error != None or error != []:
+            self.ax.axes.errorbar(x, y, yerr=error, fmt="o", capsize=3, color='black')
 
     def show(self):
         self.set_style()
@@ -179,9 +182,9 @@ def get_all_single_transform_params(transforms, num_steps=11):
             list_of_single_trans.append({curr_trans: val})
     return list_of_single_trans
 
-def compute_metric_for_human_correlation(data_store, transforms, metric_params, human_scores, metric):
+def compute_metric_for_human_correlation(data_store, transforms, metric_params, trans_str_values, metric):
     scores = {}
-    for trans_str in human_scores:
+    for trans_str in trans_str_values:
         trans, trans_value = gui_utils.get_trans_dict_from_str(trans_str)
         if trans in transforms.keys():
             single_trans = {trans: transforms[trans]}
@@ -355,12 +358,17 @@ def get_correlation_plot(human_scores, metric_scores, axes, metric, change_trans
                 y_label='Human Score')
     x = []
     y = []
+    e = []
     labels = []
-    for trans in human_scores:
+    for trans in human_scores['mean']:
         x.append(metric_scores[metric][trans])
-        y.append(human_scores[trans])
+        y.append(human_scores['mean'][trans])
+        std = human_scores['std'][trans]
+        if math.isnan(std):
+            std = 0
+        e.append(std)
         labels.append(trans)
-    sp.plot(x, y, annotations=labels)
+    sp.plot(x, y, annotations=labels, error=e)
     # make interactive hover for points
     annot = sp.ax.axes.annotate("", xy=(0, 0), xytext=(0, 0), textcoords="offset points",
                         bbox=dict(boxstyle="round", fc="w"),
@@ -398,9 +406,10 @@ def hover_scatter(_plot, annot, event):
 def update_annot(ind, _plot, annot):
     pos = _plot.sc.get_offsets()[ind["ind"][0]].copy()
     xlims = _plot.ax.axes.get_xlim()
-    xlim = xlims[1] - xlims[0]
-    if pos[0] > xlim/2:
-        pos[0] -= xlim/3
+    x_range = xlims[1] - xlims[0]
+    x_middle = xlims[0] + x_range/2
+    if pos[0] > x_middle:
+        pos[0] -= x_range/2
     # else:
     #     pos[0] += xlim/5
     annot.xy = pos

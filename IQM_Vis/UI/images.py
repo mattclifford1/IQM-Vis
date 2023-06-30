@@ -181,18 +181,27 @@ class images:
         
     def _change_human_exp(self, file):
         # load the csv human scores file and take mean of all experiments
+        self.update_status_bar(f'Loading experiment file: {file}', 10000)
         if os.path.exists(file):
             df = pd.read_csv(file)
-            experiment = df.mean().to_dict()
             for i, _ in enumerate(self.data_stores):
-                self.human_experiment_scores[i] = experiment
+                self.human_experiment_scores[i] = {'mean': df.mean().to_dict(),
+                                                   'std': df.std().to_dict()}
             self.human_scores_file = file
         else:
-            self.update_status_bar(f'No file: {file}')
+            self.update_status_bar(f'No experiment file: {file}', 10000)
             return
+        self._load_experiment_extras(os.path.dirname(file))
+        self.update_status_bar(f'Loaded experiment file: {file}', 10000)
+
+    def load_experiment(self, dir):
+        file = IQM_Vis.utils.save_utils.get_human_scores_file(dir)
         
+        self._change_human_exp(file)
+        
+    def _load_experiment_extras(self, dir):
         # load the image processing if available
-        processing_file = os.path.join(os.path.dirname(file), 'transforms', 'processing.json')
+        processing_file = IQM_Vis.utils.save_utils.get_image_processing_file(dir)
         if os.path.exists(processing_file):
             processing = IQM_Vis.utils.save_utils.load_json_dict(
                 processing_file)
@@ -212,11 +221,12 @@ class images:
             if updated == True:
                 self.update_image_settings()
         else:
-            self.update_status_bar('Warning: Could not find an image settings file in folder, make sure image pre/post processing settings are correct')
+            self.update_status_bar(f'Warning: No settings file ({processing_file}), make sure image pre/post processing settings are correct')
 
         # clear cache and update correlation plot
         self.reset_correlation_data()
         self.display_metric_correlation_plot()
+        self.tabs['graph'].setCurrentIndex(3)
 
     '''
     metric updaters
@@ -348,13 +358,13 @@ class images:
             if i in self.human_experiment_scores.keys():
                 # calculate metric at HIQM values (if not already cached)
                 if metric not in self.correlation_data[i].keys():
-                    scores = plot_utils.compute_metric_for_human_correlation(data_store,
+                    IQM_scores = plot_utils.compute_metric_for_human_correlation(data_store,
                                             self.checked_transformations,
                                             self.params_from_sliders['metric_params'],
-                                            self.human_experiment_scores[i],
-                                            metric)
+                                            trans_str_values = self.human_experiment_scores[i]['mean'].keys(),
+                                            metric=metric)
                     # cache it
-                    self.correlation_data[i][metric] = scores
+                    self.correlation_data[i][metric] = IQM_scores
                 plot = plot_utils.get_correlation_plot(self.human_experiment_scores[i],
                                                 self.correlation_data[i],
                                                 self.widget_row[i]['metrics']['correlation']['data'],

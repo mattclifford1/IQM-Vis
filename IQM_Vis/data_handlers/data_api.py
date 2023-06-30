@@ -106,6 +106,7 @@ class dataset_holder(base_dataset_loader):
         self.current_file = self.image_list[i]
         image_name_ref = os.path.splitext(os.path.basename(self.current_file))[0]
         image_data_ref = self.image_loader(self.current_file)
+        self.reference_unprocessed = image_data_ref
         if self.image_pre_processing is not None:
             image_data_ref = self.image_pre_processing(image_data_ref)
         self.image_reference = self.image_storer(image_name_ref, image_data_ref)
@@ -127,7 +128,7 @@ class dataset_holder(base_dataset_loader):
             del self.human_scores  # delete old scores (incase we dont have ones for new image)
         if hasattr(self, 'human_exp_df'):
             if image_name_ref in self.human_exp_df.index:
-                self.human_scores = self.human_exp_df.loc[image_name_ref].to_dict()
+                self.human_scores = {'mean': self.human_exp_df.loc[image_name_ref].to_dict()}
 
     def __len__(self):
         return len(self.image_list)
@@ -137,6 +138,9 @@ class dataset_holder(base_dataset_loader):
 
     def get_reference_image_name(self):
         return self.image_reference.name
+    
+    def get_reference_unprocessed(self):
+        return self.reference_unprocessed
 
     def get_reference_image(self):
         if hash(self.image_post_processing) != self.image_post_processing_hash:
