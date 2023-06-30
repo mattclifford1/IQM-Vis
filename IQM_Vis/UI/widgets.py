@@ -132,6 +132,9 @@ class widgets():
         # launch experiment button
         self.widget_controls['button']['launch_exp'] = QPushButton('Run Experiment', self)
         self.widget_controls['button']['launch_exp'].clicked.connect(self.launch_experiment)
+        # load experiment button
+        self.widget_controls['button']['load_exp'] = QPushButton('Load Experiment', self)
+        self.widget_controls['button']['load_exp'].clicked.connect(self.load_experiment_from_dir)
 
 
         '''sliders'''

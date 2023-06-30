@@ -100,6 +100,8 @@ class layout(QMainWindow):
                 graph_controls.addWidget(self.widget_controls['button']['prev_correlation_graph'])
                 graph_controls.addWidget(self.widget_controls['button']['next_correlation_graph'])
                 correlation_graph.addLayout(graph_controls)
+                '''load experiment'''
+                correlation_graph.addWidget(self.widget_controls['button']['load_exp'])
                 utils.add_layout_to_tab(self.tabs['graph'], correlation_graph, 'Correlation')
             graph_layouts.addWidget(self.tabs['graph'])
             graph_layouts.addStretch()

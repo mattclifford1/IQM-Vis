@@ -194,10 +194,23 @@ class images:
         self._load_experiment_extras(os.path.dirname(file))
         self.update_status_bar(f'Loaded experiment file: {file}', 10000)
 
-    def load_experiment(self, dir):
+    def _load_experiment(self, dir):
         file = IQM_Vis.utils.save_utils.get_human_scores_file(dir)
-        
         self._change_human_exp(file)
+
+    def load_experiment_from_dir(self):
+        # get the file opener for the user
+        try:
+            start_dir = IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR
+            dir = QFileDialog.getExistingDirectory(self, 
+                                                   'Choose Experiment Folder',
+                                                   start_dir)
+        except:
+            return
+
+        if dir == '':
+            return   
+        self._load_experiment(dir)
         
     def _load_experiment_extras(self, dir):
         # load the image processing if available
@@ -376,7 +389,7 @@ class images:
             else:
                 self.widget_row[i]['metrics']['correlation']['data'].axes.clear()
                 self.widget_row[i]['metrics']['correlation']['data'].axes.text(
-                    0.5, 0.5, 'Go to: File->Load Human Scores', horizontalalignment='center', verticalalignment='center')
+                    0.5, 0.5, 'Go to: File->Load Human Scores for .csv\nor Use Button below', horizontalalignment='center', verticalalignment='center')
                 self.widget_row[i]['metrics']['correlation']['data'].draw()
 
     def change_metric_correlations_graph(self, add=1):
