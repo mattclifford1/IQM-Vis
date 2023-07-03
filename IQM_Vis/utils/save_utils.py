@@ -15,6 +15,10 @@ def get_human_scores_file(dir):
     prefix = last_dir.split('-')[0]
     return os.path.join(dir, f'{prefix}-HUMAN-scores.csv')
 
+def get_image_name_from_human_scores(dir):
+    file_path = get_human_scores_file(dir)
+    return os.path.basename(file_path)[:-len('-HUMAN-scores.csv')]
+
 def get_human_times_file(dir):
     last_dir = os.path.basename(os.path.normpath(dir))
     prefix = last_dir.split('-')[0]

@@ -97,6 +97,7 @@ class dataset_holder(base_dataset_loader):
                 just_images.append(image_file)
         self.image_list = just_images
         self.image_list_to_transform = just_images
+        self.image_names = [get_image_name(file) for file in self.image_list]
         self._load_image_data(0)
 
 
@@ -104,7 +105,7 @@ class dataset_holder(base_dataset_loader):
         # reference image
         self.image_post_processing_hash = None
         self.current_file = self.image_list[i]
-        image_name_ref = os.path.splitext(os.path.basename(self.current_file))[0]
+        image_name_ref = get_image_name(self.current_file)
         image_data_ref = self.image_loader(self.current_file)
         self.reference_unprocessed = image_data_ref
         if self.image_pre_processing is not None:
@@ -117,7 +118,7 @@ class dataset_holder(base_dataset_loader):
         if self.current_file == self.image_list_to_transform[i]:
             self.image_to_transform = self.image_storer(image_name_ref, image_data_ref)
         else:
-            image_name_trans = os.path.splitext(os.path.basename(self.image_list_to_transform[i]))[0]
+            image_name_trans = get_image_name(self.image_list_to_transform[i])
             image_data_trans = self.image_loader(self.image_list_to_transform[i])
             if self.image_pre_processing is not None:
                 image_data_trans = self.image_pre_processing(image_data_trans)
@@ -197,3 +198,8 @@ class dataset_holder(base_dataset_loader):
             if type(item[0]) != item[1]:
                 var_name = f'{item[0]=}'.split('=')[0]
                 raise TypeError(f'holder input: {var_name} should be a {item[1]} not {type(item[0])}')
+
+
+def get_image_name(file_path):
+    # get name of image from filepath
+    return os.path.splitext(os.path.basename(file_path))[0]

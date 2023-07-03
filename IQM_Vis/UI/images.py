@@ -75,6 +75,11 @@ class images:
     '''
     change image in dataset
     '''
+    def change_to_data_num(self, ind):
+        # change to an exact ind in the data list - be careful that the ind exists!!!
+        self.data_num = ind
+        self.change_data(0)
+
     def change_data(self, ival, _redo_plots=True):
         # reset any range/correlation data stored
         if hasattr(self, 'correlation_data'):
@@ -180,6 +185,8 @@ class images:
         self._change_human_exp(file)
         
     def _change_human_exp(self, file):
+        # load image
+        self._load_experiment_image(os.path.dirname(file))
         # load the csv human scores file and take mean of all experiments
         self.update_status_bar(f'Loading experiment file: {file}', 10000)
         if os.path.exists(file):
@@ -211,6 +218,16 @@ class images:
         if dir == '':
             return   
         self._load_experiment(dir)
+
+    def _load_experiment_image(self, dir):
+        # load image if available already
+        exp_image_name = IQM_Vis.utils.save_utils.get_image_name_from_human_scores(dir)
+        if hasattr(self.data_stores[0], 'image_names'):
+            if exp_image_name in self.data_stores[0].image_names:
+                ind = self.data_stores[0].image_names.index(exp_image_name)
+                self.change_to_data_num(ind)
+        else:
+            self.update_status_bar(f'Could not find {exp_image_name} in dataset', 10000)
         
     def _load_experiment_extras(self, dir):
         # load the image processing if available

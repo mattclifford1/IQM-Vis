@@ -130,6 +130,8 @@ class make_experiment(QMainWindow):
         # QApplication.processEvents()
             
     def get_all_images(self):
+        ''' save image name '''
+        self.image_name = self.data_store.get_reference_image_name()
         ''' load all transformed images and sort them via MSE '''
         self.experiment_trans_params = plot_utils.get_all_single_transform_params(
             self.checked_transformations, num_steps=self.num_trans_values)
@@ -407,7 +409,7 @@ class make_experiment(QMainWindow):
             trans_funcs[trans_name] = self.checked_transformations[trans_name]['function']
         # make the experiment directory
         self.default_save_dir = os.path.join(
-            self.default_save_dir, self.data_store.get_reference_image_name())
+            self.default_save_dir, self.image_name)
         # get a unique directory (same image with diff trans need a new dir)
         i = 1
         unique_dir_found = False
@@ -549,7 +551,7 @@ class make_experiment(QMainWindow):
             return
         self.able_to_click = False
         # get comparison to pivot
-        trans_str = image_name[len(self.data_store.get_reference_image_name())+1:]
+        trans_str = image_name[len(self.image_name)+1:]
         if trans_str != make_name_for_trans(self.pivot): # lower value
             # If element smaller than pivot is found swap it with the greater element pointed by i
             self.less_than_pivot = True
@@ -579,10 +581,10 @@ class make_experiment(QMainWindow):
         
         gui_utils.change_im(self.widget_experiments['exp']['A']['data'], A, resize=self.image_display_size,
                             rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
-        self.widget_experiments['exp']['A']['data'].setObjectName(f'{self.data_store.get_reference_image_name()}-{make_name_for_trans(A_trans)}')
+        self.widget_experiments['exp']['A']['data'].setObjectName(f'{self.image_name}-{make_name_for_trans(A_trans)}')
         gui_utils.change_im(self.widget_experiments['exp']['B']['data'], B, resize=self.image_display_size,
                             rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
-        self.widget_experiments['exp']['B']['data'].setObjectName(f'{self.data_store.get_reference_image_name()}-{make_name_for_trans(B_trans)}')
+        self.widget_experiments['exp']['B']['data'].setObjectName(f'{self.image_name}-{make_name_for_trans(B_trans)}')
 
     ''' UI '''
     def init_style(self, style='light', css_file=None):
