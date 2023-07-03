@@ -331,8 +331,9 @@ class widgets():
 
     def set_image_name_text(self):
         for i, data_store in enumerate(self.data_stores):
-            self.widget_row[i]['images']['original']['label'].setText(data_store.get_reference_image_name())
-            self.widget_row[i]['images']['transformed']['label'].setText(gui_utils.get_transformed_image_name(data_store))
+            res = gui_utils.get_resolutions(data_store)
+            self.widget_row[i]['images']['original']['label'].setText(f"{data_store.get_reference_image_name()}\n{res['reference']}")
+            self.widget_row[i]['images']['transformed']['label'].setText(f"{gui_utils.get_transformed_image_name(data_store)}\n{res['transform']}")
             for metric_image in data_store.metric_images:
                 if metric_image in self.checked_metric_images:
                     metric_name = gui_utils.get_metric_image_name(metric_image, data_store)

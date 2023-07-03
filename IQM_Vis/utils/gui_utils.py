@@ -79,6 +79,12 @@ def get_transformed_image_name(data_store):
 def get_image_pair_name(data_store):
     return str((data_store.get_reference_image_name(), get_transformed_image_name(data_store)))
 
+def get_resolutions(data_store):
+    ref = data_store.get_reference_image().shape
+    trans = data_store.get_image_to_transform().shape
+    return {'reference': f'{ref[0]}x{ref[1]}',
+            'transform': f'{trans[0]}x{trans[1]}'}
+
 
 '''
 matplotlib widget utils
