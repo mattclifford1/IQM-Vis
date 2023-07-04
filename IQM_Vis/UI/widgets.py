@@ -173,6 +173,8 @@ class widgets():
             self.widget_experiment_controls[trans_name] = {}
             self.widget_experiment_controls[trans_name]['check_box'] = QCheckBox(self)
             self.widget_experiment_controls[trans_name]['check_box'].setChecked(True)
+            self.widget_experiment_controls[trans_name]['check_box'].stateChanged.connect(partial(self.change_text_exp_trans, 
+                                                                                                  trans=trans_name))
 
             self.widget_experiment_controls[trans_name]['name'] = QLabel(self)
             self.widget_experiment_controls[trans_name]['name'].setText(trans_name)
@@ -506,6 +508,19 @@ class widgets():
     '''
     experimetns
     '''
+    def change_text_exp_trans(self, trans):
+        ''' change colour of text when checkbox is pressed '''
+        checked = self.widget_experiment_controls[trans]['check_box'].isChecked()
+        for widget in self.widget_experiment_controls[trans]:
+            if widget == 'check_box':
+                pass
+            else:
+                self.widget_experiment_controls[trans][widget].setEnabled(checked)
+                if checked == True:
+                    self.widget_experiment_controls[trans][widget].setStyleSheet(f"QLineEdit {{color: {self.settings_text_colour_original};}}\nQLabel {{color: {self.settings_text_colour_original};}}")
+                else:
+                    self.widget_experiment_controls[trans][widget].setStyleSheet(f"QLineEdit {{color: gray;}}\nQLabel {{color: gray;}}")
+
     def launch_experiment(self):
         if self.checked_transformations != {}:
             self.experiment = IQM_Vis.UI.make_experiment(self.checked_transformations,

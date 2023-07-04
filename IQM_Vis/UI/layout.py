@@ -154,6 +154,7 @@ class layout(QMainWindow):
                 inner_layout.addWidget(item['widget'])
             else:
                 inner_layout.addWidget(item)
+            inner_layout.addStretch()
             settings_controls.addLayout(inner_layout)
         settings_controls.addStretch()
 
