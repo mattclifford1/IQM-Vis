@@ -607,6 +607,8 @@ class reset_image_widget_to_black(QObject):
         super().__init__()
         self.running = True
         self.time = time
+        self.black_array = np.zeros([100, 100, 3])
+        # self.black_array[:, :, 1] = 1 # blue
 
     @pyqtSlot(dict)
     def change_to_solid(self, data):
@@ -614,10 +616,8 @@ class reset_image_widget_to_black(QObject):
         image_display_size = data['image_display_size']
         widget = data['widget']
         # make clicked image black to show user
-        black_array = np.zeros([100, 100, 3])
-        # black_array[:, :, 1] = 1
         gui_utils.change_im(widget,
-                            black_array,
+                            self.black_array,
                             resize=image_display_size)
         # pause for half the time needed (will use the loop below to wait for full time and also see if image has turned black yet)
         time.sleep(self.time/2)
