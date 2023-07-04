@@ -125,8 +125,10 @@ class layout(QMainWindow):
             tran_layout.addWidget(self.widget_controls['slider'][key]['value'])
             image_controls.addLayout(tran_layout)
             image_controls.addStretch()
-        image_controls.addWidget(
-            self.widget_controls['button']['transforms']['reset_sliders'])
+        reset_button = QHBoxLayout()
+        reset_button.addWidget(self.widget_controls['button']['transforms']['reset_sliders'])
+        reset_button.addStretch()
+        image_controls.addLayout(reset_button)
 
         '''metric_param controls'''
         metric_controls = QVBoxLayout()
@@ -136,8 +138,11 @@ class layout(QMainWindow):
             inner_metric_layout.addWidget(self.widget_controls['slider'][key]['data'])
             inner_metric_layout.addWidget(self.widget_controls['slider'][key]['value'])
             metric_controls.addLayout(inner_metric_layout)
-        metric_controls.addWidget(
-            self.widget_controls['button']['metric_params']['reset_sliders'])
+        reset_button = QHBoxLayout()
+        reset_button.addWidget(self.widget_controls['button']['metric_params']['reset_sliders'])
+        reset_button.addStretch()
+
+        metric_controls.addLayout(reset_button)
         metric_controls.addStretch()
 
         '''settings controls'''
@@ -152,19 +157,27 @@ class layout(QMainWindow):
             settings_controls.addLayout(inner_layout)
         settings_controls.addStretch()
 
-        ''' parameter controls tab'''
-        self.tabs['slider'] = QTabWidget()
-        self.tabs['slider'] = QTabWidget()
-        for tab_layout, tab_name in zip([image_controls, metric_controls, settings_controls],
-                                        ['transforms', 'metric params', 'settings']):
-            utils.add_layout_to_tab(self.tabs['slider'], tab_layout, tab_name)
+        ''' experiment controls'''
+        experiment_controls = QVBoxLayout()
+        # tranformations
+        for trans_name in self.widget_experiment_controls:
+            experiment_trans = QHBoxLayout()
+            for _, widget in self.widget_experiment_controls[trans_name].items():
+                experiment_trans.addWidget(widget)
+                experiment_trans.addStretch()
+            experiment_controls.addLayout(experiment_trans)
+        experiment_controls.addStretch()
+        # run experiment button
+        experiment_button = QHBoxLayout()
+        experiment_button.addWidget(self.widget_controls['button']['launch_exp'])
+        experiment_button.addStretch()
+        experiment_controls.addLayout(experiment_button)
 
-        ''' reset sliders button'''
-        # reset sliders button
-        reset_button = QHBoxLayout()
-        # reset_button.addWidget(self.widget_controls['button']['reset_sliders'])
-        reset_button.addWidget(self.widget_controls['button']['launch_exp'])
-        reset_button.addStretch()
+        ''' add to parameter controls tab'''
+        self.tabs['slider'] = QTabWidget()
+        for tab_layout, tab_name in zip([image_controls, metric_controls, settings_controls, experiment_controls],
+                                        ['transforms', 'metric params', 'image settings', 'experiment']):
+            utils.add_layout_to_tab(self.tabs['slider'], tab_layout, tab_name)
 
         '''re calc graphs button'''
         graph_button = QVBoxLayout()
@@ -186,7 +199,6 @@ class layout(QMainWindow):
 
         controls = QVBoxLayout()
         controls.addWidget(self.tabs['slider'])
-        controls.addLayout(reset_button)
 
         images_plus_controls = QVBoxLayout()
         images_plus_controls.addLayout(all_images)

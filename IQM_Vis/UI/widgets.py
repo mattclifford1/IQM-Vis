@@ -6,7 +6,7 @@ from functools import partial
 
 import numpy as np
 from PyQt6.QtWidgets import QPushButton, QLabel, QSlider, QCheckBox, QComboBox, QLineEdit
-from PyQt6.QtGui import QIntValidator, QPalette
+from PyQt6.QtGui import QIntValidator, QDoubleValidator,  QPalette
 from PyQt6.QtCore import Qt, pyqtSlot
 
 import IQM_Vis
@@ -166,6 +166,36 @@ class widgets():
                 self.widget_controls['slider'][key]['value'] = QLabel(self)
                 self.widget_controls['slider'][key]['value'].setAlignment(Qt.AlignmentFlag.AlignCenter)
                 self.widget_controls['slider'][key]['value'].setText(str(self.params_from_sliders['transforms'][key]))
+
+        ''' experiment options '''
+        self.widget_experiment_controls = {}
+        for trans_name, deets in self.checked_transformations.items():
+            self.widget_experiment_controls[trans_name] = {}
+            self.widget_experiment_controls[trans_name]['check_box'] = QCheckBox(self)
+            self.widget_experiment_controls[trans_name]['check_box'].setChecked(True)
+
+            self.widget_experiment_controls[trans_name]['name'] = QLabel(self)
+            self.widget_experiment_controls[trans_name]['name'].setText(trans_name)
+
+            self.widget_experiment_controls[trans_name]['min'] = QLabel(self)
+            self.widget_experiment_controls[trans_name]['min'].setText('min:')
+            self.widget_experiment_controls[trans_name]['min_edit'] = QLineEdit()
+            self.widget_experiment_controls[trans_name]['min_edit'].setValidator(QDoubleValidator())
+            self.widget_experiment_controls[trans_name]['min_edit'].setText(f"{deets['min']}")
+
+            self.widget_experiment_controls[trans_name]['max'] = QLabel(self)
+            self.widget_experiment_controls[trans_name]['max'].setText('max:')
+            self.widget_experiment_controls[trans_name]['max_edit'] = QLineEdit()
+            self.widget_experiment_controls[trans_name]['max_edit'].setValidator(QDoubleValidator())
+            self.widget_experiment_controls[trans_name]['max_edit'].setText(f"{deets['max']}")
+
+            self.widget_experiment_controls[trans_name]['steps'] = QLabel(self)
+            self.widget_experiment_controls[trans_name]['steps'].setText('steps:')
+            self.widget_experiment_controls[trans_name]['steps_edit'] = QLineEdit()
+            self.widget_experiment_controls[trans_name]['steps_edit'].setValidator(QIntValidator())
+            self.widget_experiment_controls[trans_name]['steps_edit'].setMaxLength(2)
+            self.widget_experiment_controls[trans_name]['steps_edit'].setText(f"{self.num_step_experiment}")
+
 
     '''
     setup/helper functions
