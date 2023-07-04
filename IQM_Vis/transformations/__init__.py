@@ -21,7 +21,7 @@ def get_all_transforms():
         'saturation': {'min': -0.5, 'max': 0.5, 'function': saturation},
         # 'brightness_hsv': {'min': -1.0, 'max': 1, 'function': brightness_hsv},
         'blur':{'min':1, 'max':41, 'normalise':'odd', 'function':blur},
-        'Gaussian': {'init_value': 0.0, 'min': 0.0, 'max': 0.5, 'function': Gaussian_noise},
+        'Gaussian Noise': {'init_value': 0.0, 'min': 0.0, 'max': 0.5, 'function': Gaussian_noise},
         'salt pepper': {'init_value': 0.0, 'min': 0.0, 'max': 0.05, 'function': salt_and_pepper_noise},
         'jpg comp.':{'init_value':101, 'min':1, 'max':101, 'function':jpeg_compression},
         'rotation':{'min':-180, 'max':180, 'function':rotation},

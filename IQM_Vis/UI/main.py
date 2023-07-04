@@ -50,6 +50,8 @@ class make_app(widgets, layout, images):
         self.graph_size = 35
         self.rgb_brightness = 250  # max candela/m2 of rbg image
         self.display_brightness = 250  # max candela/m2 of display
+
+        self.human_experiment_cache = {}
         self.construct_UI()
 
     def make_menu(self):
@@ -61,6 +63,7 @@ class make_app(widgets, layout, images):
         load_image_action = self.file_menu.addAction('Load New Image')
         load_images_action = self.file_menu.addAction('Load New Image Folder')
         load_human_action = self.file_menu.addAction('Load Human Scores')
+        load_experiment = self.file_menu.addAction('Load Experiment')
         reload_action = self.file_menu.addAction('Redo Graphs')
         quit_action = self.file_menu.addAction('Quit')
 
@@ -72,8 +75,11 @@ class make_app(widgets, layout, images):
         load_images_action.setStatusTip('Choose a folder of images to load')
         load_images_action.triggered.connect(self.load_new_images_folder)
 
-        load_human_action.setStatusTip('Choose a human scores experiment')
+        load_human_action.setStatusTip('Choose a human scores from csv file')
         load_human_action.triggered.connect(self.load_human_experiment)
+
+        load_experiment.setStatusTip('Load experiment setup for folder')
+        load_experiment.triggered.connect(self.load_experiment_from_dir)
 
         reload_action.setShortcut('Ctrl+R')
         reload_action.setStatusTip('')
@@ -178,7 +184,7 @@ class make_app(widgets, layout, images):
         # init the UI widgets and layouts
         self.init_style()     # layout.py
         self.init_widgets()   # widgets.py
-        self.change_data(0, _redo_plots=True)   # images.py   - load first data instance
+        self.change_data(0, _redo_plots=True)   # images.py
         self.init_layout()    # layout.py
         self.tabs['slider'].setCurrentIndex(tabs_index['slider'])
         self.tabs['graph'].setCurrentIndex(tabs_index['graph'])

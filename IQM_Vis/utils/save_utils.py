@@ -30,10 +30,12 @@ def get_IQM_file(dir):
     return os.path.join(dir, f'{prefix}-IQM-scores.csv')
 
 def get_original_image_file(dir):
-    return os.path.join(dir, 'original.png')
+    return os.path.join(dir, 'reference.png')
 
 def get_original_unprocessed_image_file(dir):
-    return os.path.join(dir, 'original-unprocessed.png')
+    last_dir = os.path.basename(os.path.normpath(dir))
+    prefix = last_dir.split('-')[0]
+    return os.path.join(dir, f'{prefix}.png')
 
 def get_image_processing_file(dir):
     return os.path.join(dir, 'transforms', 'processing.json')

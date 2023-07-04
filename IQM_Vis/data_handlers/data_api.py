@@ -80,6 +80,10 @@ class dataset_holder(base_dataset_loader):
 
         self._check_inputs()
 
+    def get_image_dataset_list(self):
+        # get image file list
+        return self.image_list
+
     def load_image_list(self, image_list):
         if len(image_list) == 0:
             if not hasattr(self, 'image_list'):

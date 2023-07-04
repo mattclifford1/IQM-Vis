@@ -40,6 +40,8 @@ def load_image(image_path):
     img = np.array(img)
     if img.dtype == 'uint8':
         img = img/255
+    if img.shape[2] > 3:
+        img = img[:, :, :3]
     return img
 
 def save_image(img, path):

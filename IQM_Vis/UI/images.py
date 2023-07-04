@@ -110,7 +110,13 @@ class images:
         # load human experiment if any
         self.human_experiment_scores = {}
         for i, data_store in enumerate(self.data_stores):
-            if hasattr(data_store, 'human_scores'):
+            # first try get from UI
+            # load most recent correlation plots
+            name = data_store.get_reference_image_name()
+            if name in self.human_experiment_cache:
+                self._load_experiment(self.human_experiment_cache[name], change_image=False)
+            # otherwise from the datastore scores
+            elif hasattr(data_store, 'human_scores'):
                 self.human_experiment_scores[i] = data_store.human_scores
         self.widget_controls['label']['data_num'].setText(f'({self.data_num+1}/{self.max_data_ind+1})')
 
@@ -159,13 +165,25 @@ class images:
 
         self.update_datastore_image_list(image_list)
 
-    def update_datastore_image_list(self, image_list):
+    def update_datastore_image_list(self, image_list, append_dataset=False): # onyl changes the first datastore
+        # make sure that we have some images
+        if image_list == []:
+            self.update_status_bar('No images found', 10000)
+            return
+        # get all images if possible and we want to append images to the current dataset
+        if append_dataset == True and hasattr(self.data_stores[0], 'get_image_dataset_list'):
+            image_list = self.data_stores[0].get_image_dataset_list() + image_list
+            data_num_to_change_to = len(self.data_stores[0])
+        else:
+            data_num_to_change_to = 0
         # change image dataset
         if hasattr(self.data_stores[0], 'load_image_list') and len(image_list) != 0:
             self.data_stores[0].load_image_list(image_list)
-            self.data_num = 0
-            self.construct_UI()
             self.max_data_ind = len(self.data_stores[0]) - 1
+            self.data_num = data_num_to_change_to
+            self.construct_UI()
+        else:
+            self.update_status_bar('Failed to update images', 10000)
 
     def load_human_experiment(self):
         ''' change the image dataset we are using '''
@@ -184,16 +202,19 @@ class images:
             return
         self._change_human_exp(file)
         
-    def _change_human_exp(self, file):
+    def _change_human_exp(self, file, change_image=True):
         # load image
-        self._load_experiment_image(os.path.dirname(file))
+        if change_image == True:
+            self._load_experiment_image(os.path.dirname(file))
         # load the csv human scores file and take mean of all experiments
         self.update_status_bar(f'Loading experiment file: {file}', 10000)
         if os.path.exists(file):
             df = pd.read_csv(file)
-            for i, _ in enumerate(self.data_stores):
+            for i, data_store in enumerate(self.data_stores):
                 self.human_experiment_scores[i] = {'mean': df.mean().to_dict(),
                                                    'std': df.std().to_dict()}
+                # cache this as the last used dataset for this image
+                self.human_experiment_cache[data_store.get_reference_image_name()] = os.path.dirname(file)
             self.human_scores_file = file
         else:
             self.update_status_bar(f'No experiment file: {file}', 10000)
@@ -201,9 +222,9 @@ class images:
         self._load_experiment_extras(os.path.dirname(file))
         self.update_status_bar(f'Loaded experiment file: {file}', 10000)
 
-    def _load_experiment(self, dir):
+    def _load_experiment(self, dir, change_image=True):
         file = IQM_Vis.utils.save_utils.get_human_scores_file(dir)
-        self._change_human_exp(file)
+        self._change_human_exp(file, change_image=change_image)
 
     def load_experiment_from_dir(self):
         # get the file opener for the user
@@ -222,12 +243,19 @@ class images:
     def _load_experiment_image(self, dir):
         # load image if available already
         exp_image_name = IQM_Vis.utils.save_utils.get_image_name_from_human_scores(dir)
+        exp_saved_image = IQM_Vis.utils.save_utils.get_original_unprocessed_image_file(dir)
         if hasattr(self.data_stores[0], 'image_names'):
             if exp_image_name in self.data_stores[0].image_names:
                 ind = self.data_stores[0].image_names.index(exp_image_name)
                 self.change_to_data_num(ind)
+            # else load it from the experiment
+            elif os.path.exists(exp_saved_image):
+                self.update_datastore_image_list([exp_saved_image], append_dataset=True)
+        # else load it from the experiment
+        elif os.path.exists(exp_saved_image):
+            self.update_datastore_image_list([exp_saved_image], append_dataset=True)
         else:
-            self.update_status_bar(f'Could not find {exp_image_name} in dataset', 10000)
+            self.update_status_bar(f'No {exp_image_name} in dataset or file {exp_saved_image}', 10000)
         
     def _load_experiment_extras(self, dir):
         # load the image processing if available
