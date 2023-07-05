@@ -15,7 +15,7 @@ def run():
     metrs.pop('1-MS_SSIM')
     data = IQM_Vis.dataset_holder(image_list,
                                   metrs,
-                                  IQM_Vis.metrics.get_all_metric_images()
+                                #   IQM_Vis.metrics.get_all_metric_images()
                                   )
 
 

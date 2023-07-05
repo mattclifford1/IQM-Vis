@@ -33,30 +33,26 @@ class make_experiment(QMainWindow):
     reset_clicked_image = pyqtSignal(dict)
 
     def __init__(self, 
-                 checked_transformations, 
+                 checked_transformation_params, 
                  data_store, 
                  image_display_size,
                  rgb_brightness,
                  display_brightness,
                  default_save_dir=IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR,
-                 num_trans_values=6,
                  image_preprocessing='None',
                  image_postprocessing='None',
                  checked_metrics={}):
         super().__init__()
-        self.checked_transformations = checked_transformations
-        self.checked_metrics = checked_metrics
-        if self.checked_transformations == {}:
+        self.checked_transformation_params = checked_transformation_params
+        if self.checked_transformation_params == {}:
             return
+        self.checked_metrics = checked_metrics
         self.data_store = data_store
         self.image_display_size = image_display_size
         self.rgb_brightness = rgb_brightness
         self.display_brightness = display_brightness
         self.default_save_dir = default_save_dir
-        self.num_trans_values = num_trans_values
-        # calc expected number of comparisons - http://homepages.math.uic.edu/~leon/cs-mcs401-r07/handouts/quicksort-continued.pdf
-        self.expected_comps = 1.39 * self.num_trans_values * \
-            np.log(self.num_trans_values)
+        
         self.processing = {'pre': image_preprocessing,
                            'post': image_postprocessing}
 
@@ -73,8 +69,8 @@ class make_experiment(QMainWindow):
         self.stop_event = threading.Event()
         self.saved = False
         self.quit_experiment = False
-        self._init_experiment_window_widgets()
         self.get_all_images()
+        self._init_experiment_window_widgets()
         self.get_metric_scores()
         self.experiment_layout()
         self.setCentralWidget(self.experiments_tab)
@@ -133,8 +129,9 @@ class make_experiment(QMainWindow):
         ''' save image name '''
         self.image_name = self.data_store.get_reference_image_name()
         ''' load all transformed images and sort them via MSE '''
+        # get all the transform values
         self.experiment_trans_params = plot_utils.get_all_single_transform_params(
-            self.checked_transformations, num_steps=self.num_trans_values)
+            self.checked_transformation_params, num_steps='from_dict')
 
         # remove any params with value 0 
         self.experiment_trans_params = [
@@ -177,6 +174,13 @@ class make_experiment(QMainWindow):
                     'transform_value': param,
                     'image': img}
             self.experiment_transforms.append(data)
+        self.calc_max_comparisons(num_images=len(self.experiment_transforms))
+    
+    def calc_max_comparisons(self, num_images):
+        # calc expected number of comparisons - 
+        # http://homepages.math.uic.edu/~leon/cs-mcs401-r07/handouts/quicksort-continued.pdf
+        self.min_expected_comps = num_images * np.log(num_images)
+        self.max_expected_comps = 1.39 * num_images * np.log(num_images)
     
     def get_metric_scores(self):
         '''get IQM scores to save alongside the experiment for plotting/analysis purposes'''
@@ -209,13 +213,13 @@ class make_experiment(QMainWindow):
         self.widget_experiments['setup']['text'].setText(f'''
         Experiment to be setup with the above images using the settings:
             Save folder: {self.default_save_dir}
-            Number of steps per transform: {self.num_trans_values}
             Image Display Size: {self.image_display_size}
             Image Calibration:
                 Max RGB Brightness: {self.rgb_brightness}
                 Max Display Brightness: {self.display_brightness}
 
-            MAX Expected Number of Comparisons: {int(self.expected_comps)}
+            Expected Number of Comparisons: {int(self.min_expected_comps)}
+            MAX Expected Number of Comparisons: {int(self.max_expected_comps)}
 
         Click the Setup button to setup up the experiment and hand over to the test subject.
         ''')
@@ -406,7 +410,7 @@ class make_experiment(QMainWindow):
         trans_funcs = {}
         for single_trans in self.experiment_trans_params:
             trans_name = list(single_trans.keys())[0]
-            trans_funcs[trans_name] = self.checked_transformations[trans_name]['function']
+            trans_funcs[trans_name] = self.checked_transformation_params[trans_name]['function']
         # make the experiment directory
         self.default_save_dir = os.path.join(
             self.default_save_dir, self.image_name)
@@ -572,7 +576,7 @@ class make_experiment(QMainWindow):
     def get_single_transform_im(self, single_trans_dict):
         trans_name = list(single_trans_dict)[0]
         return image_utils.get_transform_image(self.data_store,
-                                        {trans_name: self.checked_transformations[trans_name]},
+                                        {trans_name: self.checked_transformation_params[trans_name]},
                                         single_trans_dict)
 
     def change_experiment_images(self, A_trans, B_trans):

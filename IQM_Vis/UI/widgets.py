@@ -168,35 +168,35 @@ class widgets():
                 self.widget_controls['slider'][key]['value'].setText(str(self.params_from_sliders['transforms'][key]))
 
         ''' experiment options '''
-        self.widget_experiment_controls = {}
+        self.widget_experiment_params = {}
         for trans_name, deets in self.checked_transformations.items():
-            self.widget_experiment_controls[trans_name] = {}
-            self.widget_experiment_controls[trans_name]['check_box'] = QCheckBox(self)
-            self.widget_experiment_controls[trans_name]['check_box'].setChecked(True)
-            self.widget_experiment_controls[trans_name]['check_box'].stateChanged.connect(partial(self.change_text_exp_trans, 
+            self.widget_experiment_params[trans_name] = {}
+            self.widget_experiment_params[trans_name]['check_box'] = QCheckBox(self)
+            self.widget_experiment_params[trans_name]['check_box'].setChecked(True)
+            self.widget_experiment_params[trans_name]['check_box'].stateChanged.connect(partial(self.change_text_exp_trans, 
                                                                                                   trans=trans_name))
 
-            self.widget_experiment_controls[trans_name]['name'] = QLabel(self)
-            self.widget_experiment_controls[trans_name]['name'].setText(trans_name)
+            self.widget_experiment_params[trans_name]['name'] = QLabel(self)
+            self.widget_experiment_params[trans_name]['name'].setText(trans_name)
 
-            self.widget_experiment_controls[trans_name]['min'] = QLabel(self)
-            self.widget_experiment_controls[trans_name]['min'].setText('min:')
-            self.widget_experiment_controls[trans_name]['min_edit'] = QLineEdit()
-            self.widget_experiment_controls[trans_name]['min_edit'].setValidator(QDoubleValidator())
-            self.widget_experiment_controls[trans_name]['min_edit'].setText(f"{deets['min']}")
+            self.widget_experiment_params[trans_name]['min'] = QLabel(self)
+            self.widget_experiment_params[trans_name]['min'].setText('min:')
+            self.widget_experiment_params[trans_name]['min_edit'] = QLineEdit()
+            self.widget_experiment_params[trans_name]['min_edit'].setValidator(QDoubleValidator())
+            self.widget_experiment_params[trans_name]['min_edit'].setText(f"{deets['min']}")
 
-            self.widget_experiment_controls[trans_name]['max'] = QLabel(self)
-            self.widget_experiment_controls[trans_name]['max'].setText('max:')
-            self.widget_experiment_controls[trans_name]['max_edit'] = QLineEdit()
-            self.widget_experiment_controls[trans_name]['max_edit'].setValidator(QDoubleValidator())
-            self.widget_experiment_controls[trans_name]['max_edit'].setText(f"{deets['max']}")
+            self.widget_experiment_params[trans_name]['max'] = QLabel(self)
+            self.widget_experiment_params[trans_name]['max'].setText('max:')
+            self.widget_experiment_params[trans_name]['max_edit'] = QLineEdit()
+            self.widget_experiment_params[trans_name]['max_edit'].setValidator(QDoubleValidator())
+            self.widget_experiment_params[trans_name]['max_edit'].setText(f"{deets['max']}")
 
-            self.widget_experiment_controls[trans_name]['steps'] = QLabel(self)
-            self.widget_experiment_controls[trans_name]['steps'].setText('steps:')
-            self.widget_experiment_controls[trans_name]['steps_edit'] = QLineEdit()
-            self.widget_experiment_controls[trans_name]['steps_edit'].setValidator(QIntValidator())
-            self.widget_experiment_controls[trans_name]['steps_edit'].setMaxLength(2)
-            self.widget_experiment_controls[trans_name]['steps_edit'].setText(f"{self.num_step_experiment}")
+            self.widget_experiment_params[trans_name]['steps'] = QLabel(self)
+            self.widget_experiment_params[trans_name]['steps'].setText('steps:')
+            self.widget_experiment_params[trans_name]['steps_edit'] = QLineEdit()
+            self.widget_experiment_params[trans_name]['steps_edit'].setValidator(QIntValidator())
+            self.widget_experiment_params[trans_name]['steps_edit'].setMaxLength(2)
+            self.widget_experiment_params[trans_name]['steps_edit'].setText(f"{self.num_step_experiment}")
 
 
     '''
@@ -510,26 +510,36 @@ class widgets():
     '''
     def change_text_exp_trans(self, trans):
         ''' change colour of text when checkbox is pressed '''
-        checked = self.widget_experiment_controls[trans]['check_box'].isChecked()
-        for widget in self.widget_experiment_controls[trans]:
+        checked = self.widget_experiment_params[trans]['check_box'].isChecked()
+        for widget in self.widget_experiment_params[trans]:
             if widget == 'check_box':
                 pass
             else:
-                self.widget_experiment_controls[trans][widget].setEnabled(checked)
+                self.widget_experiment_params[trans][widget].setEnabled(checked)
                 if checked == True:
-                    self.widget_experiment_controls[trans][widget].setStyleSheet(f"QLineEdit {{color: {self.settings_text_colour_original};}}\nQLabel {{color: {self.settings_text_colour_original};}}")
+                    self.widget_experiment_params[trans][widget].setStyleSheet(f"QLineEdit {{color: {self.settings_text_colour_original};}}\nQLabel {{color: {self.settings_text_colour_original};}}")
                 else:
-                    self.widget_experiment_controls[trans][widget].setStyleSheet(f"QLineEdit {{color: gray;}}\nQLabel {{color: gray;}}")
+                    self.widget_experiment_params[trans][widget].setStyleSheet(f"QLineEdit {{color: gray;}}\nQLabel {{color: gray;}}")
+
 
     def launch_experiment(self):
+        # first get all the checked transforms and their parameters
+        checked_transformation_params = {}
+        for trans in self.widget_experiment_params:
+            if self.widget_experiment_params[trans]['check_box'].isChecked():
+                data = {'min': float(self.widget_experiment_params[trans]['min_edit'].text()),
+                        'max': float(self.widget_experiment_params[trans]['max_edit'].text()),
+                        'num_steps': int(self.widget_experiment_params[trans]['steps_edit'].text()),
+                        'function': self.checked_transformations[trans]['function']}
+                name = self.widget_experiment_params[trans]['name'].text()
+                checked_transformation_params[name] = data
         if self.checked_transformations != {}:
-            self.experiment = IQM_Vis.UI.make_experiment(self.checked_transformations,
+            self.experiment = IQM_Vis.UI.make_experiment(checked_transformation_params,
                                                          self.data_stores[0],
                                                          self.image_display_size,
                                                          self.rgb_brightness,
                                                          self.display_brightness,
                                                          self.default_save_dir,
-                                                         self.num_steps_range,
                                                          self.pre_processing_option,
                                                          self.post_processing_option,
                                                          self.checked_metrics)
@@ -538,7 +548,7 @@ class widgets():
             self.experiment.show()
             self.experiment.showFullScreen()
         else:
-            self.status_bar.showMessage('Cannot make experiment without transforms', 5000)
+            self.status_bar.showMessage('Cannot run experiment without transforms', 5000)
 
     @pyqtSlot(str)
     def change_human_scores_after_exp(self, path):

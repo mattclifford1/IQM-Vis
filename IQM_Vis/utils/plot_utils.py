@@ -177,9 +177,13 @@ def get_all_single_transform_params(transforms, num_steps=11):
     ''' get a list of all the individual transforms with a single parameter value
         useful when doing experiments to make a dataset '''
     list_of_single_trans = []
-    for curr_trans in transforms:  # loop over all transformations
-        for val in get_all_slider_values(transforms[curr_trans], num_steps=num_steps):
-            list_of_single_trans.append({curr_trans: val})
+    for trans_name, trans_data in transforms.items():  # loop over all transformations
+        if num_steps == 'from_dict':
+            steps = trans_data['num_steps']
+        else:
+            steps = num_steps
+        for val in get_all_slider_values(trans_data, num_steps=steps):
+            list_of_single_trans.append({trans_name: val})
     return list_of_single_trans
 
 def compute_metric_for_human_correlation(data_store, transforms, metric_params, trans_str_values, metric):

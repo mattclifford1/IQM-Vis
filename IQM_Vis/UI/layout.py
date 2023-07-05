@@ -161,9 +161,9 @@ class layout(QMainWindow):
         ''' experiment controls'''
         experiment_controls = QVBoxLayout()
         # tranformations
-        for trans_name in self.widget_experiment_controls:
+        for trans_name in self.widget_experiment_params:
             experiment_trans = QHBoxLayout()
-            for _, widget in self.widget_experiment_controls[trans_name].items():
+            for _, widget in self.widget_experiment_params[trans_name].items():
                 experiment_trans.addWidget(widget)
                 experiment_trans.addStretch()
             experiment_controls.addLayout(experiment_trans)
