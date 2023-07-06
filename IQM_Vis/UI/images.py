@@ -438,7 +438,9 @@ class images:
                                                 metric,
                                                 self.view_correlation_instance)
                 if hasattr(self, 'human_scores_file'):
-                    plot.ax.axes.set_title(self.human_scores_file, fontsize=6)
+                    title = plot.ax.axes.get_title()
+                    title = f"{title}\n{self.human_scores_file}"
+                    plot.ax.axes.set_title(title, fontsize=8)
                 plot.show()
             else:
                 axes = self.widget_row[i]['metrics']['correlation']['data']
