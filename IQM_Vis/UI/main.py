@@ -139,6 +139,10 @@ class make_app(widgets, layout, images):
                                        self.menu_options['metrics'],
                                        self.construct_UI,
                                        self.restrict_options['metrics'])
+    
+    def _remake_menu(self):
+        self.menu_bar.clear()
+        self.make_menu()
 
     def make_status_bar(self):
         self.status_bar = self.statusBar()

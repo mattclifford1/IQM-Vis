@@ -463,11 +463,15 @@ class images:
                 if key == trans:
                     trans_found = True
         if trans_found == False: # need to load it
+            all_trans_iqm_vis = IQM_Vis.transformations.get_all_transforms()
             if trans in self.menu_options['transforms']:
                 self.menu_options['transforms'][trans].setChecked(True)
                 self.construct_UI()
-            elif True == False: # write code to find from IQM_Vis.transformations.get_all()
-                pass
+            elif trans in all_trans_iqm_vis:
+                self.transformations[trans] = all_trans_iqm_vis[trans]
+                self._remake_menu()
+                self.menu_options['transforms'][trans].setChecked(True)
+                self.construct_UI()
             else:
                 self.update_status_bar(f"Transform '{trans}' not found - please load it!")
 
