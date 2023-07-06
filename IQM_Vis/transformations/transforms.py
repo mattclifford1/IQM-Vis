@@ -21,7 +21,7 @@ def rotation(image, angle=0):
     '''
     if angle == 0:
         return image
-    return rotate(image, angle)
+    return np.clip(rotate(image, angle), 0, 1)
 
 def blur(image, kernel_size=7):
     '''Gaussian Blur on an image
@@ -41,7 +41,7 @@ def blur(image, kernel_size=7):
         image = cv2.GaussianBlur(image,(blur_odd, blur_odd), cv2.BORDER_DEFAULT)
         if len(image.shape) == 2:
             image = np.expand_dims(image, axis=2)
-    return image
+    return np.clip(image, 0, 1)
 
 def x_shift(image, x_shift=0):
     '''Translate image horizontally
@@ -134,7 +134,7 @@ def _translate_image(image, x_shift=0, y_shift=0):
         canvas[prop_y:,:original_size[1]-prop_x,:] = image[:original_size[0]-prop_y,prop_x-original_size[1]:,:]
     elif y_shift < 0 and x_shift < 0:
         canvas[:original_size[0]-prop_y:,:original_size[1]-prop_x,:] = image[prop_y-original_size[0]:,prop_x-original_size[1]:,:]
-    return canvas
+    return np.clip(canvas, 0, 1)
 
 def zoom_image(image, scale_factor=1):
     '''digital zoom of image
@@ -171,7 +171,7 @@ def zoom_image(image, scale_factor=1):
                    :] = image
         image = zoomed_out
 
-    return resize(image, original_size)
+    return np.clip(resize(image, original_size), 0, 1)
 
 def binary_threshold(image, threshold=100):
     '''conver image to binary at a given threshold
@@ -191,7 +191,7 @@ def binary_threshold(image, threshold=100):
     image = cv2.adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, int(threshold))
     if len(image.shape) == 2:
         image = np.stack((image,)*3, axis=-1)
-    return image.astype(np.float32) / 255.0
+    return np.clip(image.astype(np.float32) / 255.0, 0, 1)
 
 def jpeg_compression(image, compression=90):
     '''encode image using jpeg then decode
@@ -231,7 +231,7 @@ def _encode_compression(image, encoder, encode_param, uint=True):
     # have to resize as jpeg can sometimes change the size of an image
     if image.shape != original_size:
         image = resize(image, original_size)
-    return image
+    return np.clip(image, 0, 1)
 
 
 def salt_and_pepper_noise(image, prob=0):
@@ -264,7 +264,7 @@ def salt_and_pepper_noise(image, prob=0):
     probs = np.random.random(image.shape[:2])
     image[probs < (prob / 2)] = black
     image[probs > 1 - (prob / 2)] = white
-    return image
+    return np.clip(image, 0, 1)
 
 
 def contrast(image, contrast=1.0):
@@ -361,4 +361,4 @@ def _adjust_HSV(image, value, channel):
     hsv[:, :, 0] = hsv[:, :, 0]*179
     hsv[:, :, 1:] = hsv[:, :, 1:]*255
     hsv = hsv.astype(np.uint8)
-    return cv2.cvtColor(hsv, cv2.COLOR_HSV2RGB)/255
+    return np.clip(cv2.cvtColor(hsv, cv2.COLOR_HSV2RGB)/255, 0, 1)

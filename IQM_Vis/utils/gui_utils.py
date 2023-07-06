@@ -66,8 +66,11 @@ def get_metric_image_name(metric, data_store):
     return metric+get_image_pair_name(data_store)
 
 def get_trans_dict_from_str(trans_str, return_dict=False):
-    trans = ' '.join(trans_str.split('-----')[:-1])
-    trans_value = float(trans_str.split('-----')[-1])
+    splitter = '-----'
+    if len(trans_str.split(splitter)) == 1:
+        splitter = '::'   # legacy code experiments - doesn't work with windows filesystem
+    trans = ' '.join(trans_str.split(splitter)[:-1])
+    trans_value = float(trans_str.split(splitter)[-1])
     if return_dict == True:
         return {trans: trans_value}
     else:

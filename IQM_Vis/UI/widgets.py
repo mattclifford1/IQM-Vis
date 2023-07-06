@@ -88,7 +88,7 @@ class widgets():
             self.widget_row[i]['metrics']['correlation']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.widget_row[i]['metrics']['correlation']['label'].setText('Human Correlation')
             self.widget_row[i]['metrics']['correlation']['data'] = gui_utils.MplCanvas(size=(self.graph_size/10, self.graph_size/10))
-            self.widget_row[i]['metrics']['correlation']['label'].setToolTip('Human scores versus IQMs.')
+            self.widget_row[i]['metrics']['correlation']['data'].setToolTip('Human scores versus IQMs.\nMean shown with points\nStandard deviation shown with bars.\nClick points to show image.')
 
 
         '''buttons'''
@@ -303,7 +303,7 @@ class widgets():
         line_edit_num_steps.setMaxLength(4)
         line_edit_num_steps.setText(str(self.num_steps_range))
         line_edit_num_steps.textChanged.connect(self.enable_settings_button)
-        self.widget_settings['graph_num_steps'] = {'widget': line_edit_num_steps, 'label': QLabel('Graph/Experiment Step Size:')}
+        self.widget_settings['graph_num_steps'] = {'widget': line_edit_num_steps, 'label': QLabel('Graph Range Step Size:')}
 
         # image screen calibration
         line_edit_rgb = QLineEdit()

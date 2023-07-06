@@ -5,6 +5,7 @@ TODO: write docs on example usage/ what inputs etc. and what attributes that the
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 import os
 import sys
+from typing import Any
 import warnings
 import types
 import numpy as np
@@ -94,6 +95,9 @@ class make_UI:
     def _check_trans(self):
         if self.transformations == None:
             self.transformations = IQM_Vis.transformations.get_all_transforms()
+        # make sure to wrap all transforms in clip so they don't go beyond data limits
+        for trans, data in self.transformations.items():
+            self.transformations[trans]['function'] = transform_wrapper(data['function'])
 
     def _check_inputs(self):
         for item in self.data_store:
@@ -155,3 +159,19 @@ def test_datastore_attributes(data_store):
             ret = method(meth[2])
         if type(ret) != meth[1]:
             raise TypeError(f"{obj_name} method '{meth[0]}' needs to return type '{att[2]}' instead of {type(attr)}")
+
+
+class transform_wrapper:
+    ''' wrap transforms to make sure they return an image between [0, 1] '''
+    def __init__(self, function):
+        self.function = function
+
+    def __call__(self, *args, **kwargs):
+        called = self.function(*args, **kwargs)
+        return np.clip(called, 0, 1)
+    
+    def __eq__(self, other):
+        if isinstance(other, transform_wrapper):
+            return self.function == other.function
+        else:
+            return False

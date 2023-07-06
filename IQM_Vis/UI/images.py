@@ -330,15 +330,15 @@ class images:
         ''' data results sent from signal from thread worker '''
         self.update_status_bar('Completed Range Results', 3000)
         self.stopped_range_worker()
-        # first check if we have empty results (means we cannot plot)
-        if 'metric_over_range_results' in results:
-            if len(results['metric_over_range_results']) == 1:
-                if results['metric_over_range_results'][0] == {}:
-                    # dont plot
-                    return 
-        else:
-            # incorrect data
-            return
+        # first check if we have empty results (means we cannot plot) - have changed to accept empty
+        # if 'metric_over_range_results' in results:
+        #     if len(results['metric_over_range_results']) == 1:
+        #         if results['metric_over_range_results'][0] == {}:
+        #             # dont plot
+        #             return 
+        # else:
+        #     # incorrect data
+        #     return
         
         self.metric_over_range_results = results['metric_over_range_results']
         if 'max_val' in results:
@@ -354,7 +354,10 @@ class images:
     '''
     def display_metric_range_plot(self):
         all_trans = list(self.checked_transformations.keys())
-        if all_trans == []:
+        if all_trans == [] or self.checked_metrics == []:
+            for i, data_store in enumerate(self.data_stores):
+                axes = self.widget_row[i]['metrics']['range']['data']
+                message_on_plot(axes, 'No Metrics/Transforms Selected')
             return
         trans_to_plot = all_trans[self.metric_range_graph_num]
         for i, data_store in enumerate(self.data_stores):
@@ -387,7 +390,10 @@ class images:
 
     def plot_radar_graph(self, results, i):
         all_trans = list(self.checked_transformations.keys())
-        if len(all_trans) == 0:
+        if all_trans == [] or self.checked_metrics == []:
+            for i, data_store in enumerate(self.data_stores):
+                axes = self.widget_row[i]['metrics']['avg']['data']
+                message_on_plot(axes, 'No Metrics/Transforms Selected')
             return
         if 'avg'  in self.widget_row[i]['metrics'].keys():
             # get current metrics used for this data_store
@@ -409,6 +415,9 @@ class images:
     '''
     def display_metric_correlation_plot(self):
         if self.checked_metrics == []:
+            for i, data_store in enumerate(self.data_stores):
+                axes = self.widget_row[i]['metrics']['correlation']['data']
+                message_on_plot(axes, 'No Metrics/Transforms Loaded')
             return
         metric = self.checked_metrics[self.metric_correlation_graph_num]
         # calculate the metric values at the human score test values
@@ -432,10 +441,9 @@ class images:
                     plot.ax.axes.set_title(self.human_scores_file, fontsize=6)
                 plot.show()
             else:
-                self.widget_row[i]['metrics']['correlation']['data'].axes.clear()
-                self.widget_row[i]['metrics']['correlation']['data'].axes.text(
-                    0.5, 0.5, 'Go to: File->Load Human Scores for .csv\nor Use Button below', horizontalalignment='center', verticalalignment='center')
-                self.widget_row[i]['metrics']['correlation']['data'].draw()
+                axes = self.widget_row[i]['metrics']['correlation']['data']
+                message_on_plot(axes, 'Use Load Experiment Button below\nor File->Load Human Scores for a .csv')
+                
 
     def change_metric_correlations_graph(self, add=1):
         max_graph_num = len(self.checked_metrics)
@@ -448,15 +456,20 @@ class images:
 
     def change_to_specific_trans(self, trans_str):
         trans, trans_value = gui_utils.get_trans_dict_from_str(trans_str)
+        trans_found = False
         for _, slider_group in self.sliders.items():
             for key, item_sliders in slider_group.items():
                 if key == trans:
                     closest_slider_val = np.argmin(np.abs(self.sliders['transforms'][key]['values']-trans_value))
                     self.widget_controls['slider'][key]['data'].setValue(closest_slider_val)
+                    trans_found = True
                 else:
                     self.widget_controls['slider'][key]['data'].setValue(item_sliders['init_ind'])
         self.display_images()
         self.redo_plots(calc_range=False)
+        if trans_found == False:
+            self.update_status_bar(f"!!!!!Transform '{trans}' not found - please load it!!!!!!")
+
 
     '''
     metric image updaters
@@ -471,3 +484,12 @@ class images:
     '''
     def stopped_range_worker(self, signal=False):
         self.worker_working = False
+
+def message_on_plot(widget_axes, message):
+    try:
+        widget_axes.axes.clear()
+    except AttributeError:
+        pass
+    widget_axes.axes.text(
+        0.5, 0.5, message, horizontalalignment='center', verticalalignment='center')
+    widget_axes.draw()
