@@ -174,4 +174,5 @@ class transform_wrapper:
         if isinstance(other, transform_wrapper):
             return self.function == other.function
         else:
-            return False
+            # unwrapped tranform function
+            return self.function == other

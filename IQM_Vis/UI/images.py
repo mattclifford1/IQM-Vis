@@ -417,7 +417,7 @@ class images:
         if self.checked_metrics == []:
             for i, data_store in enumerate(self.data_stores):
                 axes = self.widget_row[i]['metrics']['correlation']['data']
-                message_on_plot(axes, 'No Metrics/Transforms Loaded')
+                message_on_plot(axes, 'No Metrics Loaded')
             return
         metric = self.checked_metrics[self.metric_correlation_graph_num]
         # calculate the metric values at the human score test values
@@ -456,19 +456,31 @@ class images:
 
     def change_to_specific_trans(self, trans_str):
         trans, trans_value = gui_utils.get_trans_dict_from_str(trans_str)
+        # load transform if not already on the UI
         trans_found = False
+        for _, slider_group in self.sliders.items():
+            for key, item_sliders in slider_group.items():
+                if key == trans:
+                    trans_found = True
+        if trans_found == False: # need to load it
+            if trans in self.menu_options['transforms']:
+                self.menu_options['transforms'][trans].setChecked(True)
+                self.construct_UI()
+            elif True == False: # write code to find from IQM_Vis.transformations.get_all()
+                pass
+            else:
+                self.update_status_bar(f"Transform '{trans}' not found - please load it!")
+
+        # show the specific tranform image
         for _, slider_group in self.sliders.items():
             for key, item_sliders in slider_group.items():
                 if key == trans:
                     closest_slider_val = np.argmin(np.abs(self.sliders['transforms'][key]['values']-trans_value))
                     self.widget_controls['slider'][key]['data'].setValue(closest_slider_val)
-                    trans_found = True
                 else:
                     self.widget_controls['slider'][key]['data'].setValue(item_sliders['init_ind'])
         self.display_images()
         self.redo_plots(calc_range=False)
-        if trans_found == False:
-            self.update_status_bar(f"!!!!!Transform '{trans}' not found - please load it!!!!!!")
 
 
     '''
