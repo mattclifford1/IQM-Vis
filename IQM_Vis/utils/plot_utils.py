@@ -367,7 +367,10 @@ def get_correlation_plot(human_scores, metric_scores, axes, metric, change_trans
     for trans in human_scores['mean']:
         x.append(metric_scores[metric][trans])
         y.append(human_scores['mean'][trans])
-        std = human_scores['std'][trans]
+        try:
+            std = human_scores['std'][trans]
+        except KeyError:
+            std = 0
         if math.isnan(std):
             std = 0
         e.append(std)
