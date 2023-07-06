@@ -80,6 +80,14 @@ class dataset_holder(base_dataset_loader):
 
         self._check_inputs()
 
+    def add_metric(self, key, value):
+        if not isinstance(value, cache_metric_call):
+            value = cache_metric_call(value)
+        self.metrics[key] = value
+
+    def add_metric_image(self, key, value):
+        self.metric_images[key] = value
+
     def get_image_dataset_list(self):
         # get image file list
         return self.image_list

@@ -92,7 +92,42 @@ class make_app(widgets, layout, images):
         quit_action.setStatusTip('Exit application')
         quit_action.triggered.connect(self.quit)
 
+        self.edit_menu = self.menu_bar.addMenu('Edit')
+        load_transforms = self.edit_menu.addAction('Load All Transforms')
+        load_metrics = self.edit_menu.addAction('Load All Metrics')
+        load_metric_images = self.edit_menu.addAction('Load All Metric Images')
+
+        load_transforms.triggered.connect(self.load_all_transforms)
+        load_metrics.triggered.connect(self.load_all_metrics)
+        load_metric_images.triggered.connect(self.load_all_metric_images)
+
         self.get_menu_checkboxes()
+
+    def load_all_transforms(self):
+        all_trans_iqm_vis = IQM_Vis.transformations.get_all_transforms()
+        for trans, data in all_trans_iqm_vis.items():
+            if trans not in self.transformations:
+                self.transformations[trans] = data
+        self._remake_menu()
+        self.construct_UI()
+
+    def load_all_metrics(self):
+        if not hasattr(self.data_stores[0], 'add_metric'):
+            return
+        all_metrics_iqm_vis = IQM_Vis.metrics.get_all_metrics()
+        for metric, data in all_metrics_iqm_vis.items():
+            self.data_stores[0].add_metric(metric, data)
+        self._remake_menu()
+        self.construct_UI()
+
+    def load_all_metric_images(self):
+        if not hasattr(self.data_stores[0], 'add_metric_image'):
+            return
+        all_metric_images_iqm_vis = IQM_Vis.metrics.get_all_metric_images()
+        for metric, data in all_metric_images_iqm_vis.items():
+            self.data_stores[0].add_metric_image(metric, data)
+        self._remake_menu()
+        self.construct_UI()
 
     def quit(self):
         QApplication.instance().quit()
