@@ -97,7 +97,12 @@
                    <span class="n">one_over_PSNR</span><span class="p">)</span>
 
 <div class="viewcode-block" id="get_all_metrics"><a class="viewcode-back" href="../../IQM_Vis.metrics.html#IQM_Vis.metrics.get_all_metrics">[docs]</a><span class="k">def</span> <span class="nf">get_all_metrics</span><span class="p">():</span>
-    <span class="sd">&#39;&#39;&#39; Get all available IQMs provided by IQM_Vis &#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39; </span>
+<span class="sd">    Get all available IQMs provided by IQM_Vis </span>
+<span class="sd">    </span>
+<span class="sd">    Return:</span>
+<span class="sd">        - all_metrics (dict)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
     <span class="n">all_metrics</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;MSE&#39;</span><span class="p">:</span> <span class="n">MSE</span><span class="p">(),</span>
         <span class="s1">&#39;NLPD&#39;</span><span class="p">:</span> <span class="n">NLPD</span><span class="p">(),</span>
@@ -111,7 +116,12 @@
     <span class="k">return</span> <span class="n">all_metrics</span></div>
 
 <div class="viewcode-block" id="get_all_metric_images"><a class="viewcode-back" href="../../IQM_Vis.metrics.html#IQM_Vis.metrics.get_all_metric_images">[docs]</a><span class="k">def</span> <span class="nf">get_all_metric_images</span><span class="p">():</span>
-    <span class="sd">&#39;&#39;&#39; Get all available IQMs provided by IQM_Vis that return an image &#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39; </span>
+<span class="sd">    Get all available IQMs provided by IQM_Vis that return an image </span>
+<span class="sd">    </span>
+<span class="sd">    Return:</span>
+<span class="sd">        - all_metrics (dict)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">all_metrics</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;MSE&#39;</span><span class="p">:</span> <span class="n">MSE</span><span class="p">(</span><span class="n">return_image</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
     <span class="s1">&#39;SSIM&#39;</span><span class="p">:</span> <span class="n">SSIM</span><span class="p">(</span><span class="n">return_image</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
@@ -121,11 +131,18 @@
     <span class="k">return</span> <span class="n">all_metrics</span></div>
 
 <div class="viewcode-block" id="get_all_IQM_params"><a class="viewcode-back" href="../../IQM_Vis.metrics.html#IQM_Vis.metrics.get_all_IQM_params">[docs]</a><span class="k">def</span> <span class="nf">get_all_IQM_params</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39; </span>
+<span class="sd">    Get all available IQMs parameters</span>
+<span class="sd">    </span>
+<span class="sd">    Return:</span>
+<span class="sd">        - all_params (dict)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">all_params</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;sigma&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;min&#39;</span><span class="p">:</span><span class="mf">0.25</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span><span class="mf">5.25</span><span class="p">,</span> <span class="s1">&#39;init_value&#39;</span><span class="p">:</span> <span class="mf">1.5</span><span class="p">},</span>  <span class="c1"># for the guassian kernel</span>
         <span class="s1">&#39;k1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;min&#39;</span><span class="p">:</span><span class="mf">0.01</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span><span class="mf">0.21</span><span class="p">,</span> <span class="s1">&#39;init_value&#39;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">},</span>
         <span class="s1">&#39;k2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;min&#39;</span><span class="p">:</span><span class="mf">0.01</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span><span class="mf">0.21</span><span class="p">,</span> <span class="s1">&#39;init_value&#39;</span><span class="p">:</span> <span class="mf">0.03</span><span class="p">},</span>
-        <span class="c1"># &#39;mssim_kernel_size&#39;: {&#39;min&#39;:3, &#39;max&#39;:15, &#39;normalise&#39;:&#39;odd&#39;, &#39;init_value&#39;: 11},  # ignored if guassian kernel used</span>
+        <span class="s1">&#39;ssim_kernel_size&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;min&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span><span class="mi">21</span><span class="p">,</span> <span class="s1">&#39;normalise&#39;</span><span class="p">:</span><span class="s1">&#39;odd&#39;</span><span class="p">,</span> <span class="s1">&#39;init_value&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">},</span>  <span class="c1"># ignored if guassian kernel used</span>
+        <span class="s1">&#39;mssim_kernel_size&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;min&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span><span class="mi">21</span><span class="p">,</span> <span class="s1">&#39;normalise&#39;</span><span class="p">:</span><span class="s1">&#39;odd&#39;</span><span class="p">,</span> <span class="s1">&#39;init_value&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">},</span>  <span class="c1"># ignored if guassian kernel used</span>
     <span class="p">}</span>
     <span class="k">return</span> <span class="n">all_params</span></div>
 </pre></div>
