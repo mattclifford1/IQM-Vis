@@ -26,8 +26,8 @@ def get_all_metric_images():
     all_metrics = {
     'MSE': MSE(return_image=True),
     'SSIM': SSIM(return_image=True),
-    'MAE': MAE(return_image=True),
     # 'MS_SSIM': MS_SSIM(return_image=True),
+    'MAE': MAE(return_image=True),
     }
     return all_metrics
 

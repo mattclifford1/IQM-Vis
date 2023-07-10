@@ -91,7 +91,7 @@ class SSIM:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.preproccess_function = _numpy_to_torch_image
 
-    def __call__(self, im_ref, im_comp, sigma=1.5, k1=0.01, k2=0.03, **kwargs):
+    def __call__(self, im_ref, im_comp, sigma=1.5, k1=0.01, k2=0.03, ssim_kernel_size=11, **kwargs):
         '''When an instance is called
 
         Args:
@@ -106,14 +106,15 @@ class SSIM:
         _check_shapes(im_ref, im_comp)
         im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
         im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)
+        ssim_kernel_size = make_kernel_odd(ssim_kernel_size)
         # set up metric
         with warnings.catch_warnings():    # we don't care about the warnings these give
             warnings.simplefilter("ignore")
             if self.return_image:
                 _metric = self.metric(
-                    sigma=sigma, k1=k1, k2=k2, return_full_image=True, reduction=None)
+                    sigma=sigma, k1=k1, k2=k2, return_full_image=True, reduction=None, kernel_size=ssim_kernel_size)
             else:
-                _metric = self.metric(sigma=sigma, k1=k1, k2=k2)
+                _metric = self.metric(sigma=sigma, k1=k1, k2=k2, kernel_size=ssim_kernel_size)
             _metric.to(self.device)
         if self.return_image:
             _, ssim_full_im = _metric(im_ref, im_comp)
@@ -130,7 +131,9 @@ class SSIM:
 class MS_SSIM:
     '''Multi-Scale Structural Similarity Index Measure between two images.
        Images must have the same dimensions. Score given is 1 - MS_SSIM to give the
-       loss/dissimilarity
+       loss/dissimilarity.
+       Note that images of small size, below 180 pixels will have their kernel size
+       reduced for compatability with the 4 downsizing operations.
 
     Args:
         return_image (bool): Whether to return the image (Defaults to False which
@@ -157,34 +160,51 @@ class MS_SSIM:
         _check_shapes(im_ref, im_comp)
         im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
         im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)
+        mssim_kernel_size = make_kernel_odd(mssim_kernel_size)
+        success = False
+        reduced_kernel = False
+        run_error = False
+        while success == False and mssim_kernel_size > 0:
+            _metric = self._make_metric(sigma=sigma, k1=k1, k2=k2, kernel_size=mssim_kernel_size)
+            try:
+                if self.return_image:
+                    _, ssim_full_im = _metric(im_ref, im_comp)
+                    ssim_full_im = torch.squeeze(ssim_full_im, axis=0)
+                    ssim_full_im = ssim_full_im.permute(1, 2, 0)
+                    ssim_full_im = torch.clip(ssim_full_im, 0, 1)
+                    _score = ssim_full_im.cpu().detach().numpy()
+                else:
+                    _score = _metric(im_ref, im_comp).cpu().detach().numpy()
+                _score = 1 - _score
+                success = True
+            except ValueError:
+                # get an error with small images that the torchmetrics package seems to advise the wrong larger than size for
+                reduced_kernel = True
+                mssim_kernel_size -= 2
+                _score = 0
+            except RuntimeError:
+                run_error = True
+                success = True
+                _score = 0
+            _metric.reset()
+        if reduced_kernel == True:
+            print(f'NOTE: Reduced MS_SSIM kernel size to {mssim_kernel_size} to deal with image size {im_ref.shape}')
+        if run_error == True:
+            print(f'WARNING: Image size {im_ref.shape} too small to use with MS_SSIM, returning 0')
+        return _score
+    
+    def _make_metric(self, **kwargs):
         # set up metric
         with warnings.catch_warnings():    # we don't care about the warnings these give
             warnings.simplefilter("ignore")
             if self.return_image:
-                _metric = self.metric(sigma=sigma, k1=k1, k2=k2, 
+                _metric = self.metric(**kwargs, 
                                       return_full_image=True, 
-                                      kernel_size=int(mssim_kernel_size), 
                                       reduction=None)
             else:
-                _metric = self.metric(
-                    sigma=sigma, k1=k1, k2=k2, kernel_size=int(mssim_kernel_size))
+                _metric = self.metric(**kwargs)
             _metric.to(self.device)
-        try:
-            if self.return_image:
-                _, ssim_full_im = _metric(im_ref, im_comp)
-                ssim_full_im = torch.squeeze(ssim_full_im, axis=0)
-                ssim_full_im = ssim_full_im.permute(1, 2, 0)
-                ssim_full_im = torch.clip(ssim_full_im, 0, 1)
-                _score = ssim_full_im.cpu().detach().numpy()
-            else:
-                _score = _metric(im_ref, im_comp).cpu().detach().numpy()
-            _score = 1 - _score
-        except ValueError:
-            # get an error with small images that the torchmetrics package seems to advise the wrong larger than size for
-            print(f'MSSIM failed with image size: {im_ref.shape}')
-            _score = 0
-        _metric.reset()
-        return _score
+        return _metric
     
 
 class one_over_PSNR:
@@ -429,3 +449,11 @@ def _check_shapes(im_ref, im_comp):
     '''
     if im_ref.shape != im_comp.shape:
         raise ValueError(f'Refence and transformed images need to have the same shape not: {im_ref.shape} and {im_comp.shape}')
+
+def make_kernel_odd(value):
+    value = int(value)
+    if value % 2 == 0:
+        value -= 1
+    if value <= 0:
+        value = 1
+    return value

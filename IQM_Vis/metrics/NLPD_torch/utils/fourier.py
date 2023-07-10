@@ -38,7 +38,7 @@ def harmonic_column(harmonic: torch.Tensor,
         args = harmonic * angles
         sin_args = torch.sin(args).unsqueeze(1)
         cos_args = torch.cos(args).unsqueeze(1)
-        if phase is 'sin':
+        if phase == 'sin':
             column = torch.cat([sin_args, -cos_args], axis=1)
         else:
             column = torch.cat([cos_args, sin_args], axis=1)
