@@ -98,7 +98,8 @@
 <span class="kn">import</span> <span class="nn">warnings</span>
 
 <span class="kn">from</span> <span class="nn">torchmetrics</span> <span class="kn">import</span> <span class="n">StructuralSimilarityIndexMeasure</span> <span class="k">as</span> <span class="n">ssim_torch</span>
-<span class="kn">from</span> <span class="nn">torchmetrics</span> <span class="kn">import</span> <span class="n">MultiScaleStructuralSimilarityIndexMeasure</span> <span class="k">as</span> <span class="n">Mssim_torch</span>
+<span class="kn">from</span> <span class="nn">.SSIM.ssim</span> <span class="kn">import</span> <span class="n">ms_ssim</span>
+<span class="c1"># from torchmetrics import MultiScaleStructuralSimilarityIndexMeasure as Mssim_torch</span>
 <span class="kn">from</span> <span class="nn">torchmetrics</span> <span class="kn">import</span> <span class="n">PeakSignalNoiseRatio</span> <span class="k">as</span> <span class="n">PSNRs</span>
 <span class="c1"># from torchmetrics import UniversalImageQualityIndex as UIQI</span>
 <span class="c1"># from torchmetrics.functional import universal_image_quality_index as UIQI</span>
@@ -231,7 +232,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">return_image</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">return_image</span> <span class="o">=</span> <span class="n">return_image</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">metric</span> <span class="o">=</span> <span class="n">Mssim_torch</span>
+        <span class="c1"># self.metric = Mssim_torch</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">preproccess_function</span> <span class="o">=</span> <span class="n">_numpy_to_torch_image</span>
 
@@ -255,20 +256,37 @@
         <span class="n">reduced_kernel</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">run_error</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">while</span> <span class="n">success</span> <span class="o">==</span> <span class="kc">False</span> <span class="ow">and</span> <span class="n">mssim_kernel_size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">_metric</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_metric</span><span class="p">(</span><span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">k1</span><span class="o">=</span><span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="n">k2</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="n">mssim_kernel_size</span><span class="p">)</span>
+            <span class="c1"># _metric = self._make_metric(sigma=sigma, k1=k1, k2=k2, kernel_size=mssim_kernel_size)</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_image</span><span class="p">:</span>
-                    <span class="n">_</span><span class="p">,</span> <span class="n">ssim_full_im</span> <span class="o">=</span> <span class="n">_metric</span><span class="p">(</span><span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">)</span>
+                    <span class="c1"># _, ssim_full_im = _metric(im_ref, im_comp)</span>
+                    <span class="n">ssim_full_im</span> <span class="o">=</span> <span class="n">ms_ssim</span><span class="p">(</span><span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> 
+                                           <span class="n">data_range</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                           <span class="n">win_size</span><span class="o">=</span><span class="n">mssim_kernel_size</span><span class="p">,</span>
+                                           <span class="n">win_sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span>
+                                           <span class="n">K</span><span class="o">=</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">),</span>
+                                           <span class="n">return_image</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
                     <span class="n">ssim_full_im</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">ssim_full_im</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
                     <span class="n">ssim_full_im</span> <span class="o">=</span> <span class="n">ssim_full_im</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
                     <span class="n">ssim_full_im</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">ssim_full_im</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
                     <span class="n">_score</span> <span class="o">=</span> <span class="n">ssim_full_im</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">_score</span> <span class="o">=</span> <span class="n">_metric</span><span class="p">(</span><span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-                <span class="n">_score</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">_score</span>
+                    <span class="n">_score</span> <span class="o">=</span> <span class="n">ms_ssim</span><span class="p">(</span><span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> 
+                                     <span class="n">data_range</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                     <span class="n">win_size</span><span class="o">=</span><span class="n">mssim_kernel_size</span><span class="p">,</span>
+                                     <span class="n">win_sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span>
+                                     <span class="n">K</span><span class="o">=</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">),</span>
+                                     <span class="n">size_average</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="c1"># _score = _metric(im_ref, im_comp).cpu().detach().numpy()</span>
+                <span class="n">_score</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">_score</span> <span class="c1"># get score not similarity</span>
                 <span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
                 <span class="c1"># get an error with small images that the torchmetrics package seems to advise the wrong larger than size for</span>
+                <span class="n">reduced_kernel</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">mssim_kernel_size</span> <span class="o">-=</span> <span class="mi">2</span>
+                <span class="n">_score</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+                <span class="c1"># get an error with small images that the pytorch-ssim package seems to advise the wrong larger than size for</span>
                 <span class="n">reduced_kernel</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="n">mssim_kernel_size</span> <span class="o">-=</span> <span class="mi">2</span>
                 <span class="n">_score</span> <span class="o">=</span> <span class="mi">0</span>
@@ -276,7 +294,7 @@
                 <span class="n">run_error</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="n">_score</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="n">_metric</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+            <span class="c1"># _metric.reset()</span>
         <span class="k">if</span> <span class="n">reduced_kernel</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;NOTE: Reduced MS_SSIM kernel size to </span><span class="si">{</span><span class="n">mssim_kernel_size</span><span class="si">}</span><span class="s1"> to deal with image size </span><span class="si">{</span><span class="n">im_ref</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">run_error</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>

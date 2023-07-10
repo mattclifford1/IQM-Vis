@@ -28,6 +28,8 @@ extensions = [
 ]
 
 templates_path = ['_templates']
+
+# N.B this is not for apidoc build we use - adjust in the make script
 exclude_patterns = ['_build',
                     'Thumbs.db',
                     '.DS_Store',

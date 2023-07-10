@@ -8,6 +8,7 @@ layers for wavelet transformations.
 # import expert.utils.fourier as fourier ## needed for SteerableWavelet - includes extra dependancies so wont use for now
 from .utils import conv as conv_utils
 from .utils import pyramid_filters as pyr_filts
+from .utils import fourier
 from .layers import divisive_normalisation as expert_divisive_normalisation
 import torch.nn.functional as F
 import torch.nn as nn
