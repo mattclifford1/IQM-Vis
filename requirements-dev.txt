@@ -14,7 +14,6 @@ torchvision>=0.14.1
 pandas==2.0.0
 scipy==1.9.3
 notebook
-pytorch-msssim
 twine
 pytest
 sphinx
