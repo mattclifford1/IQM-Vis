@@ -225,6 +225,7 @@ class widgets():
                 # see if we need to make odd numbers (for use with kernel sizes)
                 if 'normalise' in info_item.keys():
                     if info_item['normalise'] == 'odd':
+                        sliders_dict[key]['values'] = np.round(sliders_dict[key]['values'])
                         sliders_dict[key]['values'] = sliders_dict[key]['values'][sliders_dict[key]['values']%2 == 1]
                         info_item['num_values'] = len(sliders_dict[key]['values'])
             # get ind of the initial value to set the slider at

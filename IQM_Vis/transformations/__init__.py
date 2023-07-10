@@ -14,6 +14,12 @@ from .transforms import (rotation,
                          Gaussian_noise)
 
 def get_all_transforms():
+    '''
+    Get all the available transformation/distortions alongside their recommended parameter ranges
+
+    Returns:
+        - all (dict): names, min, max, init_value and function for each transform
+    '''
     all = {
         'brightness':{'min':-1.0, 'max':1.0, 'function':brightness},
         'contrast': {'min': 0.5, 'max': 2.5, 'init_value': 1.0, 'function': contrast},

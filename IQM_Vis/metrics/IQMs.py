@@ -8,7 +8,8 @@ import numpy as np
 import warnings
 
 from torchmetrics import StructuralSimilarityIndexMeasure as ssim_torch
-from torchmetrics import MultiScaleStructuralSimilarityIndexMeasure as Mssim_torch
+from .SSIM.ssim import ms_ssim
+# from torchmetrics import MultiScaleStructuralSimilarityIndexMeasure as Mssim_torch
 from torchmetrics import PeakSignalNoiseRatio as PSNRs
 # from torchmetrics import UniversalImageQualityIndex as UIQI
 # from torchmetrics.functional import universal_image_quality_index as UIQI
@@ -141,7 +142,7 @@ class MS_SSIM:
     '''
     def __init__(self, return_image=False):
         self.return_image = return_image
-        self.metric = Mssim_torch
+        # self.metric = Mssim_torch
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.preproccess_function = _numpy_to_torch_image
 
@@ -165,20 +166,37 @@ class MS_SSIM:
         reduced_kernel = False
         run_error = False
         while success == False and mssim_kernel_size > 0:
-            _metric = self._make_metric(sigma=sigma, k1=k1, k2=k2, kernel_size=mssim_kernel_size)
+            # _metric = self._make_metric(sigma=sigma, k1=k1, k2=k2, kernel_size=mssim_kernel_size)
             try:
                 if self.return_image:
-                    _, ssim_full_im = _metric(im_ref, im_comp)
+                    # _, ssim_full_im = _metric(im_ref, im_comp)
+                    ssim_full_im = ms_ssim(im_ref, im_comp, 
+                                           data_range=1,
+                                           win_size=mssim_kernel_size,
+                                           win_sigma=sigma,
+                                           K=(k1, k2),
+                                           return_image=True)
                     ssim_full_im = torch.squeeze(ssim_full_im, axis=0)
                     ssim_full_im = ssim_full_im.permute(1, 2, 0)
                     ssim_full_im = torch.clip(ssim_full_im, 0, 1)
                     _score = ssim_full_im.cpu().detach().numpy()
                 else:
-                    _score = _metric(im_ref, im_comp).cpu().detach().numpy()
-                _score = 1 - _score
+                    _score = ms_ssim(im_ref, im_comp, 
+                                     data_range=1,
+                                     win_size=mssim_kernel_size,
+                                     win_sigma=sigma,
+                                     K=(k1, k2),
+                                     size_average=True)
+                    # _score = _metric(im_ref, im_comp).cpu().detach().numpy()
+                _score = 1 - _score # get score not similarity
                 success = True
             except ValueError:
                 # get an error with small images that the torchmetrics package seems to advise the wrong larger than size for
+                reduced_kernel = True
+                mssim_kernel_size -= 2
+                _score = 0
+            except AssertionError:
+                # get an error with small images that the pytorch-ssim package seems to advise the wrong larger than size for
                 reduced_kernel = True
                 mssim_kernel_size -= 2
                 _score = 0
@@ -186,7 +204,7 @@ class MS_SSIM:
                 run_error = True
                 success = True
                 _score = 0
-            _metric.reset()
+            # _metric.reset()
         if reduced_kernel == True:
             print(f'NOTE: Reduced MS_SSIM kernel size to {mssim_kernel_size} to deal with image size {im_ref.shape}')
         if run_error == True:

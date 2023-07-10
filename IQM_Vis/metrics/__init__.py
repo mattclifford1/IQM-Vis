@@ -8,7 +8,12 @@ from .IQMs import (MAE,
                    one_over_PSNR)
 
 def get_all_metrics():
-    ''' Get all available IQMs provided by IQM_Vis '''
+    ''' 
+    Get all available IQMs provided by IQM_Vis 
+    
+    Return:
+        - all_metrics (dict)
+        '''
     all_metrics = {
         'MSE': MSE(),
         'NLPD': NLPD(),
@@ -22,7 +27,12 @@ def get_all_metrics():
     return all_metrics
 
 def get_all_metric_images():
-    ''' Get all available IQMs provided by IQM_Vis that return an image '''
+    ''' 
+    Get all available IQMs provided by IQM_Vis that return an image 
+    
+    Return:
+        - all_metrics (dict)
+    '''
     all_metrics = {
     'MSE': MSE(return_image=True),
     'SSIM': SSIM(return_image=True),
@@ -32,10 +42,17 @@ def get_all_metric_images():
     return all_metrics
 
 def get_all_IQM_params():
+    ''' 
+    Get all available IQMs parameters
+    
+    Return:
+        - all_params (dict)
+    '''
     all_params = {
         'sigma': {'min':0.25, 'max':5.25, 'init_value': 1.5},  # for the guassian kernel
         'k1': {'min':0.01, 'max':0.21, 'init_value': 0.01},
         'k2': {'min':0.01, 'max':0.21, 'init_value': 0.03},
-        # 'mssim_kernel_size': {'min':3, 'max':15, 'normalise':'odd', 'init_value': 11},  # ignored if guassian kernel used
+        'ssim_kernel_size': {'min':3, 'max':21, 'normalise':'odd', 'init_value': 11},  # ignored if guassian kernel used
+        'mssim_kernel_size': {'min':3, 'max':21, 'normalise':'odd', 'init_value': 11},  # ignored if guassian kernel used
     }
     return all_params

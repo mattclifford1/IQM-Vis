@@ -33,6 +33,7 @@ exclude_patterns = ['_build',
                     '.DS_Store',
                     os.path.join('IQM_Vis', 'examples'),
                     os.path.join('IQM_Vis', 'metrics', 'NLPD_torch'),
+                    os.path.join('IQM_Vis', 'metrics', 'SSIM'),
                     os.path.join('IQM_Vis', 'utils'),
                     os.path.join('IQM_Vis', 'data_handlers'),
                     os.path.join('IQM_Vis', 'UI')
