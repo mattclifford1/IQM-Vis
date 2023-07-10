@@ -66,11 +66,22 @@ def get_metric_image_name(metric, data_store):
     return metric+get_image_pair_name(data_store)
 
 def get_trans_dict_from_str(trans_str, return_dict=False):
-    splitter = '-----'
+    # determine which experiment formatting we are using
+    splitter = '='
     if len(trans_str.split(splitter)) == 1:
-        splitter = '::'   # legacy code experiments - doesn't work with windows filesystem
-    trans = ' '.join(trans_str.split(splitter)[:-1])
-    trans_value = float(trans_str.split(splitter)[-1])
+        splitter = '-----'   # legacy code experiment format - illegible with negative numbers
+    if len(trans_str.split(splitter)) == 1:
+        splitter = '::'   # legacy code experiment format - didn't work with windows filesystem
+    
+    trans = splitter.join(trans_str.split(splitter)[:-1])
+    # error with duplicated columns in csv with pandas load
+    try:
+        trans_value = float(trans_str.split(splitter)[-1])   # value is last part of string
+    except ValueError:
+        error_value = trans_str.split(splitter)[-1]
+        # remove the '.1' etc appended by pandas
+        value = '.'.join(error_value.split('.')[:-1])
+        trans_value = float(value)
     if return_dict == True:
         return {trans: trans_value}
     else:

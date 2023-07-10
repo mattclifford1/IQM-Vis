@@ -374,7 +374,8 @@ def get_correlation_plot(human_scores, metric_scores, axes, metric, change_trans
         if math.isnan(std):
             std = 0
         e.append(std)
-        labels.append(trans)
+        name, value = gui_utils.get_trans_dict_from_str(trans)
+        labels.append(f'{name}={value}')
     sp.plot(x, y, annotations=labels, error=e)
     # make interactive hover for points
     annot = sp.ax.axes.annotate("", xy=(0, 0), xytext=(0, 0), textcoords="offset points",

@@ -661,4 +661,5 @@ def sort_list(list1, list2):
     return sorted_list1
 
 def make_name_for_trans(trans):
-    return f"{trans['transform_name']}-----{trans['transform_value']}"
+    splitter = '-----'
+    return f"{trans['transform_name']}{splitter}{trans['transform_value']}"
