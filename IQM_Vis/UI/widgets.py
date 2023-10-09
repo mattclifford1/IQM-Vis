@@ -164,7 +164,7 @@ class widgets():
                 self.widget_controls['slider'][key]['label'].setAlignment(Qt.AlignmentFlag.AlignRight)
                 self.widget_controls['slider'][key]['label'].setText(f"{key}:")
                 self.widget_controls['slider'][key]['value'] = QLabel(self)
-                self.widget_controls['slider'][key]['value'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                self.widget_controls['slider'][key]['value'].setAlignment(Qt.AlignmentFlag.AlignLeft)
                 self.widget_controls['slider'][key]['value'].setText(str(self.params_from_sliders['transforms'][key]))
 
         ''' experiment options '''
@@ -231,16 +231,18 @@ class widgets():
             # store num steps used
             sliders_dict[key]['default_num_steps'] = len(sliders_dict[key]['values'])
             # make min/max inputs
+            width = 40
             sliders_dict[key]['min_edit'] = QLineEdit()
-            # sliders_dict[key]['min_edit'].setStretch(0)
             sliders_dict[key]['min_edit'].setValidator(QDoubleValidator())
             sliders_dict[key]['min_edit'].setText(f"{min(sliders_dict[key]['values'])}")
+            sliders_dict[key]['min_edit'].setFixedWidth(width)
             sliders_dict[key]['min_edit'].editingFinished.connect(partial(self.edit_slider_vals, sliders_dict, key, info_item))
             sliders_dict[key]['min_edit'].editingFinished.connect(partial(self.generic_value_change, key, param_group))
             sliders_dict[key]['min_edit'].editingFinished.connect(self.display_images)
             sliders_dict[key]['max_edit'] = QLineEdit()
             sliders_dict[key]['max_edit'].setValidator(QDoubleValidator())
             sliders_dict[key]['max_edit'].setText(f"{max(sliders_dict[key]['values'])}")
+            sliders_dict[key]['max_edit'].setFixedWidth(width)
             sliders_dict[key]['max_edit'].editingFinished.connect(partial(self.edit_slider_vals, sliders_dict, key, info_item))
             sliders_dict[key]['max_edit'].editingFinished.connect(partial(self.generic_value_change, key, param_group))
             sliders_dict[key]['max_edit'].editingFinished.connect(self.display_images)
