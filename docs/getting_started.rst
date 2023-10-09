@@ -12,7 +12,15 @@ You can make a new environment by using anaconda (conda):
     conda create -n IQM_Vis python=3.9 -y
     conda activate IQM_Vis
 
-Then install IQM-Vis from the PyPi index:
+If you have a GPU and would like to use CUDA then at this point head over to the pytorch website and download the relevent packages e.g.
+
+If you don't have a GPU then you can skip this step.
+
+..  code-block:: bash
+
+    conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cuda=11.7 -c pytorch -c nvidia
+
+Now we can install IQM-Vis from the PyPi index:
 
 ..  code-block:: bash
 
@@ -26,7 +34,7 @@ Run a demonstration example by running the python code:
 ..  code-block:: python
 
     import IQM_Vis
-    IQM_Vis.examples.dataset.run()
+    IQM_Vis.make_UI()
 
 
 Common Issues
