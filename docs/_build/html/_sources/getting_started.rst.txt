@@ -41,6 +41,10 @@ Common Issues
 =============
 There are some know issues with some work arounds.
 
+There are some dependancy conflicts with python 3.11, we recommend 3.9 or 3.10.
+If you require python 3.11, you will need to unpin the dependancy versions in the requirements.txt and install the latest versions which will fix the issue but note this is untested and may be unstable.
+
+
 If you are getting the error 
 
 ..  code-block:: bash

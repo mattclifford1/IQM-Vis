@@ -15,6 +15,7 @@ try:
     import IQM_Vis
     from IQM_Vis.UI.main import make_app
     from IQM_Vis.utils import image_utils
+    from IQM_Vis.examples.images import DEFAULT_IMAGES
     import matplotlib
     matplotlib.use("Qt5Agg")
 except ImportError:
@@ -24,6 +25,9 @@ class make_UI:
     def __init__(self, 
                  data_store=None,
                  transformations=None,
+                 image_list: list=DEFAULT_IMAGES,
+                 metrics: dict={},
+                 metric_images: dict={},
                  metrics_info_format: str='graph',
                  metrics_avg_graph: bool=True,
                  metric_params: dict={},
@@ -31,6 +35,10 @@ class make_UI:
                  restrict_options=None,
                  num_steps_range=11,
                  debug=False):
+        if data_store == None:
+            data_store = IQM_Vis.dataset_holder(image_list,
+                                   metrics,
+                                   metric_images)
         self.data_store = data_store
         self.transformations = transformations
         self.metrics_info_format = metrics_info_format

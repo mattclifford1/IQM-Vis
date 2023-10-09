@@ -1,0 +1,16 @@
+numpy==1.23.4
+PyQt6==6.4.0
+PyQt6-Qt6==6.4.0
+PyQt6-sip==13.4.0
+opencv-python-headless==4.6.0.66
+Pillow==9.2.0
+scikit-image==0.19.3
+matplotlib==3.6.1
+torch>=1.13.1
+torchmetrics==0.10.0
+lpips==0.1.4
+DISTS-pytorch==0.1
+torchvision>=0.14.1
+pandas==2.0.0
+scipy==1.9.3
+notebook

@@ -6,7 +6,7 @@ from functools import partial
 
 import numpy as np
 from PyQt6.QtWidgets import QPushButton, QLabel, QSlider, QCheckBox, QComboBox, QLineEdit
-from PyQt6.QtGui import QIntValidator, QDoubleValidator,  QPalette
+from PyQt6.QtGui import QIntValidator, QDoubleValidator
 from PyQt6.QtCore import Qt, pyqtSlot
 
 import IQM_Vis
@@ -216,20 +216,46 @@ class widgets():
                 sliders_dict[key]['function'] = info_item['function']
             if 'init_value' not in info_item.keys():
                 info_item['init_value'] = 0
+            sliders_dict[key]['init_value_store'] = info_item['init_value']
             if 'values' in info_item.keys():
                 sliders_dict[key]['values'] = info_item['values']
             else:
                 if 'num_values' not in info_item.keys():
                     info_item['num_values'] = 41   # make default value for steps in slider range
-                sliders_dict[key]['values'] = np.linspace(info_item['min'], info_item['max'], info_item['num_values'])
                 # see if we need to make odd numbers (for use with kernel sizes)
                 if 'normalise' in info_item.keys():
-                    if info_item['normalise'] == 'odd':
-                        sliders_dict[key]['values'] = np.round(sliders_dict[key]['values'])
-                        sliders_dict[key]['values'] = sliders_dict[key]['values'][sliders_dict[key]['values']%2 == 1]
-                        info_item['num_values'] = len(sliders_dict[key]['values'])
-            # get ind of the initial value to set the slider at
-            sliders_dict[key]['init_ind'] = np.searchsorted(sliders_dict[key]['values'], info_item['init_value'], side='left')
+                    # store for if min/max changed later
+                    sliders_dict[key]['normalise'] = info_item['normalise']
+                self.make_slider_range(sliders_dict, key, info_item['min'], info_item['max'], info_item['num_values'])
+            
+            # store num steps used
+            sliders_dict[key]['default_num_steps'] = len(sliders_dict[key]['values'])
+            # make min/max inputs
+            sliders_dict[key]['min_edit'] = QLineEdit()
+            # sliders_dict[key]['min_edit'].setStretch(0)
+            sliders_dict[key]['min_edit'].setValidator(QDoubleValidator())
+            sliders_dict[key]['min_edit'].setText(f"{min(sliders_dict[key]['values'])}")
+            sliders_dict[key]['min_edit'].editingFinished.connect(partial(self.edit_slider_vals, sliders_dict, key, info_item))
+            sliders_dict[key]['min_edit'].editingFinished.connect(partial(self.generic_value_change, key, param_group))
+            sliders_dict[key]['min_edit'].editingFinished.connect(self.display_images)
+            sliders_dict[key]['max_edit'] = QLineEdit()
+            sliders_dict[key]['max_edit'].setValidator(QDoubleValidator())
+            sliders_dict[key]['max_edit'].setText(f"{max(sliders_dict[key]['values'])}")
+            sliders_dict[key]['max_edit'].editingFinished.connect(partial(self.edit_slider_vals, sliders_dict, key, info_item))
+            sliders_dict[key]['max_edit'].editingFinished.connect(partial(self.generic_value_change, key, param_group))
+            sliders_dict[key]['max_edit'].editingFinished.connect(self.display_images)
+    
+    def make_slider_range(self, sliders_dict, key, _min, _max, num_steps=None):
+        if num_steps == None:
+            num_steps = sliders_dict[key]['default_num_steps']
+        sliders_dict[key]['values'] = np.linspace(_min, _max, num_steps)
+        # see if we need to make odd numbers (for use with kernel sizes)
+        if 'normalise' in sliders_dict[key].keys():
+            if sliders_dict[key]['normalise'] == 'odd':
+                sliders_dict[key]['values'] = np.round(sliders_dict[key]['values'])
+                sliders_dict[key]['values'] = sliders_dict[key]['values'][sliders_dict[key]['values']%2 == 1]
+        # get ind of the initial value to set the slider at
+        sliders_dict[key]['init_ind'] = np.searchsorted(sliders_dict[key]['values'], sliders_dict[key]['init_value_store'], side='left')
 
     def _init_image_settings(self):
         self.widget_settings = {}
@@ -339,6 +365,13 @@ class widgets():
         index = self.widget_controls['slider'][key]['data'].value()
         self.params_from_sliders[param_group][key] = self.sliders[param_group][key]['values'][index]
         self.display_slider_num(key, param_group) # display the new value ont UI
+
+    def edit_slider_vals(self, sliders_dict, key, info_item):
+        _min = float(sliders_dict[key]['min_edit'].text())
+        _max = float(sliders_dict[key]['max_edit'].text())
+        self.make_slider_range(sliders_dict, key, _min, _max)
+        info_item['min'] = _min
+        info_item['max'] = _max
 
     def display_slider_num(self, key, param_group, disp_len=5):
         # display the updated value
