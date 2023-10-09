@@ -101,6 +101,7 @@
     <span class="kn">import</span> <span class="nn">IQM_Vis</span>
     <span class="kn">from</span> <span class="nn">IQM_Vis.UI.main</span> <span class="kn">import</span> <span class="n">make_app</span>
     <span class="kn">from</span> <span class="nn">IQM_Vis.utils</span> <span class="kn">import</span> <span class="n">image_utils</span>
+    <span class="kn">from</span> <span class="nn">IQM_Vis.examples.images</span> <span class="kn">import</span> <span class="n">DEFAULT_IMAGES</span>
     <span class="kn">import</span> <span class="nn">matplotlib</span>
     <span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;Qt5Agg&quot;</span><span class="p">)</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
@@ -110,6 +111,9 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
                  <span class="n">data_store</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">transformations</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">image_list</span><span class="p">:</span> <span class="nb">list</span><span class="o">=</span><span class="n">DEFAULT_IMAGES</span><span class="p">,</span>
+                 <span class="n">metrics</span><span class="p">:</span> <span class="nb">dict</span><span class="o">=</span><span class="p">{},</span>
+                 <span class="n">metric_images</span><span class="p">:</span> <span class="nb">dict</span><span class="o">=</span><span class="p">{},</span>
                  <span class="n">metrics_info_format</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;graph&#39;</span><span class="p">,</span>
                  <span class="n">metrics_avg_graph</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                  <span class="n">metric_params</span><span class="p">:</span> <span class="nb">dict</span><span class="o">=</span><span class="p">{},</span>
@@ -117,6 +121,10 @@
                  <span class="n">restrict_options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">num_steps_range</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span>
                  <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">data_store</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">data_store</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">dataset_holder</span><span class="p">(</span><span class="n">image_list</span><span class="p">,</span>
+                                   <span class="n">metrics</span><span class="p">,</span>
+                                   <span class="n">metric_images</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_store</span> <span class="o">=</span> <span class="n">data_store</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span> <span class="o">=</span> <span class="n">transformations</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metrics_info_format</span> <span class="o">=</span> <span class="n">metrics_info_format</span>

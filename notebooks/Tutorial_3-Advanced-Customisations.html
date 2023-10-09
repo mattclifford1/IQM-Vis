@@ -214,10 +214,10 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">images</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;/home/matt/datasets/kodak/kodim01.png&#39;</span><span class="p">,</span>
           <span class="s1">&#39;/home/matt/datasets/kodak/kodim02.png&#39;</span><span class="p">]</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">dataset_holder</span><span class="p">(</span><span class="n">images</span><span class="p">,</span>
-                              <span class="n">metrics</span><span class="p">)</span>
-<span class="n">IQM_Vis</span><span class="o">.</span><span class="n">make_UI</span><span class="p">(</span><span class="n">data</span><span class="p">,</span>
-                <span class="n">transformations</span><span class="p">,</span>
+
+<span class="n">IQM_Vis</span><span class="o">.</span><span class="n">make_UI</span><span class="p">(</span><span class="n">transformations</span><span class="o">=</span><span class="n">transformations</span><span class="p">,</span>
+                <span class="n">image_list</span><span class="o">=</span><span class="n">images</span><span class="p">,</span>
+                <span class="n">metrics</span><span class="o">=</span><span class="n">metrics</span><span class="p">,</span>
                 <span class="n">metric_params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
 </pre></div>
 </div>

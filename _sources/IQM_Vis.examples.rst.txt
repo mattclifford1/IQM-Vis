@@ -60,6 +60,14 @@ IQM\_Vis.examples.multiple module
    :undoc-members:
    :show-inheritance:
 
+IQM\_Vis.examples.new\_api module
+---------------------------------
+
+.. automodule:: IQM_Vis.examples.new_api
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 IQM\_Vis.examples.simple module
 -------------------------------
 
