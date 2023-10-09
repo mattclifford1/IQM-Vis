@@ -12,8 +12,9 @@
   <![endif]-->
   
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="../../../about.html" />
@@ -26,15 +27,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../../../index.html" class="icon icon-home">
-            IQM-Vis
+            <a href="../../../index.html" class="icon icon-home"> IQM-Vis
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -75,7 +72,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
       <li class="breadcrumb-item active">IQM_Vis.utils.save_utils</li>
       <li class="wy-breadcrumbs-aside">
@@ -137,12 +134,12 @@
 
 <span class="sd">&#39;&#39;&#39; other save helpers &#39;&#39;&#39;</span>
 <div class="viewcode-block" id="save_obj"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.save_obj">[docs]</a><span class="k">def</span> <span class="nf">save_obj</span><span class="p">(</span><span class="n">pickle_path</span><span class="p">,</span> <span class="n">trans</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39; save transforms as pickle file &#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; save transforms as pickle file &#39;&#39;&#39;</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">pickle_path</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
         <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">trans</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="load_obj"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.load_obj">[docs]</a><span class="k">def</span> <span class="nf">load_obj</span><span class="p">(</span><span class="n">pickle_path</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39; load trans dict from pkl file &#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; load trans dict from pkl file &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">pickle_path</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="k">try</span><span class="p">:</span>
@@ -160,7 +157,7 @@
 
 
 <div class="viewcode-block" id="save_and_merge_df_as_csv"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.save_and_merge_df_as_csv">[docs]</a><span class="k">def</span> <span class="nf">save_and_merge_df_as_csv</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;df need to be indexed&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;df need to be indexed&#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
         <span class="n">df_saved</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
         <span class="n">index_name</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span>
@@ -170,7 +167,7 @@
 
     
 <div class="viewcode-block" id="save_experiment_results"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.save_experiment_results">[docs]</a><span class="k">def</span> <span class="nf">save_experiment_results</span><span class="p">(</span><span class="n">trans_names</span><span class="p">,</span> <span class="n">results_order</span><span class="p">,</span> <span class="n">save_dir</span><span class="p">,</span> <span class="n">times_taken</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">IQM_scores_df</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;save all the experiment reults as csvs&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;save all the experiment reults as csvs&#39;&#39;&#39;</span>
     <span class="c1"># make HIQM scores from ordering : HIQM = pos/num_pos</span>
     <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">trans_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">results_order</span><span class="p">):</span>
