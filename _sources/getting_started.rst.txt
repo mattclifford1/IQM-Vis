@@ -42,8 +42,8 @@ Common Issues
 There are some know issues with some work arounds.
 
 There are some dependancy conflicts with python 3.11, we recommend 3.9 or 3.10.
-If you require python 3.11, you will need to unpin the dependancy versions in the requirements.txt and install the latest versions which will fix the issue but note this is untested and may be unstable.
 
+If you having any issues, please use python 3.9 and install the pinned dependancies found `here <https://github.com/mattclifford1/IQM-Vis/blob/main/requirements-pinned.txt>`_.
 
 If you are getting the error 
 
