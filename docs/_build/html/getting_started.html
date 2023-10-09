@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Getting Started &mdash; IQM-Vis 0.2 documentation</title>
@@ -13,8 +13,9 @@
   <![endif]-->
   
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
@@ -29,15 +30,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="index.html" class="icon icon-home">
-            IQM-Vis
+            <a href="index.html" class="icon icon-home"> IQM-Vis
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -83,7 +80,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li><a href="index.html" class="icon icon-home"></a></li>
       <li class="breadcrumb-item active">Getting Started</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/getting_started.rst.txt" rel="nofollow"> View page source</a>
@@ -95,30 +92,35 @@
            <div itemprop="articleBody">
              
   <section id="getting-started">
-<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading"></a></h1>
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h1>
 <section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h2>
 <p>It is important to run IQM-Vis in a fresh python virtual environment. This is so that there will be no dependancy clashes with the required libraries. Python version 3.9 is recommended, but newer versions should work as well.</p>
 <p>You can make a new environment by using anaconda (conda):</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda create -n IQM_Vis <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.9 -y
-conda activate IQM_Vis
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>IQM_Vis<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.9<span class="w"> </span>-y
+conda<span class="w"> </span>activate<span class="w"> </span>IQM_Vis
 </pre></div>
 </div>
-<p>Then install IQM-Vis from the PyPi index:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install IQM-Vis
+<p>If you have a GPU and would like to use CUDA then at this point head over to the pytorch website and download the relevent packages e.g.</p>
+<p>If you don’t have a GPU then you can skip this step.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span><span class="nv">pytorch</span><span class="o">==</span><span class="m">1</span>.13.1<span class="w"> </span><span class="nv">torchvision</span><span class="o">==</span><span class="m">0</span>.14.1<span class="w"> </span><span class="nv">torchaudio</span><span class="o">==</span><span class="m">0</span>.13.1<span class="w"> </span>pytorch-cuda<span class="o">=</span><span class="m">11</span>.7<span class="w"> </span>-c<span class="w"> </span>pytorch<span class="w"> </span>-c<span class="w"> </span>nvidia
+</pre></div>
+</div>
+<p>Now we can install IQM-Vis from the PyPi index:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>IQM-Vis
 </pre></div>
 </div>
 </section>
 <section id="testing-the-installation">
-<h2>Testing the installation<a class="headerlink" href="#testing-the-installation" title="Permalink to this heading"></a></h2>
+<h2>Testing the installation<a class="headerlink" href="#testing-the-installation" title="Permalink to this headline"></a></h2>
 <p>Run a demonstration example by running the python code:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">IQM_Vis</span>
-<span class="n">IQM_Vis</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">IQM_Vis</span><span class="o">.</span><span class="n">make_UI</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
 <section id="common-issues">
-<h2>Common Issues<a class="headerlink" href="#common-issues" title="Permalink to this heading"></a></h2>
+<h2>Common Issues<a class="headerlink" href="#common-issues" title="Permalink to this headline"></a></h2>
 <p>There are some know issues with some work arounds.</p>
 <p>If you are getting the error</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;Could not load the Qt platform plugin&quot;</span>
@@ -126,12 +128,12 @@ conda activate IQM_Vis
 </div>
 <p>This is often to do with mismatched PyQt versions linked to different packages. First make sure you are using the latest version of IQM-Vis. This may require you to create a new python virtual environment from scratch and reinstall IQM-Vis.</p>
 <p>then try first to uninstall opencv and change for opencv headless.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip uninstall opencv-python
-pip install opencv-python-headless
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>uninstall<span class="w"> </span>opencv-python
+pip<span class="w"> </span>install<span class="w"> </span>opencv-python-headless
 </pre></div>
 </div>
 <p>you can also try to install the extra libraries if you are using linux e.g.:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt install libxcb-cursor0
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>libxcb-cursor0
 </pre></div>
 </div>
 </section>

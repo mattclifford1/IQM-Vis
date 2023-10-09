@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>IQM_Vis.metrics package &mdash; IQM-Vis 0.2 documentation</title>
@@ -13,8 +13,9 @@
   <![endif]-->
   
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
@@ -28,15 +29,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="index.html" class="icon icon-home">
-            IQM-Vis
+            <a href="index.html" class="icon icon-home"> IQM-Vis
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -63,48 +60,8 @@
 <li class="toctree-l1"><a class="reference internal" href="IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">IQM_Vis.metrics package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-IQM_Vis.metrics.IQMs">IQM_Vis.metrics.IQMs module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.metrics.IQMs.DISTS"><code class="docutils literal notranslate"><span class="pre">DISTS</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#IQM_Vis.metrics.IQMs.DISTS.__call__"><code class="docutils literal notranslate"><span class="pre">DISTS.__call__()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.metrics.IQMs.LPIPS"><code class="docutils literal notranslate"><span class="pre">LPIPS</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#IQM_Vis.metrics.IQMs.LPIPS.__call__"><code class="docutils literal notranslate"><span class="pre">LPIPS.__call__()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.metrics.IQMs.MAE"><code class="docutils literal notranslate"><span class="pre">MAE</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#IQM_Vis.metrics.IQMs.MAE.__call__"><code class="docutils literal notranslate"><span class="pre">MAE.__call__()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.metrics.IQMs.MSE"><code class="docutils literal notranslate"><span class="pre">MSE</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#IQM_Vis.metrics.IQMs.MSE.__call__"><code class="docutils literal notranslate"><span class="pre">MSE.__call__()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.metrics.IQMs.MS_SSIM"><code class="docutils literal notranslate"><span class="pre">MS_SSIM</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#IQM_Vis.metrics.IQMs.MS_SSIM.__call__"><code class="docutils literal notranslate"><span class="pre">MS_SSIM.__call__()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.metrics.IQMs.NLPD"><code class="docutils literal notranslate"><span class="pre">NLPD</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#IQM_Vis.metrics.IQMs.NLPD.__call__"><code class="docutils literal notranslate"><span class="pre">NLPD.__call__()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.metrics.IQMs.SSIM"><code class="docutils literal notranslate"><span class="pre">SSIM</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#IQM_Vis.metrics.IQMs.SSIM.__call__"><code class="docutils literal notranslate"><span class="pre">SSIM.__call__()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.metrics.IQMs.make_kernel_odd"><code class="docutils literal notranslate"><span class="pre">make_kernel_odd()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.metrics.IQMs.one_over_PSNR"><code class="docutils literal notranslate"><span class="pre">one_over_PSNR</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#IQM_Vis.metrics.IQMs.one_over_PSNR.__call__"><code class="docutils literal notranslate"><span class="pre">one_over_PSNR.__call__()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#module-IQM_Vis.metrics">Module contents</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.metrics.get_all_IQM_params"><code class="docutils literal notranslate"><span class="pre">get_all_IQM_params()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.metrics.get_all_metric_images"><code class="docutils literal notranslate"><span class="pre">get_all_metric_images()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#IQM_Vis.metrics.get_all_metrics"><code class="docutils literal notranslate"><span class="pre">get_all_metrics()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-IQM_Vis.metrics.IQMs">IQM_Vis.metrics.IQMs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-IQM_Vis.metrics">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -122,7 +79,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li><a href="index.html" class="icon icon-home"></a></li>
       <li class="breadcrumb-item active">IQM_Vis.metrics package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/IQM_Vis.metrics.rst.txt" rel="nofollow"> View page source</a>
@@ -134,12 +91,12 @@
            <div itemprop="articleBody">
              
   <section id="iqm-vis-metrics-package">
-<h1>IQM_Vis.metrics package<a class="headerlink" href="#iqm-vis-metrics-package" title="Permalink to this heading"></a></h1>
+<h1>IQM_Vis.metrics package<a class="headerlink" href="#iqm-vis-metrics-package" title="Permalink to this headline"></a></h1>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
 </section>
 <section id="module-IQM_Vis.metrics.IQMs">
-<span id="iqm-vis-metrics-iqms-module"></span><h2>IQM_Vis.metrics.IQMs module<a class="headerlink" href="#module-IQM_Vis.metrics.IQMs" title="Permalink to this heading"></a></h2>
+<span id="iqm-vis-metrics-iqms-module"></span><h2>IQM_Vis.metrics.IQMs module<a class="headerlink" href="#module-IQM_Vis.metrics.IQMs" title="Permalink to this headline"></a></h2>
 <p>sample metrics to use with the examples of the UI</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="IQM_Vis.metrics.IQMs.DISTS">
@@ -155,17 +112,17 @@ pairs that are not strictly point-by-point aligned).</p>
 <span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#DISTS.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.DISTS.__call__" title="Permalink to this definition"></a></dt>
 <dd><p>When an instance is called</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>im_ref</strong> (<em>np.array</em>) – Reference image</p></li>
 <li><p><strong>im_comp</strong> (<em>np.array</em>) – Comparison image</p></li>
 <li><p><strong>**kwargs</strong> – Arbitrary keyword arguments</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>DISTS score</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>score (np.array)</p>
 </dd>
 </dl>
@@ -182,7 +139,7 @@ pairs that are not strictly point-by-point aligned).</p>
 </dd>
 </dl>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>network</strong> (<em>str</em>) – Pretrained network to use. Choose between ‘alex’, ‘vgg’
 or ‘squeeze’. (Defaults to ‘alex’)</p></li>
@@ -196,21 +153,21 @@ or ‘squeeze’. (Defaults to ‘alex’)</p></li>
 <span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#LPIPS.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.LPIPS.__call__" title="Permalink to this definition"></a></dt>
 <dd><p>When an instance is called</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>im_ref</strong> (<em>np.array</em>) – Reference image</p></li>
 <li><p><strong>im_comp</strong> (<em>np.array</em>) – Comparison image</p></li>
 <li><p><strong>**kwargs</strong> – Arbitrary keyword arguments</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p><dl class="simple">
 <dt>1-SSIM (scalar if return_image is False, image if</dt><dd><p>return_image is True)</p>
 </dd>
 </dl>
 </p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>score (np.array)</p>
 </dd>
 </dl>
@@ -227,7 +184,7 @@ or ‘squeeze’. (Defaults to ‘alex’)</p></li>
 </dd>
 </dl>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>return_image</strong> (<em>bool</em>) – Whether to return the image (Defaults to False which
 will return a scalar value)</p>
 </dd>
@@ -237,21 +194,21 @@ will return a scalar value)</p>
 <span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#MAE.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.MAE.__call__" title="Permalink to this definition"></a></dt>
 <dd><p>When an instance is called</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>im_ref</strong> (<em>np.array</em>) – Reference image</p></li>
 <li><p><strong>im_comp</strong> (<em>np.array</em>) – Comparison image</p></li>
 <li><p><strong>**kwargs</strong> – Arbitrary keyword arguments</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p><dl class="simple">
 <dt>MAE (scalar if return_image is False, image if</dt><dd><p>return_image is True)</p>
 </dd>
 </dl>
 </p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>score (np.array)</p>
 </dd>
 </dl>
@@ -268,7 +225,7 @@ will return a scalar value)</p>
 </dd>
 </dl>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>return_image</strong> (<em>bool</em>) – Whether to return the image (Defaults to False which
 will return a scalar value)</p>
 </dd>
@@ -278,21 +235,21 @@ will return a scalar value)</p>
 <span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#MSE.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.MSE.__call__" title="Permalink to this definition"></a></dt>
 <dd><p>When an instance is called</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>im_ref</strong> (<em>np.array</em>) – Reference image</p></li>
 <li><p><strong>im_comp</strong> (<em>np.array</em>) – Comparison image</p></li>
 <li><p><strong>**kwargs</strong> – Arbitrary keyword arguments</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p><dl class="simple">
 <dt>MSE (scalar if return_image is False, image if</dt><dd><p>return_image is True)</p>
 </dd>
 </dl>
 </p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>score (np.array)</p>
 </dd>
 </dl>
@@ -312,7 +269,7 @@ reduced for compatability with the 4 downsizing operations.</p>
 </dd>
 </dl>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>return_image</strong> (<em>bool</em>) – Whether to return the image (Defaults to False which
 will return a scalar value)</p>
 </dd>
@@ -322,21 +279,21 @@ will return a scalar value)</p>
 <span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.03</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mssim_kernel_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">11</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#MS_SSIM.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.MS_SSIM.__call__" title="Permalink to this definition"></a></dt>
 <dd><p>When an instance is called</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>im_ref</strong> (<em>np.array</em>) – Reference image</p></li>
 <li><p><strong>im_comp</strong> (<em>np.array</em>) – Comparison image</p></li>
 <li><p><strong>**kwargs</strong> – Arbitrary keyword arguments</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p><dl class="simple">
 <dt>1-SSIM (scalar if return_image is False, image if</dt><dd><p>return_image is True)</p>
 </dd>
 </dl>
 </p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>score (np.array)</p>
 </dd>
 </dl>
@@ -357,17 +314,17 @@ early visual system: local luminance subtraction and local gain control.</p>
 <span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlpd_k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#NLPD.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.NLPD.__call__" title="Permalink to this definition"></a></dt>
 <dd><p>When an instance is called</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>im_ref</strong> (<em>np.array</em>) – Reference image</p></li>
 <li><p><strong>im_comp</strong> (<em>np.array</em>) – Comparison image</p></li>
 <li><p><strong>**kwargs</strong> – Arbitrary keyword arguments</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>NLPD score</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>score (np.array)</p>
 </dd>
 </dl>
@@ -384,7 +341,7 @@ early visual system: local luminance subtraction and local gain control.</p>
 </dd>
 </dl>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>return_image</strong> (<em>bool</em>) – Whether to return the image (Defaults to False which
 will return a scalar value)</p>
 </dd>
@@ -394,21 +351,21 @@ will return a scalar value)</p>
 <span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.03</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ssim_kernel_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">11</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#SSIM.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.SSIM.__call__" title="Permalink to this definition"></a></dt>
 <dd><p>When an instance is called</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>im_ref</strong> (<em>np.array</em>) – Reference image</p></li>
 <li><p><strong>im_comp</strong> (<em>np.array</em>) – Comparison image</p></li>
 <li><p><strong>**kwargs</strong> – Arbitrary keyword arguments</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p><dl class="simple">
 <dt>1-SSIM (scalar if return_image is False, image if</dt><dd><p>return_image is True)</p>
 </dd>
 </dl>
 </p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>score (np.array)</p>
 </dd>
 </dl>
@@ -428,7 +385,7 @@ will return a scalar value)</p>
 <p>Peak signal to noise ratio - <a class="reference external" href="https://en.wikipedia.org/wiki/Peak_signal-to-noise_ratio">https://en.wikipedia.org/wiki/Peak_signal-to-noise_ratio</a>
 The score given is normalised between 0, 1 by taking 1/PSNR</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>return_image</strong> (<em>bool</em>) – Whether to return the image (Defaults to False which
 will return a scalar value)</p>
 </dd>
@@ -438,17 +395,17 @@ will return a scalar value)</p>
 <span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#one_over_PSNR.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.one_over_PSNR.__call__" title="Permalink to this definition"></a></dt>
 <dd><p>When an instance is called</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>im_ref</strong> (<em>np.array</em>) – Reference image</p></li>
 <li><p><strong>im_comp</strong> (<em>np.array</em>) – Comparison image</p></li>
 <li><p><strong>**kwargs</strong> – Arbitrary keyword arguments</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>PSNR between the images</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>score (np.array)</p>
 </dd>
 </dl>
@@ -458,13 +415,13 @@ will return a scalar value)</p>
 
 </section>
 <section id="module-IQM_Vis.metrics">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-IQM_Vis.metrics" title="Permalink to this heading"></a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-IQM_Vis.metrics" title="Permalink to this headline"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="IQM_Vis.metrics.get_all_IQM_params">
 <span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.</span></span><span class="sig-name descname"><span class="pre">get_all_IQM_params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics.html#get_all_IQM_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.get_all_IQM_params" title="Permalink to this definition"></a></dt>
 <dd><p>Get all available IQMs parameters</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p>all_params (dict)</p></li>
 </ul>
@@ -478,7 +435,7 @@ will return a scalar value)</p>
 <span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.</span></span><span class="sig-name descname"><span class="pre">get_all_metric_images</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics.html#get_all_metric_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.get_all_metric_images" title="Permalink to this definition"></a></dt>
 <dd><p>Get all available IQMs provided by IQM_Vis that return an image</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p>all_metrics (dict)</p></li>
 </ul>
@@ -492,7 +449,7 @@ will return a scalar value)</p>
 <span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.</span></span><span class="sig-name descname"><span class="pre">get_all_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics.html#get_all_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.get_all_metrics" title="Permalink to this definition"></a></dt>
 <dd><p>Get all available IQMs provided by IQM_Vis</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p>all_metrics (dict)</p></li>
 </ul>
