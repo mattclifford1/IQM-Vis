@@ -8,6 +8,9 @@ IQM-Vis documentation
 IQM-Vis is an image quality metric visualisation toolbox to facilitate visualising and evaluating image quality metrics (IQMs).
 View our demonstration `video <https://youtu.be/C6x_E0JvKqI>`_ which illustrates the features and how to use IQM-Vis.
 
+
+Read our `PAPER <https://github.com/mattclifford1/IQM-Vis/blob/main/Software_Impacts_IQM_Vis.pdf>`_ for in depth details of the software.
+
 Quantitive Analysis
 ===================
 IQM-Vis is able to provide a comprehensive analysis of IQMs through various quantitative graphs. These graphs offer practitioners a well-rounded understanding of how different IQMs perform under different scenarios without having to write any code to set up the testing procedure.
