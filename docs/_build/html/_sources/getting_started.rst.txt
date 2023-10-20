@@ -43,26 +43,27 @@ There are some know issues with some work arounds.
 
 There are some dependancy conflicts with python 3.11, we recommend 3.9 or 3.10.
 
-If you having any issues, please use python 3.9 and install the pinned dependancies found `here <https://github.com/mattclifford1/IQM-Vis/blob/main/requirements-pinned.txt>`_.
+.. If you having any issues, please use python 3.9 and install the pinned dependancies found `here <https://github.com/mattclifford1/IQM-Vis/blob/main/requirements-pinned.txt>`_.
 
-If you are getting the error 
+If you are using Ubuntu and getting the error 
 
 ..  code-block:: bash
     
     "Could not load the Qt platform plugin"
 
-This is often to do with mismatched PyQt versions linked to different packages. First make sure you are using the latest version of IQM-Vis. This may require you to create a new python virtual environment from scratch and reinstall IQM-Vis.
-
-then try first to uninstall opencv and change for opencv headless.
-
-..  code-block:: bash
-    
-    pip uninstall opencv-python
-    pip install opencv-python-headless
-
-you can also try to install the extra libraries if you are using linux e.g.:
+Then you will be missing some libraries which you can install with:
 
 ..  code-block:: bash
 
     sudo apt install libxcb-cursor0 
+
+If this does not solve the problem then first make sure you are using the latest version of IQM-Vis. It is best to create a new python virtual environment from scratch and reinstall IQM-Vis.
+
+.. then try first to uninstall opencv and change for opencv headless.
+
+.. ..  code-block:: bash
+    
+..     pip uninstall opencv-python
+..     pip install opencv-python-headless
+  
 

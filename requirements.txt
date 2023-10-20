@@ -1,7 +1,7 @@
 numpy>=1.23.4
-PyQt6==6.4
-PyQt6-Qt6==6.4
-PyQt6-sip==13.4
+PyQt6==6.5
+PyQt6-Qt6==6.5
+PyQt6-sip==13.6
 opencv-python-headless>=4.6.0.66
 Pillow>=9.2.0
 scikit-image>=0.19.3
