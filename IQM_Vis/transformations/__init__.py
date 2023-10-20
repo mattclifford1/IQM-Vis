@@ -1,4 +1,4 @@
-from .transforms import (rotation, 
+from IQM_Vis.transformations.transforms import (rotation, 
                          blur, 
                          x_shift, 
                          y_shift, 

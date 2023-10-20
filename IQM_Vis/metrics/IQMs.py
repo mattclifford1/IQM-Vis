@@ -8,7 +8,7 @@ import numpy as np
 import warnings
 
 from torchmetrics import StructuralSimilarityIndexMeasure as ssim_torch
-from .SSIM.ssim import ms_ssim
+from IQM_Vis.metrics.SSIM.ssim import ms_ssim
 # from torchmetrics import MultiScaleStructuralSimilarityIndexMeasure as Mssim_torch
 from torchmetrics import PeakSignalNoiseRatio as PSNRs
 # from torchmetrics import UniversalImageQualityIndex as UIQI
@@ -16,7 +16,7 @@ from torchmetrics import PeakSignalNoiseRatio as PSNRs
 # from torchmetrics import SpectralDistortionIndex as SDI
 from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity as lpips_torch
 from DISTS_pytorch import DISTS as dists_original
-from .NLPD_torch.pyramids import LaplacianPyramid
+from IQM_Vis.metrics.NLPD_torch.pyramids import LaplacianPyramid
 
 class MAE:
     '''Mean Absolute Error between two images. Images must have the same

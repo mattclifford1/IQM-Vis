@@ -6,10 +6,10 @@ layers for wavelet transformations.
 # License: new BSD
 
 # import expert.utils.fourier as fourier ## needed for SteerableWavelet - includes extra dependancies so wont use for now
-from .utils import conv as conv_utils
-from .utils import pyramid_filters as pyr_filts
-from .utils import fourier
-from .layers import divisive_normalisation as expert_divisive_normalisation
+from IQM_Vis.metrics.NLPD_torch.utils import conv as conv_utils
+from IQM_Vis.metrics.NLPD_torch.utils import pyramid_filters as pyr_filts
+from IQM_Vis.metrics.NLPD_torch.utils import fourier
+from IQM_Vis.metrics.NLPD_torch.layers import divisive_normalisation as expert_divisive_normalisation
 import torch.nn.functional as F
 import torch.nn as nn
 import torch
