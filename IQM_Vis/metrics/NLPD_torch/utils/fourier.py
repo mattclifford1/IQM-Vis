@@ -9,7 +9,7 @@ import math
 
 import torch
 
-from .interp1d import Interp1d
+from IQM_Vis.metrics.NLPD_torch.utils.interp1d import Interp1d
 
 __all__ = ['harmonic_column', 'raised_cosine', 'steer_to_harmonics',
            'point_operation_filter']

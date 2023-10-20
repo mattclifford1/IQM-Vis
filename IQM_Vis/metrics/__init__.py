@@ -1,4 +1,4 @@
-from .IQMs import (MAE, 
+from IQM_Vis.metrics.IQMs import (MAE, 
                    MSE, 
                    SSIM, 
                    MS_SSIM, 
