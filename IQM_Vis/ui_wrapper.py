@@ -3,7 +3,8 @@ API to access making the PyQt6 UI for IQM-Vis
 TODO: write docs on example usage/ what inputs etc. and what attributes that the data_store class needs
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
-import os
+import subprocess
+import platform
 import sys
 from typing import Any
 import warnings
@@ -48,6 +49,7 @@ class make_UI:
         self.restrict_options = restrict_options
         self.num_steps_range = num_steps_range
         self.debug = debug
+        check_pyqt_install_deps()
         self.show()
 
     def show(self):
@@ -184,3 +186,22 @@ class transform_wrapper:
         else:
             # unwrapped tranform function
             return self.function == other
+
+
+def check_pyqt_install_deps():
+    ''' PyQt6 on linux doesn't always ship with all the required libraries
+        so here we will warn the user if they need to install them, avoiding a crash '''
+    system_info = platform.system()
+    if not system_info == "Linux":
+        return True
+    
+    # if on linux try see if package installed (only for debian based)
+    package_name = "libxcb-cursor0"
+    installed = False
+    try:
+        result = subprocess.run(["dpkg", "-l", package_name], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        installed = "ii" in result.stdout
+    except subprocess.CalledProcessError:
+        installed = False
+    if installed == False:
+        print(f"{'*'*30}\n\nWarning: not all dependencies are installed. If you get an 'Aborted (core dumped)' error below this message then please install them using:\n\n 'sudo apt install libxcb-cursor0'\n\n\n{'*'*30}\n\n")
