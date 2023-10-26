@@ -185,13 +185,14 @@ class widgets():
             self.widget_experiment_params[trans_name]['min'].setText('min:')
             self.widget_experiment_params[trans_name]['min_edit'] = QLineEdit()
             self.widget_experiment_params[trans_name]['min_edit'].setValidator(get_float_validator())
-            
+            self.widget_experiment_params[trans_name]['min_edit'].textChanged.connect(partial(self.colour_lineedit, self.widget_experiment_params[trans_name]['min_edit']))
             self.widget_experiment_params[trans_name]['min_edit'].setText(f"{deets['min']}")
 
             self.widget_experiment_params[trans_name]['max'] = QLabel(self)
             self.widget_experiment_params[trans_name]['max'].setText('max:')
             self.widget_experiment_params[trans_name]['max_edit'] = QLineEdit()
             self.widget_experiment_params[trans_name]['max_edit'].setValidator(get_float_validator())
+            self.widget_experiment_params[trans_name]['max_edit'].textChanged.connect(partial(self.colour_lineedit, self.widget_experiment_params[trans_name]['max_edit']))
             self.widget_experiment_params[trans_name]['max_edit'].setText(f"{deets['max']}")
 
             self.widget_experiment_params[trans_name]['steps'] = QLabel(self)
@@ -237,6 +238,7 @@ class widgets():
             width = 40
             sliders_dict[key]['min_edit'] = QLineEdit()
             sliders_dict[key]['min_edit'].setValidator(get_float_validator())
+            sliders_dict[key]['min_edit'].textChanged.connect(partial(self.colour_lineedit, sliders_dict[key]['min_edit']))
             sliders_dict[key]['min_edit'].setText(f"{min(sliders_dict[key]['values'])}")
             sliders_dict[key]['min_edit'].setFixedWidth(width)
             sliders_dict[key]['min_edit'].editingFinished.connect(partial(self.edit_slider_vals, sliders_dict, key, info_item))
@@ -244,6 +246,7 @@ class widgets():
             sliders_dict[key]['min_edit'].editingFinished.connect(self.display_images)
             sliders_dict[key]['max_edit'] = QLineEdit()
             sliders_dict[key]['max_edit'].setValidator(get_float_validator())
+            sliders_dict[key]['max_edit'].textChanged.connect(partial(self.colour_lineedit, sliders_dict[key]['max_edit']))
             sliders_dict[key]['max_edit'].setText(f"{max(sliders_dict[key]['values'])}")
             sliders_dict[key]['max_edit'].setFixedWidth(width)
             sliders_dict[key]['max_edit'].editingFinished.connect(partial(self.edit_slider_vals, sliders_dict, key, info_item))
@@ -365,6 +368,13 @@ class widgets():
     '''
     ==================== functions to bind to sliders/widgets ====================
     '''
+    # line edit colour based on if valid
+    def colour_lineedit(self, widget, txt):
+        if not is_float(txt):
+            widget.setStyleSheet("color: red;")
+        else:
+            widget.setStyleSheet("color: black;")
+
     # sliders value changes
     def generic_value_change(self, key, param_group):
         index = self.widget_controls['slider'][key]['data'].value()
@@ -606,22 +616,28 @@ def get_float_validator():
     return custom_float_validator()
 
 def is_float(input_string):
-    if input_string == '-' or input_string == '+' or input_string == '':
-        return False
-    pattern = r'^[-+]?[0-9]*\.?[0-9]*$'
-    match = re.match(pattern, input_string)
-    if match:
+    # if input_string == '-' or input_string == '+' or input_string == '':
+    #     return False
+    # pattern = r'^[-+]?[0-9]*\.?[0-9]*$'
+    # match = re.match(pattern, input_string)
+    # if match:
+    #     return True
+    # return False
+    try: 
+        float(input_string)
         return True
-    return False
+    except ValueError:
+        return False
 
 def is_almost_float(input_string):
-    if input_string == '-' or input_string == '+' or input_string == '':
-        return True
-    pattern = r'^[-+]?[0-9]*.*[0-9]$'
-    match = re.match(pattern, input_string)
-    if match:
-        return True
-    return False
+    # if input_string == '-' or input_string == '+' or input_string == '':
+    #     return True
+    # pattern = r'^[-+]?[0-9]*.*[0-9]$'
+    # match = re.match(pattern, input_string)
+    # if match:
+    #     return True
+    # return False
+    return True
 
 class custom_float_validator(QValidator):
     def __init__(self, parent=None):
