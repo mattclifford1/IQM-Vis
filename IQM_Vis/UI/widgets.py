@@ -2,12 +2,13 @@
 UI create widgets
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+import re
 from functools import partial
 
 import numpy as np
 from PyQt6.QtWidgets import QPushButton, QLabel, QSlider, QCheckBox, QComboBox, QLineEdit
-from PyQt6.QtGui import QIntValidator, QDoubleValidator
-from PyQt6.QtCore import Qt, pyqtSlot
+from PyQt6.QtGui import QIntValidator, QDoubleValidator, QValidator
+from PyQt6.QtCore import Qt, pyqtSlot, QLocale
 
 import IQM_Vis
 from IQM_Vis.UI.custom_widgets import ClickLabel
@@ -169,6 +170,7 @@ class widgets():
 
         ''' experiment options '''
         self.widget_experiment_params = {}
+        
         for trans_name, deets in self.checked_transformations.items():
             self.widget_experiment_params[trans_name] = {}
             self.widget_experiment_params[trans_name]['check_box'] = QCheckBox(self)
@@ -182,13 +184,14 @@ class widgets():
             self.widget_experiment_params[trans_name]['min'] = QLabel(self)
             self.widget_experiment_params[trans_name]['min'].setText('min:')
             self.widget_experiment_params[trans_name]['min_edit'] = QLineEdit()
-            self.widget_experiment_params[trans_name]['min_edit'].setValidator(QDoubleValidator())
+            self.widget_experiment_params[trans_name]['min_edit'].setValidator(get_float_validator())
+            
             self.widget_experiment_params[trans_name]['min_edit'].setText(f"{deets['min']}")
 
             self.widget_experiment_params[trans_name]['max'] = QLabel(self)
             self.widget_experiment_params[trans_name]['max'].setText('max:')
             self.widget_experiment_params[trans_name]['max_edit'] = QLineEdit()
-            self.widget_experiment_params[trans_name]['max_edit'].setValidator(QDoubleValidator())
+            self.widget_experiment_params[trans_name]['max_edit'].setValidator(get_float_validator())
             self.widget_experiment_params[trans_name]['max_edit'].setText(f"{deets['max']}")
 
             self.widget_experiment_params[trans_name]['steps'] = QLabel(self)
@@ -233,14 +236,14 @@ class widgets():
             # make min/max inputs
             width = 40
             sliders_dict[key]['min_edit'] = QLineEdit()
-            sliders_dict[key]['min_edit'].setValidator(QDoubleValidator())
+            sliders_dict[key]['min_edit'].setValidator(get_float_validator())
             sliders_dict[key]['min_edit'].setText(f"{min(sliders_dict[key]['values'])}")
             sliders_dict[key]['min_edit'].setFixedWidth(width)
             sliders_dict[key]['min_edit'].editingFinished.connect(partial(self.edit_slider_vals, sliders_dict, key, info_item))
             sliders_dict[key]['min_edit'].editingFinished.connect(partial(self.generic_value_change, key, param_group))
             sliders_dict[key]['min_edit'].editingFinished.connect(self.display_images)
             sliders_dict[key]['max_edit'] = QLineEdit()
-            sliders_dict[key]['max_edit'].setValidator(QDoubleValidator())
+            sliders_dict[key]['max_edit'].setValidator(get_float_validator())
             sliders_dict[key]['max_edit'].setText(f"{max(sliders_dict[key]['values'])}")
             sliders_dict[key]['max_edit'].setFixedWidth(width)
             sliders_dict[key]['max_edit'].editingFinished.connect(partial(self.edit_slider_vals, sliders_dict, key, info_item))
@@ -369,8 +372,8 @@ class widgets():
         self.display_slider_num(key, param_group) # display the new value ont UI
 
     def edit_slider_vals(self, sliders_dict, key, info_item):
-        _min = float(sliders_dict[key]['min_edit'].text())
-        _max = float(sliders_dict[key]['max_edit'].text())
+        _min = make_float_from_text(sliders_dict[key]['min_edit'].text())
+        _max = make_float_from_text(sliders_dict[key]['max_edit'].text())
         self.make_slider_range(sliders_dict, key, _min, _max)
         info_item['min'] = _min
         info_item['max'] = _max
@@ -563,8 +566,8 @@ class widgets():
         checked_transformation_params = {}
         for trans in self.widget_experiment_params:
             if self.widget_experiment_params[trans]['check_box'].isChecked():
-                data = {'min': float(self.widget_experiment_params[trans]['min_edit'].text()),
-                        'max': float(self.widget_experiment_params[trans]['max_edit'].text()),
+                data = {'min': make_float_from_text(self.widget_experiment_params[trans]['min_edit'].text()),
+                        'max': make_float_from_text(self.widget_experiment_params[trans]['max_edit'].text()),
                         'num_steps': int(self.widget_experiment_params[trans]['steps_edit'].text()),
                         'function': self.checked_transformations[trans]['function']}
                 name = self.widget_experiment_params[trans]['name'].text()
@@ -589,3 +592,49 @@ class widgets():
     @pyqtSlot(str)
     def change_human_scores_after_exp(self, path):
         self._change_human_exp(path)
+
+
+'''
+float checking functionality for checkign line edit
+'''
+
+def get_float_validator():
+    # float_validator = QDoubleValidator()
+    # float_validator.setLocale(QLocale('en_US'))  # so comma cannot be used a decimal place for spanish users
+    # float_validator.setNotation(QDoubleValidator.Notation(0)) # StandardNotation
+    # return float_validator
+    return custom_float_validator()
+
+def is_float(input_string):
+    if input_string == '-' or input_string == '+' or input_string == '':
+        return False
+    pattern = r'^[-+]?[0-9]*\.?[0-9]*$'
+    match = re.match(pattern, input_string)
+    if match:
+        return True
+    return False
+
+def is_almost_float(input_string):
+    if input_string == '-' or input_string == '+' or input_string == '':
+        return True
+    pattern = r'^[-+]?[0-9]*.*[0-9]$'
+    match = re.match(pattern, input_string)
+    if match:
+        return True
+    return False
+
+class custom_float_validator(QValidator):
+    def __init__(self, parent=None):
+        super(custom_float_validator, self).__init__(parent)
+
+    def validate(self, string, pos):
+        if is_float(string):
+            return QValidator.State(2), string, pos # Acceptable
+        if is_almost_float(string):
+            return QValidator.State(1), string, pos # Intermediate
+        return QValidator.State(0), string, pos # Invalid
+
+def make_float_from_text(txt):
+    # get rid of pesky commas
+    no_commas = txt.replace(',', '')
+    return float(no_commas)
