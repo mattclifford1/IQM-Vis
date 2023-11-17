@@ -302,8 +302,7 @@ class LPIPS:
             **kwargs: Arbitrary keyword arguments
 
         Returns:
-            score (np.array): 1-SSIM (scalar if return_image is False, image if
-                             return_image is True)
+            score (np.array): LPIPS score
         '''
         _check_shapes(im_ref, im_comp)
         im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
@@ -313,7 +312,7 @@ class LPIPS:
             warnings.simplefilter("ignore")
             _metric = self.metric(net_type=self.network,
                                   reduction=self.reduction,
-                                  normalise=True,
+                                  normalize=True,
                                   **kwargs)
             _metric.to(self.device)
         _score = _metric(im_ref, im_comp).cpu().detach().numpy()
