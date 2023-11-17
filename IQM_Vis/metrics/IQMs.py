@@ -287,9 +287,10 @@ class LPIPS:
 
     '''
     def __init__(self, network='alex', reduction='mean'):
+        self.initialised = False   # initialse fully on first __call__ to save load up time
         self.network = network
         self.reduction = reduction
-        self.metric = lpips_torch
+        # self.metric = lpips_torch
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.preproccess_function = _numpy_to_torch_image
 
@@ -304,20 +305,23 @@ class LPIPS:
         Returns:
             score (np.array): LPIPS score
         '''
+        if self.initialised == False:
+            with warnings.catch_warnings():    # we don't care about the warnings these give
+                warnings.simplefilter("ignore")
+                self.metric = lpips_torch(net_type=self.network,
+                                          reduction=self.reduction,
+                                          normalize=True)
+                self.metric.to(self.device)
+            self.initialised = True
         _check_shapes(im_ref, im_comp)
         im_ref = self.preproccess_function(im_ref).to(device=self.device, dtype=torch.float)
         im_comp = self.preproccess_function(im_comp).to(device=self.device, dtype=torch.float)
-        # set up metric
-        with warnings.catch_warnings():    # we don't care about the warnings these give
+        with warnings.catch_warnings():    # warning because we have reset
             warnings.simplefilter("ignore")
-            _metric = self.metric(net_type=self.network,
-                                  reduction=self.reduction,
-                                  normalize=True,
-                                  **kwargs)
-            _metric.to(self.device)
-        _score = _metric(im_ref, im_comp).cpu().detach().numpy()
-        _metric.reset()
-        return _score
+            _score = self.metric(im_ref, im_comp)
+        score = _score.cpu().detach().numpy()
+        self.metric.reset()
+        return score
 
 class DISTS:
     '''Deep Image Structure and Texture Similarity (DISTS) Metric. Uses the
