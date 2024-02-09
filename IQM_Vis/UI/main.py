@@ -92,16 +92,17 @@ class make_app(widgets, layout, images):
         quit_action.setStatusTip('Exit application')
         quit_action.triggered.connect(self.quit)
 
-        self.edit_menu = self.menu_bar.addMenu('Edit')
-        load_transforms = self.edit_menu.addAction('Load All Transforms')
-        load_metrics = self.edit_menu.addAction('Load All Metrics')
-        load_metric_images = self.edit_menu.addAction('Load All Metric Images')
+        self.get_menu_checkboxes()
+
+        self.edit_menu = self.menu_bar.addMenu('Load')
+        load_transforms = self.edit_menu.addAction('All Transforms')
+        load_metrics = self.edit_menu.addAction('All Metrics')
+        load_metric_images = self.edit_menu.addAction('All Metric Images')
 
         load_transforms.triggered.connect(self.load_all_transforms)
         load_metrics.triggered.connect(self.load_all_metrics)
         load_metric_images.triggered.connect(self.load_all_metric_images)
 
-        self.get_menu_checkboxes()
 
     def load_all_transforms(self):
         all_trans_iqm_vis = IQM_Vis.transformations.get_all_transforms()
