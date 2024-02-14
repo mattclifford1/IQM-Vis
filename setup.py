@@ -1,6 +1,13 @@
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 from setuptools import setup, find_packages
-from IQM_Vis import __version__
+import os
+
+
+def get_version():
+    info = {}
+    with open(os.path.join('IQM_Vis', 'version.py')) as ver_file:
+        exec(ver_file.read(), info)
+    return info['__version__']
 
 
 def get_long_description():
@@ -22,7 +29,7 @@ def dependencies_from_file(file_path):
 
 
 setup(name='IQM-Vis',
-      version=IQM_Vis.__version__,
+      version=get_version(),
       packages=find_packages(),
       include_package_data=True,
       install_requires=dependencies_from_file('./requirements.txt'),

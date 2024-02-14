@@ -4,9 +4,7 @@ from IQM_Vis.transformations import transforms
 from IQM_Vis.metrics import IQMs
 from IQM_Vis import examples
 from IQM_Vis import utils
-
-# Changing the version number will action GitHub to push to PyPi the new version
-__version__ = '0.2.5.87'
+from IQM_Vis.version import __version__
 
 # Author info
 __author__ = "Matt Clifford"
