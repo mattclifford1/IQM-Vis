@@ -6,7 +6,7 @@ from IQM_Vis import examples
 from IQM_Vis import utils
 
 # Changing the version number will action GitHub to push to PyPi the new version
-__version__ = '0.2.5.86'
+__version__ = '0.2.5.87'
 
 # Author info
 __author__ = "Matt Clifford"
