@@ -21,7 +21,7 @@ jobs:
       - name: Get Version numbers
         run: |
           echo "code_version=$(cat VERSION)" >> $GITHUB_ENV
-          echo "pypi_version=$(./scripts/get_latest_package_version.py)" >> $GITHUB_ENV
+          echo "pypi_version=$(./scripts/get_latest_pypi_version.py)" >> $GITHUB_ENV
 
       # - name: Setup Python
       #   uses: actions/setup-python@v3

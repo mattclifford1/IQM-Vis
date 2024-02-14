@@ -1,5 +1,6 @@
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 from setuptools import setup, find_packages
+import IQM_Vis
 
 
 def get_long_description():
@@ -7,12 +8,6 @@ def get_long_description():
         text = f.read()
     return text
 
-def get_version():
-    with open('VERSION') as f:
-        ver = f.read()
-    while ver[-1] == '\n':
-        ver = ver[:-1]
-    return ver
 
 def dependencies_from_file(file_path):
     required = []
@@ -25,8 +20,9 @@ def dependencies_from_file(file_path):
                 required.append(l_c)
     return required
 
+
 setup(name='IQM-Vis',
-      version=get_version(),
+      version=IQM_Vis.__version__,
       packages=find_packages(),
       include_package_data=True,
       install_requires=dependencies_from_file('./requirements.txt'),
