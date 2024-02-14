@@ -1,6 +1,6 @@
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 from setuptools import setup, find_packages
-import IQM_Vis
+from IQM_Vis import __version__
 
 
 def get_long_description():
