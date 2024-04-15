@@ -25,6 +25,14 @@ IQM\_Vis.ui\_wrapper module
    :undoc-members:
    :show-inheritance:
 
+IQM\_Vis.version module
+-----------------------
+
+.. automodule:: IQM_Vis.version
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
