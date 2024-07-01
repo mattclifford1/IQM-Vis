@@ -1,5 +1,7 @@
 # Deploy package to PyPi when a new VERSION is release to the main branch
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+# License: BSD 3-Clause License
+
 
 name: Upload Python Package to PyPi
 

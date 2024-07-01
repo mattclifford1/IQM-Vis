@@ -1,7 +1,8 @@
 #!/bin/python3
-
 '''Get the current version of package locally (github repo) - N.B. needs to be run from root of repo'''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+# License: BSD 3-Clause License
+
 import os
 import sys
 

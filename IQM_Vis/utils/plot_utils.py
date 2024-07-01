@@ -3,6 +3,8 @@ matplotlib plotting helpers
 TODO: write docs how to use these (currently just have to look at the UI code)
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+# License: BSD 3-Clause License
+
 from functools import partial
 import math
 

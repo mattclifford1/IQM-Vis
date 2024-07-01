@@ -1,6 +1,8 @@
 ''' thread and signal classes to makethe UI smoother
     useful info about PyQt6 threads: https://www.pythontutorial.net/pyqt/pyqt-qthread/'''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+# License: BSD 3-Clause License
+
 from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot
 from IQM_Vis.utils import plot_utils
 

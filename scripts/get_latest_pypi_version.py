@@ -1,7 +1,8 @@
 #!/bin/python3
-
 '''Get the latest version of a PyPi package'''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+# License: BSD 3-Clause License
+
 import urllib.request
 import sys
 import json

@@ -1,3 +1,6 @@
+# Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+# License: BSD 3-Clause License
+
 from IQM_Vis.ui_wrapper import make_UI
 from IQM_Vis.data_handlers.data_api import dataset_holder
 from IQM_Vis.transformations import transforms

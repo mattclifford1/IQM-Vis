@@ -3,6 +3,8 @@ API to access making the PyQt6 UI for IQM-Vis
 TODO: write docs on example usage/ what inputs etc. and what attributes that the data_store class needs
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+# License: BSD 3-Clause License
+
 import subprocess
 import platform
 import sys

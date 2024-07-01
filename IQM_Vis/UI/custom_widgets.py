@@ -1,5 +1,7 @@
 ''' Custom SubClasses of PyQt6 widget to extent to the required functionality '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+# License: BSD 3-Clause License
+
 from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtWidgets import QProgressBar, QLabel
 

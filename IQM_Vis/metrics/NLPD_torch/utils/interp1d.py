@@ -1,4 +1,7 @@
 # code dep from https://github.com/aliutkus/torchinterp1d/blob/master/torchinterp1d/interp1d.py
+# Author: Antoine Liutkus
+# License: BSD 3-Clause License
+
 import torch
 import contextlib
 

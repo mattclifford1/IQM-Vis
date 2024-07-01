@@ -2,6 +2,8 @@
 Utils for PyQt6 image, text and graph widgets
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+# License: BSD 3-Clause License
+
 try:
     from PyQt6.QtGui import QPixmap, QImage
     import matplotlib; matplotlib.use('Qt5Agg')

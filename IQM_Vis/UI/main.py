@@ -2,6 +2,7 @@
 main entry point to initialise the UI
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+# License: BSD 3-Clause License
 
 import os
 import time

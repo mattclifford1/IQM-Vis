@@ -2,6 +2,8 @@
 Sample image transformations to get the user started with
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+# License: BSD 3-Clause License
+
 from skimage.transform import resize, rotate
 from skimage.util import img_as_ubyte
 import cv2

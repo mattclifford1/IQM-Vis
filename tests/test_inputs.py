@@ -2,6 +2,8 @@
 test invalid input to api throws an error
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+# License: BSD 3-Clause License
+
 import pytest
 import numpy as np
 
@@ -38,4 +40,4 @@ def test_warn_empty():
         ui._check_inputs()
 
 if __name__ == '__main__':
-    test_inputs()
+    test_not_dict()

@@ -2,6 +2,8 @@
 # N.B. currently doesn't build the docs: need to do that locally with
 # ./scrips/make_docs.sh
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+# License: BSD 3-Clause License
+
 
 name: Publish Documentation to Github Pages
 

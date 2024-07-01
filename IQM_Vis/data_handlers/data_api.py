@@ -3,6 +3,8 @@ generic image and metric data class constructor
 both use the same image for reference and transformed
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+# License: BSD 3-Clause License
+
 import os
 import imghdr
 from functools import cache

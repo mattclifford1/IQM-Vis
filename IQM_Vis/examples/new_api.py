@@ -1,4 +1,7 @@
 ''' KODAK dataset '''
+# Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+# License: BSD 3-Clause License
+
 import os
 import glob
 import IQM_Vis

@@ -2,6 +2,8 @@
 UI create layout
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+# License: BSD 3-Clause License
+
 import os
 import warnings
 from PyQt6.QtWidgets import (QMainWindow,
