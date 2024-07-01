@@ -58,6 +58,7 @@ def build_IQM_Vis():
     qtbotbis = QtBot(test_window.window)
 
     yield test_window, qtbotbis
+    QtTest.QTest.qWait(1000)
 
     # need to handle the closing dialog
     def handle_dialog():
@@ -71,6 +72,7 @@ def build_IQM_Vis():
 
     # test_window.window.quit()
     test_window.window.main.close()
+    QtTest.QTest.qWait(1000)
 
 
 @pytest.fixture

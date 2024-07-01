@@ -1,3 +1,10 @@
+'''
+this test only crashes as part of pytest but will run fine on its own e.g.
+
+$ pytest tests/run_this_individually_4_experiment_.py 
+
+TODO: find out why that is the case...
+'''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
 
@@ -48,6 +55,7 @@ def build_IQM_Vis():
     qtbotbis = QtBot(test_window.window)
 
     yield test_window, qtbotbis
+    QtTest.QTest.qWait(1000)
 
     # need to handle the closing dialog
     def handle_dialog():
@@ -61,6 +69,7 @@ def build_IQM_Vis():
 
     # test_window.window.quit()
     test_window.window.main.close()
+    QtTest.QTest.qWait(1000)
 
 
 @pytest.fixture
@@ -69,10 +78,19 @@ def build_exp(build_IQM_Vis):
     assert test_window.showing == True
     # launch experiment
     QtTest.QTest.qWait(1000)
+
+    # qtbotbis.mouseClick(
+    #     test_window.window.tabs['slider'], QtCore.Qt.MouseButton.LeftButton)
+    test_window.window.tabs['slider'].setCurrentIndex(3)
+
+
+    QtTest.QTest.qWait(1000)
+
     qtbotbis.mouseClick(
         test_window.window.widget_controls['button']['launch_exp'], QtCore.Qt.MouseButton.LeftButton)
-    QtTest.QTest.qWait(500)
-    return test_window, qtbotbis
+    QtTest.QTest.qWait(1000)
+    yield test_window, qtbotbis
+    QtTest.QTest.qWait(1000)
 
 
 def test_experiment_runs(build_exp):
@@ -110,9 +128,9 @@ def test_experiment_runs(build_exp):
 
 
     # leave experiment
+    QtTest.QTest.qWait(1000)
     qtbotbis.mouseClick(
         test_window.window.experiment.widget_experiments['final']['quit_button'], QtCore.Qt.MouseButton.LeftButton)
-    QtTest.QTest.qWait(100)
 
 
 
