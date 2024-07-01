@@ -4,6 +4,8 @@ this test only crashes as part of pytest but will run fine on its own e.g.
 $ pytest tests/run_this_individually_4_experiment_.py 
 
 TODO: find out why that is the case...
+    will likely be to do with the cleanup of closing the app not working fully
+    - not just for this file but the 4th pyqt window opened crashes...
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
@@ -12,7 +14,7 @@ import pytest
 from PyQt6 import QtTest, QtWidgets, QtCore
 from pytestqt.plugin import QtBot, _close_widgets
 import IQM_Vis
-import threading
+import time
 
 
 def get_UI():
@@ -48,13 +50,15 @@ def get_UI():
 
 
 # building and closing function of UI for testing
-@pytest.fixture
+@pytest.fixture(scope='function')
 def build_IQM_Vis():
-
+    # Setup
     test_window = get_UI()
     qtbotbis = QtBot(test_window.window)
 
     yield test_window, qtbotbis
+
+    # Clean Up
     QtTest.QTest.qWait(1000)
 
     # need to handle the closing dialog
@@ -69,10 +73,10 @@ def build_IQM_Vis():
 
     # test_window.window.quit()
     test_window.window.main.close()
-    QtTest.QTest.qWait(1000)
+    time.sleep(1)
 
 
-@pytest.fixture
+@pytest.fixture(scope='function')
 def build_exp(build_IQM_Vis):
     test_window, qtbotbis = build_IQM_Vis
     assert test_window.showing == True

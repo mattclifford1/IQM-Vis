@@ -51,13 +51,15 @@ def get_UI():
 
 
 # building and closing function of UI for testing
-@pytest.fixture
+@pytest.fixture(scope='function')
 def build_IQM_Vis():
-
+    # Setup
     test_window = get_UI()
     qtbotbis = QtBot(test_window.window)
 
     yield test_window, qtbotbis
+
+    # Clean up
     QtTest.QTest.qWait(1000)
 
     # need to handle the closing dialog
@@ -75,7 +77,7 @@ def build_IQM_Vis():
     QtTest.QTest.qWait(1000)
 
 
-@pytest.fixture
+@pytest.fixture(scope='function')
 def test_build_3(build_IQM_Vis):
     test_window, _ = build_IQM_Vis
     assert test_window.showing == True
