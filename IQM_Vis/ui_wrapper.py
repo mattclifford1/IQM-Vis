@@ -37,7 +37,8 @@ class make_UI:
                  default_save_dir=IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR,
                  restrict_options=None,
                  num_steps_range=11,
-                 debug=False):
+                 debug=False, 
+                 test=False):
         if data_store == None:
             data_store = IQM_Vis.dataset_holder(image_list,
                                    metrics,
@@ -51,8 +52,10 @@ class make_UI:
         self.restrict_options = restrict_options
         self.num_steps_range = num_steps_range
         self.debug = debug
+        self.test = test
         check_pyqt_install_deps()
         self.show()
+        self.showing = True
 
     def show(self):
         self._check_restrict_options()
@@ -60,8 +63,8 @@ class make_UI:
         self._check_trans()
         if self.debug:
             self._check_inputs()
-        app = QApplication(sys.argv)
-        window = make_app(app,
+        self.app = QApplication(sys.argv)
+        self.window = make_app(self.app,
                           self.data_store,
                           self.transformations,
                           metrics_info_format=self.metrics_info_format,
@@ -70,7 +73,8 @@ class make_UI:
                           default_save_dir=self.default_save_dir,
                           restrict_options=self.restrict_options,
                           num_steps_range=self.num_steps_range)
-        sys.exit(app.exec())
+        if self.test == False:
+            sys.exit(self.app.exec())
 
     def _check_restrict_options(self):
         if self.restrict_options == None:

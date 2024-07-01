@@ -16,6 +16,7 @@ scipy==1.9.3
 notebook
 twine
 pytest
+pytest-qt==4.4.0
 sphinx
 nbsphinx
 sphinx_gallery

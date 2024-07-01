@@ -28,6 +28,7 @@ class layout(QMainWindow):
         self.main_widget.setLayout(self.main_layout)
         self.setCentralWidget(self.main_widget)
         self.show()
+        return self
 
     def _init_generic_layout(self):
         '''

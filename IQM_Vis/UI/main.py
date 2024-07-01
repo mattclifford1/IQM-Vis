@@ -12,7 +12,8 @@ import IQM_Vis
 from IQM_Vis.UI import layout, widgets, images, ProgressBar
 
 class make_app(widgets, layout, images):
-    def __init__(self, app,
+    def __init__(self, 
+                 app,
                  data_stores: list,
                  transformations: dict,
                  metrics_info_format='graph', # graph or text
@@ -132,7 +133,8 @@ class make_app(widgets, layout, images):
         self.construct_UI()
 
     def quit(self):
-        QApplication.instance().quit()
+        # QApplication.instance().quit()
+        self.app.quit()
 
     def __del__(self):
         # garbage collection
@@ -140,14 +142,14 @@ class make_app(widgets, layout, images):
 
     def closeEvent(self, event):
         # Ask for confirmation
-        answer = QMessageBox.question(self,
+        self.close_answer = QMessageBox.question(self,
         "Confirm Exit...",
         "Are you sure you want to exit?\nAll unsaved data will be lost.",
         QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
                                       QMessageBox.StandardButton.Yes)
 
         event.ignore()
-        if answer == QMessageBox.StandardButton.Yes:
+        if self.close_answer == QMessageBox.StandardButton.Yes:
             if hasattr(self, 'range_worker'):
                 self.range_worker.stop()
             event.accept()
@@ -228,7 +230,7 @@ class make_app(widgets, layout, images):
         self.init_style()     # layout.py
         self.init_widgets()   # widgets.py
         self.change_data(0, _redo_plots=True)   # images.py
-        self.init_layout()    # layout.py
+        self.main = self.init_layout()    # layout.py
         self.tabs['slider'].setCurrentIndex(tabs_index['slider'])
         self.tabs['graph'].setCurrentIndex(tabs_index['graph'])
         # self.experiments_tab.setCurrentIndex(experi_tabs_index)
