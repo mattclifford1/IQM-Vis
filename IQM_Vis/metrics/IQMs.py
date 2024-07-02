@@ -190,7 +190,7 @@ class MS_SSIM:
                                      K=(k1, k2),
                                      size_average=True)
                     # _score = _metric(im_ref, im_comp).cpu().detach().numpy()
-                _score = 1 - _score # get score not similarity
+                _score = 1 - _score.cpu().detach().numpy() # get score not similarity
                 success = True
             except ValueError:
                 # get an error with small images that the torchmetrics package seems to advise the wrong larger than size for

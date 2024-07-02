@@ -13,7 +13,7 @@ from PIL.TiffTags import TAGS
 
 
 '''Textures calibrated image loader'''
-def load_and_calibrate_image(file, max_luminance=200, size=256):
+def load_and_calibrate_image(file, max_luminance=200, size=512):
     # Calculate max luminance value in the whole dataset
     img = Image.open(file)
     meta_dict = {TAGS[key] : img.tag[key] for key in img.tag_v2}
@@ -97,20 +97,21 @@ def run():
                                   metric,
                                   metric_images,
                                   load_and_calibrate_image,
-                                  image_post_processing=IQM_Vis.utils.image_utils.crop_centre)
+                                  image_post_processing=IQM_Vis.utils.image_utils.crop_centre
+                                  )
 
     # define the transformations
     transformations = {
-        'rotation':{'min':-10, 'max':10, 'function':IQM_Vis.transforms.rotation},    # normal input
-        'x_shift': {'min':-0.1, 'max':0.1, 'function':IQM_Vis.transforms.x_shift, 'init_value': 0.0},
-        'y_shift': {'min':-0.1, 'max':0.1, 'function':IQM_Vis.transforms.y_shift, 'init_value': 0.0},
-        'zoom':    {'min': 0.8, 'max':1.2, 'function':IQM_Vis.transforms.zoom_image, 'init_value': 1.0},  # requires non standard slider params
-        'brightness':{'min':-1.0, 'max':1.0, 'function':IQM_Vis.transforms.brightness},   # normal but with float
-        'contrast': {'min': 0.5, 'max': 2.5, 'init_value': 1.0, 'function': IQM_Vis.transforms.contrast},
-        'hue': {'min': -0.5, 'max': 0.5, 'function': IQM_Vis.transforms.hue},
-        'saturation': {'min': -0.5, 'max': 0.5, 'function': IQM_Vis.transforms.saturation},
-        'jpg compr':{'init_value':101, 'min':1, 'max':101, 'function':IQM_Vis.transforms.jpeg_compression},
-        'blur':{'min':1, 'max':41, 'normalise':'odd', 'function':IQM_Vis.transforms.blur},  # only odd ints
+        'rotation':{'min':-2, 'max':2, 'function':IQM_Vis.transforms.rotation},    # normal input
+        'x_shift': {'min':-0.01, 'max':0.01, 'function':IQM_Vis.transforms.x_shift, 'init_value': 0.0},
+        'y_shift': {'min':-0.01, 'max':0.01, 'function':IQM_Vis.transforms.y_shift, 'init_value': 0.0},
+        'zoom':    {'min': 0.95, 'max':1.05, 'function':IQM_Vis.transforms.zoom_image, 'init_value': 1.0},  # requires non standard slider params
+        # 'brightness':{'min':-1.0, 'max':1.0, 'function':IQM_Vis.transforms.brightness},   # normal but with float
+        # 'contrast': {'min': 0.5, 'max': 2.5, 'init_value': 1.0, 'function': IQM_Vis.transforms.contrast},
+        # 'hue': {'min': -0.5, 'max': 0.5, 'function': IQM_Vis.transforms.hue},
+        # 'saturation': {'min': -0.5, 'max': 0.5, 'function': IQM_Vis.transforms.saturation},
+        # 'jpg compr':{'init_value':101, 'min':1, 'max':101, 'function':IQM_Vis.transforms.jpeg_compression},
+        # 'blur':{'min':1, 'max':41, 'normalise':'odd', 'function':IQM_Vis.transforms.blur},  # only odd ints
         # 'threshold':{'min':-40, 'max':40, 'function':IQM_Vis.transforms.binary_threshold},
                }
     # define any parameters that the metrics need (names shared across both metrics and metric_images)
