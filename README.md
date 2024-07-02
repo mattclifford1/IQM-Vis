@@ -12,7 +12,7 @@
 # IQM-Vis
 Image Quality Metric Visualision. An extendable user interface for the assessment of transformations on image metrics.
 
-Head over to the [DOCUMENTATION](https://mattclifford1.github.io/IQM-Vis/) for tutorials and package reference. Read our [PAPER](https://github.com/mattclifford1/IQM-Vis/blob/main/docs/resources/Software_Paper.pdf) for in depth details of the software.
+Head over to the [DOCUMENTATION](https://mattclifford1.github.io/IQM-Vis/) for tutorials and package reference. Read our [PAPER](https://github.com/mattclifford1/IQM-Vis/blob/main/docs/resources/Software_paper.pdf) for in depth details of the software.
 
 ### IQM's average sensitivity to tranforms
 ![Alt text](https://github.com/mattclifford1/IQM-Vis/blob/main/pics/data_graphs.gif?raw=true "Dataset UI") 
