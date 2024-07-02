@@ -17,6 +17,8 @@ notebook
 twine
 pytest
 pytest-qt==4.4.0
+pytest-xdist
+pytest-forked
 sphinx
 nbsphinx
 sphinx_gallery

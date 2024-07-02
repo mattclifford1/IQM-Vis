@@ -14,7 +14,6 @@ import pytest
 from PyQt6 import QtTest, QtWidgets, QtCore
 from pytestqt.plugin import QtBot, _close_widgets
 import IQM_Vis
-import time
 
 
 def get_UI():
@@ -59,7 +58,7 @@ def build_IQM_Vis():
     yield test_window, qtbotbis
 
     # Clean Up
-    QtTest.QTest.qWait(1000)
+    QtTest.QTest.qWait(500)
 
     # need to handle the closing dialog
     def handle_dialog():
@@ -73,7 +72,6 @@ def build_IQM_Vis():
 
     # test_window.window.quit()
     test_window.window.main.close()
-    time.sleep(1)
 
 
 @pytest.fixture(scope='function')
@@ -81,20 +79,20 @@ def build_exp(build_IQM_Vis):
     test_window, qtbotbis = build_IQM_Vis
     assert test_window.showing == True
     # launch experiment
-    QtTest.QTest.qWait(1000)
+    QtTest.QTest.qWait(500)
 
     # qtbotbis.mouseClick(
     #     test_window.window.tabs['slider'], QtCore.Qt.MouseButton.LeftButton)
     test_window.window.tabs['slider'].setCurrentIndex(3)
 
 
-    QtTest.QTest.qWait(1000)
+    QtTest.QTest.qWait(500)
 
     qtbotbis.mouseClick(
         test_window.window.widget_controls['button']['launch_exp'], QtCore.Qt.MouseButton.LeftButton)
-    QtTest.QTest.qWait(1000)
+    QtTest.QTest.qWait(500)
     yield test_window, qtbotbis
-    QtTest.QTest.qWait(1000)
+    QtTest.QTest.qWait(500)
 
 
 def test_experiment_runs(build_exp):

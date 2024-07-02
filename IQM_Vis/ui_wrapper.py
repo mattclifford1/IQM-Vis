@@ -72,7 +72,8 @@ class make_UI:
                           metric_params=self.metric_params,
                           default_save_dir=self.default_save_dir,
                           restrict_options=self.restrict_options,
-                          num_steps_range=self.num_steps_range)
+                          num_steps_range=self.num_steps_range,
+                          test=self.test)
         if self.test == False:
             sys.exit(self.app.exec())
 

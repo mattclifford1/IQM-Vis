@@ -3,7 +3,7 @@
 
 import pytest
 from PyQt6 import QtTest, QtWidgets, QtCore
-from pytestqt.plugin import QtBot, _close_widgets
+from pytestqt.plugin import QtBot
 import IQM_Vis
 
 
@@ -53,6 +53,7 @@ def get_UI():
 # building and closing function of UI for testing
 @pytest.fixture(scope='function')
 def build_IQM_Vis():
+    # QtTest.QTest.qWait(5000)
     # Setup 
     test_window = get_UI()
     qtbotbis = QtBot(test_window.window)
@@ -60,7 +61,7 @@ def build_IQM_Vis():
     yield test_window, qtbotbis
 
     # Clean up
-    QtTest.QTest.qWait(1000)
+    QtTest.QTest.qWait(100)
 
     # need to handle the closing dialog
     def handle_dialog():
@@ -74,7 +75,7 @@ def build_IQM_Vis():
 
     # test_window.window.quit()
     test_window.window.main.close()
-    QtTest.QTest.qWait(1000)
+    # QtTest.QTest.qWait(5000)
 
 
 def test_build_2(build_IQM_Vis):

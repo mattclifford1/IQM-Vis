@@ -101,9 +101,10 @@ class make_experiment(QMainWindow):
             if hasattr(self, 'range_worker'):
                 self.range_worker.stop()
             if hasattr(self, 'image_worker_thread'):
+                if self.image_worker_thread.isRunning():
+                    self.image_worker_thread.quit()
+                    self.image_worker_thread.wait()
                 self.image_change_worker.stop()
-                self.image_worker_thread.quit()
-                self.image_worker_thread.wait()
             self.stop_event.set()
             self.clicked_event.set()
             event.accept()

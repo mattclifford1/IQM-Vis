@@ -8,6 +8,7 @@ import os
 import time
 from functools import partial
 from PyQt6.QtWidgets import QApplication, QMessageBox, QFileDialog
+from PyQt6.QtCore import QCoreApplication
 import IQM_Vis
 from IQM_Vis.UI import layout, widgets, images, ProgressBar
 
@@ -25,6 +26,7 @@ class make_app(widgets, layout, images):
                  restrict_options=None,
                  num_steps_range=11,
                  num_step_experiment=6,
+                 test=False
                  ):
         super().__init__()
         self.app = app
@@ -32,6 +34,7 @@ class make_app(widgets, layout, images):
         self.transformations = transformations
         self.num_steps_range = num_steps_range
         self.num_step_experiment = num_step_experiment
+        self.test = test
 
         self.metrics_info_format = metrics_info_format
         self.metrics_avg_graph = metrics_avg_graph
@@ -141,18 +144,29 @@ class make_app(widgets, layout, images):
         self.range_worker.stop()
 
     def closeEvent(self, event):
+        # self.close_answer = None
+        # if self.test == False:
+
         # Ask for confirmation
         self.close_answer = QMessageBox.question(self,
         "Confirm Exit...",
         "Are you sure you want to exit?\nAll unsaved data will be lost.",
         QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
-                                      QMessageBox.StandardButton.Yes)
+                                    QMessageBox.StandardButton.Yes)
 
         event.ignore()
+        # if self.test == True or self.close_answer == QMessageBox.StandardButton.Yes:
         if self.close_answer == QMessageBox.StandardButton.Yes:
             if hasattr(self, 'range_worker'):
                 self.range_worker.stop()
+
+            if hasattr(self, 'range_worker_thread'):
+                if self.range_worker_thread.isRunning():
+                    self.range_worker_thread.quit()
+                    self.range_worker_thread.wait()
+            
             event.accept()
+            # QCoreApplication.quit()
 
     def get_menu_checkboxes(self):
         ''' list all trans/metrics in the menu drop downs '''
