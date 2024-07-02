@@ -89,6 +89,8 @@
 <span class="sd">TODO: write docs on example usage/ what inputs etc. and what attributes that the data_store class needs</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="c1"># Author: Matt Clifford &lt;matt.clifford@bristol.ac.uk&gt;</span>
+<span class="c1"># License: BSD 3-Clause License</span>
+
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">import</span> <span class="nn">platform</span>
 <span class="kn">import</span> <span class="nn">sys</span>
@@ -121,7 +123,8 @@
                  <span class="n">default_save_dir</span><span class="o">=</span><span class="n">IQM_Vis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">save_utils</span><span class="o">.</span><span class="n">DEFAULT_SAVE_DIR</span><span class="p">,</span>
                  <span class="n">restrict_options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">num_steps_range</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span>
-                 <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                 <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+                 <span class="n">test</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">data_store</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">data_store</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">dataset_holder</span><span class="p">(</span><span class="n">image_list</span><span class="p">,</span>
                                    <span class="n">metrics</span><span class="p">,</span>
@@ -135,8 +138,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">restrict_options</span> <span class="o">=</span> <span class="n">restrict_options</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_steps_range</span> <span class="o">=</span> <span class="n">num_steps_range</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">debug</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test</span> <span class="o">=</span> <span class="n">test</span>
         <span class="n">check_pyqt_install_deps</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">showing</span> <span class="o">=</span> <span class="kc">True</span>
 
 <div class="viewcode-block" id="make_UI.show"><a class="viewcode-back" href="../../IQM_Vis.html#IQM_Vis.ui_wrapper.make_UI.show">[docs]</a>    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_restrict_options</span><span class="p">()</span>
@@ -144,8 +149,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_trans</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_check_inputs</span><span class="p">()</span>
-        <span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
-        <span class="n">window</span> <span class="o">=</span> <span class="n">make_app</span><span class="p">(</span><span class="n">app</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">make_app</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="p">,</span>
                           <span class="bp">self</span><span class="o">.</span><span class="n">data_store</span><span class="p">,</span>
                           <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span><span class="p">,</span>
                           <span class="n">metrics_info_format</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics_info_format</span><span class="p">,</span>
@@ -153,8 +158,10 @@
                           <span class="n">metric_params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_params</span><span class="p">,</span>
                           <span class="n">default_save_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span><span class="p">,</span>
                           <span class="n">restrict_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">restrict_options</span><span class="p">,</span>
-                          <span class="n">num_steps_range</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_steps_range</span><span class="p">)</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">())</span></div>
+                          <span class="n">num_steps_range</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_steps_range</span><span class="p">,</span>
+                          <span class="n">test</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">test</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">test</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">())</span></div>
 
     <span class="k">def</span> <span class="nf">_check_restrict_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">restrict_options</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
