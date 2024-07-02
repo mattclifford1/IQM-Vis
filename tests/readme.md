@@ -6,7 +6,8 @@ It is important to run all tests on a separate process to avoid conflicts. We do
 ```
 pytest --forked
 ```
-or if you want to speed it up with multiprocessing use
+
+If you want to speed it up with multiprocessing use
 ```
 pytest --forked --numprocesses=auto
 ```
