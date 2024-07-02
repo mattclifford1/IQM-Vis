@@ -23,7 +23,7 @@ def rotation(image, angle=0):
     '''
     if angle == 0:
         return image
-    return np.clip(rotate(image, angle), 0, 1)
+    return np.clip(rotate(image, angle, order=3), 0, 1)
 
 def blur(image, kernel_size=7):
     '''Gaussian Blur on an image
