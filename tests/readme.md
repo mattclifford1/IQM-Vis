@@ -11,6 +11,11 @@ or if you want to speed it up with multiprocessing use
 pytest --forked --numprocesses=auto
 ```
 
+If you want a coverage report use:
+```
+pytest --forked --cov=IQM_Vis
+```
+
 ## Windows
 I believe that --forked doesn't work on windows so you must run all test separately using
 ```

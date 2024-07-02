@@ -19,6 +19,7 @@ pytest
 pytest-qt==4.4.0
 pytest-xdist
 pytest-forked
+pytest-cov
 sphinx
 nbsphinx
 sphinx_gallery
