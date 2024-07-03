@@ -97,15 +97,16 @@ def run():
                                   metric,
                                   metric_images,
                                   load_and_calibrate_image,
+                                  image_pre_processing=lambda x: x,  # no resize at start up 
                                   image_post_processing=IQM_Vis.utils.image_utils.crop_centre
                                   )
 
     # define the transformations
     transformations = {
-        'rotation':{'min':-2, 'max':2, 'function':IQM_Vis.transforms.rotation},    # normal input
-        'x_shift': {'min':-0.01, 'max':0.01, 'function':IQM_Vis.transforms.x_shift, 'init_value': 0.0},
-        'y_shift': {'min':-0.01, 'max':0.01, 'function':IQM_Vis.transforms.y_shift, 'init_value': 0.0},
-        'zoom':    {'min': 0.95, 'max':1.05, 'function':IQM_Vis.transforms.zoom_image, 'init_value': 1.0},  # requires non standard slider params
+        'rotation':{'min':-10, 'max':10, 'function':IQM_Vis.transforms.rotation},    # normal input
+        'x_shift': {'min':-0.1, 'max':0.1, 'function':IQM_Vis.transforms.x_shift, 'init_value': 0.0},
+        # 'y_shift': {'min':-0.1, 'max':0.1, 'function':IQM_Vis.transforms.y_shift, 'init_value': 0.0},
+        'zoom':    {'min': 0.8, 'max':1.2, 'function':IQM_Vis.transforms.zoom_image, 'init_value': 1.0},  # requires non standard slider params
         # 'brightness':{'min':-1.0, 'max':1.0, 'function':IQM_Vis.transforms.brightness},   # normal but with float
         # 'contrast': {'min': 0.5, 'max': 2.5, 'init_value': 1.0, 'function': IQM_Vis.transforms.contrast},
         # 'hue': {'min': -0.5, 'max': 0.5, 'function': IQM_Vis.transforms.hue},
