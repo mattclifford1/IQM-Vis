@@ -295,7 +295,7 @@ class widgets():
                 if str(data_store.image_pre_processing) not in [str(f) for f in self.pre_processing_options.values()]:
                     name = f"Custom {i}"
                     self.pre_processing_options[name] = data_store.image_pre_processing
-                    init_val = name
+                    self.pre_processing_option = name
         combobox_pre = QComboBox()
         combobox_pre.addItems(list(self.pre_processing_options.keys()))
         combobox_pre.setCurrentText(self.pre_processing_option)
@@ -315,7 +315,7 @@ class widgets():
                 if data_store.image_post_processing not in list(self.post_processing_options.values()):
                     name = f"Custom {i}"
                     self.post_processing_options[name] = data_store.image_post_processing
-                    init_val = name
+                    self.post_processing_option = name
         combobox_post = QComboBox()
         combobox_post.addItems(list(self.post_processing_options.keys()))
         combobox_post.setCurrentText(self.post_processing_option)
