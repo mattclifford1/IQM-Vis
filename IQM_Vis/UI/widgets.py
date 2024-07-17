@@ -30,6 +30,7 @@ class widgets():
         '''
         create all the widgets we need and init params
         '''
+        self.tool_tip_style = """QToolTip {background-color: black; color: white; border: black solid 1px}"""
         # first setup the slider data
         self.sliders = {'transforms': {}, 'metric_params': {}}
         self._init_sliders(self.sliders['transforms'], self.checked_transformations,  param_group='transforms')
@@ -79,6 +80,7 @@ class widgets():
                 self.widget_row[i]['metrics']['avg']['label'].setText('IQM Averages')
                 self.widget_row[i]['metrics']['avg']['data'] = gui_utils.MplCanvas(size=(self.graph_size/10, self.graph_size/10), polar=True)
                 self.widget_row[i]['metrics']['avg']['data'].setToolTip('Mean metric value over the range of each transform.')
+                self.widget_row[i]['metrics']['avg']['data'].setStyleSheet(self.tool_tip_style)
             if self.metric_range_graph:
                 self.widget_row[i]['metrics']['range'] = {}
                 self.widget_row[i]['metrics']['range']['label'] = QLabel(self)
@@ -86,17 +88,14 @@ class widgets():
                 self.widget_row[i]['metrics']['range']['label'].setText('Response Profiles')
                 self.widget_row[i]['metrics']['range']['data'] = gui_utils.MplCanvas(size=(self.graph_size/10, self.graph_size/10))
                 self.widget_row[i]['metrics']['range']['data'].setToolTip('Single tranformation value range for all metrics.')
+                self.widget_row[i]['metrics']['range']['data'].setStyleSheet(self.tool_tip_style)
             self.widget_row[i]['metrics']['correlation'] = {}
             self.widget_row[i]['metrics']['correlation']['label'] = QLabel(self)
             self.widget_row[i]['metrics']['correlation']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.widget_row[i]['metrics']['correlation']['label'].setText('Human Correlation')
             self.widget_row[i]['metrics']['correlation']['data'] = gui_utils.MplCanvas(size=(self.graph_size/10, self.graph_size/10))
             self.widget_row[i]['metrics']['correlation']['data'].setToolTip('Human scores versus IQMs.\nMean shown with points\nStandard deviation shown with bars.\nClick points to show image.')
-            self.widget_row[i]['metrics']['correlation']['data'].setStyleSheet("""QToolTip { 
-                                                                                background-color: black; 
-                                                                                color: white; 
-                                                                                border: black solid 1px
-                                                                                }""")
+            self.widget_row[i]['metrics']['correlation']['data'].setStyleSheet(self.tool_tip_style)
 
 
         '''buttons'''
@@ -106,11 +105,13 @@ class widgets():
             # Update graphs
             self.widget_controls['button']['force_update'] = QPushButton('Update Graphs', self)
             self.widget_controls['button']['force_update'].setToolTip('Update graphs using all the current slider values.')
+            self.widget_controls['button']['force_update'].setStyleSheet(self.tool_tip_style)
             self.widget_controls['button']['force_update'].clicked.connect(self.display_images)
             self.widget_controls['button']['force_update'].clicked.connect(partial(self.redo_plots, True))
             # Change plot limits
             self.widget_controls['check_box']['graph_limits'] = QCheckBox('Squeeze plots')
             self.widget_controls['check_box']['graph_limits'].setToolTip('Set the scale of the plots to the metric data range.')
+            self.widget_controls['check_box']['graph_limits'].setStyleSheet(self.tool_tip_style)
             self.widget_controls['check_box']['graph_limits'].setCheckState(Qt.CheckState.Unchecked)
             self.widget_controls['check_box']['graph_limits'].stateChanged.connect(self.change_plot_lims)
 
