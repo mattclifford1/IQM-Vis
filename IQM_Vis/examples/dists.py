@@ -92,7 +92,9 @@ def run():
     metric_images = {}
 
     # make dataset list of images
-    files = sorted(glob.glob('/home/matt/datasets/Textures/*'))
+    files = sorted(glob.glob(os.path.join(os.path.expanduser('~'), 'datasets', 'Textures', '*')))
+    if len(files) == 0:
+        raise ValueError('No files found in the dataset directory - please download the texture dataset')
 
     data = IQM_Vis.dataset_holder(files,
                                   metric,
