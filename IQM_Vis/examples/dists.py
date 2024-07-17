@@ -102,13 +102,13 @@ def run():
                                   image_loader=load_and_calibrate_image,
                                   image_pre_processing=lambda x: x,  # no resize at start up 
                                   image_post_processing=lambda x: IQM_Vis.utils.image_utils.crop_centre(
-                                      x, scale_factor=1.5, keep_size=False)
+                                      x, scale_factor=2, keep_size=False)
                                   )
 
     # define the transformations
     transformations = {
-        'rotation':{'min':-10, 'max':10, 'function':IQM_Vis.transforms.rotation},    # normal input
-        'x_shift': {'min':-0.1, 'max':0.1, 'function':IQM_Vis.transforms.x_shift, 'init_value': 0.0},
+        'rotation':{'min':-12, 'max':12, 'function':IQM_Vis.transforms.rotation},    # normal input
+        'x_shift': {'min':-0.2, 'max':0.2, 'function':IQM_Vis.transforms.x_shift, 'init_value': 0.0},
         # 'y_shift': {'min':-0.1, 'max':0.1, 'function':IQM_Vis.transforms.y_shift, 'init_value': 0.0},
         'zoom':    {'min': 0.8, 'max':1.2, 'function':IQM_Vis.transforms.zoom_image, 'init_value': 1.0},  # requires non standard slider params
         # 'brightness':{'min':-1.0, 'max':1.0, 'function':IQM_Vis.transforms.brightness},   # normal but with float
