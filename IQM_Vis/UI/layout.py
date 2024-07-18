@@ -79,6 +79,9 @@ class layout(QMainWindow):
                 graph = QGridLayout()
                 graph.addWidget(self.widget_row[i]['metrics']['avg']['data'], 0, 0, im_height, im_width)
                 avg_graph.addLayout(graph)   # need for matplotlib? - test this...   (grid)
+                graph_save = QHBoxLayout()
+                graph_save.addWidget(self.widget_row[i]['metrics']['avg']['save_button'])
+                avg_graph.addLayout(graph_save)
                 utils.add_layout_to_tab(self.tabs['graph'], avg_graph, 'Radar')
             if 'range' in self.widget_row[i]['metrics'].keys():
                 range_graph = QVBoxLayout()
@@ -93,8 +96,8 @@ class layout(QMainWindow):
                 range_graph.addLayout(graph_controls)
                 graph_save = QHBoxLayout()
                 graph_save.addWidget(self.widget_row[i]['metrics']['range']['save_button'])
-                utils.add_layout_to_tab(self.tabs['graph'], range_graph, 'Range')
                 range_graph.addLayout(graph_save)
+                utils.add_layout_to_tab(self.tabs['graph'], range_graph, 'Range')
             if 'correlation' in self.widget_row[i]['metrics'].keys():
                 correlation_graph = QVBoxLayout()
                 correlation_graph.addWidget(self.widget_row[i]['metrics']['correlation']['label'])

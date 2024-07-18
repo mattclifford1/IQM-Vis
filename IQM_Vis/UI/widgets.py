@@ -74,7 +74,7 @@ class widgets():
                 self.widget_row[i]['metrics']['info']['data'] = QLabel(self)
                 self.widget_row[i]['metrics']['info']['data'].setAlignment(Qt.AlignmentFlag.AlignCenter)
                 self.widget_row[i]['metrics']['info']['data'].setText('')
-            # metrics avgerage graphs
+            # metrics average graphs
             if self.metrics_avg_graph:
                 self.widget_row[i]['metrics']['avg'] = {}
                 self.widget_row[i]['metrics']['avg']['label'] = QLabel(self)
@@ -83,6 +83,8 @@ class widgets():
                 self.widget_row[i]['metrics']['avg']['data'] = gui_utils.MplCanvas(size=(self.graph_size/10, self.graph_size/10), polar=True)
                 self.widget_row[i]['metrics']['avg']['data'].setToolTip('Mean metric value over the range of each transform.')
                 self.widget_row[i]['metrics']['avg']['data'].setStyleSheet(self.tool_tip_style)
+                self.widget_row[i]['metrics']['avg']['save_button'] = QPushButton('Adjust or Save', self)
+                self.widget_row[i]['metrics']['avg']['save_button'].clicked.connect(partial(self.plot_radar_mlp, i))
             if self.metric_range_graph:
                 self.widget_row[i]['metrics']['range'] = {}
                 self.widget_row[i]['metrics']['range']['label'] = QLabel(self)
@@ -92,10 +94,7 @@ class widgets():
                 self.widget_row[i]['metrics']['range']['data'].setToolTip('Single transformation value range for all metrics.')
                 self.widget_row[i]['metrics']['range']['data'].setStyleSheet(self.tool_tip_style)
                 self.widget_row[i]['metrics']['range']['save_button'] = QPushButton('Adjust or Save', self)
-                self.widget_row[i]['metrics']['range']['save_button'].clicked.connect(
-                    # partial(self.open_mlp_new, self.widget_row[i]['metrics']['range']['data'])
-                    partial(self.plot_metric_range_mlp, i)
-                    )
+                self.widget_row[i]['metrics']['range']['save_button'].clicked.connect(partial(self.plot_metric_range_mlp, i))
             self.widget_row[i]['metrics']['correlation'] = {}
             self.widget_row[i]['metrics']['correlation']['label'] = QLabel(self)
             self.widget_row[i]['metrics']['correlation']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)

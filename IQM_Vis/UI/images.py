@@ -368,6 +368,7 @@ class images:
                 plot.show()
     
     def plot_metric_range_mlp(self, i):
+        # TODO: reduce copy of code from above function
         # make sure we have somethign to plot
         if not hasattr(self, 'metric_over_range_results'):
             return
@@ -383,12 +384,7 @@ class images:
         fig.canvas.manager.set_window_title(
             f"{self.data_stores[i].get_reference_image_name()}-{trans_to_plot}")
 
-        # set the default save path
-        image_name = f"{self.data_stores[i].get_reference_image_name()}-export"
-        save_path = os.path.join(self.default_save_dir, image_name)
-        if not os.path.exists(save_path):
-            save_path = self.default_save_dir
-        gui_utils.matplotlib.rcParams['savefig.directory'] = save_path
+        self.set_save_dir_mpl(i)
 
         # show fig in new window
         gui_utils.matplotlib.pyplot.show()
@@ -436,6 +432,47 @@ class images:
             axes = self.widget_row[i]['metrics']['avg']['data']
             radar_plotter = plot_utils.get_radar_plots_avg_plots(results, metrics_names, transformation_names, axes, self.plot_data_lim)
             radar_plotter.show()
+    
+    def plot_radar_mlp(self, i):
+        # TODO: reduce copy of code from above function
+        # make sure we have somethign to plot
+        if not hasattr(self, 'metric_over_range_results'):
+            return
+
+        # plot our data on a new axis
+        fig = gui_utils.plt.figure()
+        axes = fig.add_subplot(projection='polar')
+        all_trans = list(self.checked_transformations.keys())
+        transformation_names = list(self.sliders['transforms'].keys())
+        if 'avg' in self.widget_row[i]['metrics'].keys():
+            # get current metrics used for this data_store
+            metrics_names = []
+            for metric in self.data_stores[i].metrics:
+                if metric in self.checked_metrics:
+                    metrics_names.append(metric)
+
+            if len(metrics_names) == 0:
+                return
+            
+        plot = plot_utils.get_radar_plots_avg_plots(
+            self.metric_over_range_results[i], metrics_names, transformation_names, axes, self.plot_data_lim)
+        plot.set_style()
+
+        fig.canvas.manager.set_window_title(
+            f"{self.data_stores[i].get_reference_image_name()}-radar")
+        
+        self.set_save_dir_mpl(i)
+
+        # show fig in new window
+        gui_utils.matplotlib.pyplot.show()
+
+    def set_save_dir_mpl(self, i=0):
+        # set the default save path
+        image_name = f"{self.data_stores[i].get_reference_image_name()}-export"
+        save_path = os.path.join(self.default_save_dir, image_name)
+        if not os.path.exists(save_path):
+            os.makedirs(save_path)
+        gui_utils.matplotlib.rcParams['savefig.directory'] = save_path
 
     '''
     metric correlation plots
