@@ -91,7 +91,10 @@ class layout(QMainWindow):
                 graph_controls.addWidget(self.widget_controls['button']['prev_metric_graph'])
                 graph_controls.addWidget(self.widget_controls['button']['next_metric_graph'])
                 range_graph.addLayout(graph_controls)
+                graph_save = QHBoxLayout()
+                graph_save.addWidget(self.widget_row[i]['metrics']['range']['save_button'])
                 utils.add_layout_to_tab(self.tabs['graph'], range_graph, 'Range')
+                range_graph.addLayout(graph_save)
             if 'correlation' in self.widget_row[i]['metrics'].keys():
                 correlation_graph = QVBoxLayout()
                 correlation_graph.addWidget(self.widget_row[i]['metrics']['correlation']['label'])

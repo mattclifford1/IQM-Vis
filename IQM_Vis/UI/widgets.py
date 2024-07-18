@@ -89,8 +89,13 @@ class widgets():
                 self.widget_row[i]['metrics']['range']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
                 self.widget_row[i]['metrics']['range']['label'].setText('Response Profiles')
                 self.widget_row[i]['metrics']['range']['data'] = gui_utils.MplCanvas(size=(self.graph_size/10, self.graph_size/10))
-                self.widget_row[i]['metrics']['range']['data'].setToolTip('Single tranformation value range for all metrics.')
+                self.widget_row[i]['metrics']['range']['data'].setToolTip('Single transformation value range for all metrics.')
                 self.widget_row[i]['metrics']['range']['data'].setStyleSheet(self.tool_tip_style)
+                self.widget_row[i]['metrics']['range']['save_button'] = QPushButton('Adjust or Save', self)
+                self.widget_row[i]['metrics']['range']['save_button'].clicked.connect(
+                    # partial(self.open_mlp_new, self.widget_row[i]['metrics']['range']['data'])
+                    partial(self.plot_metric_range_mlp, i)
+                    )
             self.widget_row[i]['metrics']['correlation'] = {}
             self.widget_row[i]['metrics']['correlation']['label'] = QLabel(self)
             self.widget_row[i]['metrics']['correlation']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -633,7 +638,7 @@ class widgets():
         image_name = f"{self.data_stores[0].get_reference_image_name()}-export"
 
         save_folder = os.path.join(
-            self.default_save_dir, image_name, str(datetime.datetime.now()).split('.')[0])
+            self.default_save_dir, image_name, f"images-{str(datetime.datetime.now()).split('.')[0]}")
         if not os.path.exists(save_folder):
             os.makedirs(save_folder)
 
@@ -671,6 +676,10 @@ class widgets():
             image_utils.save_image(img, os.path.join(
                 save_folder, f'{save_utils.make_name_for_trans(trans_info)}.png'))
         self.status_bar.showMessage(f'Images saved to {save_folder}', 5000)
+
+    def open_mlp_new(self, mpl_canvas):
+        fig = gui_utils.break_out_mlp(mpl_canvas)
+        fig.show()
 
     '''
     experiments

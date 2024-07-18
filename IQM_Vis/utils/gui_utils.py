@@ -9,11 +9,15 @@ try:
     import matplotlib; matplotlib.use('Qt5Agg')
     from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
     from matplotlib.figure import Figure
+    import matplotlib.pyplot as plt
     HEADLESS = False
 except ImportError:
     import warnings
     warnings.warn('Can not load PyQt6 library - running IQM_Vis package in headless mode')
     HEADLESS = True
+import pickle
+import io
+
 import numpy as np
 from skimage.util import img_as_ubyte
 from skimage.transform import resize

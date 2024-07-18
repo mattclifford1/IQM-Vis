@@ -366,6 +366,32 @@ class images:
                 axes = self.widget_row[i]['metrics']['range']['data']
                 plot = plot_utils.get_transform_range_plots(self.metric_over_range_results[i], trans_to_plot, axes, self.plot_data_lim)
                 plot.show()
+    
+    def plot_metric_range_mlp(self, i):
+        # make sure we have somethign to plot
+        if not hasattr(self, 'metric_over_range_results'):
+            return
+
+        # plot our data on a new axis    
+        fig = gui_utils.plt.figure()
+        axes = fig.add_subplot(111)
+        all_trans = list(self.checked_transformations.keys())
+        trans_to_plot = all_trans[self.metric_range_graph_num]
+        plot = plot_utils.get_transform_range_plots(
+            self.metric_over_range_results[i], trans_to_plot, axes, self.plot_data_lim)
+        plot.set_style()
+        fig.canvas.manager.set_window_title(
+            f"{self.data_stores[i].get_reference_image_name()}-{trans_to_plot}")
+
+        # set the default save path
+        image_name = f"{self.data_stores[i].get_reference_image_name()}-export"
+        save_path = os.path.join(self.default_save_dir, image_name)
+        if not os.path.exists(save_path):
+            save_path = self.default_save_dir
+        gui_utils.matplotlib.rcParams['savefig.directory'] = save_path
+
+        # show fig in new window
+        gui_utils.matplotlib.pyplot.show()
 
     def change_metric_range_graph(self, add=1):
         max_graph_num = len(list(self.checked_transformations.keys()))
