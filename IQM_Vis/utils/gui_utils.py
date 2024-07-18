@@ -101,7 +101,11 @@ def get_image_pair_name(data_store):
 
 def get_resolutions(data_store):
     ref = data_store.get_reference_image().shape
-    trans = data_store.get_image_to_transform().shape
+    if hasattr(data_store, 'image_post_processing'):
+        trans_im = data_store.get_image_to_transform()
+        if data_store.image_post_processing is not None:
+            trans_im = data_store.image_post_processing(trans_im)
+    trans = trans_im.shape
     return {'reference': f'{ref[0]}x{ref[1]}',
             'transform': f'{trans[0]}x{trans[1]}'}
 
