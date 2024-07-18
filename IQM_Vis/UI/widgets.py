@@ -144,6 +144,10 @@ class widgets():
         # load experiment button
         self.widget_controls['button']['load_exp'] = QPushButton('Load Experiment', self)
         self.widget_controls['button']['load_exp'].clicked.connect(self.load_experiment_from_dir)
+        # export images button
+        self.widget_controls['button']['export_images'] = QPushButton('Export Images', self)
+        self.widget_controls['button']['export_images'].clicked.connect(self.export_trans_images)
+        
 
 
         '''sliders'''
@@ -209,6 +213,50 @@ class widgets():
             self.widget_experiment_params[trans_name]['steps_edit'].setValidator(QIntValidator())
             self.widget_experiment_params[trans_name]['steps_edit'].setMaxLength(2)
             self.widget_experiment_params[trans_name]['steps_edit'].setText(f"{self.num_step_experiment}")
+        # change save folder button
+        self.widget_controls['label']['exp_change_save'] = QLabel(self)
+        self.widget_controls['label']['exp_change_save'].setText(f'Save Folder: {self.default_save_dir}')
+        self.widget_controls['button']['exp_change_save'] = QPushButton('Change', self)
+        self.widget_controls['button']['exp_change_save'].clicked.connect(self.change_save_folder)
+
+        ''' export options '''
+        self.widget_export = {}
+        
+        for trans_name, deets in self.checked_transformations.items():
+            self.widget_export[trans_name] = {}
+            self.widget_export[trans_name]['check_box'] = QCheckBox(self)
+            self.widget_export[trans_name]['check_box'].setChecked(True)
+            self.widget_export[trans_name]['check_box'].stateChanged.connect(partial(self.change_text_export_trans,
+                                                                                                  trans=trans_name))
+
+            self.widget_export[trans_name]['name'] = QLabel(self)
+            self.widget_export[trans_name]['name'].setText(trans_name)
+
+            self.widget_export[trans_name]['min'] = QLabel(self)
+            self.widget_export[trans_name]['min'].setText('min:')
+            self.widget_export[trans_name]['min_edit'] = QLineEdit()
+            self.widget_export[trans_name]['min_edit'].setValidator(get_float_validator())
+            self.widget_export[trans_name]['min_edit'].textChanged.connect(partial(self.colour_lineedit, self.widget_export[trans_name]['min_edit']))
+            self.widget_export[trans_name]['min_edit'].setText(f"{deets['min']}")
+
+            self.widget_export[trans_name]['max'] = QLabel(self)
+            self.widget_export[trans_name]['max'].setText('max:')
+            self.widget_export[trans_name]['max_edit'] = QLineEdit()
+            self.widget_export[trans_name]['max_edit'].setValidator(get_float_validator())
+            self.widget_export[trans_name]['max_edit'].textChanged.connect(partial(self.colour_lineedit, self.widget_export[trans_name]['max_edit']))
+            self.widget_export[trans_name]['max_edit'].setText(f"{deets['max']}")
+
+            self.widget_export[trans_name]['steps'] = QLabel(self)
+            self.widget_export[trans_name]['steps'].setText('steps:')
+            self.widget_export[trans_name]['steps_edit'] = QLineEdit()
+            self.widget_export[trans_name]['steps_edit'].setValidator(QIntValidator())
+            self.widget_export[trans_name]['steps_edit'].setMaxLength(2)
+            self.widget_export[trans_name]['steps_edit'].setText(f"{self.num_steps_range}")
+        # change save folder button
+        self.widget_controls['label']['export_change_save'] = QLabel(self)
+        self.widget_controls['label']['export_change_save'].setText(f'Save Folder: {self.default_save_dir}')
+        self.widget_controls['button']['export_change_save'] = QPushButton('Change', self)
+        self.widget_controls['button']['export_change_save'].clicked.connect(self.change_save_folder)
 
 
     '''
@@ -563,7 +611,26 @@ class widgets():
             self.status_bar.showMessage(v, time)
 
     '''
-    experimetns
+    export controls
+    '''
+    def change_text_export_trans(self, trans):
+        ''' change colour of text when checkbox is pressed '''
+        checked = self.widget_export[trans]['check_box'].isChecked()
+        for widget in self.widget_export[trans]:
+            if widget == 'check_box':
+                pass
+            else:
+                self.widget_export[trans][widget].setEnabled(checked)
+                if checked == True:
+                    self.widget_export[trans][widget].setStyleSheet(f"QLineEdit {{color: {self.settings_text_colour_original};}}\nQLabel {{color: {self.settings_text_colour_original};}}")
+                else:
+                    self.widget_export[trans][widget].setStyleSheet(f"QLineEdit {{color: gray;}}\nQLabel {{color: gray;}}")
+
+    def export_trans_images(self):
+        pass
+
+    '''
+    experiments
     '''
     def change_text_exp_trans(self, trans):
         ''' change colour of text when checkbox is pressed '''

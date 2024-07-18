@@ -178,16 +178,43 @@ class layout(QMainWindow):
                 experiment_trans.addStretch()
             experiment_controls.addLayout(experiment_trans)
         experiment_controls.addStretch()
+        # Save folder
+        save_button_exp = QHBoxLayout()
+        save_button_exp.addWidget(self.widget_controls['label']['exp_change_save'])
+        save_button_exp.addWidget(self.widget_controls['button']['exp_change_save'])
+        save_button_exp.addStretch()
+        experiment_controls.addLayout(save_button_exp)
         # run experiment button
         experiment_button = QHBoxLayout()
         experiment_button.addWidget(self.widget_controls['button']['launch_exp'])
         experiment_button.addStretch()
         experiment_controls.addLayout(experiment_button)
 
+        '''export images'''
+        export_controls = QVBoxLayout()
+        for trans_name in self.widget_export:
+            export_trans = QHBoxLayout()
+            for _, widget in self.widget_export[trans_name].items():
+                export_trans.addWidget(widget)
+                export_trans.addStretch()
+            export_controls.addLayout(export_trans)
+        export_controls.addStretch()
+        # Save folder
+        save_button_exp = QHBoxLayout()
+        save_button_exp.addWidget(self.widget_controls['label']['export_change_save'])
+        save_button_exp.addWidget(self.widget_controls['button']['export_change_save'])
+        save_button_exp.addStretch()
+        export_controls.addLayout(save_button_exp)
+        # export images button
+        export_button = QHBoxLayout()
+        export_button.addWidget(self.widget_controls['button']['export_images'])
+        export_button.addStretch()
+        export_controls.addLayout(export_button)
+
         ''' add to parameter controls tab'''
         self.tabs['slider'] = QTabWidget()
-        for tab_layout, tab_name in zip([image_controls, metric_controls, settings_controls, experiment_controls],
-                                        ['transforms', 'metric params', 'image settings', 'experiment']):
+        for tab_layout, tab_name in zip([image_controls, metric_controls, settings_controls, experiment_controls, export_controls],
+                                        ['transforms', 'metric params', 'image settings', 'experiment', 'export']):
             utils.add_layout_to_tab(self.tabs['slider'], tab_layout, tab_name)
 
         '''re calc graphs button'''
