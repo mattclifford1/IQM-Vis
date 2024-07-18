@@ -120,3 +120,8 @@ def save_json_dict(path, dict_):
 def load_json_dict(path):
     with open(path, 'r') as fp:
         return json.load(fp)
+
+
+def make_name_for_trans(trans):
+    splitter = '-----'
+    return f"{trans['transform_name']}{splitter}{trans['transform_value']}"

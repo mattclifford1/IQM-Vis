@@ -27,7 +27,7 @@ from PyQt6.QtGui import QShortcut, QKeySequence
 import IQM_Vis
 from IQM_Vis.UI.custom_widgets import ClickLabel
 from IQM_Vis.UI import utils
-from IQM_Vis.utils import gui_utils, plot_utils, image_utils
+from IQM_Vis.utils import gui_utils, plot_utils, image_utils, save_utils
 
 
 class make_experiment(QMainWindow):
@@ -40,7 +40,7 @@ class make_experiment(QMainWindow):
                  image_display_size,
                  rgb_brightness,
                  display_brightness,
-                 default_save_dir=IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR,
+                 default_save_dir=save_utils.DEFAULT_SAVE_DIR,
                  image_preprocessing='None',
                  image_postprocessing='None',
                  checked_metrics={}):
@@ -122,7 +122,7 @@ class make_experiment(QMainWindow):
             ax.imshow(image_utils.calibrate_brightness(
                 trans['image'], self.rgb_brightness, self.display_brightness, ubyte=False))
             ax.axis('off')
-            ax.set_title(make_name_for_trans(trans), fontsize=6)
+            ax.set_title(save_utils.make_name_for_trans(trans), fontsize=6)
         # self.widget_experiments[tab]['images'].figure.tight_layout()
 
         # time.sleep(5)
@@ -147,7 +147,8 @@ class make_experiment(QMainWindow):
             param = single_trans[trans_name]
             data = {'transform_name': trans_name,
                     'transform_value': param}
-            self.original_params_order.append(make_name_for_trans(data))
+            self.original_params_order.append(
+                save_utils.make_name_for_trans(data))
 
         # REFERENCE image
         self.ref_image = self.data_store.get_reference_image()
@@ -196,7 +197,7 @@ class make_experiment(QMainWindow):
             for name, score in score_dict.items():
                 metrics.append(name)
                 scores.append(float(score))
-            IQM_scores[make_name_for_trans(data)] = scores
+            IQM_scores[save_utils.make_name_for_trans(data)] = scores
         IQM_scores['IQM'] = metrics
         self.IQM_scores_df = pd.DataFrame.from_dict(IQM_scores)
         self.IQM_scores_df.set_index('IQM', inplace=True)
@@ -425,16 +426,16 @@ class make_experiment(QMainWindow):
             exp_save_dir = f'{self.default_save_dir}-experiment-{i}'
             if os.path.exists(exp_save_dir):
                 # get transform funcs and params
-                exp_trans_params = IQM_Vis.utils.save_utils.load_obj(
+                exp_trans_params = save_utils.load_obj(
                     os.path.join(exp_save_dir, 'transforms', 'transform_params.pkl'))
-                exp_trans_funcs = IQM_Vis.utils.save_utils.load_obj(
+                exp_trans_funcs = save_utils.load_obj(
                     os.path.join(exp_save_dir, 'transforms', 'transform_functions.pkl'))
                 
                 # get image processing saved params
-                processing_file = IQM_Vis.utils.save_utils.get_image_processing_file(exp_save_dir)
+                processing_file = save_utils.get_image_processing_file(exp_save_dir)
                 procesing_same = False
                 if os.path.exists(processing_file):
-                    processing = IQM_Vis.utils.save_utils.load_json_dict(processing_file)
+                    processing = save_utils.load_json_dict(processing_file)
                     if processing == self.processing:
                         procesing_same = True
 
@@ -454,34 +455,34 @@ class make_experiment(QMainWindow):
         os.makedirs(os.path.join(self.default_save_dir, 'transforms'), exist_ok=True)
 
         # save experiment images
-        if not os.path.exists(IQM_Vis.utils.save_utils.get_original_image_file(self.default_save_dir)):
+        if not os.path.exists(save_utils.get_original_image_file(self.default_save_dir)):
             image_utils.save_image(self.ref_image,
-                                    IQM_Vis.utils.save_utils.get_original_image_file(self.default_save_dir))
-        if not os.path.exists(IQM_Vis.utils.save_utils.get_original_unprocessed_image_file(self.default_save_dir)):
+                                    save_utils.get_original_image_file(self.default_save_dir))
+        if not os.path.exists(save_utils.get_original_unprocessed_image_file(self.default_save_dir)):
             if hasattr(self, 'ref_image_unprocessed'):
                 image_utils.save_image(self.ref_image_unprocessed,
-                                        IQM_Vis.utils.save_utils.get_original_unprocessed_image_file(self.default_save_dir))
+                                        save_utils.get_original_unprocessed_image_file(self.default_save_dir))
         if new_dir == True:
             for trans in self.experiment_transforms:
                 image_utils.save_image(
-                    trans['image'], os.path.join(self.default_save_dir, 'images', f'{make_name_for_trans(trans)}.png'))
+                    trans['image'], os.path.join(self.default_save_dir, 'images', f'{save_utils.make_name_for_trans(trans)}.png'))
             # save the transformations
-            IQM_Vis.utils.save_utils.save_obj(
-                IQM_Vis.utils.save_utils.get_transform_params_file(self.default_save_dir),
+            save_utils.save_obj(
+                save_utils.get_transform_params_file(self.default_save_dir),
                 self.original_params_order)
-            IQM_Vis.utils.save_utils.save_obj(
-                IQM_Vis.utils.save_utils.get_transform_functions_file(self.default_save_dir),
+            save_utils.save_obj(
+                save_utils.get_transform_functions_file(self.default_save_dir),
                 dict(sorted(trans_funcs.items())))
             # save the image pre/post processing options
-            IQM_Vis.utils.save_utils.save_json_dict(
-                IQM_Vis.utils.save_utils.get_image_processing_file(self.default_save_dir),
+            save_utils.save_json_dict(
+                save_utils.get_image_processing_file(self.default_save_dir),
                 self.processing)
 
         # save the experiment results
         exp_order = []
         for trans in self.experiment_transforms:
-            exp_order.append(make_name_for_trans(trans))
-        csv_file = IQM_Vis.utils.save_utils.save_experiment_results(
+            exp_order.append(save_utils.make_name_for_trans(trans))
+        csv_file = save_utils.save_experiment_results(
             self.original_params_order,
             exp_order,
             self.default_save_dir,
@@ -559,7 +560,7 @@ class make_experiment(QMainWindow):
         self.able_to_click = False
         # get comparison to pivot
         trans_str = image_name[len(self.image_name)+1:]
-        if trans_str != make_name_for_trans(self.pivot): # lower value
+        if trans_str != save_utils.make_name_for_trans(self.pivot): # lower value
             # If element smaller than pivot is found swap it with the greater element pointed by i
             self.less_than_pivot = True
         else:
@@ -588,10 +589,12 @@ class make_experiment(QMainWindow):
         
         gui_utils.change_im(self.widget_experiments['exp']['A']['data'], A, resize=self.image_display_size,
                             rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
-        self.widget_experiments['exp']['A']['data'].setObjectName(f'{self.image_name}-{make_name_for_trans(A_trans)}')
+        self.widget_experiments['exp']['A']['data'].setObjectName(
+            f'{self.image_name}-{save_utils.make_name_for_trans(A_trans)}')
         gui_utils.change_im(self.widget_experiments['exp']['B']['data'], B, resize=self.image_display_size,
                             rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
-        self.widget_experiments['exp']['B']['data'].setObjectName(f'{self.image_name}-{make_name_for_trans(B_trans)}')
+        self.widget_experiments['exp']['B']['data'].setObjectName(
+            f'{self.image_name}-{save_utils.make_name_for_trans(B_trans)}')
 
     ''' UI '''
     def init_style(self, style='light', css_file=None):
@@ -662,7 +665,3 @@ def sort_list(list1, list2):
     for i in inds:
         sorted_list1.append(list1[i])
     return sorted_list1
-
-def make_name_for_trans(trans):
-    splitter = '-----'
-    return f"{trans['transform_name']}{splitter}{trans['transform_value']}"

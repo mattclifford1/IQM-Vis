@@ -5,7 +5,9 @@ UI create widgets
 # License: BSD 3-Clause License
 
 import re
+import os
 from functools import partial
+import datetime
 
 import numpy as np
 from PyQt6.QtWidgets import QPushButton, QLabel, QSlider, QCheckBox, QComboBox, QLineEdit
@@ -14,7 +16,7 @@ from PyQt6.QtCore import Qt, pyqtSlot, QLocale
 
 import IQM_Vis
 from IQM_Vis.UI.custom_widgets import ClickLabel
-from IQM_Vis.utils import gui_utils, plot_utils, image_utils
+from IQM_Vis.utils import gui_utils, plot_utils, image_utils, save_utils
 
 # sub class used by IQM_Vis.main.make_app to initialise widgets and general UI functions for widgets
 class widgets():
@@ -627,7 +629,48 @@ class widgets():
                     self.widget_export[trans][widget].setStyleSheet(f"QLineEdit {{color: gray;}}\nQLabel {{color: gray;}}")
 
     def export_trans_images(self):
-        pass
+        # make save folder
+        image_name = f"{self.data_stores[0].get_reference_image_name()}-export"
+
+        save_folder = os.path.join(
+            self.default_save_dir, image_name, str(datetime.datetime.now()).split('.')[0])
+        if not os.path.exists(save_folder):
+            os.makedirs(save_folder)
+
+        # save original image
+        ref_image = self.data_stores[0].get_reference_image()
+        image_utils.save_image(ref_image,
+                               os.path.join(save_folder, f"reference.png"))
+
+        # make and save transforms
+        checked_transforms = {}
+        for trans in self.widget_export:
+            if self.widget_export[trans]['check_box'].isChecked():
+                data = {'min': make_float_from_text(self.widget_export[trans]['min_edit'].text()),
+                        'max': make_float_from_text(self.widget_export[trans]['max_edit'].text()),
+                        'num_steps': int(self.widget_export[trans]['steps_edit'].text()),
+                        'function': self.checked_transformations[trans]['function']
+                        }
+                name = self.widget_export[trans]['name'].text()
+                checked_transforms[name] = data
+
+        export_images = plot_utils.get_all_single_transform_params(
+            checked_transforms, num_steps='from_dict')
+
+        # remove any params with value 0
+        export_images = [x for x in export_images if not x[list(x.keys())[0]] == 0]
+
+        # make and save images
+        for single_trans in export_images:
+            trans_name = list(single_trans.keys())[0]
+            param = single_trans[trans_name]
+            img = image_utils.get_transform_image(self.data_stores[0],
+                                                  transform_functions={trans_name: self.checked_transformations[trans_name]},
+                                                  transform_params={trans_name: param})
+            trans_info = {'transform_name': trans_name, 'transform_value': param}
+            image_utils.save_image(img, os.path.join(
+                save_folder, f'{save_utils.make_name_for_trans(trans_info)}.png'))
+        self.status_bar.showMessage(f'Images saved to {save_folder}', 5000)
 
     '''
     experiments
