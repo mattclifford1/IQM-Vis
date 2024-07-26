@@ -172,7 +172,8 @@ def get_all_slider_values(transforms, num_steps=11):
                        stop=transforms['max']*float_stabiliser, 
                        step=steps*float_stabiliser)
     values = list(values/float_stabiliser)
-    values.append(transforms['max'])
+    if transforms['max'] not in values:
+        values.append(transforms['max'])
     return values
 
 def get_all_single_transform_params(transforms, num_steps=11):
@@ -186,6 +187,7 @@ def get_all_single_transform_params(transforms, num_steps=11):
             steps = num_steps
         for val in get_all_slider_values(trans_data, num_steps=steps):
             list_of_single_trans.append({trans_name: val})
+
     return list_of_single_trans
 
 def compute_metric_for_human_correlation(data_store, transforms, metric_params, trans_str_values, metric):
