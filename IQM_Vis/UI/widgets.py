@@ -105,7 +105,7 @@ class widgets():
 
 
         '''buttons'''
-        self.widget_controls = {'button': {}, 'slider': {}, 'label': {}, 'check_box': {}}
+        self.widget_controls = {'button': {}, 'slider': {}, 'label': {}, 'check_box': {}, 'images': {}}
         
         if (self.metrics_avg_graph or self.metric_range_graph):
             # Update graphs
@@ -136,13 +136,19 @@ class widgets():
         if self.dataset:
             # control what image is used from the dataset
             self.widget_controls['button']['next_data'] = QPushButton('->', self)
-            self.widget_controls['button']['next_data'].clicked.connect(partial(self.change_data, 1, True))
+            self.widget_controls['button']['next_data'].clicked.connect(partial(self.change_preview_images, 1))
             self.widget_controls['button']['prev_data'] = QPushButton('<-', self)
-            self.widget_controls['button']['prev_data'].clicked.connect(partial(self.change_data, -1, True))
+            self.widget_controls['button']['prev_data'].clicked.connect(partial(self.change_preview_images, -1))
             self.widget_controls['label']['data'] = QLabel(self)
             self.widget_controls['label']['data'].setText('Change Image:')
             self.widget_controls['label']['data_num'] = QLabel(self)
             self.widget_controls['label']['data_num'].setText('1/1')
+            self.widget_im_num_hash = {}
+            for im in range(self.num_images_scroll_show):
+                self.widget_controls['images'][im] = QLabel( self)
+                self.widget_controls['images'][im].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                self.widget_controls['images'][im].mousePressEvent = partial(self.change_data_click_im, im)
+                self.widget_im_num_hash[im] = im # store the ind number of each im widget preview
 
         # launch experiment button
         self.widget_controls['button']['launch_exp'] = QPushButton('Run Experiment', self)

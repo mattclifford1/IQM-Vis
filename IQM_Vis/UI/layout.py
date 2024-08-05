@@ -121,6 +121,8 @@ class layout(QMainWindow):
         if self.dataset:
             dataset_layout.addWidget(self.widget_controls['label']['data'])
             dataset_layout.addWidget(self.widget_controls['button']['prev_data'])
+            for im in range(self.num_images_scroll_show):
+                dataset_layout.addWidget(self.widget_controls['images'][im])
             dataset_layout.addWidget(self.widget_controls['button']['next_data'])
             dataset_layout.addWidget(self.widget_controls['label']['data_num'])
 

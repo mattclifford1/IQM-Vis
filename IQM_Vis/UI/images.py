@@ -76,8 +76,35 @@ class images:
     '''
     change image in dataset
     '''
-    def change_to_data_num(self, ind):
-        # change to an exact ind in the data list 
+    def change_preview_images(self, ival):
+        if self.preview_num + ival < 0:
+            return 
+        elif self.preview_num + ival + self.num_images_scroll_show > self.max_data_ind + 1:
+            return
+        else:
+            self.preview_num += ival
+            self.set_preview_images(self.preview_num)
+        
+    def set_preview_images(self, preview_num):
+        for data_store in self.data_stores:
+            for i in range(self.num_images_scroll_show):
+                im_preview_ind = preview_num + i
+                if im_preview_ind <= self.max_data_ind:
+                    # load image
+                    im_preview_data = data_store.get_reference_image_by_index(
+                        im_preview_ind)
+                    self.widget_im_num_hash[i] = im_preview_ind
+                    if isinstance(self.image_display_size, list) or isinstance(self.image_display_size, tuple):
+                        preview_size = (self.image_display_size[0]//self.num_images_scroll_show, self.image_display_size[1]//self.num_images_scroll_show)
+                    else:
+                        preview_size = self.image_display_size//self.num_images_scroll_show
+                    gui_utils.change_im(self.widget_controls['images'][i], im_preview_data,
+                                        resize=preview_size, rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
+
+    def change_data_click_im(self, widget_ind, *args): # args sent are position of mouse click on the image widget
+        self.change_to_data_num(self.widget_im_num_hash[widget_ind])
+
+    def change_to_data_num(self, ind):  # change to an exact ind in the data list
         # check the num is within the data limits
         if ind < 0:
             return

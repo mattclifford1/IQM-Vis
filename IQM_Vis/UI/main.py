@@ -26,6 +26,7 @@ class make_app(widgets, layout, images):
                  restrict_options=None,
                  num_steps_range=11,
                  num_step_experiment=6,
+                 num_images_scroll_show=5,
                  test=False
                  ):
         super().__init__()
@@ -34,6 +35,7 @@ class make_app(widgets, layout, images):
         self.transformations = transformations
         self.num_steps_range = num_steps_range
         self.num_step_experiment = num_step_experiment
+        self.num_images_scroll_show = num_images_scroll_show
         self.test = test
 
         self.metrics_info_format = metrics_info_format
@@ -244,6 +246,9 @@ class make_app(widgets, layout, images):
         self.init_style()     # layout.py
         self.init_widgets()   # widgets.py
         self.change_data(0, _redo_plots=True)   # images.py
+        if self.dataset:
+            self.preview_num = 0
+            self.set_preview_images(self.preview_num)
         self.main = self.init_layout()    # layout.py
         self.tabs['slider'].setCurrentIndex(tabs_index['slider'])
         self.tabs['graph'].setCurrentIndex(tabs_index['graph'])

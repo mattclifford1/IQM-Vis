@@ -56,3 +56,7 @@ class base_dataset_loader(base_dataloader):
     @abstractmethod
     def __getitem__(self):
         pass
+
+    @abstractmethod
+    def get_reference_image_by_index(self, index):
+        pass

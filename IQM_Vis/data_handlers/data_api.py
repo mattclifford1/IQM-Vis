@@ -151,6 +151,13 @@ class dataset_holder(base_dataset_loader):
     def __getitem__(self, i):
         self._load_image_data(i)
 
+    def get_reference_image_by_index(self, index):
+        if index >= len(self.image_list):
+            raise IndexError('Index out of range of the length of the image list')
+        file_name = self.image_list[index]
+        image_data = self.image_loader(file_name)
+        return image_data
+
     def get_reference_image_name(self):
         return self.image_reference.name
     
