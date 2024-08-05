@@ -77,9 +77,15 @@ class images:
     change image in dataset
     '''
     def change_to_data_num(self, ind):
-        # change to an exact ind in the data list - be careful that the ind exists!!!
-        self.data_num = ind
-        self.change_data(0)
+        # change to an exact ind in the data list 
+        # check the num is within the data limits
+        if ind < 0:
+            return
+        elif ind > self.max_data_ind:
+            return
+        else:
+            self.data_num = ind
+            self.change_data(0) # 0 means dont increment data_num
 
     def change_data(self, ival, _redo_plots=True):
         # reset any range/correlation data stored
