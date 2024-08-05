@@ -77,13 +77,14 @@ class images:
     change image in dataset
     '''
     def change_preview_images(self, ival):
+        # have roll around scrolling
         if self.preview_num + ival < 0:
-            return 
+            self.preview_num = self.max_data_ind - self.num_images_scroll_show + 1
         elif self.preview_num + ival + self.num_images_scroll_show > self.max_data_ind + 1:
-            return
+            self.preview_num = 0
         else:
             self.preview_num += ival
-            self.set_preview_images(self.preview_num)
+        self.set_preview_images(self.preview_num)
         
     def set_preview_images(self, preview_num):
         for data_store in self.data_stores:
@@ -94,15 +95,25 @@ class images:
                     im_preview_data = data_store.get_reference_image_by_index(
                         im_preview_ind)
                     self.widget_im_num_hash[i] = im_preview_ind
+                    # set image preview size
+                    scale = self.num_images_scroll_show - 1
                     if isinstance(self.image_display_size, list) or isinstance(self.image_display_size, tuple):
-                        preview_size = (self.image_display_size[0]//self.num_images_scroll_show, self.image_display_size[1]//self.num_images_scroll_show)
+                        preview_size = (self.image_display_size[0]//scale, self.image_display_size[1]//scale)
                     else:
-                        preview_size = self.image_display_size//self.num_images_scroll_show
+                        preview_size = self.image_display_size//scale
+                    # determine if we have the current display image
+                    if self.data_num == im_preview_ind:
+                        border = True
+                    else:
+                        border = False
                     gui_utils.change_im(self.widget_controls['images'][i], im_preview_data,
-                                        resize=preview_size, rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
+                                        resize=preview_size, rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness, border=border)
+            self.widget_controls['label']['data_num'].setText(
+                f'({preview_num+1}-{im_preview_ind+1}/{self.max_data_ind+1})')
 
     def change_data_click_im(self, widget_ind, *args): # args sent are position of mouse click on the image widget
         self.change_to_data_num(self.widget_im_num_hash[widget_ind])
+        self.set_preview_images(self.preview_num) # refresh boarder on image
 
     def change_to_data_num(self, ind):  # change to an exact ind in the data list
         # check the num is within the data limits
@@ -152,7 +163,6 @@ class images:
             # otherwise from the datastore scores
             elif hasattr(data_store, 'human_scores'):
                 self.human_experiment_scores[i] = data_store.human_scores
-        self.widget_controls['label']['data_num'].setText(f'({self.data_num+1}/{self.max_data_ind+1})')
 
     def load_new_single_image(self):
         ''' change the image we are using '''

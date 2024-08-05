@@ -26,7 +26,7 @@ class make_app(widgets, layout, images):
                  restrict_options=None,
                  num_steps_range=11,
                  num_step_experiment=6,
-                 num_images_scroll_show=5,
+                 num_images_scroll_show=7,
                  test=False
                  ):
         super().__init__()

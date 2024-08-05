@@ -31,7 +31,7 @@ image helper functions
 #     return img_as_ubyte(down_im)
 
 
-def change_im(widget, im, resize=False, rgb_brightness=250, display_brightness=250):
+def change_im(widget, im, resize=False, rgb_brightness=250, display_brightness=250, border=False):
     '''
     given a numpy image, changes the given widget Frame
     '''
@@ -46,6 +46,12 @@ def change_im(widget, im, resize=False, rgb_brightness=250, display_brightness=2
         im = resize_to_longest_side(im, resize)
         im = img_as_ubyte(im)
     im = calibrate_brightness(im, rgb_brightness, display_brightness)
+    if border == True:
+        # add a black border to the image
+        im = np.pad(im, ((5, 5), (5, 5), (0, 0)), 'constant', constant_values=0)
+        if resize:
+            im = resize_to_longest_side(im, resize)
+            im = img_as_ubyte(im)
     qimage = QImage(im,
                     im.shape[1],
                     im.shape[0],

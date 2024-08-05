@@ -120,7 +120,7 @@ class dataset_holder(base_dataset_loader):
         self.image_post_processing_hash = None
         self.current_file = self.image_list[i]
         image_name_ref = get_image_name(self.current_file)
-        image_data_ref = self.image_loader(self.current_file)
+        image_data_ref = self._cached_image_loader(self.current_file)
         self.reference_unprocessed = image_data_ref
         if self.image_pre_processing is not None:
             image_data_ref = self.image_pre_processing(image_data_ref)
@@ -133,7 +133,8 @@ class dataset_holder(base_dataset_loader):
             self.image_to_transform = self.image_storer(image_name_ref, image_data_ref)
         else:
             image_name_trans = get_image_name(self.image_list_to_transform[i])
-            image_data_trans = self.image_loader(self.image_list_to_transform[i])
+            image_data_trans = self._cached_image_loader(
+                self.image_list_to_transform[i])
             if self.image_pre_processing is not None:
                 image_data_trans = self.image_pre_processing(image_data_trans)
             self.image_reference = self.image_storer(image_name_trans, image_data_trans)
@@ -151,11 +152,15 @@ class dataset_holder(base_dataset_loader):
     def __getitem__(self, i):
         self._load_image_data(i)
 
+    @cache
+    def _cached_image_loader(self, file_name):
+        return self.image_loader(file_name)
+
     def get_reference_image_by_index(self, index):
         if index >= len(self.image_list):
             raise IndexError('Index out of range of the length of the image list')
         file_name = self.image_list[index]
-        image_data = self.image_loader(file_name)
+        image_data = self._cached_image_loader(file_name)
         return image_data
 
     def get_reference_image_name(self):
