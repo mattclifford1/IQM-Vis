@@ -184,32 +184,47 @@ class make_app(widgets, layout, images):
 
     def get_menu_checkboxes(self):
         ''' list all trans/metrics in the menu drop downs '''
-        # transformations
         self.menu_options = {'transforms': {},
                              'metrics': {},
                              'metric_images': {}}
+        # check if we need to restore current checked
+        if hasattr(self, 'restore_checked_menu_items'):
+            restrict_options = self.restore_checked_menu_items
+        else:  # or building for the first time
+            restrict_options = self.restrict_options
+        
+        # make menus
         set_checked_menu_from_iterable(self.menu_bar,
                                        self.transformations,
                                        'Transforms',
                                        self.menu_options['transforms'],
                                        self.construct_UI,
-                                       self.restrict_options['transforms'])
+                                       restrict_options['transforms'])
         set_checked_menu_from_iterable(self.menu_bar,
                                        self.data_stores[0].metric_images,
                                        'Metric Images',
                                        self.menu_options['metric_images'],
                                        self.construct_UI,
-                                       self.restrict_options['metric_images'])
+                                       restrict_options['metric_images'])
         set_checked_menu_from_iterable(self.menu_bar,
                                        self.data_stores[0].metrics,
                                        'Metrics',
                                        self.menu_options['metrics'],
                                        self.construct_UI,
-                                       self.restrict_options['metrics'])
+                                       restrict_options['metrics'])
     
     def _remake_menu(self):
+        self._save_checked_menu_items()
         self.menu_bar.clear()
         self.make_menu()
+
+    def _save_checked_menu_items(self):
+        self.restore_checked_menu_items = {}
+        for menu in ['transforms', 'metric_images', 'metrics']:
+            self.restore_checked_menu_items[menu] = {}
+            for item in self.menu_options[menu]:
+                self.restore_checked_menu_items[menu][item] = self.menu_options[menu][item].isChecked()
+
 
     def make_status_bar(self):
         self.status_bar = self.statusBar()
@@ -330,6 +345,11 @@ def set_checked_menu_from_iterable(main_menu, iterable, name, action_store, conn
         if isinstance(restrict_options, int):
             if i  < restrict_options:
                 action_store[trans].setChecked(True)
+            else:
+                action_store[trans].setChecked(False)
+        elif isinstance(restrict_options, dict):
+            if trans in restrict_options.keys():
+                action_store[trans].setChecked(restrict_options[trans])
             else:
                 action_store[trans].setChecked(False)
         else:
