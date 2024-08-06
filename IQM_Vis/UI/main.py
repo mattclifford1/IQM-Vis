@@ -36,6 +36,7 @@ class make_app(widgets, layout, images):
         self.num_steps_range = num_steps_range
         self.num_step_experiment = num_step_experiment
         self.num_images_scroll_show = num_images_scroll_show
+        self.preview_num = 0
         self.test = test
 
         self.metrics_info_format = metrics_info_format
@@ -110,6 +111,11 @@ class make_app(widgets, layout, images):
         load_metrics.triggered.connect(self.load_all_metrics)
         load_metric_images.triggered.connect(self.load_all_metric_images)
 
+        self.cache_menu = self.menu_bar.addMenu('Cache')
+        clear_all_cache = self.cache_menu.addAction('Clear All Cache')
+
+        clear_all_cache.triggered.connect(self.clear_all_cache_data)
+
 
     def load_all_transforms(self):
         all_trans_iqm_vis = IQM_Vis.transformations.get_all_transforms()
@@ -136,6 +142,12 @@ class make_app(widgets, layout, images):
             self.data_stores[0].add_metric_image(metric, data)
         self._remake_menu()
         self.construct_UI()
+
+    def clear_all_cache_data(self):
+        for data_store in self.data_stores:
+            if hasattr(data_store, 'clear_all_cache'):
+                data_store.clear_all_cache()
+        self.status_bar.showMessage('Cleared all cache data', 8000)
 
     def quit(self):
         # QApplication.instance().quit()
@@ -247,7 +259,6 @@ class make_app(widgets, layout, images):
         self.init_widgets()   # widgets.py
         self.change_data(0, _redo_plots=True)   # images.py
         if self.dataset:
-            self.preview_num = 0
             self.set_preview_images(self.preview_num)
         self.main = self.init_layout()    # layout.py
         self.tabs['slider'].setCurrentIndex(tabs_index['slider'])

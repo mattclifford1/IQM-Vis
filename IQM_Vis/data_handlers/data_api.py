@@ -7,12 +7,21 @@ both use the same image for reference and transformed
 
 import os
 import imghdr
-from functools import cache
+from functools import cache, lru_cache
 from collections import namedtuple
 import numpy as np
 import pandas as pd
 import IQM_Vis
 from IQM_Vis.data_handlers import base_dataloader, base_dataset_loader
+
+
+# keep a track of all the cached functions so we can clear them easily
+CACHED_FUNCTIONS = []
+# custom decorator to cache functions and store which are cached
+def cache_tracked(func):
+    cached_func = lru_cache(maxsize=None)(func)
+    CACHED_FUNCTIONS.append(cached_func)
+    return cached_func
 
 
 class cache_metric_call:
@@ -23,7 +32,7 @@ class cache_metric_call:
     def __init__(self, metric):
         self.metric = metric
     
-    @cache
+    @cache_tracked
     def __call__(self, ref, trans, **kwargs):
         # expect a hashable bytes array tuple as input with the data type and shape
         #  N.B. we need to copy the array since from buffer gives a read only array since
@@ -152,7 +161,7 @@ class dataset_holder(base_dataset_loader):
     def __getitem__(self, i):
         self._load_image_data(i)
 
-    @cache
+    @cache_tracked
     def _cached_image_loader(self, file_name):
         return self.image_loader(file_name)
 
@@ -224,6 +233,10 @@ class dataset_holder(base_dataset_loader):
             if type(item[0]) != item[1]:
                 var_name = f'{item[0]=}'.split('=')[0]
                 raise TypeError(f'holder input: {var_name} should be a {item[1]} not {type(item[0])}')
+            
+    def clear_all_cache(self):
+        for cached_func in CACHED_FUNCTIONS:
+            cached_func.cache_clear()
 
 
 def get_image_name(file_path):
