@@ -108,6 +108,11 @@ to achieve this we convert to a bytes array (input to __call__) then load this f
 
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api.cache_tracked">
+<span class="sig-prename descclassname"><span class="pre">IQM_Vis.data_handlers.data_api.</span></span><span class="sig-name descname"><span class="pre">cache_tracked</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#cache_tracked"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.cache_tracked" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api.dataset_holder">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.data_handlers.data_api.</span></span><span class="sig-name descname"><span class="pre">dataset_holder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_list:</span> <span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_images:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_loader=&lt;function</span> <span class="pre">load_image&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_pre_processing=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_post_processing=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_list_to_transform=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">human_exp_csv=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder" title="Permalink to this definition"></a></dt>
@@ -146,6 +151,11 @@ the reference image. (Defaults to None)</p></li>
 <dd></dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api.dataset_holder.clear_all_cache">
+<span class="sig-name descname"><span class="pre">clear_all_cache</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder.clear_all_cache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder.clear_all_cache" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api.dataset_holder.get_image_dataset_list">
 <span class="sig-name descname"><span class="pre">get_image_dataset_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder.get_image_dataset_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder.get_image_dataset_list" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -173,6 +183,11 @@ the reference image. (Defaults to None)</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api.dataset_holder.get_reference_image">
 <span class="sig-name descname"><span class="pre">get_reference_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder.get_reference_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder.get_reference_image" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api.dataset_holder.get_reference_image_by_index">
+<span class="sig-name descname"><span class="pre">get_reference_image_by_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder.get_reference_image_by_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder.get_reference_image_by_index" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -251,6 +266,11 @@ the reference image. (Defaults to None)</p></li>
 <dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api_abstract.base_dataset_loader">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.data_handlers.data_api_abstract.</span></span><span class="sig-name descname"><span class="pre">base_dataset_loader</span></span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api_abstract.html#base_dataset_loader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataset_loader" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader" title="IQM_Vis.data_handlers.data_api_abstract.base_dataloader"><code class="xref py py-class docutils literal notranslate"><span class="pre">IQM_Vis.data_handlers.data_api_abstract.base_dataloader</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api_abstract.base_dataset_loader.get_reference_image_by_index">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_reference_image_by_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api_abstract.html#base_dataset_loader.get_reference_image_by_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataset_loader.get_reference_image_by_index" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </section>
