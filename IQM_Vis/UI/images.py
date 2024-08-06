@@ -80,6 +80,8 @@ class images:
         # have roll around scrolling
         if self.preview_num + ival < 0:
             self.preview_num = self.max_data_ind - self.num_images_scroll_show + 1
+            if self.preview_num + ival < 0: # dataset is smaller than the number of images to show
+                self.preview_num = 0
         elif self.preview_num + ival + self.num_images_scroll_show > self.max_data_ind + 1:
             self.preview_num = 0
         else:
@@ -88,12 +90,11 @@ class images:
         
     def set_preview_images(self, preview_num):
         for data_store in self.data_stores:
-            for i in range(self.num_images_scroll_show):
+            for i in range(min(self.num_images_scroll_show, self.max_data_ind+1)):
                 im_preview_ind = preview_num + i
                 if im_preview_ind <= self.max_data_ind:
                     # load image
-                    im_preview_data = data_store.get_reference_image_by_index(
-                        im_preview_ind)
+                    im_preview_data = data_store.get_reference_image_by_index(im_preview_ind)
                     self.widget_im_num_hash[i] = im_preview_ind
                     # set image preview size
                     scale = self.num_images_scroll_show - 1
