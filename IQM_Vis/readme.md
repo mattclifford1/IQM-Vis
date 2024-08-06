@@ -5,7 +5,7 @@ conda create -n IQM_Vis python=3.9
 ```
 Activate env:
 ```
-conda activate IQM_Vis
+conda activate IQM_Vis 
 ```
 The latest stable version can be downloaded via [PyPi](https://pypi.org/project/IQM-Vis).
 ```
