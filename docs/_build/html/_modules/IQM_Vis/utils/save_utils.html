@@ -206,6 +206,11 @@
 <div class="viewcode-block" id="load_json_dict"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.load_json_dict">[docs]</a><span class="k">def</span> <span class="nf">load_json_dict</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="make_name_for_trans"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.make_name_for_trans">[docs]</a><span class="k">def</span> <span class="nf">make_name_for_trans</span><span class="p">(</span><span class="n">trans</span><span class="p">):</span>
+    <span class="n">splitter</span> <span class="o">=</span> <span class="s1">&#39;-----&#39;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">trans</span><span class="p">[</span><span class="s1">&#39;transform_name&#39;</span><span class="p">]</span><span class="si">}{</span><span class="n">splitter</span><span class="si">}{</span><span class="n">trans</span><span class="p">[</span><span class="s1">&#39;transform_value&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span></div>
 </pre></div>
 
            </div>

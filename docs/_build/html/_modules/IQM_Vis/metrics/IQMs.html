@@ -277,7 +277,7 @@
                                      <span class="n">K</span><span class="o">=</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">),</span>
                                      <span class="n">size_average</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
                     <span class="c1"># _score = _metric(im_ref, im_comp).cpu().detach().numpy()</span>
-                <span class="n">_score</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">_score</span> <span class="c1"># get score not similarity</span>
+                <span class="n">_score</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">_score</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span> <span class="c1"># get score not similarity</span>
                 <span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
                 <span class="c1"># get an error with small images that the torchmetrics package seems to advise the wrong larger than size for</span>

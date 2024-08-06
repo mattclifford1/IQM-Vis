@@ -93,12 +93,21 @@
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">imghdr</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cache</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cache</span><span class="p">,</span> <span class="n">lru_cache</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">IQM_Vis</span>
 <span class="kn">from</span> <span class="nn">IQM_Vis.data_handlers</span> <span class="kn">import</span> <span class="n">base_dataloader</span><span class="p">,</span> <span class="n">base_dataset_loader</span>
+
+
+<span class="c1"># keep a track of all the cached functions so we can clear them easily</span>
+<span class="n">CACHED_FUNCTIONS</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1"># custom decorator to cache functions and store which are cached</span>
+<div class="viewcode-block" id="cache_tracked"><a class="viewcode-back" href="../../../IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api.cache_tracked">[docs]</a><span class="k">def</span> <span class="nf">cache_tracked</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="n">cached_func</span> <span class="o">=</span> <span class="n">lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)(</span><span class="n">func</span><span class="p">)</span>
+    <span class="n">CACHED_FUNCTIONS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cached_func</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cached_func</span></div>
 
 
 <div class="viewcode-block" id="cache_metric_call"><a class="viewcode-back" href="../../../IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api.cache_metric_call">[docs]</a><span class="k">class</span> <span class="nc">cache_metric_call</span><span class="p">:</span>
@@ -109,7 +118,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metric</span> <span class="o">=</span> <span class="n">metric</span>
     
-<div class="viewcode-block" id="cache_metric_call.__call__"><a class="viewcode-back" href="../../../IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api.cache_metric_call.__call__">[docs]</a>    <span class="nd">@cache</span>
+<div class="viewcode-block" id="cache_metric_call.__call__"><a class="viewcode-back" href="../../../IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api.cache_metric_call.__call__">[docs]</a>    <span class="nd">@cache_tracked</span>
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">trans</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="c1"># expect a hashable bytes array tuple as input with the data type and shape</span>
         <span class="c1">#  N.B. we need to copy the array since from buffer gives a read only array since</span>
@@ -206,7 +215,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">image_post_processing_hash</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="n">image_name_ref</span> <span class="o">=</span> <span class="n">get_image_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_file</span><span class="p">)</span>
-        <span class="n">image_data_ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_loader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_file</span><span class="p">)</span>
+        <span class="n">image_data_ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_image_loader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_file</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reference_unprocessed</span> <span class="o">=</span> <span class="n">image_data_ref</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_pre_processing</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">image_data_ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_pre_processing</span><span class="p">(</span><span class="n">image_data_ref</span><span class="p">)</span>
@@ -219,7 +228,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">image_to_transform</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_storer</span><span class="p">(</span><span class="n">image_name_ref</span><span class="p">,</span> <span class="n">image_data_ref</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">image_name_trans</span> <span class="o">=</span> <span class="n">get_image_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_list_to_transform</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-            <span class="n">image_data_trans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_loader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_list_to_transform</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">image_data_trans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_image_loader</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">image_list_to_transform</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_pre_processing</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">image_data_trans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_pre_processing</span><span class="p">(</span><span class="n">image_data_trans</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">image_reference</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_storer</span><span class="p">(</span><span class="n">image_name_trans</span><span class="p">,</span> <span class="n">image_data_trans</span><span class="p">)</span>
@@ -236,6 +246,17 @@
 
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_image_data</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+    <span class="nd">@cache_tracked</span>
+    <span class="k">def</span> <span class="nf">_cached_image_loader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_loader</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+
+<div class="viewcode-block" id="dataset_holder.get_reference_image_by_index"><a class="viewcode-back" href="../../../IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api.dataset_holder.get_reference_image_by_index">[docs]</a>    <span class="k">def</span> <span class="nf">get_reference_image_by_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_list</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">&#39;Index out of range of the length of the image list&#39;</span><span class="p">)</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_list</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="n">image_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_image_loader</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">image_data</span></div>
 
 <div class="viewcode-block" id="dataset_holder.get_reference_image_name"><a class="viewcode-back" href="../../../IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api.dataset_holder.get_reference_image_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_reference_image_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_reference</span><span class="o">.</span><span class="n">name</span></div>
@@ -297,7 +318,11 @@
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">input_types</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">!=</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
                 <span class="n">var_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">=}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;holder input: </span><span class="si">{</span><span class="n">var_name</span><span class="si">}</span><span class="s1"> should be a </span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1"> not </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;holder input: </span><span class="si">{</span><span class="n">var_name</span><span class="si">}</span><span class="s1"> should be a </span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1"> not </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            
+<div class="viewcode-block" id="dataset_holder.clear_all_cache"><a class="viewcode-back" href="../../../IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api.dataset_holder.clear_all_cache">[docs]</a>    <span class="k">def</span> <span class="nf">clear_all_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">cached_func</span> <span class="ow">in</span> <span class="n">CACHED_FUNCTIONS</span><span class="p">:</span>
+            <span class="n">cached_func</span><span class="o">.</span><span class="n">cache_clear</span><span class="p">()</span></div></div>
 
 
 <div class="viewcode-block" id="get_image_name"><a class="viewcode-back" href="../../../IQM_Vis.data_handlers.html#IQM_Vis.data_handlers.data_api.get_image_name">[docs]</a><span class="k">def</span> <span class="nf">get_image_name</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
