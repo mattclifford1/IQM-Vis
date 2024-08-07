@@ -166,6 +166,36 @@
             <span class="k">return</span> <span class="n">L2</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">L2</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span></div></div>
+        
+<div class="viewcode-block" id="RMSE"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.RMSE">[docs]</a><span class="k">class</span> <span class="nc">RMSE</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Root Mean Squared Error between two images. Images must have the same</span>
+<span class="sd">       dimensions</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        return_image (bool): Whether to return the image (Defaults to False which</span>
+<span class="sd">                             will return a scalar value)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">return_image</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">return_image</span> <span class="o">=</span> <span class="n">return_image</span>
+
+<div class="viewcode-block" id="RMSE.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.RMSE.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;When an instance is called</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            im_ref (np.array): Reference image</span>
+<span class="sd">            im_comp (np.array): Comparison image</span>
+<span class="sd">            **kwargs: Arbitrary keyword arguments</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            score (np.array): RMSE (scalar if return_image is False, image if</span>
+<span class="sd">                             return_image is True)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">_check_shapes</span><span class="p">(</span><span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">)</span>
+        <span class="n">L2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">im_ref</span> <span class="o">-</span> <span class="n">im_comp</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_image</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">L2</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">L2</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span></div></div>
 
 <div class="viewcode-block" id="SSIM"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.SSIM">[docs]</a><span class="k">class</span> <span class="nc">SSIM</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Structural Similarity Index Measure between two images. Images must have</span>
