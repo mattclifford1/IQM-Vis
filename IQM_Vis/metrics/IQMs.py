@@ -79,6 +79,36 @@ class MSE:
             return L2
         else:
             return L2.mean()
+        
+class RMSE:
+    '''Root Mean Squared Error between two images. Images must have the same
+       dimensions
+
+    Args:
+        return_image (bool): Whether to return the image (Defaults to False which
+                             will return a scalar value)
+    '''
+    def __init__(self, return_image=False):
+        self.return_image = return_image
+
+    def __call__(self, im_ref, im_comp, **kwargs):
+        '''When an instance is called
+
+        Args:
+            im_ref (np.array): Reference image
+            im_comp (np.array): Comparison image
+            **kwargs: Arbitrary keyword arguments
+
+        Returns:
+            score (np.array): RMSE (scalar if return_image is False, image if
+                             return_image is True)
+        '''
+        _check_shapes(im_ref, im_comp)
+        L2 = np.square(im_ref - im_comp)
+        if self.return_image:
+            return np.sqrt(L2)
+        else:
+            return np.sqrt(L2.mean())
 
 class SSIM:
     '''Structural Similarity Index Measure between two images. Images must have

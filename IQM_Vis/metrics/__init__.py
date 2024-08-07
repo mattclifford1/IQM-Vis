@@ -1,5 +1,6 @@
 from IQM_Vis.metrics.IQMs import (MAE, 
                    MSE, 
+                   RMSE,
                    SSIM, 
                    MS_SSIM, 
                    LPIPS, 
@@ -23,6 +24,7 @@ def get_all_metrics():
         'DISTS': DISTS(),
         'LPIPS': LPIPS(),
         'MAE': MAE(),
+        'RMSE': RMSE(),
     }
     return all_metrics
 
@@ -38,6 +40,7 @@ def get_all_metric_images():
     'SSIM': SSIM(return_image=True),
     # 'MS_SSIM': MS_SSIM(return_image=True),
     'MAE': MAE(return_image=True),
+    'RMSE': RMSE(return_image=True),
     }
     return all_metrics
 

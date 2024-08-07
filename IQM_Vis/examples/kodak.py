@@ -15,7 +15,8 @@ def run():
     image_list.sort()
 
     metrs = IQM_Vis.metrics.get_all_metrics()
-    metrs.pop('1-MS_SSIM')
+    if '1-MS_SSIM' in metrs:
+      metrs.pop('1-MS_SSIM')
     data = IQM_Vis.dataset_holder(image_list,
                                   metrs,
                                 #   IQM_Vis.metrics.get_all_metric_images()
