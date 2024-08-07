@@ -86,6 +86,7 @@
   <h1>Source code for IQM_Vis.metrics</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">IQM_Vis.metrics.IQMs</span> <span class="kn">import</span> <span class="p">(</span><span class="n">MAE</span><span class="p">,</span> 
                    <span class="n">MSE</span><span class="p">,</span> 
+                   <span class="n">RMSE</span><span class="p">,</span>
                    <span class="n">SSIM</span><span class="p">,</span> 
                    <span class="n">MS_SSIM</span><span class="p">,</span> 
                    <span class="n">LPIPS</span><span class="p">,</span> 
@@ -109,6 +110,7 @@
         <span class="s1">&#39;DISTS&#39;</span><span class="p">:</span> <span class="n">DISTS</span><span class="p">(),</span>
         <span class="s1">&#39;LPIPS&#39;</span><span class="p">:</span> <span class="n">LPIPS</span><span class="p">(),</span>
         <span class="s1">&#39;MAE&#39;</span><span class="p">:</span> <span class="n">MAE</span><span class="p">(),</span>
+        <span class="s1">&#39;RMSE&#39;</span><span class="p">:</span> <span class="n">RMSE</span><span class="p">(),</span>
     <span class="p">}</span>
     <span class="k">return</span> <span class="n">all_metrics</span></div>
 
@@ -124,6 +126,7 @@
     <span class="s1">&#39;SSIM&#39;</span><span class="p">:</span> <span class="n">SSIM</span><span class="p">(</span><span class="n">return_image</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
     <span class="c1"># &#39;MS_SSIM&#39;: MS_SSIM(return_image=True),</span>
     <span class="s1">&#39;MAE&#39;</span><span class="p">:</span> <span class="n">MAE</span><span class="p">(</span><span class="n">return_image</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="s1">&#39;RMSE&#39;</span><span class="p">:</span> <span class="n">RMSE</span><span class="p">(</span><span class="n">return_image</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
     <span class="p">}</span>
     <span class="k">return</span> <span class="n">all_metrics</span></div>
 
