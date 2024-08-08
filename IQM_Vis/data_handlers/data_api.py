@@ -6,13 +6,13 @@ both use the same image for reference and transformed
 # License: BSD 3-Clause License
 
 import os
-import imghdr
-from functools import cache, lru_cache
+from functools import lru_cache
 from collections import namedtuple
 import numpy as np
 import pandas as pd
+import imghdr
 import IQM_Vis
-from IQM_Vis.data_handlers import base_dataloader, base_dataset_loader
+from IQM_Vis.data_handlers import base_dataset_loader
 
 
 # keep a track of all the cached functions so we can clear them easily
