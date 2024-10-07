@@ -55,7 +55,6 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
 </ul>
 
@@ -204,7 +203,7 @@
 
 
 <div class="viewcode-block" id="make_app.load_all_transforms"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.main.make_app.load_all_transforms">[docs]</a>    <span class="k">def</span> <span class="nf">load_all_transforms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">all_trans_iqm_vis</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">transformations</span><span class="o">.</span><span class="n">get_all_transforms</span><span class="p">()</span>
+        <span class="n">all_trans_iqm_vis</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">get_all_transforms</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">trans</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">all_trans_iqm_vis</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">trans</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span><span class="p">[</span><span class="n">trans</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>

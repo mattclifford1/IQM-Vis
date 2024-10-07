@@ -55,7 +55,6 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
 </ul>
 
@@ -92,13 +91,13 @@
 <span class="c1"># License: BSD 3-Clause License</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">imghdr</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cache</span><span class="p">,</span> <span class="n">lru_cache</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">lru_cache</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">imghdr</span>
 <span class="kn">import</span> <span class="nn">IQM_Vis</span>
-<span class="kn">from</span> <span class="nn">IQM_Vis.data_handlers</span> <span class="kn">import</span> <span class="n">base_dataloader</span><span class="p">,</span> <span class="n">base_dataset_loader</span>
+<span class="kn">from</span> <span class="nn">IQM_Vis.data_handlers</span> <span class="kn">import</span> <span class="n">base_dataset_loader</span>
 
 
 <span class="c1"># keep a track of all the cached functions so we can clear them easily</span>

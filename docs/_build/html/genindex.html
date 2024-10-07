@@ -55,7 +55,6 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
 </ul>
 
@@ -169,13 +168,13 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.binary_threshold">binary_threshold() (in module IQM_Vis.transformations.transforms)</a>
+      <li><a href="IQM_Vis.transforms.html#IQM_Vis.transforms.effects.binary_threshold">binary_threshold() (in module IQM_Vis.transforms.effects)</a>
 </li>
-      <li><a href="IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.blur">blur() (in module IQM_Vis.transformations.transforms)</a>
+      <li><a href="IQM_Vis.transforms.html#IQM_Vis.transforms.effects.blur">blur() (in module IQM_Vis.transforms.effects)</a>
 </li>
-      <li><a href="IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.brightness">brightness() (in module IQM_Vis.transformations.transforms)</a>
+      <li><a href="IQM_Vis.transforms.html#IQM_Vis.transforms.effects.brightness">brightness() (in module IQM_Vis.transforms.effects)</a>
 </li>
-      <li><a href="IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.brightness_hsv">brightness_hsv() (in module IQM_Vis.transformations.transforms)</a>
+      <li><a href="IQM_Vis.transforms.html#IQM_Vis.transforms.effects.brightness_hsv">brightness_hsv() (in module IQM_Vis.transforms.effects)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -277,7 +276,7 @@
 </li>
       <li><a href="IQM_Vis.UI.html#IQM_Vis.UI.main.make_app.construct_UI">construct_UI() (IQM_Vis.UI.main.make_app method)</a>
 </li>
-      <li><a href="IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.contrast">contrast() (in module IQM_Vis.transformations.transforms)</a>
+      <li><a href="IQM_Vis.transforms.html#IQM_Vis.transforms.effects.contrast">contrast() (in module IQM_Vis.transforms.effects)</a>
 </li>
       <li><a href="IQM_Vis.examples.html#IQM_Vis.examples.dists.correct">correct() (in module IQM_Vis.examples.dists)</a>
 </li>
@@ -363,7 +362,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="IQM_Vis.metrics.SSIM.html#IQM_Vis.metrics.SSIM.ssim.gaussian_filter">gaussian_filter() (in module IQM_Vis.metrics.SSIM.ssim)</a>
 </li>
-      <li><a href="IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.Gaussian_noise">Gaussian_noise() (in module IQM_Vis.transformations.transforms)</a>
+      <li><a href="IQM_Vis.transforms.html#IQM_Vis.transforms.additive_noise.Gaussian_noise">Gaussian_noise (class in IQM_Vis.transforms.additive_noise)</a>
 </li>
       <li><a href="IQM_Vis.UI.html#IQM_Vis.UI.widgets.widgets.generic_value_change">generic_value_change() (IQM_Vis.UI.widgets.widgets method)</a>
 </li>
@@ -379,7 +378,7 @@
 </li>
       <li><a href="IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.get_all_slider_values">get_all_slider_values() (in module IQM_Vis.utils.plot_utils)</a>
 </li>
-      <li><a href="IQM_Vis.transformations.html#IQM_Vis.transformations.get_all_transforms">get_all_transforms() (in module IQM_Vis.transformations)</a>
+      <li><a href="IQM_Vis.transforms.html#IQM_Vis.transforms.get_all_transforms">get_all_transforms() (in module IQM_Vis.transforms)</a>
 </li>
       <li><a href="IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.get_correlation_plot">get_correlation_plot() (in module IQM_Vis.utils.plot_utils)</a>
 </li>
@@ -489,7 +488,7 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.hue">hue() (in module IQM_Vis.transformations.transforms)</a>
+      <li><a href="IQM_Vis.transforms.html#IQM_Vis.transforms.effects.hue">hue() (in module IQM_Vis.transforms.effects)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -630,8 +629,6 @@
         <li><a href="IQM_Vis.metrics.SSIM.html#module-IQM_Vis.metrics.SSIM">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     IQM_Vis.metrics.SSIM.ssim
 
@@ -639,18 +636,34 @@
         <li><a href="IQM_Vis.metrics.SSIM.html#module-IQM_Vis.metrics.SSIM.ssim">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
-    IQM_Vis.transformations
+    IQM_Vis.transforms
 
       <ul>
-        <li><a href="IQM_Vis.transformations.html#module-IQM_Vis.transformations">module</a>
+        <li><a href="IQM_Vis.transforms.html#module-IQM_Vis.transforms">module</a>
 </li>
       </ul></li>
       <li>
-    IQM_Vis.transformations.transforms
+    IQM_Vis.transforms.additive_noise
 
       <ul>
-        <li><a href="IQM_Vis.transformations.html#module-IQM_Vis.transformations.transforms">module</a>
+        <li><a href="IQM_Vis.transforms.html#module-IQM_Vis.transforms.additive_noise">module</a>
+</li>
+      </ul></li>
+      <li>
+    IQM_Vis.transforms.affine
+
+      <ul>
+        <li><a href="IQM_Vis.transforms.html#module-IQM_Vis.transforms.affine">module</a>
+</li>
+      </ul></li>
+      <li>
+    IQM_Vis.transforms.effects
+
+      <ul>
+        <li><a href="IQM_Vis.transforms.html#module-IQM_Vis.transforms.effects">module</a>
 </li>
       </ul></li>
       <li>
@@ -775,7 +788,7 @@
 <h2 id="J">J</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.jpeg_compression">jpeg_compression() (in module IQM_Vis.transformations.transforms)</a>
+      <li><a href="IQM_Vis.transforms.html#IQM_Vis.transforms.effects.jpeg_compression">jpeg_compression() (in module IQM_Vis.transforms.effects)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -889,9 +902,13 @@
 </li>
         <li><a href="IQM_Vis.metrics.SSIM.html#module-IQM_Vis.metrics.SSIM.ssim">IQM_Vis.metrics.SSIM.ssim</a>
 </li>
-        <li><a href="IQM_Vis.transformations.html#module-IQM_Vis.transformations">IQM_Vis.transformations</a>
+        <li><a href="IQM_Vis.transforms.html#module-IQM_Vis.transforms">IQM_Vis.transforms</a>
 </li>
-        <li><a href="IQM_Vis.transformations.html#module-IQM_Vis.transformations.transforms">IQM_Vis.transformations.transforms</a>
+        <li><a href="IQM_Vis.transforms.html#module-IQM_Vis.transforms.additive_noise">IQM_Vis.transforms.additive_noise</a>
+</li>
+        <li><a href="IQM_Vis.transforms.html#module-IQM_Vis.transforms.affine">IQM_Vis.transforms.affine</a>
+</li>
+        <li><a href="IQM_Vis.transforms.html#module-IQM_Vis.transforms.effects">IQM_Vis.transforms.effects</a>
 </li>
         <li><a href="IQM_Vis.UI.html#module-IQM_Vis.UI">IQM_Vis.UI</a>
 </li>
@@ -949,6 +966,10 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.NLPD">NLPD (class in IQM_Vis.metrics.IQMs)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="IQM_Vis.transforms.html#IQM_Vis.transforms.additive_noise.noise_hypersphere">noise_hypersphere (class in IQM_Vis.transforms.additive_noise)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1040,7 +1061,7 @@
 </li>
       <li><a href="IQM_Vis.metrics.html#IQM_Vis.metrics.IQMs.RMSE">RMSE (class in IQM_Vis.metrics.IQMs)</a>
 </li>
-      <li><a href="IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.rotation">rotation() (in module IQM_Vis.transformations.transforms)</a>
+      <li><a href="IQM_Vis.transforms.html#IQM_Vis.transforms.affine.rotation">rotation() (in module IQM_Vis.transforms.affine)</a>
 </li>
       <li><a href="IQM_Vis.examples.html#IQM_Vis.examples.all.run">run() (in module IQM_Vis.examples.all)</a>
 
@@ -1066,9 +1087,9 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.salt_and_pepper_noise">salt_and_pepper_noise() (in module IQM_Vis.transformations.transforms)</a>
+      <li><a href="IQM_Vis.transforms.html#IQM_Vis.transforms.additive_noise.salt_and_pepper_noise">salt_and_pepper_noise() (in module IQM_Vis.transforms.additive_noise)</a>
 </li>
-      <li><a href="IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.saturation">saturation() (in module IQM_Vis.transformations.transforms)</a>
+      <li><a href="IQM_Vis.transforms.html#IQM_Vis.transforms.effects.saturation">saturation() (in module IQM_Vis.transforms.effects)</a>
 </li>
       <li><a href="IQM_Vis.utils.html#IQM_Vis.utils.save_utils.save_and_merge_df_as_csv">save_and_merge_df_as_csv() (in module IQM_Vis.utils.save_utils)</a>
 </li>
@@ -1224,7 +1245,7 @@
 <h2 id="X">X</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.x_shift">x_shift() (in module IQM_Vis.transformations.transforms)</a>
+      <li><a href="IQM_Vis.transforms.html#IQM_Vis.transforms.affine.x_shift">x_shift() (in module IQM_Vis.transforms.affine)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1232,7 +1253,7 @@
 <h2 id="Y">Y</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.y_shift">y_shift() (in module IQM_Vis.transformations.transforms)</a>
+      <li><a href="IQM_Vis.transforms.html#IQM_Vis.transforms.affine.y_shift">y_shift() (in module IQM_Vis.transforms.affine)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1240,7 +1261,7 @@
 <h2 id="Z">Z</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="IQM_Vis.transformations.html#IQM_Vis.transformations.transforms.zoom_image">zoom_image() (in module IQM_Vis.transformations.transforms)</a>
+      <li><a href="IQM_Vis.transforms.html#IQM_Vis.transforms.affine.zoom_image">zoom_image() (in module IQM_Vis.transforms.affine)</a>
 </li>
   </ul></td>
 </tr></table>

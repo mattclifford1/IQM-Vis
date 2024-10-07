@@ -11,7 +11,7 @@ Subpackages
    IQM_Vis.data_handlers
    IQM_Vis.examples
    IQM_Vis.metrics
-   IQM_Vis.transformations
+   IQM_Vis.transforms
    IQM_Vis.utils
 
 Submodules
