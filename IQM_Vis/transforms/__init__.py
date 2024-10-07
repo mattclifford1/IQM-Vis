@@ -1,17 +1,14 @@
-from IQM_Vis.transformations.transforms import (rotation, 
+from IQM_Vis.transforms.effects import ( 
                          blur, 
-                         x_shift, 
-                         y_shift, 
                          brightness, 
-                         zoom_image, 
                          binary_threshold, 
                          jpeg_compression, 
-                         salt_and_pepper_noise,
                          contrast,
                          hue,
                          saturation,
-                         brightness_hsv,
-                         Gaussian_noise)
+                         brightness_hsv)
+from IQM_Vis.transforms.affine import (rotation, x_shift, y_shift, zoom_image)
+from IQM_Vis.transforms.additive_noise import (salt_and_pepper_noise, Gaussian_noise, noise_hypersphere)
 
 def get_all_transforms():
     '''
@@ -28,6 +25,7 @@ def get_all_transforms():
         # 'brightness_hsv': {'min': -1.0, 'max': 1, 'function': brightness_hsv},
         'blur':{'min':1, 'max':41, 'normalise':'odd', 'function':blur},
         'Gaussian Noise': {'init_value': 0.0, 'min': 0.0, 'max': 0.5, 'function': Gaussian_noise},
+        'noise hypersphere': {'init_value': 0.0, 'min': 0.0, 'max': 5.0, 'function': noise_hypersphere},
         'salt pepper': {'init_value': 0.0, 'min': 0.0, 'max': 0.05, 'function': salt_and_pepper_noise},
         'jpg comp.':{'init_value':101, 'min':1, 'max':101, 'function':jpeg_compression},
         'rotation':{'min':-180, 'max':180, 'function':rotation},

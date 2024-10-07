@@ -197,7 +197,7 @@ def compute_metric_for_human_correlation(data_store, transforms, metric_params, 
         if trans in transforms.keys():
             single_trans = {trans: transforms[trans]}
         else:
-            iqm_vis_trans = IQM_Vis.transformations.get_all_transforms()
+            iqm_vis_trans = IQM_Vis.transforms.get_all_transforms()
             if trans in iqm_vis_trans.keys():
                 single_trans = {trans: iqm_vis_trans[trans]}
             else:

@@ -118,7 +118,7 @@ class make_app(widgets, layout, images):
 
 
     def load_all_transforms(self):
-        all_trans_iqm_vis = IQM_Vis.transformations.get_all_transforms()
+        all_trans_iqm_vis = IQM_Vis.transforms.get_all_transforms()
         for trans, data in all_trans_iqm_vis.items():
             if trans not in self.transformations:
                 self.transformations[trans] = data

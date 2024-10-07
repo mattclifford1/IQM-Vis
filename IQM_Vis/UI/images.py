@@ -573,7 +573,7 @@ class images:
                 if key == trans:
                     trans_found = True
         if trans_found == False: # need to load it
-            all_trans_iqm_vis = IQM_Vis.transformations.get_all_transforms()
+            all_trans_iqm_vis = IQM_Vis.transforms.get_all_transforms()
             if trans in self.menu_options['transforms']:
                 self.menu_options['transforms'][trans].setChecked(True)
                 self.construct_UI()

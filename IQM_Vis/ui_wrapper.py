@@ -111,7 +111,7 @@ class make_UI:
 
     def _check_trans(self):
         if self.transformations == None:
-            self.transformations = IQM_Vis.transformations.get_all_transforms()
+            self.transformations = IQM_Vis.transforms.get_all_transforms()
         # make sure to wrap all transforms in clip so they don't go beyond data limits
         for trans, data in self.transformations.items():
             self.transformations[trans]['function'] = transform_wrapper(data['function'])

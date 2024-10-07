@@ -22,7 +22,7 @@ def run():
     metr_ims = IQM_Vis.metrics.get_all_metric_images()
     metr_ims.pop('MSE')
 
-    IQM_Vis.make_UI(transformations=IQM_Vis.transformations.get_all_transforms(),
+    IQM_Vis.make_UI(transformations=IQM_Vis.transforms.get_all_transforms(),
                     image_list=image_list,
                     metrics=metrs,
                     metric_images=metr_ims,
