@@ -55,7 +55,6 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.transformations.html">IQM_Vis.transformations package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
 </ul>
 
@@ -659,7 +658,7 @@
                 <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">trans</span><span class="p">:</span>
                     <span class="n">trans_found</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">if</span> <span class="n">trans_found</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span> <span class="c1"># need to load it</span>
-            <span class="n">all_trans_iqm_vis</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">transformations</span><span class="o">.</span><span class="n">get_all_transforms</span><span class="p">()</span>
+            <span class="n">all_trans_iqm_vis</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">get_all_transforms</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">trans</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu_options</span><span class="p">[</span><span class="s1">&#39;transforms&#39;</span><span class="p">]:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">menu_options</span><span class="p">[</span><span class="s1">&#39;transforms&#39;</span><span class="p">][</span><span class="n">trans</span><span class="p">]</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">construct_UI</span><span class="p">()</span>
