@@ -80,12 +80,12 @@ def correct(img, meta_dict, greycale=True):
 
 def run():
     # metrics functions must return a single value
-    metric = {'DISTS': IQM_Vis.IQMs.DISTS(),
-              'LPIPS': IQM_Vis.IQMs.LPIPS(),
-              '1-SSIM': IQM_Vis.IQMs.SSIM(),
-              'MAE': IQM_Vis.IQMs.MAE(),
-            #   '1-MS_SSIM': IQM_Vis.IQMs.MS_SSIM(),
-            #   'NLPD': IQM_Vis.IQMs.NLPD(),
+    metric = {'DISTS': IQM_Vis.metrics.DISTS(),
+              'LPIPS': IQM_Vis.metrics.LPIPS(),
+              '1-SSIM': IQM_Vis.metrics.SSIM(),
+              'MAE': IQM_Vis.metrics.MAE(),
+            #   '1-MS_SSIM': IQM_Vis.metrics.MS_SSIM(),
+            #   'NLPD': IQM_Vis.metrics.NLPD(),
               }
 
     # metrics images return a numpy image - dont include any for this example

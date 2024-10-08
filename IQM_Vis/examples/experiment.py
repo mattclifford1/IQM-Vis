@@ -8,12 +8,12 @@ import IQM_Vis
 
 def run():
     # metrics functions must return a single value
-    metric = {'DISTS': IQM_Vis.IQMs.DISTS(),
-              'MAE': IQM_Vis.IQMs.MAE(),
-              '1-SSIM': IQM_Vis.IQMs.SSIM(),
-            #   '1-MS_SSIM': IQM_Vis.IQMs.MS_SSIM(),
-              'NLPD': IQM_Vis.IQMs.NLPD(),
-              #   'LPIPS': IQM_Vis.IQMs.LPIPS(),
+    metric = {'DISTS': IQM_Vis.metrics.DISTS(),
+              'MAE': IQM_Vis.metrics.MAE(),
+              '1-SSIM': IQM_Vis.metrics.SSIM(),
+            #   '1-MS_SSIM': IQM_Vis.metrics.MS_SSIM(),
+              'NLPD': IQM_Vis.metrics.NLPD(),
+              #   'LPIPS': IQM_Vis.metrics.LPIPS(),
               }
 
     # metrics images return a numpy image

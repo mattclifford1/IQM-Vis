@@ -8,15 +8,15 @@ import IQM_Vis
 
 def run():
     # metrics functions must return a single value
-    metric = {'MAE': IQM_Vis.IQMs.MAE(),
-              'MSE': IQM_Vis.IQMs.MSE(),
-              '1-SSIM': IQM_Vis.IQMs.SSIM()
+    metric = {'MAE': IQM_Vis.metrics.MAE(),
+              'MSE': IQM_Vis.metrics.MSE(),
+              '1-SSIM': IQM_Vis.metrics.SSIM()
               }
 
     # metrics images return a numpy image
     metric_images = {
-        # 'MSE': IQM_Vis.IQMs.MSE(return_image=True),
-        # 'SSIM': IQM_Vis.IQMs.SSIM(return_image=True)
+        # 'MSE': IQM_Vis.metrics.MSE(return_image=True),
+        # 'SSIM': IQM_Vis.metrics.SSIM(return_image=True)
                      }
 
     # make dataset list of images

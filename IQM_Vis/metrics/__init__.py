@@ -1,12 +1,9 @@
-from IQM_Vis.metrics.IQMs import (MAE, 
-                   MSE, 
-                   RMSE,
-                   SSIM, 
-                   MS_SSIM, 
-                   LPIPS, 
-                   DISTS, 
-                   NLPD,
-                   one_over_PSNR)
+# Author: Matt Clifford <matt.clifford@bristol.ac.uk>
+# License: BSD 3-Clause License
+
+from IQM_Vis.metrics.non_perceptual import MAE, MSE, RMSE, one_over_PSNR
+from IQM_Vis.metrics.perceptual_trad import SSIM, MS_SSIM, NLPD
+from IQM_Vis.metrics.perceptual_DL import LPIPS, DISTS
 
 def get_all_metrics():
     ''' 

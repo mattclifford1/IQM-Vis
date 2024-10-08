@@ -156,7 +156,7 @@ class make_experiment(QMainWindow):
             self.ref_image_unprocessed = self.data_store.get_reference_unprocessed()
         # get MSE for experiments to get a rough sorting
         mses = []
-        mse = IQM_Vis.IQMs.MSE()
+        mse = IQM_Vis.metrics.MSE()
         for trans in self.experiment_trans_params:
             mses.append(
                 mse(self.ref_image, self.get_single_transform_im(trans)))

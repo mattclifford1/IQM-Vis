@@ -22,14 +22,14 @@ def get_UI():
     images = [image1, image2]
     print(f'Images files: {images}')
 
-    MAE = IQM_Vis.IQMs.MAE()
-    MSE = IQM_Vis.IQMs.MSE()
+    MAE = IQM_Vis.metrics.MAE()
+    MSE = IQM_Vis.metrics.MSE()
 
     metrics = {'MAE': MAE,
                'MSE': MSE,
                }
 
-    MSE_image = IQM_Vis.IQMs.MSE(return_image=True)
+    MSE_image = IQM_Vis.metrics.MSE(return_image=True)
     metric_images = {'MSE': MSE_image,
                      }
 

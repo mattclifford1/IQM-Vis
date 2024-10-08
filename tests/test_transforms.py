@@ -4,16 +4,14 @@
 '''
 Test that all of the transforms work as expected
 '''
-import os
 import numpy as np
 from IQM_Vis.transforms import get_all_transforms
 from IQM_Vis.utils import load_image
+from IQM_Vis.examples.images import IMAGE2
 
 
 def _get_test_image():
-    file_path = os.path.dirname(os.path.abspath(__file__))
-    im_path = os.path.join(file_path, '..', 'examples', 'images', 'waves2.jpeg')
-    return load_image(im_path)
+    return load_image(IMAGE2)
 
 
 def test_all_transforms_init_value_no_change_image():
