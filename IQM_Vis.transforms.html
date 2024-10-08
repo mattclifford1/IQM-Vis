@@ -273,14 +273,15 @@ that are rotated beyond the image are filled in with black pixel values</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="IQM_Vis.transforms.effects.blur">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.transforms.effects.</span></span><span class="sig-name descname"><span class="pre">blur</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">7</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/transforms/effects.html#blur"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.transforms.effects.blur" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">IQM_Vis.transforms.effects.</span></span><span class="sig-name descname"><span class="pre">blur</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/transforms/effects.html#blur"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.transforms.effects.blur" title="Permalink to this definition"></a></dt>
 <dd><p>Gaussian Blur on an image</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>image</strong> (<em>np.array</em>) – image to be rotated</p></li>
 <li><p><strong>kernel_size</strong> (<em>int</em>) – size of the convolutional kernel, will be converted
-to an odd number. (Defaults to 7)</p></li>
+to an odd number. 1 is no blur.
+(Defaults to 1)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -380,7 +381,7 @@ Values higher than 1 will increase the contrast.
 
 <dl class="py function">
 <dt class="sig sig-object py" id="IQM_Vis.transforms.effects.jpeg_compression">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.transforms.effects.</span></span><span class="sig-name descname"><span class="pre">jpeg_compression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compression</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">90</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/transforms/effects.html#jpeg_compression"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.transforms.effects.jpeg_compression" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">IQM_Vis.transforms.effects.</span></span><span class="sig-name descname"><span class="pre">jpeg_compression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compression</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">101</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/transforms/effects.html#jpeg_compression"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.transforms.effects.jpeg_compression" title="Permalink to this definition"></a></dt>
 <dd><p>encode image using jpeg then decode</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -388,7 +389,7 @@ Values higher than 1 will increase the contrast.
 <li><p><strong>image</strong> (<em>np.array</em>) – image to be compressed</p></li>
 <li><p><strong>compression</strong> (<em>int</em>) – amount of jpeg compression, higher is better quality.
 101 returns identity image.
-(Defaults to 90)</p></li>
+(Defaults to 101)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>

@@ -64,7 +64,10 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-IQM_Vis.metrics.IQMs">IQM_Vis.metrics.IQMs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-IQM_Vis.metrics.metric_utils">IQM_Vis.metrics.metric_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-IQM_Vis.metrics.non_perceptual">IQM_Vis.metrics.non_perceptual module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-IQM_Vis.metrics.perceptual_DL">IQM_Vis.metrics.perceptual_DL module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-IQM_Vis.metrics.perceptual_trad">IQM_Vis.metrics.perceptual_trad module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-IQM_Vis.metrics">Module contents</a></li>
 </ul>
 </li>
@@ -112,85 +115,15 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
 </section>
-<section id="module-IQM_Vis.metrics.IQMs">
-<span id="iqm-vis-metrics-iqms-module"></span><h2>IQM_Vis.metrics.IQMs module<a class="headerlink" href="#module-IQM_Vis.metrics.IQMs" title="Permalink to this headline"></a></h2>
-<p>sample metrics to use with the examples of the UI</p>
+<section id="module-IQM_Vis.metrics.metric_utils">
+<span id="iqm-vis-metrics-metric-utils-module"></span><h2>IQM_Vis.metrics.metric_utils module<a class="headerlink" href="#module-IQM_Vis.metrics.metric_utils" title="Permalink to this headline"></a></h2>
+<p>Helper functions for metric computation</p>
+</section>
+<section id="module-IQM_Vis.metrics.non_perceptual">
+<span id="iqm-vis-metrics-non-perceptual-module"></span><h2>IQM_Vis.metrics.non_perceptual module<a class="headerlink" href="#module-IQM_Vis.metrics.non_perceptual" title="Permalink to this headline"></a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="IQM_Vis.metrics.IQMs.DISTS">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.IQMs.</span></span><span class="sig-name descname"><span class="pre">DISTS</span></span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#DISTS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.DISTS" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Deep Image Structure and Texture Similarity (DISTS) Metric. Uses the
-code from <a class="reference external" href="https://github.com/dingkeyan93/DISTS">https://github.com/dingkeyan93/DISTS</a>. Uses the PyTorch backend.
-It is robust to texture variance (e.g., evaluating the images generated
-by GANs) and mild geometric transformations (e.g., evaluating the image
-pairs that are not strictly point-by-point aligned).</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.metrics.IQMs.DISTS.__call__">
-<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#DISTS.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.DISTS.__call__" title="Permalink to this definition"></a></dt>
-<dd><p>When an instance is called</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>im_ref</strong> (<em>np.array</em>) – Reference image</p></li>
-<li><p><strong>im_comp</strong> (<em>np.array</em>) – Comparison image</p></li>
-<li><p><strong>**kwargs</strong> – Arbitrary keyword arguments</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>DISTS score</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>score (np.array)</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="IQM_Vis.metrics.IQMs.LPIPS">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.IQMs.</span></span><span class="sig-name descname"><span class="pre">LPIPS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'alex'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mean'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#LPIPS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.LPIPS" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="simple">
-<dt>Learned Perceptual Image Patch Similarity between two images.</dt><dd><p>Images must have the same dimensions.</p>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>network</strong> (<em>str</em>) – Pretrained network to use. Choose between ‘alex’, ‘vgg’
-or ‘squeeze’. (Defaults to ‘alex’)</p></li>
-<li><p><strong>reduction</strong> (<em>str</em>) – How to reduce over the batch dimension. Choose between
-‘sum’ or ‘mean’. (Defaults to ‘mean’)</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.metrics.IQMs.LPIPS.__call__">
-<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#LPIPS.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.LPIPS.__call__" title="Permalink to this definition"></a></dt>
-<dd><p>When an instance is called</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>im_ref</strong> (<em>np.array</em>) – Reference image</p></li>
-<li><p><strong>im_comp</strong> (<em>np.array</em>) – Comparison image</p></li>
-<li><p><strong>**kwargs</strong> – Arbitrary keyword arguments</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>LPIPS score</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>score (np.array)</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="IQM_Vis.metrics.IQMs.MAE">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.IQMs.</span></span><span class="sig-name descname"><span class="pre">MAE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#MAE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.MAE" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.metrics.non_perceptual.MAE">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.non_perceptual.</span></span><span class="sig-name descname"><span class="pre">MAE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/non_perceptual.html#MAE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.non_perceptual.MAE" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="simple">
 <dt>Mean Absolute Error between two images. Images must have the same</dt><dd><p>dimensions</p>
@@ -203,8 +136,8 @@ will return a scalar value)</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.metrics.IQMs.MAE.__call__">
-<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#MAE.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.MAE.__call__" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.metrics.non_perceptual.MAE.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/non_perceptual.html#MAE.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.non_perceptual.MAE.__call__" title="Permalink to this definition"></a></dt>
 <dd><p>When an instance is called</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -230,8 +163,8 @@ will return a scalar value)</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="IQM_Vis.metrics.IQMs.MSE">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.IQMs.</span></span><span class="sig-name descname"><span class="pre">MSE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#MSE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.MSE" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.metrics.non_perceptual.MSE">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.non_perceptual.</span></span><span class="sig-name descname"><span class="pre">MSE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/non_perceptual.html#MSE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.non_perceptual.MSE" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="simple">
 <dt>Mean Squared Error between two images. Images must have the same</dt><dd><p>dimensions</p>
@@ -244,8 +177,8 @@ will return a scalar value)</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.metrics.IQMs.MSE.__call__">
-<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#MSE.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.MSE.__call__" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.metrics.non_perceptual.MSE.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/non_perceptual.html#MSE.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.non_perceptual.MSE.__call__" title="Permalink to this definition"></a></dt>
 <dd><p>When an instance is called</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -271,83 +204,8 @@ will return a scalar value)</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="IQM_Vis.metrics.IQMs.MS_SSIM">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.IQMs.</span></span><span class="sig-name descname"><span class="pre">MS_SSIM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#MS_SSIM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.MS_SSIM" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="simple">
-<dt>Multi-Scale Structural Similarity Index Measure between two images.</dt><dd><p>Images must have the same dimensions. Score given is 1 - MS_SSIM to give the
-loss/dissimilarity.
-Note that images of small size, below 180 pixels will have their kernel size
-reduced for compatability with the 4 downsizing operations.</p>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>return_image</strong> (<em>bool</em>) – Whether to return the image (Defaults to False which
-will return a scalar value)</p>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.metrics.IQMs.MS_SSIM.__call__">
-<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.03</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mssim_kernel_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">11</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#MS_SSIM.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.MS_SSIM.__call__" title="Permalink to this definition"></a></dt>
-<dd><p>When an instance is called</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>im_ref</strong> (<em>np.array</em>) – Reference image</p></li>
-<li><p><strong>im_comp</strong> (<em>np.array</em>) – Comparison image</p></li>
-<li><p><strong>**kwargs</strong> – Arbitrary keyword arguments</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>1-SSIM (scalar if return_image is False, image if</dt><dd><p>return_image is True)</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>score (np.array)</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="IQM_Vis.metrics.IQMs.NLPD">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.IQMs.</span></span><span class="sig-name descname"><span class="pre">NLPD</span></span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#NLPD"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.NLPD" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Normalised Laplacian pyramid
-Proposed by Valero Laparra et al. <a class="reference external" href="https://www.uv.es/lapeva/papers/2016_HVEI.pdf">https://www.uv.es/lapeva/papers/2016_HVEI.pdf</a> .
-NLPD is an image quality metric based on the transformations associated with the
-early visual system: local luminance subtraction and local gain control.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.metrics.IQMs.NLPD.__call__">
-<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlpd_k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#NLPD.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.NLPD.__call__" title="Permalink to this definition"></a></dt>
-<dd><p>When an instance is called</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>im_ref</strong> (<em>np.array</em>) – Reference image</p></li>
-<li><p><strong>im_comp</strong> (<em>np.array</em>) – Comparison image</p></li>
-<li><p><strong>**kwargs</strong> – Arbitrary keyword arguments</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>NLPD score</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>score (np.array)</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="IQM_Vis.metrics.IQMs.RMSE">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.IQMs.</span></span><span class="sig-name descname"><span class="pre">RMSE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#RMSE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.RMSE" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.metrics.non_perceptual.RMSE">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.non_perceptual.</span></span><span class="sig-name descname"><span class="pre">RMSE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/non_perceptual.html#RMSE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.non_perceptual.RMSE" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="simple">
 <dt>Root Mean Squared Error between two images. Images must have the same</dt><dd><p>dimensions</p>
@@ -360,8 +218,8 @@ will return a scalar value)</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.metrics.IQMs.RMSE.__call__">
-<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#RMSE.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.RMSE.__call__" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.metrics.non_perceptual.RMSE.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/non_perceptual.html#RMSE.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.non_perceptual.RMSE.__call__" title="Permalink to this definition"></a></dt>
 <dd><p>When an instance is called</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -387,11 +245,128 @@ will return a scalar value)</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="IQM_Vis.metrics.IQMs.SSIM">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.IQMs.</span></span><span class="sig-name descname"><span class="pre">SSIM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#SSIM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.SSIM" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.metrics.non_perceptual.one_over_PSNR">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.non_perceptual.</span></span><span class="sig-name descname"><span class="pre">one_over_PSNR</span></span><a class="reference internal" href="_modules/IQM_Vis/metrics/non_perceptual.html#one_over_PSNR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.non_perceptual.one_over_PSNR" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Peak signal to noise ratio - <a class="reference external" href="https://en.wikipedia.org/wiki/Peak_signal-to-noise_ratio">https://en.wikipedia.org/wiki/Peak_signal-to-noise_ratio</a>
+The score given is normalised between 0, 1 by taking 1/PSNR</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>return_image</strong> (<em>bool</em>) – Whether to return the image (Defaults to False which
+will return a scalar value)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.non_perceptual.one_over_PSNR.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/non_perceptual.html#one_over_PSNR.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.non_perceptual.one_over_PSNR.__call__" title="Permalink to this definition"></a></dt>
+<dd><p>When an instance is called</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>im_ref</strong> (<em>np.array</em>) – Reference image</p></li>
+<li><p><strong>im_comp</strong> (<em>np.array</em>) – Comparison image</p></li>
+<li><p><strong>**kwargs</strong> – Arbitrary keyword arguments</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>PSNR between the images</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>score (np.array)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-IQM_Vis.metrics.perceptual_DL">
+<span id="iqm-vis-metrics-perceptual-dl-module"></span><h2>IQM_Vis.metrics.perceptual_DL module<a class="headerlink" href="#module-IQM_Vis.metrics.perceptual_DL" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.perceptual_DL.DISTS">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.perceptual_DL.</span></span><span class="sig-name descname"><span class="pre">DISTS</span></span><a class="reference internal" href="_modules/IQM_Vis/metrics/perceptual_DL.html#DISTS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.perceptual_DL.DISTS" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Deep Image Structure and Texture Similarity (DISTS) Metric. Uses the
+code from <a class="reference external" href="https://github.com/dingkeyan93/DISTS">https://github.com/dingkeyan93/DISTS</a>. Uses the PyTorch backend.
+It is robust to texture variance (e.g., evaluating the images generated
+by GANs) and mild geometric transformations (e.g., evaluating the image
+pairs that are not strictly point-by-point aligned).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.perceptual_DL.DISTS.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/perceptual_DL.html#DISTS.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.perceptual_DL.DISTS.__call__" title="Permalink to this definition"></a></dt>
+<dd><p>When an instance is called</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>im_ref</strong> (<em>np.array</em>) – Reference image</p></li>
+<li><p><strong>im_comp</strong> (<em>np.array</em>) – Comparison image</p></li>
+<li><p><strong>**kwargs</strong> – Arbitrary keyword arguments</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>DISTS score</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>score (np.array)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.perceptual_DL.LPIPS">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.perceptual_DL.</span></span><span class="sig-name descname"><span class="pre">LPIPS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'alex'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mean'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/perceptual_DL.html#LPIPS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.perceptual_DL.LPIPS" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="simple">
-<dt>Structural Similarity Index Measure between two images. Images must have</dt><dd><p>the same dimensions. Score given is 1 - SSIM to give the loss/dissimilarity</p>
+<dt>Learned Perceptual Image Patch Similarity between two images.</dt><dd><p>Images must have the same dimensions.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>network</strong> (<em>str</em>) – Pretrained network to use. Choose between ‘alex’, ‘vgg’
+or ‘squeeze’. (Defaults to ‘alex’)</p></li>
+<li><p><strong>reduction</strong> (<em>str</em>) – How to reduce over the batch dimension. Choose between
+‘sum’ or ‘mean’. (Defaults to ‘mean’)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.perceptual_DL.LPIPS.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/perceptual_DL.html#LPIPS.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.perceptual_DL.LPIPS.__call__" title="Permalink to this definition"></a></dt>
+<dd><p>When an instance is called</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>im_ref</strong> (<em>np.array</em>) – Reference image</p></li>
+<li><p><strong>im_comp</strong> (<em>np.array</em>) – Comparison image</p></li>
+<li><p><strong>**kwargs</strong> – Arbitrary keyword arguments</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>LPIPS score</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>score (np.array)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-IQM_Vis.metrics.perceptual_trad">
+<span id="iqm-vis-metrics-perceptual-trad-module"></span><h2>IQM_Vis.metrics.perceptual_trad module<a class="headerlink" href="#module-IQM_Vis.metrics.perceptual_trad" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.perceptual_trad.MS_SSIM">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.perceptual_trad.</span></span><span class="sig-name descname"><span class="pre">MS_SSIM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/perceptual_trad.html#MS_SSIM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.perceptual_trad.MS_SSIM" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="simple">
+<dt>Multi-Scale Structural Similarity Index Measure between two images.</dt><dd><p>Images must have the same dimensions. Score given is 1 - MS_SSIM to give the
+loss/dissimilarity.
+Note that images of small size, below 180 pixels will have their kernel size
+reduced for compatability with the 4 downsizing operations.</p>
 </dd>
 </dl>
 <dl class="field-list simple">
@@ -401,8 +376,8 @@ will return a scalar value)</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.metrics.IQMs.SSIM.__call__">
-<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.03</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ssim_kernel_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">11</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#SSIM.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.SSIM.__call__" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.metrics.perceptual_trad.MS_SSIM.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.03</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mssim_kernel_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">11</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/perceptual_trad.html#MS_SSIM.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.perceptual_trad.MS_SSIM.__call__" title="Permalink to this definition"></a></dt>
 <dd><p>When an instance is called</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -427,26 +402,17 @@ will return a scalar value)</p>
 
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="IQM_Vis.metrics.IQMs.make_kernel_odd">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.IQMs.</span></span><span class="sig-name descname"><span class="pre">make_kernel_odd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#make_kernel_odd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.make_kernel_odd" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
 <dl class="py class">
-<dt class="sig sig-object py" id="IQM_Vis.metrics.IQMs.one_over_PSNR">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.IQMs.</span></span><span class="sig-name descname"><span class="pre">one_over_PSNR</span></span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#one_over_PSNR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.one_over_PSNR" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.metrics.perceptual_trad.NLPD">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.perceptual_trad.</span></span><span class="sig-name descname"><span class="pre">NLPD</span></span><a class="reference internal" href="_modules/IQM_Vis/metrics/perceptual_trad.html#NLPD"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.perceptual_trad.NLPD" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Peak signal to noise ratio - <a class="reference external" href="https://en.wikipedia.org/wiki/Peak_signal-to-noise_ratio">https://en.wikipedia.org/wiki/Peak_signal-to-noise_ratio</a>
-The score given is normalised between 0, 1 by taking 1/PSNR</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>return_image</strong> (<em>bool</em>) – Whether to return the image (Defaults to False which
-will return a scalar value)</p>
-</dd>
-</dl>
+<p>Normalised Laplacian pyramid
+Proposed by Valero Laparra et al. <a class="reference external" href="https://www.uv.es/lapeva/papers/2016_HVEI.pdf">https://www.uv.es/lapeva/papers/2016_HVEI.pdf</a> .
+NLPD is an image quality metric based on the transformations associated with the
+early visual system: local luminance subtraction and local gain control.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.metrics.IQMs.one_over_PSNR.__call__">
-<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/IQMs.html#one_over_PSNR.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.IQMs.one_over_PSNR.__call__" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.metrics.perceptual_trad.NLPD.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlpd_k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/perceptual_trad.html#NLPD.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.perceptual_trad.NLPD.__call__" title="Permalink to this definition"></a></dt>
 <dd><p>When an instance is called</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -457,7 +423,48 @@ will return a scalar value)</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>PSNR between the images</p>
+<dd class="field-even"><p>NLPD score</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>score (np.array)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.perceptual_trad.SSIM">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.metrics.perceptual_trad.</span></span><span class="sig-name descname"><span class="pre">SSIM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/perceptual_trad.html#SSIM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.perceptual_trad.SSIM" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="simple">
+<dt>Structural Similarity Index Measure between two images. Images must have</dt><dd><p>the same dimensions. Score given is 1 - SSIM to give the loss/dissimilarity</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>return_image</strong> (<em>bool</em>) – Whether to return the image (Defaults to False which
+will return a scalar value)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.metrics.perceptual_trad.SSIM.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_comp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.03</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ssim_kernel_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">11</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/metrics/perceptual_trad.html#SSIM.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.metrics.perceptual_trad.SSIM.__call__" title="Permalink to this definition"></a></dt>
+<dd><p>When an instance is called</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>im_ref</strong> (<em>np.array</em>) – Reference image</p></li>
+<li><p><strong>im_comp</strong> (<em>np.array</em>) – Comparison image</p></li>
+<li><p><strong>**kwargs</strong> – Arbitrary keyword arguments</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>1-SSIM (scalar if return_image is False, image if</dt><dd><p>return_image is True)</p>
+</dd>
+</dl>
+</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>score (np.array)</p>

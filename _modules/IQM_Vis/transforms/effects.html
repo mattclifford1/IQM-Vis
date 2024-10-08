@@ -133,14 +133,14 @@
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="jpeg_compression"><a class="viewcode-back" href="../../../IQM_Vis.transforms.html#IQM_Vis.transforms.effects.jpeg_compression">[docs]</a><span class="k">def</span> <span class="nf">jpeg_compression</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="mi">90</span><span class="p">):</span>
+<div class="viewcode-block" id="jpeg_compression"><a class="viewcode-back" href="../../../IQM_Vis.transforms.html#IQM_Vis.transforms.effects.jpeg_compression">[docs]</a><span class="k">def</span> <span class="nf">jpeg_compression</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="mi">101</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;encode image using jpeg then decode</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.array): image to be compressed</span>
 <span class="sd">        compression (int): amount of jpeg compression, higher is better quality. </span>
 <span class="sd">                     101 returns identity image.</span>
-<span class="sd">                     (Defaults to 90)</span>
+<span class="sd">                     (Defaults to 101)</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        image (np.array): jpeg compressed image</span>
@@ -272,13 +272,14 @@
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">hsv</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_HSV2RGB</span><span class="p">)</span><span class="o">/</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="blur"><a class="viewcode-back" href="../../../IQM_Vis.transforms.html#IQM_Vis.transforms.effects.blur">[docs]</a><span class="k">def</span> <span class="nf">blur</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">7</span><span class="p">):</span>
+<div class="viewcode-block" id="blur"><a class="viewcode-back" href="../../../IQM_Vis.transforms.html#IQM_Vis.transforms.effects.blur">[docs]</a><span class="k">def</span> <span class="nf">blur</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Gaussian Blur on an image</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.array): image to be rotated</span>
 <span class="sd">        kernel_size (int): size of the convolutional kernel, will be converted</span>
-<span class="sd">                           to an odd number. (Defaults to 7)</span>
+<span class="sd">                           to an odd number. 1 is no blur.</span>
+<span class="sd">                           (Defaults to 1)</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        image (np.array): rotated image</span>

@@ -165,12 +165,12 @@
 
 <div class="viewcode-block" id="run"><a class="viewcode-back" href="../../../IQM_Vis.examples.html#IQM_Vis.examples.dists.run">[docs]</a><span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
     <span class="c1"># metrics functions must return a single value</span>
-    <span class="n">metric</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;DISTS&#39;</span><span class="p">:</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">IQMs</span><span class="o">.</span><span class="n">DISTS</span><span class="p">(),</span>
-              <span class="s1">&#39;LPIPS&#39;</span><span class="p">:</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">IQMs</span><span class="o">.</span><span class="n">LPIPS</span><span class="p">(),</span>
-              <span class="s1">&#39;1-SSIM&#39;</span><span class="p">:</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">IQMs</span><span class="o">.</span><span class="n">SSIM</span><span class="p">(),</span>
-              <span class="s1">&#39;MAE&#39;</span><span class="p">:</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">IQMs</span><span class="o">.</span><span class="n">MAE</span><span class="p">(),</span>
-            <span class="c1">#   &#39;1-MS_SSIM&#39;: IQM_Vis.IQMs.MS_SSIM(),</span>
-            <span class="c1">#   &#39;NLPD&#39;: IQM_Vis.IQMs.NLPD(),</span>
+    <span class="n">metric</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;DISTS&#39;</span><span class="p">:</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">DISTS</span><span class="p">(),</span>
+              <span class="s1">&#39;LPIPS&#39;</span><span class="p">:</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">LPIPS</span><span class="p">(),</span>
+              <span class="s1">&#39;1-SSIM&#39;</span><span class="p">:</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">SSIM</span><span class="p">(),</span>
+              <span class="s1">&#39;MAE&#39;</span><span class="p">:</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">MAE</span><span class="p">(),</span>
+            <span class="c1">#   &#39;1-MS_SSIM&#39;: IQM_Vis.metrics.MS_SSIM(),</span>
+            <span class="c1">#   &#39;NLPD&#39;: IQM_Vis.metrics.NLPD(),</span>
               <span class="p">}</span>
 
     <span class="c1"># metrics images return a numpy image - dont include any for this example</span>
