@@ -47,14 +47,14 @@ def binary_threshold(image, threshold=100):
     return np.clip(image.astype(np.float32) / 255.0, 0, 1)
 
 
-def jpeg_compression(image, compression=90):
+def jpeg_compression(image, compression=101):
     '''encode image using jpeg then decode
 
     Args:
         image (np.array): image to be compressed
         compression (int): amount of jpeg compression, higher is better quality. 
                      101 returns identity image.
-                     (Defaults to 90)
+                     (Defaults to 101)
 
     Returns:
         image (np.array): jpeg compressed image
@@ -186,13 +186,14 @@ def _adjust_HSV(image, value, channel):
     return np.clip(cv2.cvtColor(hsv, cv2.COLOR_HSV2RGB)/255, 0, 1)
 
 
-def blur(image, kernel_size=7):
+def blur(image, kernel_size=1):
     '''Gaussian Blur on an image
 
     Args:
         image (np.array): image to be rotated
         kernel_size (int): size of the convolutional kernel, will be converted
-                           to an odd number. (Defaults to 7)
+                           to an odd number. 1 is no blur.
+                           (Defaults to 1)
 
     Returns:
         image (np.array): rotated image

@@ -30,7 +30,7 @@ class _base_noise(ABC):
         # must return x_noisey, additive_noise
         pass
 
-    def __call__(self, img, param=None):
+    def __call__(self, img, param=0):
         '''
         will return a noisy image with noise level according to 'param'
         highest noise will be returned if noise level is too low acccording to acceptable_percent
@@ -47,7 +47,7 @@ class _base_noise(ABC):
         will return the highest noise level if noise level is too low acccording to acceptable_percent
         '''
         for _ in range(self.max_iter):
-            x_noisey, additive_noise = self._make_noisey_image(img, np=np)
+            x_noisey, additive_noise = self._make_noisey_image(img)
             # check noise level and actual noise level reduced after clipping
             expected_noise = np.sqrt(np.mean(np.square(additive_noise)))
             if self.reject_low_noise == False:
@@ -83,7 +83,7 @@ class noise_hypersphere(_base_noise):
 
     def _make_noisey_image(self, img):
         if self.param <= 0:
-            return img, 0
+            return img, 0.0
         if self.seed:
             np.random.seed(42)
         noise = np.random.randn(*img.shape)
@@ -111,7 +111,7 @@ class Gaussian_noise(_base_noise):
 
     def _make_noisey_image(self, img):
         if self.param <= 0:
-            return img, 0
+            return img, 0.0
         if self.seed:
             np.random.seed(42)
         additive_noise = np.random.normal(
@@ -154,3 +154,11 @@ def salt_and_pepper_noise(image, prob=0):
     image[probs < (prob / 2)] = black
     image[probs > 1 - (prob / 2)] = white
     return np.clip(image, 0, 1)
+
+
+if __name__ == '__main__':
+    import numpy as np
+    image = np.random.rand(256, 256, 3)
+    noise = Gaussian_noise()
+    noise(image, 0)
+    # noise(image, 0.1)
