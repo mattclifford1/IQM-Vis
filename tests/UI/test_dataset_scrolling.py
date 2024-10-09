@@ -1,16 +1,17 @@
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
+from PyQt6 import QtTest, QtCore
+
 import IQM_Vis
 import sys
 import os
 sys.path.append(os.path.abspath('..'))
+import IQM_Vis.examples.KODAK_dataset
 from tests.QtBot_utils import BotTester
 
 
 def get_UI():
-    image1 = IQM_Vis.examples.images.IMAGE1
-    image2 = IQM_Vis.examples.images.IMAGE2
-    images = [image1, image2]
+    images = IQM_Vis.examples.KODAK_dataset.KODAK_IMAGES
 
     MAE = IQM_Vis.metrics.MAE()
     MSE = IQM_Vis.metrics.MSE()
@@ -44,7 +45,7 @@ def get_UI():
     test_app = IQM_Vis.make_UI(transformations=transformations,
                                image_list=images,
                                metrics=metrics,
-                               metric_images=metric_images,
+                            #    metric_images=metric_images,
                                test=True)
     return test_app
 
@@ -52,6 +53,41 @@ def get_UI():
 build_IQM_Vis = BotTester(get_UI=get_UI, wait_time=1000,
                           final_wait=True).build_IQM_Vis
 
-def test_sliders(build_IQM_Vis):
+def test_dataset_scrolling(build_IQM_Vis):
     test_window, qtbotbis = build_IQM_Vis
     assert test_window.showing == True
+
+    QtTest.QTest.qWait(500)
+
+    # cycle the dataset backwards
+    for _ in range(2):
+        button = test_window.window.widget_controls['button']['prev_data']
+        qtbotbis.mouseClick(button, QtCore.Qt.MouseButton.LeftButton)
+        QtTest.QTest.qWait(500)
+    # check not crashed
+    assert test_window.showing == True
+
+    # click on an image to change the image
+    for i in range(1,5):
+        image = test_window.window.widget_controls['images'][i]
+        qtbotbis.mouseClick(image, QtCore.Qt.MouseButton.LeftButton)
+        QtTest.QTest.qWait(500)
+
+    # cycle the dataset forwards
+    for _ in range(3):
+        button = test_window.window.widget_controls['button']['prev_data']
+        qtbotbis.mouseClick(button, QtCore.Qt.MouseButton.LeftButton)
+        QtTest.QTest.qWait(500)
+    # check not crashed
+    assert test_window.showing == True
+
+    # click on an image to change the image
+    for i in range(1,5):
+        image = test_window.window.widget_controls['images'][i]
+        qtbotbis.mouseClick(image, QtCore.Qt.MouseButton.LeftButton)
+        QtTest.QTest.qWait(500)
+    # check not crashed
+    assert test_window.showing == True
+
+
+

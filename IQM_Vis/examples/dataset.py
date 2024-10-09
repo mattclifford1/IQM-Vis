@@ -21,9 +21,10 @@ def run():
 
     # make dataset list of images
     file_path = os.path.dirname(os.path.abspath(__file__))
-    dataset = [os.path.join(file_path, 'images', 'waves1.jpeg'),
-               os.path.join(file_path, 'images', 'waves2.jpeg'),
-               os.path.join(file_path, 'images', 'waves3.jpeg')]
+    dataset = [IQM_Vis.examples.images.IMAGE1,
+               IQM_Vis.examples.images.IMAGE2,
+               IQM_Vis.examples.images.IMAGE3]
+    
     data = IQM_Vis.dataset_holder(dataset,
                                   metric,
                                   metric_images,

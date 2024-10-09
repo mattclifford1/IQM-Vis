@@ -24,6 +24,7 @@ try:
 except ImportError:
     warnings.warn('Cannot load PyQt6 library - running IQM_Vis package in headless mode')
 
+
 class make_UI:
     def __init__(self, 
                  data_store=None,
