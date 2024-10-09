@@ -81,7 +81,7 @@ You can visit the source code on `GitHub <https://github.com/mattclifford1/IQM-V
    :maxdepth: 1
    :caption: Documentation:
 
-   IQM_Vis.transformations
+   IQM_Vis.transforms
    IQM_Vis.metrics
 
 

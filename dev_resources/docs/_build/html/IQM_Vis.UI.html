@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>IQM_Vis.UI package &mdash; IQM-Vis 0.2 documentation</title>
@@ -13,9 +13,8 @@
   <![endif]-->
   
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
@@ -28,11 +27,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> IQM-Vis
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            IQM-Vis
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -56,6 +59,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="IQM_Vis.transforms.html">IQM_Vis.transforms package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
 </ul>
 
@@ -72,7 +76,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">IQM_Vis.UI package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/IQM_Vis.UI.rst.txt" rel="nofollow"> View page source</a>
@@ -84,17 +88,17 @@
            <div itemprop="articleBody">
              
   <section id="iqm-vis-ui-package">
-<h1>IQM_Vis.UI package<a class="headerlink" href="#iqm-vis-ui-package" title="Permalink to this headline"></a></h1>
+<h1>IQM_Vis.UI package<a class="headerlink" href="#iqm-vis-ui-package" title="Permalink to this heading"></a></h1>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 </section>
 <section id="module-IQM_Vis.UI.custom_widgets">
-<span id="iqm-vis-ui-custom-widgets-module"></span><h2>IQM_Vis.UI.custom_widgets module<a class="headerlink" href="#module-IQM_Vis.UI.custom_widgets" title="Permalink to this headline"></a></h2>
+<span id="iqm-vis-ui-custom-widgets-module"></span><h2>IQM_Vis.UI.custom_widgets module<a class="headerlink" href="#module-IQM_Vis.UI.custom_widgets" title="Permalink to this heading"></a></h2>
 <p>Custom SubClasses of PyQt6 widget to extent to the required functionality</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="IQM_Vis.UI.custom_widgets.ClickLabel">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.custom_widgets.</span></span><span class="sig-name descname"><span class="pre">ClickLabel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'clickable</span> <span class="pre">label'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/custom_widgets.html#ClickLabel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.custom_widgets.ClickLabel" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt6.QtWidgets.QLabel</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QLabel</span></code></p>
 <p>add a click mousePressEvent event to label (so can click on images)</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="IQM_Vis.UI.custom_widgets.ClickLabel.clicked">
@@ -103,7 +107,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="IQM_Vis.UI.custom_widgets.ClickLabel.mousePressEvent">
-<span class="sig-name descname"><span class="pre">mousePressEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ev</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">QMouseEvent</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/custom_widgets.html#ClickLabel.mousePressEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.custom_widgets.ClickLabel.mousePressEvent" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">mousePressEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">QMouseEvent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/custom_widgets.html#ClickLabel.mousePressEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.custom_widgets.ClickLabel.mousePressEvent" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -111,17 +115,17 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="IQM_Vis.UI.custom_widgets.ProgressBar">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.custom_widgets.</span></span><span class="sig-name descname"><span class="pre">ProgressBar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/custom_widgets.html#ProgressBar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.custom_widgets.ProgressBar" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt6.QtWidgets.QProgressBar</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QProgressBar</span></code></p>
 </dd></dl>
 
 </section>
 <section id="module-IQM_Vis.UI.experiment_mode">
-<span id="iqm-vis-ui-experiment-mode-module"></span><h2>IQM_Vis.UI.experiment_mode module<a class="headerlink" href="#module-IQM_Vis.UI.experiment_mode" title="Permalink to this headline"></a></h2>
+<span id="iqm-vis-ui-experiment-mode-module"></span><h2>IQM_Vis.UI.experiment_mode module<a class="headerlink" href="#module-IQM_Vis.UI.experiment_mode" title="Permalink to this heading"></a></h2>
 <p>create experiment window</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.experiment_mode.</span></span><span class="sig-name descname"><span class="pre">make_experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checked_transformation_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_store</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_display_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rgb_brightness</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_brightness</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/home/matt/IQM-Vis-experiments'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_preprocessing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'None'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_postprocessing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'None'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checked_metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt6.QtWidgets.QMainWindow</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QMainWindow</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.calc_max_comparisons">
 <span class="sig-name descname"><span class="pre">calc_max_comparisons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_images</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.calc_max_comparisons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.calc_max_comparisons" title="Permalink to this definition"></a></dt>
@@ -144,7 +148,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.closeEvent">
-<span class="sig-name descname"><span class="pre">closeEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">QCloseEvent</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.closeEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.closeEvent" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">closeEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">QCloseEvent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.closeEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.closeEvent" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -247,7 +251,7 @@ elements lower than a given pivot point to the left and higher to the right</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.reset_image_widget_to_black">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.experiment_mode.</span></span><span class="sig-name descname"><span class="pre">reset_image_widget_to_black</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#reset_image_widget_to_black"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.reset_image_widget_to_black" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt6.QtCore.QObject</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QObject</span></code></p>
 <p>change clicked image to black and pause</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.reset_image_widget_to_black.change_to_solid">
@@ -273,7 +277,7 @@ elements lower than a given pivot point to the left and higher to the right</p>
 
 </section>
 <section id="module-IQM_Vis.UI.images">
-<span id="iqm-vis-ui-images-module"></span><h2>IQM_Vis.UI.images module<a class="headerlink" href="#module-IQM_Vis.UI.images" title="Permalink to this headline"></a></h2>
+<span id="iqm-vis-ui-images-module"></span><h2>IQM_Vis.UI.images module<a class="headerlink" href="#module-IQM_Vis.UI.images" title="Permalink to this heading"></a></h2>
 <p>UI image functions</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="IQM_Vis.UI.images.images">
@@ -453,12 +457,12 @@ elements lower than a given pivot point to the left and higher to the right</p>
 
 </section>
 <section id="module-IQM_Vis.UI.layout">
-<span id="iqm-vis-ui-layout-module"></span><h2>IQM_Vis.UI.layout module<a class="headerlink" href="#module-IQM_Vis.UI.layout" title="Permalink to this headline"></a></h2>
+<span id="iqm-vis-ui-layout-module"></span><h2>IQM_Vis.UI.layout module<a class="headerlink" href="#module-IQM_Vis.UI.layout" title="Permalink to this heading"></a></h2>
 <p>UI create layout</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="IQM_Vis.UI.layout.layout">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.layout.</span></span><span class="sig-name descname"><span class="pre">layout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/layout.html#layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.layout.layout" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt6.QtWidgets.QMainWindow</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QMainWindow</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="IQM_Vis.UI.layout.layout.init_layout">
 <span class="sig-name descname"><span class="pre">init_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/layout.html#layout.init_layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.layout.layout.init_layout" title="Permalink to this definition"></a></dt>
@@ -473,12 +477,12 @@ elements lower than a given pivot point to the left and higher to the right</p>
 
 </section>
 <section id="module-IQM_Vis.UI.main">
-<span id="iqm-vis-ui-main-module"></span><h2>IQM_Vis.UI.main module<a class="headerlink" href="#module-IQM_Vis.UI.main" title="Permalink to this headline"></a></h2>
+<span id="iqm-vis-ui-main-module"></span><h2>IQM_Vis.UI.main module<a class="headerlink" href="#module-IQM_Vis.UI.main" title="Permalink to this heading"></a></h2>
 <p>main entry point to initialise the UI</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="IQM_Vis.UI.main.make_app">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.main.</span></span><span class="sig-name descname"><span class="pre">make_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_stores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transformations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_info_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'graph'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_avg_graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_range_graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_display_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/home/matt/IQM-Vis-experiments'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">restrict_options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_steps_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">11</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_step_experiment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_images_scroll_show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/main.html#make_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.main.make_app" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#IQM_Vis.UI.widgets.widgets" title="IQM_Vis.UI.widgets.widgets"><code class="xref py py-class docutils literal notranslate"><span class="pre">IQM_Vis.UI.widgets.widgets</span></code></a>, <a class="reference internal" href="#IQM_Vis.UI.layout.layout" title="IQM_Vis.UI.layout.layout"><code class="xref py py-class docutils literal notranslate"><span class="pre">IQM_Vis.UI.layout.layout</span></code></a>, <a class="reference internal" href="#IQM_Vis.UI.images.images" title="IQM_Vis.UI.images.images"><code class="xref py py-class docutils literal notranslate"><span class="pre">IQM_Vis.UI.images.images</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#IQM_Vis.UI.widgets.widgets" title="IQM_Vis.UI.widgets.widgets"><code class="xref py py-class docutils literal notranslate"><span class="pre">widgets</span></code></a>, <a class="reference internal" href="#IQM_Vis.UI.layout.layout" title="IQM_Vis.UI.layout.layout"><code class="xref py py-class docutils literal notranslate"><span class="pre">layout</span></code></a>, <a class="reference internal" href="#IQM_Vis.UI.images.images" title="IQM_Vis.UI.images.images"><code class="xref py py-class docutils literal notranslate"><span class="pre">images</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="IQM_Vis.UI.main.make_app.change_save_folder">
 <span class="sig-name descname"><span class="pre">change_save_folder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/main.html#make_app.change_save_folder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.main.make_app.change_save_folder" title="Permalink to this definition"></a></dt>
@@ -492,7 +496,7 @@ elements lower than a given pivot point to the left and higher to the right</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="IQM_Vis.UI.main.make_app.closeEvent">
-<span class="sig-name descname"><span class="pre">closeEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">QCloseEvent</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/main.html#make_app.closeEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.main.make_app.closeEvent" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">closeEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">QCloseEvent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/main.html#make_app.closeEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.main.make_app.closeEvent" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -550,13 +554,13 @@ elements lower than a given pivot point to the left and higher to the right</p>
 
 </section>
 <section id="module-IQM_Vis.UI.threads">
-<span id="iqm-vis-ui-threads-module"></span><h2>IQM_Vis.UI.threads module<a class="headerlink" href="#module-IQM_Vis.UI.threads" title="Permalink to this headline"></a></h2>
+<span id="iqm-vis-ui-threads-module"></span><h2>IQM_Vis.UI.threads module<a class="headerlink" href="#module-IQM_Vis.UI.threads" title="Permalink to this heading"></a></h2>
 <p>thread and signal classes to makethe UI smoother
 useful info about PyQt6 threads: <a class="reference external" href="https://www.pythontutorial.net/pyqt/pyqt-qthread/">https://www.pythontutorial.net/pyqt/pyqt-qthread/</a></p>
 <dl class="py class">
 <dt class="sig sig-object py" id="IQM_Vis.UI.threads.get_range_results_worker">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.threads.</span></span><span class="sig-name descname"><span class="pre">get_range_results_worker</span></span><a class="reference internal" href="_modules/IQM_Vis/UI/threads.html#get_range_results_worker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.threads.get_range_results_worker" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt6.QtCore.QObject</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QObject</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="IQM_Vis.UI.threads.get_range_results_worker.completed">
 <span class="sig-name descname"><span class="pre">completed</span></span><a class="headerlink" href="#IQM_Vis.UI.threads.get_range_results_worker.completed" title="Permalink to this definition"></a></dt>
@@ -591,7 +595,7 @@ useful info about PyQt6 threads: <a class="reference external" href="https://www
 
 </section>
 <section id="module-IQM_Vis.UI.utils">
-<span id="iqm-vis-ui-utils-module"></span><h2>IQM_Vis.UI.utils module<a class="headerlink" href="#module-IQM_Vis.UI.utils" title="Permalink to this headline"></a></h2>
+<span id="iqm-vis-ui-utils-module"></span><h2>IQM_Vis.UI.utils module<a class="headerlink" href="#module-IQM_Vis.UI.utils" title="Permalink to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="IQM_Vis.UI.utils.add_layout_to_tab">
 <span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.utils.</span></span><span class="sig-name descname"><span class="pre">add_layout_to_tab</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/utils.html#add_layout_to_tab"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.utils.add_layout_to_tab" title="Permalink to this definition"></a></dt>
@@ -599,15 +603,15 @@ useful info about PyQt6 threads: <a class="reference external" href="https://www
 
 </section>
 <section id="module-IQM_Vis.UI.widgets">
-<span id="iqm-vis-ui-widgets-module"></span><h2>IQM_Vis.UI.widgets module<a class="headerlink" href="#module-IQM_Vis.UI.widgets" title="Permalink to this headline"></a></h2>
+<span id="iqm-vis-ui-widgets-module"></span><h2>IQM_Vis.UI.widgets module<a class="headerlink" href="#module-IQM_Vis.UI.widgets" title="Permalink to this heading"></a></h2>
 <p>UI create widgets</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="IQM_Vis.UI.widgets.custom_float_validator">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.widgets.</span></span><span class="sig-name descname"><span class="pre">custom_float_validator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#custom_float_validator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.custom_float_validator" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt6.QtGui.QValidator</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QValidator</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="IQM_Vis.UI.widgets.custom_float_validator.validate">
-<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#custom_float_validator.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.custom_float_validator.validate" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">QValidator.State</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#custom_float_validator.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.custom_float_validator.validate" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -784,7 +788,7 @@ useful info about PyQt6 threads: <a class="reference external" href="https://www
 
 </section>
 <section id="module-IQM_Vis.UI">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-IQM_Vis.UI" title="Permalink to this headline"></a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-IQM_Vis.UI" title="Permalink to this heading"></a></h2>
 </section>
 </section>
 

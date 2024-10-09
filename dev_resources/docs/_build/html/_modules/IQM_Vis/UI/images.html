@@ -12,9 +12,8 @@
   <![endif]-->
   
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="../../../about.html" />
@@ -27,11 +26,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> IQM-Vis
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            IQM-Vis
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -55,6 +58,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.transforms.html">IQM_Vis.transforms package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
 </ul>
 
@@ -71,7 +75,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
       <li class="breadcrumb-item active">IQM_Vis.UI.images</li>
       <li class="wy-breadcrumbs-aside">
@@ -100,17 +104,17 @@
 <span class="kn">from</span> <span class="nn">IQM_Vis.utils</span> <span class="kn">import</span> <span class="n">gui_utils</span><span class="p">,</span> <span class="n">plot_utils</span><span class="p">,</span> <span class="n">image_utils</span>
 
 <span class="c1"># sub class used by IQM_Vis.main.make_app to control all of the image widgets</span>
-<div class="viewcode-block" id="images"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images">[docs]</a><span class="k">class</span> <span class="nc">images</span><span class="p">:</span>
+<div class="viewcode-block" id="images"><a class="viewcode-back" href="../../../_autosummary/IQM_Vis.UI.images.html#IQM_Vis.UI.images.images">[docs]</a><span class="k">class</span> <span class="nc">images</span><span class="p">:</span>
     <span class="n">request_range_work</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
     <span class="n">view_correlation_instance</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="images.__init__"><a class="viewcode-back" href="../../../_autosummary/IQM_Vis.UI.images.html#IQM_Vis.UI.images.images.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_images</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">init_worker_thread</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">view_correlation_instance</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">change_to_specific_trans</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_correlation_instance</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">change_to_specific_trans</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="images.init_worker_thread"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.init_worker_thread">[docs]</a>    <span class="k">def</span> <span class="nf">init_worker_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39; set up thread for smoother range plot calculation &#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39; set up thread for smoother range plot calculation &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span> <span class="o">=</span> <span class="n">IQM_Vis</span><span class="o">.</span><span class="n">UI</span><span class="o">.</span><span class="n">threads</span><span class="o">.</span><span class="n">get_range_results_worker</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">range_worker_thread</span> <span class="o">=</span> <span class="n">QThread</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">range_worker</span><span class="o">.</span><span class="n">progress</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_progress</span><span class="p">)</span>
@@ -124,7 +128,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">range_worker_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">worker_working</span> <span class="o">=</span> <span class="kc">False</span></div>
 
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    image updaters</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="c1"># def transform_image(self, image):</span>
@@ -150,7 +154,7 @@
 
                 <span class="n">QApplication</span><span class="o">.</span><span class="n">processEvents</span><span class="p">()</span>   <span class="c1"># make figures become the correct size</span></div>
 
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    metric graph updaters</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 <div class="viewcode-block" id="images.redo_plots"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.redo_plots">[docs]</a>    <span class="k">def</span> <span class="nf">redo_plots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">calc_range</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -158,7 +162,7 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics_avg_graph</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric_range_graph</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">get_metrics_over_all_trans_with_init_values</span><span class="p">()</span></div>
 
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    change image in dataset</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 <div class="viewcode-block" id="images.change_preview_images"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.change_preview_images">[docs]</a>    <span class="k">def</span> <span class="nf">change_preview_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ival</span><span class="p">):</span>
@@ -251,7 +255,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">human_experiment_scores</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_store</span><span class="o">.</span><span class="n">human_scores</span></div>
 
 <div class="viewcode-block" id="images.load_new_single_image"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.load_new_single_image">[docs]</a>    <span class="k">def</span> <span class="nf">load_new_single_image</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39; change the image we are using &#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39; change the image we are using &#39;&#39;&#39;</span>
         <span class="c1"># get the file opener for the user</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">start_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span>
@@ -275,7 +279,7 @@
 
 
 <div class="viewcode-block" id="images.load_new_images_folder"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.load_new_images_folder">[docs]</a>    <span class="k">def</span> <span class="nf">load_new_images_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39; change the image dataset we are using &#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39; change the image dataset we are using &#39;&#39;&#39;</span>
         <span class="c1"># get the file opener for the user</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">start_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span>
@@ -316,7 +320,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">update_status_bar</span><span class="p">(</span><span class="s1">&#39;Failed to update images&#39;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="images.load_human_experiment"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.load_human_experiment">[docs]</a>    <span class="k">def</span> <span class="nf">load_human_experiment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39; change the image dataset we are using &#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39; change the image dataset we are using &#39;&#39;&#39;</span>
         <span class="c1"># get the file opener for the user</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span><span class="p">):</span>
             <span class="n">start_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span>
@@ -416,7 +420,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">display_metric_correlation_plot</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tabs</span><span class="p">[</span><span class="s1">&#39;graph&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    metric updaters</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 <div class="viewcode-block" id="images.display_metrics"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.display_metrics">[docs]</a>    <span class="k">def</span> <span class="nf">display_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
@@ -440,7 +444,7 @@
             <span class="n">text</span> <span class="o">+=</span> <span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="n">metric</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">][</span><span class="s1">&#39;info&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
 
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    get metric values when adjusting a single transformation value over its range</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 <div class="viewcode-block" id="images.get_metrics_over_all_trans_with_init_values"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.get_metrics_over_all_trans_with_init_values">[docs]</a>    <span class="k">def</span> <span class="nf">get_metrics_over_all_trans_with_init_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -457,7 +461,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">request_range_work</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="images.completed_range_results"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.completed_range_results">[docs]</a>    <span class="k">def</span> <span class="nf">completed_range_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">results</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39; data results sent from signal from thread worker &#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39; data results sent from signal from thread worker &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_status_bar</span><span class="p">(</span><span class="s1">&#39;Completed Range Results&#39;</span><span class="p">,</span> <span class="mi">3000</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stopped_range_worker</span><span class="p">()</span>
         <span class="c1"># first check if we have empty results (means we cannot plot) - have changed to accept empty</span>
@@ -479,7 +483,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">display_metric_range_plot</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">display_metric_correlation_plot</span><span class="p">()</span></div>
 
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    metric range plot (line plots of range of all sliders)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 <div class="viewcode-block" id="images.display_metric_range_plot"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.display_metric_range_plot">[docs]</a>    <span class="k">def</span> <span class="nf">display_metric_range_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -527,7 +531,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">metric_range_graph_num</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">display_metric_range_plot</span><span class="p">()</span></div>
 
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    metric averaging plots (radar plot)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 <div class="viewcode-block" id="images.display_radar_plots"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.display_radar_plots">[docs]</a>    <span class="k">def</span> <span class="nf">display_radar_plots</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -603,7 +607,7 @@
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
         <span class="n">gui_utils</span><span class="o">.</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;savefig.directory&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">save_path</span></div>
 
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    metric correlation plots</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 <div class="viewcode-block" id="images.display_metric_correlation_plot"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.display_metric_correlation_plot">[docs]</a>    <span class="k">def</span> <span class="nf">display_metric_correlation_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -682,7 +686,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">redo_plots</span><span class="p">(</span><span class="n">calc_range</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
 
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    metric image updaters</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 <div class="viewcode-block" id="images.display_metric_images"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.display_metric_images">[docs]</a>    <span class="k">def</span> <span class="nf">display_metric_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_images</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
@@ -690,7 +694,7 @@
             <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_row</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;metric_images&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]</span>
             <span class="n">gui_utils</span><span class="o">.</span><span class="n">change_im</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">metric_images</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">resize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_display_size</span><span class="p">)</span></div>
 
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    thread manegment</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 <div class="viewcode-block" id="images.stopped_range_worker"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.images.images.stopped_range_worker">[docs]</a>    <span class="k">def</span> <span class="nf">stopped_range_worker</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
