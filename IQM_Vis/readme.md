@@ -54,7 +54,7 @@ IQM_Vis.make_UI(data,
 ```
 
 <!-- # UI Example
-![Alt text](https://github.com/mattclifford1/IQM-Vis/blob/main/pics/UI-all.png?raw=true "Dataset UI") -->
+![Alt text](https://github.com/mattclifford1/IQM-Vis/blob/main/dev_resources/pics/UI-all.png?raw=true "Dataset UI") -->
 <!--
 ## UI Examples (section needs pictures updating)
 Simple UI with single image and image metric
@@ -62,7 +62,7 @@ Simple UI with single image and image metric
 import IQM_Vis
 IQM_Vis.examples.simple.run()
 ```
-![Alt text](https://github.com/mattclifford1/IQM-Vis/blob/main/pics/ui-simple.png?raw=true "Simple UI")
+![Alt text](https://github.com/mattclifford1/IQM-Vis/blob/main/dev_resources/pics/ui-simple.png?raw=true "Simple UI")
 
 ### Extensions
 Link to a dataset so you can scroll through and assess many images
@@ -70,14 +70,14 @@ Link to a dataset so you can scroll through and assess many images
 import IQM_Vis
 IQM_Vis.examples.dataset.run()
 ```
-![Alt text](https://github.com/mattclifford1/IQM-Vis/blob/main/pics/ui-dataset.png?raw=true "Dataset UI")
+![Alt text](https://github.com/mattclifford1/IQM-Vis/blob/main/dev_resources/pics/ui-dataset.png?raw=true "Dataset UI")
 
 Extend with multiple image rows to compare multiple images at once.
 ```
 import IQM_Vis
 IQM_Vis.examples.multiple.run()
 ```
-![Alt text](https://github.com/mattclifford1/IQM-Vis/blob/main/pics/ui-multi.png?raw=true "Multi UI")
+![Alt text](https://github.com/mattclifford1/IQM-Vis/blob/main/dev_resources/pics/ui-multi.png?raw=true "Multi UI")
 -->
 
 # Quick testing with our web version

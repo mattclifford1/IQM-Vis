@@ -15,12 +15,12 @@ Image Quality Metric Visualision. An extendable user interface for the assessmen
 Head over to the [DOCUMENTATION](https://mattclifford1.github.io/IQM-Vis/) for tutorials and package reference. Read our [PAPER](https://github.com/mattclifford1/IQM-Vis/blob/main/docs/resources/Software_paper.pdf) for in depth details of the software.
 
 ### IQM's average sensitivity to tranforms
-![Alt text](https://github.com/mattclifford1/IQM-Vis/blob/main/pics/data_graphs.gif?raw=true "Dataset UI") 
+![Alt text](https://github.com/mattclifford1/IQM-Vis/blob/main/dev_resources/pics/data_graphs.gif?raw=true "Dataset UI") 
 
 ### IQM's sensitivity to tranforms specific parameters
-![Alt text](https://github.com/mattclifford1/IQM-Vis/blob/main/pics/params.gif?raw=true "Dataset UI") 
+![Alt text](https://github.com/mattclifford1/IQM-Vis/blob/main/dev_resources/pics/params.gif?raw=true "Dataset UI") 
 
 ### IQM's correlation to human scores
-![Alt text](https://github.com/mattclifford1/IQM-Vis/blob/main/pics/correlation.gif?raw=true "Dataset UI") 
+![Alt text](https://github.com/mattclifford1/IQM-Vis/blob/main/dev_resources/pics/correlation.gif?raw=true "Dataset UI") 
 
 

@@ -12,9 +12,8 @@
   <![endif]-->
   
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="../../../about.html" />
@@ -27,11 +26,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> IQM-Vis
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            IQM-Vis
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -71,7 +74,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
       <li class="breadcrumb-item active">IQM_Vis.utils.plot_utils</li>
       <li class="wy-breadcrumbs-aside">
@@ -262,7 +265,7 @@
     <span class="k">return</span> <span class="n">values</span></div>
 
 <div class="viewcode-block" id="get_all_single_transform_params"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.get_all_single_transform_params">[docs]</a><span class="k">def</span> <span class="nf">get_all_single_transform_params</span><span class="p">(</span><span class="n">transforms</span><span class="p">,</span> <span class="n">num_steps</span><span class="o">=</span><span class="mi">11</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39; get a list of all the individual transforms with a single parameter value</span>
+    <span class="sd">&#39;&#39;&#39; get a list of all the individual transforms with a single parameter value</span>
 <span class="sd">        useful when doing experiments to make a dataset &#39;&#39;&#39;</span>
     <span class="n">list_of_single_trans</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">trans_name</span><span class="p">,</span> <span class="n">trans_data</span> <span class="ow">in</span> <span class="n">transforms</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>  <span class="c1"># loop over all transformations</span>
@@ -294,7 +297,7 @@
     <span class="k">return</span> <span class="n">scores</span></div>
 
 <div class="viewcode-block" id="compute_metrics_over_range_single_trans"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.compute_metrics_over_range_single_trans">[docs]</a><span class="k">def</span> <span class="nf">compute_metrics_over_range_single_trans</span><span class="p">(</span><span class="n">data_store</span><span class="p">,</span> <span class="n">transforms</span><span class="p">,</span> <span class="n">metric_params</span><span class="p">,</span> <span class="n">metrics_to_use</span><span class="p">,</span> <span class="n">pbar_signal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stop_flag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">num_steps</span><span class="o">=</span><span class="mi">11</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39; compute metrics over a range of trans</span>
+    <span class="sd">&#39;&#39;&#39; compute metrics over a range of trans</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        data_store: object containing metrics and image</span>
@@ -352,7 +355,7 @@
     <span class="k">return</span> <span class="n">results</span></div>
 
 <div class="viewcode-block" id="compute_metrics_over_range"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.compute_metrics_over_range">[docs]</a><span class="k">def</span> <span class="nf">compute_metrics_over_range</span><span class="p">(</span><span class="n">data_store</span><span class="p">,</span> <span class="n">transforms</span><span class="p">,</span> <span class="n">transform_values</span><span class="p">,</span> <span class="n">metric_params</span><span class="p">,</span> <span class="n">metrics_to_use</span><span class="p">,</span> <span class="n">pbar_signal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stop_flag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">num_steps</span><span class="o">=</span><span class="mi">11</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    compute metrics over a range of trans (when using non initial values for other transforms)</span>
 <span class="sd">    currently this method is not being used and instead using the simpler compute_metrics_over_range_single_trans</span>
 
@@ -412,7 +415,7 @@
     <span class="k">return</span> <span class="n">results</span></div>
 
 <div class="viewcode-block" id="get_radar_plots_avg_plots"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.get_radar_plots_avg_plots">[docs]</a><span class="k">def</span> <span class="nf">get_radar_plots_avg_plots</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">metrics_names</span><span class="p">,</span> <span class="n">transformation_names</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">lim</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    plot results on a polar axes -&gt; radar/spider plot</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">radar_plt</span> <span class="o">=</span> <span class="n">radar_plotter</span><span class="p">(</span><span class="n">radar_names</span><span class="o">=</span><span class="n">metrics_names</span><span class="p">,</span>
@@ -434,7 +437,7 @@
     <span class="k">return</span> <span class="n">radar_plt</span></div>
 
 <div class="viewcode-block" id="get_transform_range_plots"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.get_transform_range_plots">[docs]</a><span class="k">def</span> <span class="nf">get_transform_range_plots</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">lim</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    plot a single transform range graph of all metrics</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">plot</span> <span class="o">=</span> <span class="n">line_plotter</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="s1">&#39;Values&#39;</span><span class="p">,</span> <span class="n">lim</span><span class="o">=</span><span class="n">lim</span><span class="p">)</span>
@@ -443,7 +446,7 @@
     <span class="k">return</span> <span class="n">plot</span></div>
 
 <div class="viewcode-block" id="get_correlation_plot"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.get_correlation_plot">[docs]</a><span class="k">def</span> <span class="nf">get_correlation_plot</span><span class="p">(</span><span class="n">human_scores</span><span class="p">,</span> <span class="n">metric_scores</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="n">change_trans_value_signal</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    scatter plot for correlations</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">sp</span> <span class="o">=</span> <span class="n">scatter_plotter</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span>
@@ -484,7 +487,7 @@
     <span class="k">return</span> <span class="n">sp</span></div>
 
 <div class="viewcode-block" id="click_scatter"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.click_scatter">[docs]</a><span class="k">def</span> <span class="nf">click_scatter</span><span class="p">(</span><span class="n">_plot</span><span class="p">,</span> <span class="n">change_trans_value_signal</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39; send signal of which data point was clicked &#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39; send signal of which data point was clicked &#39;&#39;&#39;</span>
     <span class="n">change_trans_value_signal</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">_plot</span><span class="o">.</span><span class="n">annotations</span><span class="p">[</span><span class="n">event</span><span class="o">.</span><span class="n">ind</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span></div>
 
 <div class="viewcode-block" id="hover_scatter"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.plot_utils.hover_scatter">[docs]</a><span class="k">def</span> <span class="nf">hover_scatter</span><span class="p">(</span><span class="n">_plot</span><span class="p">,</span> <span class="n">annot</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
