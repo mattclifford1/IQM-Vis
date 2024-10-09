@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>IQM-Vis documentation &mdash; IQM-Vis 0.2 documentation</title>
@@ -13,9 +13,8 @@
   <![endif]-->
   
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
@@ -29,11 +28,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="#" class="icon icon-home"> IQM-Vis
+
+          
+          
+          <a href="#" class="icon icon-home">
+            IQM-Vis
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -57,6 +60,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="IQM_Vis.transforms.html">IQM_Vis.transforms package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
 </ul>
 
@@ -73,7 +77,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home"></a></li>
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">IQM-Vis documentation</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
@@ -85,29 +89,29 @@
            <div itemprop="articleBody">
              
   <section id="iqm-vis-documentation">
-<h1>IQM-Vis documentation<a class="headerlink" href="#iqm-vis-documentation" title="Permalink to this headline"></a></h1>
+<h1>IQM-Vis documentation<a class="headerlink" href="#iqm-vis-documentation" title="Permalink to this heading"></a></h1>
 <p>IQM-Vis is an image quality metric visualisation toolbox to facilitate visualising and evaluating image quality metrics (IQMs).
 View our demonstration <a class="reference external" href="https://youtu.be/C6x_E0JvKqI">video</a> which illustrates the features and how to use IQM-Vis.</p>
 <p>Read our <a class="reference external" href="https://github.com/mattclifford1/IQM-Vis/blob/main/dev_resources/docs/resources/Software_paper.pdf">PAPER</a> for in depth details of the software.</p>
 <section id="quantitive-analysis">
-<h2>Quantitive Analysis<a class="headerlink" href="#quantitive-analysis" title="Permalink to this headline"></a></h2>
+<h2>Quantitive Analysis<a class="headerlink" href="#quantitive-analysis" title="Permalink to this heading"></a></h2>
 <p>IQM-Vis is able to provide a comprehensive analysis of IQMs through various quantitative graphs. These graphs offer practitioners a well-rounded understanding of how different IQMs perform under different scenarios without having to write any code to set up the testing procedure.</p>
 <img alt="Graphs" class="align-center" src="_images/data_graphs.gif" />
 </section>
 <section id="qualitative-analysis">
-<h2>Qualitative Analysis<a class="headerlink" href="#qualitative-analysis" title="Permalink to this headline"></a></h2>
+<h2>Qualitative Analysis<a class="headerlink" href="#qualitative-analysis" title="Permalink to this heading"></a></h2>
 <p>Users are able to investigate the effects of distortions visually in two ways. Firstly by visually inspecting the transformed/distored image to make sure the distortion and parameters behave as expected.
 Secondly by analysing the spacial effects of IQMs, e.g. the image of an SSIM reponse.</p>
 <img alt="Visual" class="align-center" src="_images/params.gif" />
 </section>
 <section id="correlation-to-human-perception">
-<h2>Correlation to Human Perception<a class="headerlink" href="#correlation-to-human-perception" title="Permalink to this headline"></a></h2>
+<h2>Correlation to Human Perception<a class="headerlink" href="#correlation-to-human-perception" title="Permalink to this heading"></a></h2>
 <p>IQM-Vis facilitates the conduction, data management and analysis of the human perception experiments. See the “Running an Experiment” tutorial for further details on experiments.</p>
 <p>Any image distortions which do not conform to the correlation can be selected for further analysis of the image properties.</p>
 <img alt="Visual" class="align-center" src="_images/correlation.gif" />
 </section>
 <section id="source-code">
-<h2>Source Code<a class="headerlink" href="#source-code" title="Permalink to this headline"></a></h2>
+<h2>Source Code<a class="headerlink" href="#source-code" title="Permalink to this heading"></a></h2>
 <p>You can visit the source code on <a class="reference external" href="https://github.com/mattclifford1/IQM-Vis">GitHub</a> .</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">What is an IQM?:</span></p>
@@ -143,12 +147,13 @@ Secondly by analysing the spacial effects of IQMs, e.g. the image of an SSIM rep
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="IQM_Vis.transforms.html">IQM_Vis.transforms package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
 </ul>
 </div>
 </section>
 <section id="indices-and-tables">
-<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline"></a></h2>
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 </ul>

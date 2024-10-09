@@ -12,9 +12,8 @@
   <![endif]-->
   
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="../../../about.html" />
@@ -27,11 +26,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> IQM-Vis
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            IQM-Vis
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -55,6 +58,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.transforms.html">IQM_Vis.transforms package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../IQM_Vis.metrics.html">IQM_Vis.metrics package</a></li>
 </ul>
 
@@ -71,7 +75,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
           <li class="breadcrumb-item"><a href="../transforms.html">IQM_Vis.transforms</a></li>
       <li class="breadcrumb-item active">IQM_Vis.transforms.affine</li>
@@ -94,7 +98,7 @@
 
 
 <div class="viewcode-block" id="rotation"><a class="viewcode-back" href="../../../IQM_Vis.transforms.html#IQM_Vis.transforms.affine.rotation">[docs]</a><span class="k">def</span> <span class="nf">rotation</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Rotate an image around its centre. Uses skimage.transform.rotate. Areas</span>
+    <span class="sd">&#39;&#39;&#39;Rotate an image around its centre. Uses skimage.transform.rotate. Areas</span>
 <span class="sd">    that are rotated beyond the image are filled in with black pixel values</span>
 
 <span class="sd">    Args:</span>
@@ -110,7 +114,7 @@
 
 
 <div class="viewcode-block" id="x_shift"><a class="viewcode-back" href="../../../IQM_Vis.transforms.html#IQM_Vis.transforms.affine.x_shift">[docs]</a><span class="k">def</span> <span class="nf">x_shift</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">x_shift</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Translate image horizontally</span>
+    <span class="sd">&#39;&#39;&#39;Translate image horizontally</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.array): image to be shifted</span>
@@ -126,7 +130,7 @@
 
 
 <div class="viewcode-block" id="y_shift"><a class="viewcode-back" href="../../../IQM_Vis.transforms.html#IQM_Vis.transforms.affine.y_shift">[docs]</a><span class="k">def</span> <span class="nf">y_shift</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">y_shift</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Translate image vertically</span>
+    <span class="sd">&#39;&#39;&#39;Translate image vertically</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.array): image to be shifted</span>
@@ -142,7 +146,7 @@
 
 
 <span class="k">def</span> <span class="nf">_translate_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">x_shift</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y_shift</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Translate image vertically</span>
+    <span class="sd">&#39;&#39;&#39;Translate image vertically</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.array): image to be shifted</span>
@@ -179,7 +183,7 @@
 
 
 <div class="viewcode-block" id="zoom_image"><a class="viewcode-back" href="../../../IQM_Vis.transforms.html#IQM_Vis.transforms.affine.zoom_image">[docs]</a><span class="k">def</span> <span class="nf">zoom_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">scale_factor</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;digital zoom of image</span>
+    <span class="sd">&#39;&#39;&#39;digital zoom of image</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.array): image to be zoomed</span>
