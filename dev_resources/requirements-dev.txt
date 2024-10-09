@@ -30,3 +30,5 @@ pydata-sphinx-theme
 sphinx-book-theme
 cloud-sptheme
 Jinja2==3.0
+genbadge
+packaging

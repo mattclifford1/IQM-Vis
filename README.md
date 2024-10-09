@@ -6,7 +6,7 @@
 | Installation | [![Generic badge](https://img.shields.io/badge/INSTALL-View-green.svg)](https://mattclifford1.github.io/IQM-Vis/getting_started.html) | 
 | Tutorials | [![Generic badge](https://img.shields.io/badge/TUTORIALS-View-blue.svg)](https://mattclifford1.github.io/IQM-Vis/Tutorials.html) | 
 | Demos | [![Generic badge](https://img.shields.io/badge/HuggingFaceSpace-Launch-red.svg)](https://huggingface.co/spaces/mattclifford1/IQM-VIS) |
-
+| Tests | [![Generic badge](./tests/reports/tests_badge.svg)](./tests) [![Generic badge](./tests/reports/coverage_badge.svg)](./tests) |
 
 
 # IQM-Vis

@@ -1,0 +1,3 @@
+[run]
+omit =
+    IQM_Vis/examples/*

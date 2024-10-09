@@ -20,7 +20,6 @@ def get_UI():
     image1 = IQM_Vis.examples.images.IMAGE1
     image2 = IQM_Vis.examples.images.IMAGE2
     images = [image1, image2]
-    print(f'Images files: {images}')
 
     MAE = IQM_Vis.metrics.MAE()
     MSE = IQM_Vis.metrics.MSE()

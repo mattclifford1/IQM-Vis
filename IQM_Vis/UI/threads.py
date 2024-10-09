@@ -17,7 +17,7 @@ class get_range_results_worker(QObject):
 
     @pyqtSlot(dict)
     def do_work(self, data):
-        t0 = time.time()
+        # t0 = time.time()
 
         metric_over_range_results = []
         max_val = 0
