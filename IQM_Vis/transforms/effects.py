@@ -69,8 +69,8 @@ def jpeg_compression(image, compression=101):
 def _encode_compression(image, encoder, encode_param, uint=True):
     '''
         generic image encoder for jpeg, png etc
-        using https://docs.opencv.org/3.4/d4/da8/group__imgcodecs.html to encode/decode
-        for encode types: https://docs.opencv.org/3.4/d6/d87/imgcodecs_8hpp.html
+        using https://dev_resources/docs.opencv.org/3.4/d4/da8/group__imgcodecs.html to encode/decode
+        for encode types: https://dev_resources/docs.opencv.org/3.4/d6/d87/imgcodecs_8hpp.html
     '''
     original_size = image.shape
     if uint == True:

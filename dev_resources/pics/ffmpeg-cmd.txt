@@ -1,3 +1,3 @@
-# convert webm screenshot to gif for docs
+# convert webm screenshot to gif for dev_resources/docs
 
 ffmpeg -i qual.webm -vf "fps=5,scale=1080:-1:flags=lanczos,palettegen" -y 'qual-palette.png' && ffmpeg -i qual.webm -i qual-palette.png -lavfi "fps=5,scale=1080:-1:flags=lanczos [x]; [x][1:v] paletteuse" -y qual-red.gif

@@ -21,8 +21,8 @@ jobs:
     - uses: actions/checkout@v3
     - name: Get Version numbers
       run: |
-        echo "code_version=$(./scripts/get_local_version.py)" >> $GITHUB_ENV
-        echo "pypi_version=$(./scripts/get_latest_pypi_version.py)" >> $GITHUB_ENV
+        echo "code_version=$(./dev_resources/scripts/get_local_version.py)" >> $GITHUB_ENV
+        echo "pypi_version=$(./dev_resources/scripts/get_latest_pypi_version.py)" >> $GITHUB_ENV
 
     - name: Set up Python
       if: env.code_version != env.pypi_version

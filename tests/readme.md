@@ -5,7 +5,7 @@ Tests cannot be run as part of a CI pipeline as a display is required to launch 
 
 To run all tests and make badges automatically use the bash script
 ```
-./scripts/pytest_and_badges.sh 
+./dev_resources/scripts/pytest_and_badges.sh 
 ```
 Other wise refer below for running the individual steps
 

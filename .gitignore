@@ -81,7 +81,7 @@ instance/
 .scrapy
 
 # Sphinx documentation
-# docs/_build/
+# dev_resources/docs/_build/
 
 # PyBuilder
 target/
@@ -129,7 +129,7 @@ venv.bak/
 # Rope project settings
 .ropeproject
 
-# mkdocs documentation
+# mkdev_resources/docs documentation
 /site
 
 # mypy

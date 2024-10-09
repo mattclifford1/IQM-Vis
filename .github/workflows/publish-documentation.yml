@@ -1,6 +1,6 @@
 # Deploy documentation when a new VERSION is release to the main branch
-# N.B. currently doesn't build the docs: need to do that locally with
-# ./scrips/make_docs.sh
+# N.B. currently doesn't build the dev_resources/docs: need to do that locally with
+# ./scrips/make_dev_resources/docs.sh
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
 
@@ -16,14 +16,14 @@ permissions:
     contents: write
 
 jobs:
-  docs:
+  dev_resources/docs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Get Version numbers
         run: |
           echo "code_version=$(cat VERSION)" >> $GITHUB_ENV
-          echo "pypi_version=$(./scripts/get_latest_pypi_version.py)" >> $GITHUB_ENV
+          echo "pypi_version=$(./dev_resources/scripts/get_latest_pypi_version.py)" >> $GITHUB_ENV
 
       # - name: Setup Python
       #   uses: actions/setup-python@v3
@@ -54,9 +54,9 @@ jobs:
       #
       # - name: Sphinx build
       #   run: |
-      #     rm docs/IQM_Vis.*
-      #     sphinx-apidoc -o docs IQM_Vis
-      #     cd docs
+      #     rm dev_resources/docs/IQM_Vis.*
+      #     sphinx-apidoc -o dev_resources/docs IQM_Vis
+      #     cd dev_resources/docs
       #     make clean html
       #     make html
 
@@ -66,4 +66,4 @@ jobs:
         with:
           publish_branch: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/_build/html
+          publish_dir: dev_resources/docs/_build/html
