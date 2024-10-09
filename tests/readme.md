@@ -1,6 +1,8 @@
 # Testing
 We test the install using pytest and simulate user interaction with the plugin pytest-qt, all addional dependancies can be found under dev_resources/requirements-dev.txt 
 
+Tests cannot be run as part of a CI pipeline as a display is required to launch the UI for testing
+
 To run all tests and make badges automatically use the bash script
 ```
 ./scripts/pytest_and_badges.sh 
