@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>IQM_Vis.utils package &mdash; IQM-Vis 0.2 documentation</title>
@@ -13,8 +13,9 @@
   <![endif]-->
   
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
@@ -27,15 +28,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="index.html" class="icon icon-home">
-            IQM-Vis
+            <a href="index.html" class="icon icon-home"> IQM-Vis
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -75,7 +72,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li><a href="index.html" class="icon icon-home"></a></li>
       <li class="breadcrumb-item active">IQM_Vis.utils package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/IQM_Vis.utils.rst.txt" rel="nofollow"> View page source</a>
@@ -87,17 +84,17 @@
            <div itemprop="articleBody">
              
   <section id="iqm-vis-utils-package">
-<h1>IQM_Vis.utils package<a class="headerlink" href="#iqm-vis-utils-package" title="Permalink to this heading"></a></h1>
+<h1>IQM_Vis.utils package<a class="headerlink" href="#iqm-vis-utils-package" title="Permalink to this headline"></a></h1>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
 </section>
 <section id="module-IQM_Vis.utils.gui_utils">
-<span id="iqm-vis-utils-gui-utils-module"></span><h2>IQM_Vis.utils.gui_utils module<a class="headerlink" href="#module-IQM_Vis.utils.gui_utils" title="Permalink to this heading"></a></h2>
+<span id="iqm-vis-utils-gui-utils-module"></span><h2>IQM_Vis.utils.gui_utils module<a class="headerlink" href="#module-IQM_Vis.utils.gui_utils" title="Permalink to this headline"></a></h2>
 <p>Utils for PyQt6 image, text and graph widgets</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="IQM_Vis.utils.gui_utils.MplCanvas">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.utils.gui_utils.</span></span><span class="sig-name descname"><span class="pre">MplCanvas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(3.5,</span> <span class="pre">3.5)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/utils/gui_utils.html#MplCanvas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.utils.gui_utils.MplCanvas" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">FigureCanvasQTAgg</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.backends.backend_qtagg.FigureCanvasQTAgg</span></code></p>
 </dd></dl>
 
 <dl class="py function">
@@ -138,7 +135,7 @@
 
 </section>
 <section id="module-IQM_Vis.utils.image_utils">
-<span id="iqm-vis-utils-image-utils-module"></span><h2>IQM_Vis.utils.image_utils module<a class="headerlink" href="#module-IQM_Vis.utils.image_utils" title="Permalink to this heading"></a></h2>
+<span id="iqm-vis-utils-image-utils-module"></span><h2>IQM_Vis.utils.image_utils module<a class="headerlink" href="#module-IQM_Vis.utils.image_utils" title="Permalink to this headline"></a></h2>
 <p>image helper functions</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="IQM_Vis.utils.image_utils.calibrate_brightness">
@@ -153,7 +150,7 @@
 </dd>
 </dl>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>image</strong> (<em>np.array</em>) – image to be cropped</p></li>
 <li><p><strong>scale_factor</strong> (<em>float</em>) – the percentage to zoom in by (for square crop only).
@@ -164,10 +161,10 @@
 <li><p><strong>keep_size</strong> (<em>bool</em>) – resize image to the original size after cropping (Defaults to True)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>cropeed image</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>image (np.array)</p>
 </dd>
 </dl>
@@ -178,7 +175,7 @@
 <span class="sig-prename descclassname"><span class="pre">IQM_Vis.utils.image_utils.</span></span><span class="sig-name descname"><span class="pre">get_transform_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_store</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_functions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/utils/image_utils.html#get_transform_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.utils.image_utils.get_transform_image" title="Permalink to this definition"></a></dt>
 <dd><p>transform image with image post processing</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data_store</strong> – IQM_Vis data_api</p></li>
 <li><p><strong>transform_functions</strong> – dict holding transforms
@@ -186,10 +183,10 @@
 <li><p><strong>transform_params</strong> – dict holding the parameters for transforms (corresponding to keys in transform_functions)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>processed numpy image</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>image</p>
 </dd>
 </dl>
@@ -221,9 +218,9 @@
 
 </section>
 <section id="module-IQM_Vis.utils.plot_utils">
-<span id="iqm-vis-utils-plot-utils-module"></span><h2>IQM_Vis.utils.plot_utils module<a class="headerlink" href="#module-IQM_Vis.utils.plot_utils" title="Permalink to this heading"></a></h2>
+<span id="iqm-vis-utils-plot-utils-module"></span><h2>IQM_Vis.utils.plot_utils module<a class="headerlink" href="#module-IQM_Vis.utils.plot_utils" title="Permalink to this headline"></a></h2>
 <p>matplotlib plotting helpers
-TODO: write docs how to use these (currently just have to look at the UI code)</p>
+TODO: write dev_resources/docs how to use these (currently just have to look at the UI code)</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="IQM_Vis.utils.plot_utils.bar_plotter">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.utils.plot_utils.</span></span><span class="sig-name descname"><span class="pre">bar_plotter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bar_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/utils/plot_utils.html#bar_plotter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.utils.plot_utils.bar_plotter" title="Permalink to this definition"></a></dt>
@@ -267,21 +264,21 @@ TODO: write docs how to use these (currently just have to look at the UI code)</
 <dd><p>compute metrics over a range of trans (when using non initial values for other transforms)
 currently this method is not being used and instead using the simpler compute_metrics_over_range_single_trans</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data_store</strong> – object containing metrics and image</p></li>
 <li><p><strong>transforms</strong> (<em>dict</em>) – containing trans functions and min/max/initial values</p></li>
 <li><p><strong>transform_values</strong> (<em>dict</em>) – containing the fixed current transform parameter values</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p><dl class="simple">
 <dt>results of IQM values at each transform value across its</dt><dd><p>whole paramter rance for the reference image</p>
 </dd>
 </dl>
 </p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>results (dict)</p>
 </dd>
 </dl>
@@ -292,20 +289,20 @@ currently this method is not being used and instead using the simpler compute_me
 <span class="sig-prename descclassname"><span class="pre">IQM_Vis.utils.plot_utils.</span></span><span class="sig-name descname"><span class="pre">compute_metrics_over_range_single_trans</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_store</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transforms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_to_use</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbar_signal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">11</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/utils/plot_utils.html#compute_metrics_over_range_single_trans"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.utils.plot_utils.compute_metrics_over_range_single_trans" title="Permalink to this definition"></a></dt>
 <dd><p>compute metrics over a range of trans</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data_store</strong> – object containing metrics and image</p></li>
 <li><p><strong>transforms</strong> (<em>dict</em>) – containing trans functions and min/max/initial values</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p><dl class="simple">
 <dt>results of IQM values at each transform value across its</dt><dd><p>whole paramter rance for the reference image</p>
 </dd>
 </dl>
 </p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>results (dict)</p>
 </dd>
 </dl>
@@ -431,7 +428,7 @@ useful when doing experiments to make a dataset</p>
 
 </section>
 <section id="module-IQM_Vis.utils.save_utils">
-<span id="iqm-vis-utils-save-utils-module"></span><h2>IQM_Vis.utils.save_utils module<a class="headerlink" href="#module-IQM_Vis.utils.save_utils" title="Permalink to this heading"></a></h2>
+<span id="iqm-vis-utils-save-utils-module"></span><h2>IQM_Vis.utils.save_utils module<a class="headerlink" href="#module-IQM_Vis.utils.save_utils" title="Permalink to this headline"></a></h2>
 <p>utils for saving experiments, images and figures</p>
 <dl class="py data">
 <dt class="sig sig-object py" id="IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR">
@@ -530,7 +527,7 @@ useful when doing experiments to make a dataset</p>
 
 </section>
 <section id="module-IQM_Vis.utils">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-IQM_Vis.utils" title="Permalink to this heading"></a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-IQM_Vis.utils" title="Permalink to this headline"></a></h2>
 </section>
 </section>
 

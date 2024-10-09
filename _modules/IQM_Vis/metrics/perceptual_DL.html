@@ -12,8 +12,9 @@
   <![endif]-->
   
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="../../../about.html" />
@@ -26,15 +27,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../../../index.html" class="icon icon-home">
-            IQM-Vis
+            <a href="../../../index.html" class="icon icon-home"> IQM-Vis
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -74,7 +71,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
           <li class="breadcrumb-item"><a href="../metrics.html">IQM_Vis.metrics</a></li>
       <li class="breadcrumb-item active">IQM_Vis.metrics.perceptual_DL</li>
@@ -98,7 +95,7 @@
 
 
 <div class="viewcode-block" id="LPIPS"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.perceptual_DL.LPIPS">[docs]</a><span class="k">class</span> <span class="nc">LPIPS</span><span class="p">:</span>
-    <span class="sd">&#39;&#39;&#39;Learned Perceptual Image Patch Similarity between two images.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Learned Perceptual Image Patch Similarity between two images.</span>
 <span class="sd">       Images must have the same dimensions.</span>
 
 <span class="sd">    Args:</span>
@@ -119,7 +116,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">preproccess_function</span> <span class="o">=</span> <span class="n">_numpy_to_torch_image</span>
 
 <div class="viewcode-block" id="LPIPS.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.perceptual_DL.LPIPS.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;When an instance is called</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;When an instance is called</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            im_ref (np.array): Reference image</span>
@@ -151,7 +148,7 @@
 
 
 <div class="viewcode-block" id="DISTS"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.perceptual_DL.DISTS">[docs]</a><span class="k">class</span> <span class="nc">DISTS</span><span class="p">:</span>
-    <span class="sd">&#39;&#39;&#39;Deep Image Structure and Texture Similarity (DISTS) Metric. Uses the</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Deep Image Structure and Texture Similarity (DISTS) Metric. Uses the</span>
 <span class="sd">        code from https://github.com/dingkeyan93/DISTS. Uses the PyTorch backend.</span>
 <span class="sd">        It is robust to texture variance (e.g., evaluating the images generated</span>
 <span class="sd">        by GANs) and mild geometric transformations (e.g., evaluating the image</span>
@@ -166,7 +163,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">preproccess_function</span> <span class="o">=</span> <span class="n">_numpy_to_torch_image</span>
 
 <div class="viewcode-block" id="DISTS.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.perceptual_DL.DISTS.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;When an instance is called</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;When an instance is called</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            im_ref (np.array): Reference image</span>

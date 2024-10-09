@@ -12,8 +12,9 @@
   <![endif]-->
   
         <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/doctools.js"></script>
-        <script src="../../../../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="../../../../about.html" />
@@ -26,15 +27,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../../../../index.html" class="icon icon-home">
-            IQM-Vis
+            <a href="../../../../index.html" class="icon icon-home"> IQM-Vis
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -74,7 +71,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li><a href="../../../../index.html" class="icon icon-home"></a></li>
           <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
           <li class="breadcrumb-item"><a href="../../metrics.html">IQM_Vis.metrics</a></li>
       <li class="breadcrumb-item active">IQM_Vis.metrics.SSIM.ssim</li>
@@ -102,7 +99,7 @@
 
 
 <span class="k">def</span> <span class="nf">_fspecial_gauss_1d</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">sigma</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Create 1-D gauss kernel</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Create 1-D gauss kernel</span>
 <span class="sd">    Args:</span>
 <span class="sd">        size (int): the size of gauss kernel</span>
 <span class="sd">        sigma (float): sigma of normal distribution</span>
@@ -119,7 +116,7 @@
 
 
 <div class="viewcode-block" id="gaussian_filter"><a class="viewcode-back" href="../../../../IQM_Vis.metrics.SSIM.html#IQM_Vis.metrics.SSIM.ssim.gaussian_filter">[docs]</a><span class="k">def</span> <span class="nf">gaussian_filter</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">win</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot; Blur input with 1-D kernel</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot; Blur input with 1-D kernel</span>
 <span class="sd">    Args:</span>
 <span class="sd">        input (torch.Tensor): a batch of tensors to be blurred</span>
 <span class="sd">        window (torch.Tensor): 1-D gauss kernel</span>
@@ -155,7 +152,7 @@
     <span class="n">size_average</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">K</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">)</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot; Calculate ssim index for X and Y</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot; Calculate ssim index for X and Y</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        X (torch.Tensor): images</span>
@@ -206,7 +203,7 @@
     <span class="n">K</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">),</span>
     <span class="n">nonnegative_ssim</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot; interface of ssim</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot; interface of ssim</span>
 <span class="sd">    Args:</span>
 <span class="sd">        X (torch.Tensor): a batch of images, (N,C,H,W)</span>
 <span class="sd">        Y (torch.Tensor): a batch of images, (N,C,H,W)</span>
@@ -265,7 +262,7 @@
     <span class="n">weights</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">K</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">)</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot; interface of ms-ssim</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot; interface of ms-ssim</span>
 <span class="sd">    Args:</span>
 <span class="sd">        X (torch.Tensor): a batch of images, (N,C,[T,]H,W)</span>
 <span class="sd">        Y (torch.Tensor): a batch of images, (N,C,[T,]H,W)</span>
@@ -348,7 +345,7 @@
         <span class="n">K</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">),</span>
         <span class="n">nonnegative_ssim</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot; class for ssim</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot; class for ssim</span>
 <span class="sd">        Args:</span>
 <span class="sd">            data_range (float or int, optional): value range of input images. (usually 1.0 or 255)</span>
 <span class="sd">            size_average (bool, optional): if size_average=True, ssim of all images will be averaged as a scalar</span>
@@ -391,7 +388,7 @@
         <span class="n">weights</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">K</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">),</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot; class for ms-ssim</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot; class for ms-ssim</span>
 <span class="sd">        Args:</span>
 <span class="sd">            data_range (float or int, optional): value range of input images. (usually 1.0 or 255)</span>
 <span class="sd">            size_average (bool, optional): if size_average=True, ssim of all images will be averaged as a scalar</span>
