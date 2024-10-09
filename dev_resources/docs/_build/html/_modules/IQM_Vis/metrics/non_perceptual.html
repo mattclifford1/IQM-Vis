@@ -12,8 +12,9 @@
   <![endif]-->
   
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="../../../about.html" />
@@ -26,15 +27,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../../../index.html" class="icon icon-home">
-            IQM-Vis
+            <a href="../../../index.html" class="icon icon-home"> IQM-Vis
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -74,7 +71,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
           <li class="breadcrumb-item"><a href="../metrics.html">IQM_Vis.metrics</a></li>
       <li class="breadcrumb-item active">IQM_Vis.metrics.non_perceptual</li>
@@ -95,7 +92,7 @@
 <span class="kn">from</span> <span class="nn">IQM_Vis.metrics.metric_utils</span> <span class="kn">import</span> <span class="n">_check_shapes</span>
 
 <div class="viewcode-block" id="MAE"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.non_perceptual.MAE">[docs]</a><span class="k">class</span> <span class="nc">MAE</span><span class="p">:</span>
-    <span class="sd">&#39;&#39;&#39;Mean Absolute Error between two images. Images must have the same</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Mean Absolute Error between two images. Images must have the same</span>
 <span class="sd">       dimensions</span>
 
 <span class="sd">    Args:</span>
@@ -107,7 +104,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">return_image</span> <span class="o">=</span> <span class="n">return_image</span>
 
 <div class="viewcode-block" id="MAE.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.non_perceptual.MAE.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;When an instance is called</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;When an instance is called</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            im_ref (np.array): Reference image</span>
@@ -127,7 +124,7 @@
 
 
 <div class="viewcode-block" id="MSE"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.non_perceptual.MSE">[docs]</a><span class="k">class</span> <span class="nc">MSE</span><span class="p">:</span>
-    <span class="sd">&#39;&#39;&#39;Mean Squared Error between two images. Images must have the same</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Mean Squared Error between two images. Images must have the same</span>
 <span class="sd">       dimensions</span>
 
 <span class="sd">    Args:</span>
@@ -139,7 +136,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">return_image</span> <span class="o">=</span> <span class="n">return_image</span>
 
 <div class="viewcode-block" id="MSE.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.non_perceptual.MSE.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;When an instance is called</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;When an instance is called</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            im_ref (np.array): Reference image</span>
@@ -159,7 +156,7 @@
 
 
 <div class="viewcode-block" id="RMSE"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.non_perceptual.RMSE">[docs]</a><span class="k">class</span> <span class="nc">RMSE</span><span class="p">:</span>
-    <span class="sd">&#39;&#39;&#39;Root Mean Squared Error between two images. Images must have the same</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Root Mean Squared Error between two images. Images must have the same</span>
 <span class="sd">       dimensions</span>
 
 <span class="sd">    Args:</span>
@@ -171,7 +168,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">return_image</span> <span class="o">=</span> <span class="n">return_image</span>
 
 <div class="viewcode-block" id="RMSE.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.non_perceptual.RMSE.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;When an instance is called</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;When an instance is called</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            im_ref (np.array): Reference image</span>
@@ -191,7 +188,7 @@
 
 
 <div class="viewcode-block" id="one_over_PSNR"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.non_perceptual.one_over_PSNR">[docs]</a><span class="k">class</span> <span class="nc">one_over_PSNR</span><span class="p">:</span>
-    <span class="sd">&#39;&#39;&#39;Peak signal to noise ratio - https://en.wikipedia.org/wiki/Peak_signal-to-noise_ratio</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Peak signal to noise ratio - https://en.wikipedia.org/wiki/Peak_signal-to-noise_ratio</span>
 <span class="sd">    The score given is normalised between 0, 1 by taking 1/PSNR </span>
 
 <span class="sd">    Args:</span>
@@ -207,7 +204,7 @@
         <span class="c1"># self.preproccess_function = _numpy_to_torch_image</span>
 
 <div class="viewcode-block" id="one_over_PSNR.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.non_perceptual.one_over_PSNR.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;When an instance is called</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;When an instance is called</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            im_ref (np.array): Reference image</span>
