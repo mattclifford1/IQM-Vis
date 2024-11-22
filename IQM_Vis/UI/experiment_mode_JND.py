@@ -170,7 +170,6 @@ class make_experiment_JND(QMainWindow):
                 'image': self.ref_image}
         self.experiment_transforms.append(data)
 
-
     def get_metric_scores(self):
         '''get IQM scores to save alongside the experiment for plotting/analysis purposes'''
         IQM_scores = {}
