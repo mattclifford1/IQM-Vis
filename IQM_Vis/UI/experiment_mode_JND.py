@@ -383,7 +383,11 @@ class make_experiment_JND(QMainWindow):
         gui_utils.change_im(self.widget_experiments['exp']['Reference']['data'], self.ref_image,
                             resize=self.image_display_size, rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
 
+        # exp data holder
+        self.times_taken = []
+        self.time0 = time.time()
         self.curr_im_ind = 0
+        # Display comparison image
         gui_utils.change_im(self.widget_experiments['exp']['Comparison']['data'], self.experiment_transforms[self.curr_im_ind]['image'],
                             resize=self.image_display_size, rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
 
@@ -399,11 +403,11 @@ class make_experiment_JND(QMainWindow):
             print(f"{im['transform_name']}, {im['transform_value']}: {im['user_decision']}")
 
         # save experiment to file
-        # self.save_experiment()
-        # if self.saved == True:
-        #     self.widget_experiments['final']['save_label'].setText(f'Saved to {self.default_save_dir}')
-        # else:
-        #     self.widget_experiments['final']['save_label'].setText(f'Save failed to {self.default_save_dir}')
+        self.save_experiment()
+        if self.saved == True:
+            self.widget_experiments['final']['save_label'].setText(f'Saved to {self.default_save_dir}')
+        else:
+            self.widget_experiments['final']['save_label'].setText(f'Save failed to {self.default_save_dir}')
 
     def save_experiment(self):
         # get the current transform functions
@@ -474,6 +478,7 @@ class make_experiment_JND(QMainWindow):
                 save_utils.get_image_processing_file(self.default_save_dir),
                 self.processing)
 
+        # TODO: save this properly!!!!
         # save the experiment results
         exp_order = []
         for trans in self.experiment_transforms:
@@ -491,7 +496,12 @@ class make_experiment_JND(QMainWindow):
         if decision not in ['same', 'diff']:
             raise ValueError(f'user decision for JND experiment needs to be same or diff')
         
+        # save time it took 
+        self.times_taken.append(time.time()-self.time0)
+
+        # log decision
         self.experiment_transforms[self.curr_im_ind]['user_decision'] = decision
+        
         # move to next image
         self.curr_im_ind += 1
         if self.curr_im_ind ==  len(self.experiment_transforms):
