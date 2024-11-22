@@ -166,6 +166,12 @@ class make_experiment_JND(QMainWindow):
                     'transform_value': param,
                     'image': img}
             self.experiment_transforms.append(data)
+        
+        # add reference image to list
+        data = {'transform_name': 'None',
+                'transform_value': 'None',
+                'image': self.ref_image}
+
 
     def get_metric_scores(self):
         '''get IQM scores to save alongside the experiment for plotting/analysis purposes'''
@@ -380,10 +386,9 @@ class make_experiment_JND(QMainWindow):
         gui_utils.change_im(self.widget_experiments['exp']['Reference']['data'], self.ref_image,
                             resize=self.image_display_size, rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
 
-        # get user sorting
-        self.sorting_thread = threading.Thread(target=self.quick_sort)
-        self.sorting_thread.start()
-        # self.quick_sort(0, len(self.experiment_transforms)-1)
+        self.curr_im_ind = 0
+        gui_utils.change_im(self.widget_experiments['exp']['Comparison']['data'], self.experiment_transforms[self.curr_im_ind]['image'],
+                            resize=self.image_display_size, rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
 
     def finish_experiment(self):
         self.experiments_tab.setTabEnabled(3, True)
@@ -561,7 +566,15 @@ class make_experiment_JND(QMainWindow):
     def user_decision(self, decision):
         if decision not in ['same', 'diff']:
             raise ValueError(f'user decision for JND experiment needs to be same or diff')
-        print(decision)
+        self.curr_im_ind += 1
+        if self.curr_im_ind ==  len(self.experiment_transforms):
+            self.finish_experiment()
+        else:
+            gui_utils.change_im(self.widget_experiments['exp']['Comparison']['data'], self.experiment_transforms[self.curr_im_ind]['image'],
+                                resize=self.image_display_size, rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
+
+    def finished_experiment(self):
+        print('impliment finish')
 
     def click_completed(self):
         # unlock the wait
@@ -580,14 +593,14 @@ class make_experiment_JND(QMainWindow):
         A = A_trans['image']
         B = B_trans['image']
         
-        gui_utils.change_im(self.widget_experiments['exp']['A']['data'], A, resize=self.image_display_size,
+        gui_utils.change_im(self.widget_experiments['exp']['Reference']['data'], A, resize=self.image_display_size,
                             rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
-        self.widget_experiments['exp']['A']['data'].setObjectName(
-            f'{self.image_name}-{save_utils.make_name_for_trans(A_trans)}')
-        gui_utils.change_im(self.widget_experiments['exp']['B']['data'], B, resize=self.image_display_size,
+        # self.widget_experiments['exp']['A']['data'].setObjectName(
+        #     f'{self.image_name}-{save_utils.make_name_for_trans(A_trans)}')
+        gui_utils.change_im(self.widget_experiments['exp']['Comparison']['data'], B, resize=self.image_display_size,
                             rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
-        self.widget_experiments['exp']['B']['data'].setObjectName(
-            f'{self.image_name}-{save_utils.make_name_for_trans(B_trans)}')
+        # self.widget_experiments['exp']['B']['data'].setObjectName(
+        #     f'{self.image_name}-{save_utils.make_name_for_trans(B_trans)}')
 
     ''' UI '''
     def init_style(self, style='light', css_file=None):
