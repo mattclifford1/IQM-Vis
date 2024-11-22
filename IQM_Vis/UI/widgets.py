@@ -706,11 +706,29 @@ class widgets():
 
     def launch_experiment_JND(self):
         '''launch the Just Noticable difference experiment'''
-        print('Clicked JND')
-        pass
+        # first get all the checked transforms and their parameters
+        checked_transformation_params = {}
+        for trans in self.widget_experiment_params:
+            if self.widget_experiment_params[trans]['check_box'].isChecked():
+                data = {'min': make_float_from_text(self.widget_experiment_params[trans]['min_edit'].text()),
+                        'max': make_float_from_text(self.widget_experiment_params[trans]['max_edit'].text()),
+                        'num_steps': int(self.widget_experiment_params[trans]['steps_edit'].text()),
+                        'function': self.checked_transformations[trans]['function']}
+                name = self.widget_experiment_params[trans]['name'].text()
+                checked_transformation_params[name] = data
+
+        # check that we only have one transform selected to JND test to work
+        if len(checked_transformation_params) != 1:
+            # show message to UI if more than one transform
+            self.status_bar.showMessage(
+                '!!! Select only one tranform/distortion for Just Noticable Difference Experiment !!!', 10000)
+        else:
+            # run JND experiment
+            pass
+            
 
     def launch_experiment_2AF(self):
-        '''LAunch the 2 alternate forced choice experiment'''
+        '''Launch the 2 alternate forced choice experiment'''
         # first get all the checked transforms and their parameters
         checked_transformation_params = {}
         for trans in self.widget_experiment_params:
