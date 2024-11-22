@@ -30,7 +30,7 @@ from IQM_Vis.UI import utils
 from IQM_Vis.utils import gui_utils, plot_utils, image_utils, save_utils
 
 
-class make_experiment(QMainWindow):
+class make_experiment_2AF(QMainWindow):
     saved_experiment = pyqtSignal(str)
     reset_clicked_image = pyqtSignal(dict)
 

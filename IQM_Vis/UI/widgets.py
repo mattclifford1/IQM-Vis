@@ -740,7 +740,7 @@ class widgets():
                 name = self.widget_experiment_params[trans]['name'].text()
                 checked_transformation_params[name] = data
         if self.checked_transformations != {}:
-            self.experiment = IQM_Vis.UI.make_experiment(checked_transformation_params,
+            self.experiment = IQM_Vis.UI.make_experiment_2AF(checked_transformation_params,
                                                          self.data_stores[0],
                                                          self.image_display_size,
                                                          self.rgb_brightness,
