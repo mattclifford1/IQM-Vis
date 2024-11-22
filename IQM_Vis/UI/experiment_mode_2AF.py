@@ -215,7 +215,7 @@ class make_experiment_2AF(QMainWindow):
         self.widget_experiments['setup']['images'] = gui_utils.MplCanvas(size=None)
         self.widget_experiments['setup']['text'] = QLabel(self)
         self.widget_experiments['setup']['text'].setText(f'''
-        Experiment to be setup with the above images using the settings:
+        2AF Experiment to be setup with the above images using the settings:
             Save folder: {self.default_save_dir}
             Image Display Size: {self.image_display_size}
             Image Calibration:

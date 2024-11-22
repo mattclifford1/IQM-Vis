@@ -1,5 +1,5 @@
 '''
-create experiment window
+create experiment window JND
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
@@ -31,6 +31,7 @@ from IQM_Vis.utils import gui_utils, plot_utils, image_utils, save_utils
 
 
 class make_experiment_JND(QMainWindow):
+    '''https://www.verywellmind.com/what-is-the-just-noticeable-difference-2795306'''
     saved_experiment = pyqtSignal(str)
     reset_clicked_image = pyqtSignal(dict)
 
@@ -48,12 +49,15 @@ class make_experiment_JND(QMainWindow):
         self.checked_transformation_params = checked_transformation_params
         if self.checked_transformation_params == {}:
             return
+        elif len(self.checked_transformation_params) != 1:
+            raise AttributeError(f'Just Noticable difference experiment can only use one transform/distortion')
+
         self.checked_metrics = checked_metrics
         self.data_store = data_store
         self.image_display_size = image_display_size
         self.rgb_brightness = rgb_brightness
         self.display_brightness = display_brightness
-        self.default_save_dir = default_save_dir
+        self.default_save_dir = os.path.join(default_save_dir, 'JND')
         
         self.processing = {'pre': image_preprocessing,
                            'post': image_postprocessing}
@@ -136,10 +140,6 @@ class make_experiment_JND(QMainWindow):
         self.experiment_trans_params = plot_utils.get_all_single_transform_params(
             self.checked_transformation_params, num_steps='from_dict')
 
-        # remove any params with value 0 
-        self.experiment_trans_params = [
-            x for x in self.experiment_trans_params if not x[list(x.keys())[0]] == 0]
-
         # save the experiment ordering before reordering (for saving to csv col ordering)
         self.original_params_order = []
         for single_trans in self.experiment_trans_params:
@@ -154,20 +154,7 @@ class make_experiment_JND(QMainWindow):
         self.ref_image = self.data_store.get_reference_image()
         if hasattr(self.data_store, 'get_reference_unprocessed'):
             self.ref_image_unprocessed = self.data_store.get_reference_unprocessed()
-        # get MSE for experiments to get a rough sorting
-        mses = []
-        mse = IQM_Vis.metrics.MSE()
-        for trans in self.experiment_trans_params:
-            mses.append(
-                mse(self.ref_image, self.get_single_transform_im(trans)))
-        # put median MSE at the end (best for quick sort)
-        self.experiment_trans_params = sort_list(
-            self.experiment_trans_params, mses)  # sort array
-        # take median out and get random shuffle for the rest
-        median = self.experiment_trans_params.pop(
-            len(self.experiment_trans_params)//2)
-        random.shuffle(self.experiment_trans_params)
-        self.experiment_trans_params.append(median)
+
         # load all images
         self.experiment_transforms = []
         for single_trans in self.experiment_trans_params:
@@ -178,14 +165,7 @@ class make_experiment_JND(QMainWindow):
                     'transform_value': param,
                     'image': img}
             self.experiment_transforms.append(data)
-        self.calc_max_comparisons(num_images=len(self.experiment_transforms))
-    
-    def calc_max_comparisons(self, num_images):
-        # calc expected number of comparisons - 
-        # http://homepages.math.uic.edu/~leon/cs-mcs401-r07/handouts/quicksort-continued.pdf
-        self.min_expected_comps = num_images * np.log(num_images)
-        self.max_expected_comps = 1.39 * num_images * np.log(num_images)
-    
+
     def get_metric_scores(self):
         '''get IQM scores to save alongside the experiment for plotting/analysis purposes'''
         IQM_scores = {}
@@ -215,15 +195,14 @@ class make_experiment_JND(QMainWindow):
         self.widget_experiments['setup']['images'] = gui_utils.MplCanvas(size=None)
         self.widget_experiments['setup']['text'] = QLabel(self)
         self.widget_experiments['setup']['text'].setText(f'''
-        Experiment to be setup with the above images using the settings:
+        JND Experiment to be setup with the above images using the settings:
             Save folder: {self.default_save_dir}
             Image Display Size: {self.image_display_size}
             Image Calibration:
                 Max RGB Brightness: {self.rgb_brightness}
                 Max Display Brightness: {self.display_brightness}
 
-            Expected Number of Comparisons: {int(self.min_expected_comps)}
-            MAX Expected Number of Comparisons: {int(self.max_expected_comps)}
+            Number of Comparisons: {int(len(self.experiment_transforms))}
 
         Click the Setup button to setup up the experiment and hand over to the test subject.
         ''')
@@ -233,9 +212,9 @@ class make_experiment_JND(QMainWindow):
         ''' info tab '''
         self.widget_experiments['preamble']['text'] = QLabel(self)
         self.widget_experiments['preamble']['text'].setText('''
-        For this experiment you will be shown a reference image and two similar images.
+        For this experiment you will be shown a reference image a comparison image.
 
-        You need to click on the image (A or B) which you believe to be most similar to the reference image.
+        You need to click SAME or DIFFERENT whether you think the comparison image is the same or different to the reference image.
 
 
 

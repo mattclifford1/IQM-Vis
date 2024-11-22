@@ -724,7 +724,19 @@ class widgets():
                 '!!! Select only one tranform/distortion for Just Noticable Difference Experiment !!!', 10000)
         else:
             # run JND experiment
-            pass
+            self.experiment_JND = IQM_Vis.UI.make_experiment_JND(checked_transformation_params,
+                                                             self.data_stores[0],
+                                                             self.image_display_size,
+                                                             self.rgb_brightness,
+                                                             self.display_brightness,
+                                                             self.default_save_dir,
+                                                             self.pre_processing_option,
+                                                             self.post_processing_option,
+                                                             self.checked_metrics)
+            self.experiment_JND.saved_experiment.connect(
+                self.change_human_scores_after_exp)
+            self.experiment_JND.show()
+            self.experiment_JND.showFullScreen()
             
 
     def launch_experiment_2AF(self):
@@ -740,7 +752,7 @@ class widgets():
                 name = self.widget_experiment_params[trans]['name'].text()
                 checked_transformation_params[name] = data
         if self.checked_transformations != {}:
-            self.experiment = IQM_Vis.UI.make_experiment_2AF(checked_transformation_params,
+            self.experiment_2AF = IQM_Vis.UI.make_experiment_2AF(checked_transformation_params,
                                                          self.data_stores[0],
                                                          self.image_display_size,
                                                          self.rgb_brightness,
@@ -749,10 +761,10 @@ class widgets():
                                                          self.pre_processing_option,
                                                          self.post_processing_option,
                                                          self.checked_metrics)
-            self.experiment.saved_experiment.connect(
+            self.experiment_2AF.saved_experiment.connect(
                 self.change_human_scores_after_exp)
-            self.experiment.show()
-            self.experiment.showFullScreen()
+            self.experiment_2AF.show()
+            self.experiment_2AF.showFullScreen()
         else:
             self.status_bar.showMessage('Cannot run experiment without transforms', 5000)
 
