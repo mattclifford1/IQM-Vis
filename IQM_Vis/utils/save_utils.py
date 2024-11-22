@@ -81,8 +81,10 @@ def save_and_merge_df_as_csv(df, file):
         df.set_index(index_name, inplace=True)
     df.to_csv(file, index=True)
 
+def save_JND_experiment_results():
+    pass
     
-def save_experiment_results(trans_names, results_order, save_dir, times_taken=None, IQM_scores_df=None):
+def save_2AF_experiment_results(trans_names, results_order, save_dir, times_taken=None, IQM_scores_df=None):
     '''save all the experiment reults as csvs'''
     # make HIQM scores from ordering : HIQM = pos/num_pos
     results = {}

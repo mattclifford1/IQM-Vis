@@ -398,10 +398,6 @@ class make_experiment_JND(QMainWindow):
         self.experiments_tab.setCurrentIndex(3)
         # self.experiments_tab.setTabEnabled(2, False)
 
-        #dev
-        for im in self.experiment_transforms:
-            print(f"{im['transform_name']}, {im['transform_value']}: {im['user_decision']}")
-
         # save experiment to file
         self.save_experiment()
         if self.saved == True:
@@ -479,13 +475,14 @@ class make_experiment_JND(QMainWindow):
                 self.processing)
 
         # TODO: save this properly!!!!
+        # dev
+        for im in self.experiment_transforms:
+            print(
+                f"{im['transform_name']}, {im['transform_value']}: {im['user_decision']}")
         # save the experiment results
-        exp_order = []
-        for trans in self.experiment_transforms:
-            exp_order.append(save_utils.make_name_for_trans(trans))
-        csv_file = save_utils.save_experiment_results(
+        csv_file = save_utils.save_JND_experiment_results(
             self.original_params_order,
-            exp_order,
+            self.experiment_transforms,
             self.default_save_dir,
             self.times_taken,
             self.IQM_scores_df)
@@ -501,7 +498,7 @@ class make_experiment_JND(QMainWindow):
 
         # log decision
         self.experiment_transforms[self.curr_im_ind]['user_decision'] = decision
-        
+
         # move to next image
         self.curr_im_ind += 1
         if self.curr_im_ind ==  len(self.experiment_transforms):

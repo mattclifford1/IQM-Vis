@@ -482,7 +482,7 @@ class make_experiment_2AF(QMainWindow):
         exp_order = []
         for trans in self.experiment_transforms:
             exp_order.append(save_utils.make_name_for_trans(trans))
-        csv_file = save_utils.save_experiment_results(
+        csv_file = save_utils.save_2AF_experiment_results(
             self.original_params_order,
             exp_order,
             self.default_save_dir,
