@@ -76,7 +76,7 @@ class make_experiment_2AF(QMainWindow):
         self.get_metric_scores()
         self.experiment_layout()
         self.setCentralWidget(self.experiments_tab)
-        self.setWindowTitle('Experiment')
+        self.setWindowTitle('2AF Experiment')
         # move to centre of the screen
         qr = self.frameGeometry()
         cp = self.screen().availableGeometry().center()

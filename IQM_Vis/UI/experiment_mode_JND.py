@@ -63,15 +63,12 @@ class make_experiment_JND(QMainWindow):
         self.processing = {'pre': image_preprocessing,
                            'post': image_postprocessing}
 
-        self.clicked_event = threading.Event()
-        self.able_to_click = False
-
-        self.image_change_worker = reset_image_widget_to_black()
-        self.image_change_worker.completed.connect(self.click_completed)
-        self.image_worker_thread = QThread()
-        self.reset_clicked_image.connect(self.image_change_worker.change_to_solid)
-        self.image_change_worker.moveToThread(self.image_worker_thread)
-        self.image_worker_thread.start()
+        # self.image_change_worker = reset_image_widget_to_black()
+        # self.image_change_worker.completed.connect(self.click_completed)
+        # self.image_worker_thread = QThread()
+        # self.reset_clicked_image.connect(self.image_change_worker.change_to_solid)
+        # self.image_change_worker.moveToThread(self.image_worker_thread)
+        # self.image_worker_thread.start()
 
         self.stop_event = threading.Event()
         self.saved = False
@@ -81,7 +78,7 @@ class make_experiment_JND(QMainWindow):
         self.get_metric_scores()
         self.experiment_layout()
         self.setCentralWidget(self.experiments_tab)
-        self.setWindowTitle('Experiment')
+        self.setWindowTitle('JND Experiment')
         # move to centre of the screen
         qr = self.frameGeometry()
         cp = self.screen().availableGeometry().center()
@@ -111,7 +108,7 @@ class make_experiment_JND(QMainWindow):
                     self.image_worker_thread.wait()
                 self.image_change_worker.stop()
             self.stop_event.set()
-            self.clicked_event.set()
+            # self.clicked_event.set()
             event.accept()
 
     def quit(self):
@@ -171,6 +168,7 @@ class make_experiment_JND(QMainWindow):
         data = {'transform_name': 'None',
                 'transform_value': 'None',
                 'image': self.ref_image}
+        self.experiment_transforms.append(data)
 
 
     def get_metric_scores(self):
@@ -396,11 +394,17 @@ class make_experiment_JND(QMainWindow):
         self.init_style('light')
         self.experiments_tab.setCurrentIndex(3)
         # self.experiments_tab.setTabEnabled(2, False)
-        self.save_experiment()
-        if self.saved == True:
-            self.widget_experiments['final']['save_label'].setText(f'Saved to {self.default_save_dir}')
-        else:
-            self.widget_experiments['final']['save_label'].setText(f'Save failed to {self.default_save_dir}')
+
+        #dev
+        for im in self.experiment_transforms:
+            print(f"{im['transform_name']}, {im['transform_value']}: {im['user_decision']}")
+
+        # save experiment to file
+        # self.save_experiment()
+        # if self.saved == True:
+        #     self.widget_experiments['final']['save_label'].setText(f'Saved to {self.default_save_dir}')
+        # else:
+        #     self.widget_experiments['final']['save_label'].setText(f'Save failed to {self.default_save_dir}')
 
     def save_experiment(self):
         # get the current transform functions
@@ -484,88 +488,12 @@ class make_experiment_JND(QMainWindow):
         self.saved = True
         self.saved_experiment.emit(csv_file)
 
-
-    ''' sorting algorithm resource: https://www.geeksforgeeks.org/quick-sort/'''
-    def quick_sort(self):
-        self.times_taken = []
-        self._quick_sort(0, len(self.experiment_transforms)-1)
-        if self.quit_experiment != True:
-            self.finish_experiment()
-            # for trans in self.experiment_transforms:
-            #     print(trans['transform_name'], trans['transform_value'])
-
-    def _quick_sort(self, low, high):
-        if low < high:
-            # Find pivot elements such that element smaller than pivot are on the
-            # left and elements greater than pivot are on the right
-            pi = self.partition(low, high)
-            if self.stop_event.is_set():
-                return
-            # Recursive call on the left of pivot
-            self._quick_sort(low, pi - 1)
-            # Recursive call on the right of pivot
-            self._quick_sort(pi + 1, high)
-
-    def partition(self, low, high):
-        ''' given an unsorted partition of the array between low and high, order
-            elements lower than a given pivot point to the left and higher to the right'''
-        # Choose the end element as pivot
-        self.high = high
-        self.low = low
-        self.current_comparision = low
-        self.pivot = self.experiment_transforms[self.high]
-        # Pointer for greater element
-        self.comp_pointer = low - 1
-        # Traverse through all elements and compare each element with pivot (by user clicking)
-        while True:
-            time0 = time.time()
-            # randomly assign to image A or B
-            ims_to_display = [
-                self.experiment_transforms[self.current_comparision], self.pivot]
-            random.shuffle(ims_to_display)
-            # display the images
-            self.change_experiment_images(A_trans=ims_to_display[0],
-                                          B_trans=ims_to_display[1])
-            # wait for image to be clicked
-            self.clicked_event.clear()
-            self.able_to_click = True
-            self.clicked_event.wait()
-            if self.stop_event.is_set():
-                return
-            if self.less_than_pivot == True:
-            # if self.experiment_transforms[self.current_comparision]['brightness'] <= self.pivot['brightness']:
-                # If element smaller than pivot is found swap it with the greater element pointed by i
-                self.comp_pointer += 1
-                # Swapping element at i with element at j
-                self.swap_inds(self.comp_pointer, self.current_comparision)
-            self.current_comparision += 1
-            self.times_taken.append(time.time()-time0)
-            if self.current_comparision == self.high:
-                break
-        # Swap the pivot element with the greater element specified by i
-        self.swap_inds(self.comp_pointer+1, self.high)
-        # Return the position from where partition is done
-        return self.comp_pointer + 1
-
-    def clicked_image(self, image_name, widget_name):
-        if self.able_to_click == False:
-            return
-        self.able_to_click = False
-        # get comparison to pivot
-        trans_str = image_name[len(self.image_name)+1:]
-        if trans_str != save_utils.make_name_for_trans(self.pivot): # lower value
-            # If element smaller than pivot is found swap it with the greater element pointed by i
-            self.less_than_pivot = True
-        else:
-            self.less_than_pivot = False
-        # make clicked image black to show user
-        data = {'image_display_size': self.image_display_size,
-                'widget': self.widget_experiments['exp'][widget_name]['data']}
-        self.reset_clicked_image.emit(data)  # change to black image, after x amount of time will change to experimetn image
-        
     def user_decision(self, decision):
         if decision not in ['same', 'diff']:
             raise ValueError(f'user decision for JND experiment needs to be same or diff')
+        
+        self.experiment_transforms[self.curr_im_ind]['user_decision'] = decision
+        # move to next image
         self.curr_im_ind += 1
         if self.curr_im_ind ==  len(self.experiment_transforms):
             self.finish_experiment()
@@ -573,34 +501,11 @@ class make_experiment_JND(QMainWindow):
             gui_utils.change_im(self.widget_experiments['exp']['Comparison']['data'], self.experiment_transforms[self.curr_im_ind]['image'],
                                 resize=self.image_display_size, rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
 
-    def finished_experiment(self):
-        print('impliment finish')
-
-    def click_completed(self):
-        # unlock the wait
-        self.clicked_event.set()
-
-    def swap_inds(self, i, j):
-        (self.experiment_transforms[i], self.experiment_transforms[j]) = (self.experiment_transforms[j], self.experiment_transforms[i])
-
     def get_single_transform_im(self, single_trans_dict):
         trans_name = list(single_trans_dict)[0]
         return image_utils.get_transform_image(self.data_store,
                                         {trans_name: self.checked_transformation_params[trans_name]},
                                         single_trans_dict)
-
-    def change_experiment_images(self, A_trans, B_trans):
-        A = A_trans['image']
-        B = B_trans['image']
-        
-        gui_utils.change_im(self.widget_experiments['exp']['Reference']['data'], A, resize=self.image_display_size,
-                            rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
-        # self.widget_experiments['exp']['A']['data'].setObjectName(
-        #     f'{self.image_name}-{save_utils.make_name_for_trans(A_trans)}')
-        gui_utils.change_im(self.widget_experiments['exp']['Comparison']['data'], B, resize=self.image_display_size,
-                            rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
-        # self.widget_experiments['exp']['B']['data'].setObjectName(
-        #     f'{self.image_name}-{save_utils.make_name_for_trans(B_trans)}')
 
     ''' UI '''
     def init_style(self, style='light', css_file=None):
@@ -662,12 +567,3 @@ class reset_image_widget_to_black(QObject):
     def __del__(self):
         # close app upon garbage collection
         self.stop()
-
-
-def sort_list(list1, list2):
-    # sort list1 based on list2
-    inds = np.argsort(list2)
-    sorted_list1 = []
-    for i in inds:
-        sorted_list1.append(list1[i])
-    return sorted_list1
