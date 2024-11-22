@@ -9,6 +9,7 @@ import random
 import threading
 import warnings
 import time
+from functools import partial
 
 import numpy as np
 import pandas as pd
@@ -232,16 +233,19 @@ class make_experiment_JND(QMainWindow):
 
         ''' experiment tab '''
         self.widget_experiments['exp']['info'] = QLabel(
-            'Click on which image, A or B, is most similar to the reference image', self)
-        for image in ['Reference', 'A', 'B']:
+            'Click same or different for the two images shown', self)
+        for image in ['Reference', 'Comparison']:
             self.widget_experiments['exp'][image] = {}
             self.widget_experiments['exp'][image]['data'] = ClickLabel(image)
             self.widget_experiments['exp'][image]['data'].setAlignment(Qt.AlignmentFlag.AlignCenter)
             # image label
             self.widget_experiments['exp'][image]['label'] = QLabel(image, self)
             self.widget_experiments['exp'][image]['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.widget_experiments['exp']['A']['data'].clicked.connect(self.clicked_image)
-        self.widget_experiments['exp']['B']['data'].clicked.connect(self.clicked_image)
+        
+        self.widget_experiments['exp']['same_button'] = QPushButton('SAME', self)
+        self.widget_experiments['exp']['same_button'].clicked.connect(partial(self.user_decision, 'same'))
+        self.widget_experiments['exp']['diff_button'] = QPushButton('DIFFERENT', self)
+        self.widget_experiments['exp']['diff_button'].clicked.connect(partial(self.user_decision, 'diff'))
         self.widget_experiments['exp']['quit_button'] = QPushButton('Quit', self)
         self.widget_experiments['exp']['quit_button'].clicked.connect(self.quit)
         QShortcut(QKeySequence("Ctrl+Q"),
@@ -294,12 +298,18 @@ class make_experiment_JND(QMainWindow):
         info.addWidget(self.widget_experiments['exp']['info'])
         info.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        quit = QVBoxLayout()
-        quit.addWidget(self.widget_experiments['exp']['quit_button'])
-        quit.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        exp_buttons = QVBoxLayout()
+        same_diff = QHBoxLayout()
+        same_diff.addWidget(self.widget_experiments['exp']['same_button'])
+        same_diff.addWidget(self.widget_experiments['exp']['diff_button'])
+        same_diff.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        exp_buttons.addLayout(same_diff)
+        exp_buttons.addWidget(self.widget_experiments['exp']['quit_button'])
+        exp_buttons.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         layouts = []
-        for im in ['A', 'Reference', 'B']:
+        for im in ['Reference', 'Comparison']:
             _layout = QVBoxLayout()
             for _, widget in self.widget_experiments['exp'][im].items():
                 _layout.addWidget(widget)
@@ -315,7 +325,7 @@ class make_experiment_JND(QMainWindow):
         run_experiment = QVBoxLayout()
         run_experiment.addLayout(info)
         run_experiment.addLayout(experiment_images)
-        run_experiment.addLayout(quit)
+        run_experiment.addLayout(exp_buttons)
         run_experiment.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         ''' finished '''
@@ -386,7 +396,6 @@ class make_experiment_JND(QMainWindow):
             self.widget_experiments['final']['save_label'].setText(f'Saved to {self.default_save_dir}')
         else:
             self.widget_experiments['final']['save_label'].setText(f'Save failed to {self.default_save_dir}')
-
 
     def save_experiment(self):
         # get the current transform functions
@@ -549,6 +558,11 @@ class make_experiment_JND(QMainWindow):
                 'widget': self.widget_experiments['exp'][widget_name]['data']}
         self.reset_clicked_image.emit(data)  # change to black image, after x amount of time will change to experimetn image
         
+    def user_decision(self, decision):
+        if decision not in ['same', 'diff']:
+            raise ValueError(f'user decision for JND experiment needs to be same or diff')
+        print(decision)
+
     def click_completed(self):
         # unlock the wait
         self.clicked_event.set()
