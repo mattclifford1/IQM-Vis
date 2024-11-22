@@ -150,9 +150,11 @@ class widgets():
                 self.widget_controls['images'][im].mousePressEvent = partial(self.change_data_click_im, im)
                 self.widget_im_num_hash[im] = im # store the ind number of each im widget preview
 
-        # launch experiment button
-        self.widget_controls['button']['launch_exp'] = QPushButton('Run Experiment', self)
-        self.widget_controls['button']['launch_exp'].clicked.connect(self.launch_experiment)
+        # launch experiment buttons
+        self.widget_controls['button']['launch_exp_2AF'] = QPushButton('Run 2AF Experiment', self)
+        self.widget_controls['button']['launch_exp_2AF'].clicked.connect(self.launch_experiment_2AF)
+        self.widget_controls['button']['launch_exp_JND'] = QPushButton('Run JND Experiment', self)
+        self.widget_controls['button']['launch_exp_JND'].clicked.connect(self.launch_experiment_JND)
         # load experiment button
         self.widget_controls['button']['load_exp'] = QPushButton('Load Experiment', self)
         self.widget_controls['button']['load_exp'].clicked.connect(self.load_experiment_from_dir)
@@ -702,8 +704,13 @@ class widgets():
                 else:
                     self.widget_experiment_params[trans][widget].setStyleSheet(f"QLineEdit {{color: gray;}}\nQLabel {{color: gray;}}")
 
+    def launch_experiment_JND(self):
+        '''launch the Just Noticable difference experiment'''
+        print('Clicked JND')
+        pass
 
-    def launch_experiment(self):
+    def launch_experiment_2AF(self):
+        '''LAunch the 2 alternate forced choice experiment'''
         # first get all the checked transforms and their parameters
         checked_transformation_params = {}
         for trans in self.widget_experiment_params:

@@ -69,7 +69,7 @@ def build_exp(build_IQM_Vis):
     QtTest.QTest.qWait(500)
 
     qtbotbis.mouseClick(
-        test_window.window.widget_controls['button']['launch_exp'], QtCore.Qt.MouseButton.LeftButton)
+        test_window.window.widget_controls['button']['launch_exp_2AF'], QtCore.Qt.MouseButton.LeftButton)
     QtTest.QTest.qWait(500)
     yield test_window, qtbotbis
     QtTest.QTest.qWait(500)
