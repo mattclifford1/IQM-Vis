@@ -123,7 +123,13 @@ class make_experiment_JND(QMainWindow):
                 rows, cols, i+1)
             ax.imshow(image_utils.calibrate_brightness(
                 trans['image'], self.rgb_brightness, self.display_brightness, ubyte=False))
-            ax.axis('off')
+            if tab == 'final':
+                ax.set_ylabel('')
+                ax.set_xlabel(trans['user_decision'], fontsize=6)
+                ax.set_xticks([])
+                ax.set_yticks([])
+            else:
+                ax.axis('off')
             ax.set_title(save_utils.make_name_for_trans(trans), fontsize=6)
         # self.widget_experiments[tab]['images'].figure.tight_layout()
 
@@ -259,7 +265,7 @@ class make_experiment_JND(QMainWindow):
 
         ''' finish tab '''
         self.widget_experiments['final']['order_text'] = QLabel(
-            'Experiment Sorting Order:', self)
+            'Experiment Results:', self)
         self.widget_experiments['final']['images'] = gui_utils.MplCanvas(size=None)
         self.widget_experiments['final']['quit_button'] = QPushButton('Quit', self)
         self.widget_experiments['final']['quit_button'].clicked.connect(
