@@ -734,7 +734,7 @@ class widgets():
                                                              self.post_processing_option,
                                                              self.checked_metrics)
             self.experiment_JND.saved_experiment.connect(
-                self.change_human_scores_after_exp)
+                self.change_human_scores_after_exp_JND)
             self.experiment_JND.show()
             self.experiment_JND.showFullScreen()
             
@@ -762,15 +762,19 @@ class widgets():
                                                          self.post_processing_option,
                                                          self.checked_metrics)
             self.experiment_2AF.saved_experiment.connect(
-                self.change_human_scores_after_exp)
+                self.change_human_scores_after_exp_2AF)
             self.experiment_2AF.show()
             self.experiment_2AF.showFullScreen()
         else:
             self.status_bar.showMessage('Cannot run experiment without transforms', 5000)
 
     @pyqtSlot(str)
-    def change_human_scores_after_exp(self, path):
-        self._change_human_exp(path)
+    def change_human_scores_after_exp_2AF(self, path):
+        self._change_human_exp_2AF(path)
+
+    @pyqtSlot(str)
+    def change_human_scores_after_exp_JND(self, path):
+        self._change_human_exp_JND(path)
 
 
 '''

@@ -245,9 +245,9 @@ class images:
                 "CSV Files (*.csv)",)
         except:
             return
-        self._change_human_exp(file)
+        self._change_human_exp_2AF(file)
         
-    def _change_human_exp(self, file, change_image=True):
+    def _change_human_exp_2AF(self, file, change_image=True):
         # load image
         if change_image == True:
             self._load_experiment_image(os.path.dirname(file))
@@ -267,9 +267,31 @@ class images:
         self._load_experiment_extras(os.path.dirname(file))
         self.update_status_bar(f'Loaded experiment file: {file}', 10000)
 
+    def _change_human_exp_JND(self, file, change_image=True):
+        # load image
+        if change_image == True:
+            self._load_experiment_image(os.path.dirname(file))
+        # load the csv human scores file and take mean of all experiments
+        self.update_status_bar(f'Loading experiment file: {file}', 10000)
+        if os.path.exists(file):
+            df = pd.read_csv(file)
+            # for i, data_store in enumerate(self.data_stores):
+            #     self.human_experiment_scores[i] = {'mean': df.mean().to_dict(),
+            #                                        'std': df.std().to_dict()}
+            #     # cache this as the last used dataset for this image
+            #     self.human_experiment_cache[data_store.get_reference_image_name(
+            #     )] = os.path.dirname(file)
+            # self.human_scores_file = file
+            print(df)
+        else:
+            self.update_status_bar(f'No experiment file: {file}', 10000)
+            return
+        self._load_experiment_extras(os.path.dirname(file))
+        self.update_status_bar(f'Loaded experiment file: {file}', 10000)
+
     def _load_experiment(self, dir, change_image=True):
         file = IQM_Vis.utils.save_utils.get_human_scores_file(dir)
-        self._change_human_exp(file, change_image=change_image)
+        self._change_human_exp_2AF(file, change_image=change_image)
 
     def load_experiment_from_dir(self):
         # get the file opener for the user

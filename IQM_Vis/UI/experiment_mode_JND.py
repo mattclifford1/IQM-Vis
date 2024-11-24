@@ -170,6 +170,9 @@ class make_experiment_JND(QMainWindow):
                 'image': self.ref_image}
         self.experiment_transforms.append(data)
 
+        # shuffle the images list
+        random.shuffle(self.experiment_transforms)
+
     def get_metric_scores(self):
         '''get IQM scores to save alongside the experiment for plotting/analysis purposes'''
         IQM_scores = {}
@@ -474,11 +477,6 @@ class make_experiment_JND(QMainWindow):
                 save_utils.get_image_processing_file(self.default_save_dir),
                 self.processing)
 
-        # TODO: save this properly!!!!
-        # dev
-        for im in self.experiment_transforms:
-            print(
-                f"{im['transform_name']}, {im['transform_value']}: {im['user_decision']}")
         # save the experiment results
         csv_file = save_utils.save_JND_experiment_results(
             self.original_params_order,

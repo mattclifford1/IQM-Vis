@@ -81,10 +81,47 @@ def save_and_merge_df_as_csv(df, file):
         df.set_index(index_name, inplace=True)
     df.to_csv(file, index=True)
 
-def save_JND_experiment_results():
-    pass
+
+def save_JND_experiment_results(trans_names,
+                                experiment_results,
+                                save_dir,
+                                times_taken=None,
+                                IQM_scores_df=None):
+
+    results = {}
+    for image_data in experiment_results:
+        results[make_name_for_trans(image_data)] = [image_data['user_decision']]
+
+    # make df
+    df = pd.DataFrame.from_dict(results)
+    # re order so that the trans_names are acending order as given
+    df = df[trans_names]
+    # save results
+    human_experiment_csv_file = get_human_scores_file(save_dir)
+    save_df_as_csv(df, human_experiment_csv_file, index=False)
+
+    # save times taken
+    if times_taken != None:
+        times_file = get_human_times_file(save_dir)
+        data = {'mean time (seconds)': [sum(times_taken)/len(times_taken)],
+                'total time (seconds)': [sum(times_taken)],
+                'number of comparisons': [len(times_taken)],
+                'individual times (seconds)': [str(times_taken)]}
+        save_df_as_csv(pd.DataFrame.from_dict(data), times_file)
+
+    # save IQM results
+    if not isinstance(IQM_scores_df, type(None)):
+        IQM_file = get_IQM_file(save_dir)
+        save_and_merge_df_as_csv(IQM_scores_df, IQM_file)
+
+    return human_experiment_csv_file
+
     
-def save_2AF_experiment_results(trans_names, results_order, save_dir, times_taken=None, IQM_scores_df=None):
+def save_2AF_experiment_results(trans_names, 
+                                results_order, 
+                                save_dir, 
+                                times_taken=None, 
+                                IQM_scores_df=None):
     '''save all the experiment reults as csvs'''
     # make HIQM scores from ordering : HIQM = pos/num_pos
     results = {}
