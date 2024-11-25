@@ -192,6 +192,14 @@ class layout(QMainWindow):
         save_button_exp.addWidget(self.widget_controls['button']['exp_change_save'])
         save_button_exp.addStretch()
         experiment_controls.addLayout(save_button_exp)
+        # Dataset Name
+        dataset_name_exp = QHBoxLayout()
+        dataset_name_exp.addWidget(
+            self.widget_controls['label']['exp_change_dataset_name'])
+        dataset_name_exp.addWidget(
+            self.widget_controls['button']['exp_change_dataset_name'])
+        dataset_name_exp.addStretch()
+        experiment_controls.addLayout(dataset_name_exp)
         # run experiment button
         experiment_button = QHBoxLayout()
         experiment_button.addWidget(self.widget_controls['button']['launch_exp_2AFC'])

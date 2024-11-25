@@ -233,9 +233,17 @@ class widgets():
             self.widget_experiment_params[trans_name]['steps_edit'].setText(f"{self.num_step_experiment}")
         # change save folder button
         self.widget_controls['label']['exp_change_save'] = QLabel(self)
-        self.widget_controls['label']['exp_change_save'].setText(f'Save Folder: {self.default_save_dir}')
+        self.widget_controls['label']['exp_change_save'].setText(f'Root Save Folder: {self.default_save_dir}')
         self.widget_controls['button']['exp_change_save'] = QPushButton('Change', self)
         self.widget_controls['button']['exp_change_save'].clicked.connect(self.change_save_folder)
+        # dataset name
+        self.widget_controls['label']['exp_change_dataset_name'] = QLabel(self)
+        self.widget_controls['label']['exp_change_dataset_name'].setText(f'Dataset Name')
+        self.widget_controls['button']['exp_change_dataset_name'] = QLineEdit(self)
+        self.widget_controls['button']['exp_change_dataset_name'].setText(
+            self.default_dataset_name)
+        self.widget_controls['button']['exp_change_dataset_name'].textChanged.connect(
+            self.change_dataset_name)
 
         ''' export options '''
         self.widget_export = {}

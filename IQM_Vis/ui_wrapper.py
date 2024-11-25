@@ -37,6 +37,7 @@ class make_UI:
                  metrics_avg_graph: bool=True,
                  metric_params: dict={},
                  default_save_dir=IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR,
+                 default_dataset_name='dataset1',
                  restrict_options=None,
                  num_steps_range=11,
                  debug=False, 
@@ -51,6 +52,7 @@ class make_UI:
         self.metrics_avg_graph = metrics_avg_graph
         self.metric_params = metric_params
         self.default_save_dir = default_save_dir
+        self.default_dataset_name = default_dataset_name
         self.restrict_options = restrict_options
         self.num_steps_range = num_steps_range
         self.debug = debug
@@ -67,15 +69,16 @@ class make_UI:
             self._check_inputs()
         self.app = QApplication(sys.argv)
         self.window = make_app(self.app,
-                          self.data_store,
-                          self.transformations,
-                          metrics_info_format=self.metrics_info_format,
-                          metrics_avg_graph=self.metrics_avg_graph,
-                          metric_params=self.metric_params,
-                          default_save_dir=self.default_save_dir,
-                          restrict_options=self.restrict_options,
-                          num_steps_range=self.num_steps_range,
-                          test=self.test)
+                               self.data_store,
+                               self.transformations,
+                               metrics_info_format=self.metrics_info_format,
+                               metrics_avg_graph=self.metrics_avg_graph,
+                               metric_params=self.metric_params,
+                               default_save_dir=self.default_save_dir,
+                               default_dataset_name=self.default_dataset_name,
+                               restrict_options=self.restrict_options,
+                               num_steps_range=self.num_steps_range,
+                               test=self.test)
         if self.test == False:
             sys.exit(self.app.exec())
 
