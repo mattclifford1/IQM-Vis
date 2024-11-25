@@ -245,9 +245,9 @@ class images:
                 "CSV Files (*.csv)",)
         except:
             return
-        self._change_human_exp_2AF(file)
+        self._change_human_exp_2AFC(file)
         
-    def _change_human_exp_2AF(self, file, change_image=True):
+    def _change_human_exp_2AFC(self, file, change_image=True):
         # load image
         if change_image == True:
             self._load_experiment_image(os.path.dirname(file))
@@ -291,7 +291,7 @@ class images:
 
     def _load_experiment(self, dir, change_image=True):
         file = IQM_Vis.utils.save_utils.get_human_scores_file(dir)
-        self._change_human_exp_2AF(file, change_image=change_image)
+        self._change_human_exp_2AFC(file, change_image=change_image)
 
     def load_experiment_from_dir(self):
         # get the file opener for the user

@@ -30,7 +30,7 @@ from IQM_Vis.UI import utils
 from IQM_Vis.utils import gui_utils, plot_utils, image_utils, save_utils
 
 
-class make_experiment_2AF(QMainWindow):
+class make_experiment_2AFC(QMainWindow):
     saved_experiment = pyqtSignal(str)
     reset_clicked_image = pyqtSignal(dict)
 
@@ -76,7 +76,7 @@ class make_experiment_2AF(QMainWindow):
         self.get_metric_scores()
         self.experiment_layout()
         self.setCentralWidget(self.experiments_tab)
-        self.setWindowTitle('2AF Experiment')
+        self.setWindowTitle('2AFC Experiment')
         # move to centre of the screen
         qr = self.frameGeometry()
         cp = self.screen().availableGeometry().center()
@@ -215,7 +215,7 @@ class make_experiment_2AF(QMainWindow):
         self.widget_experiments['setup']['images'] = gui_utils.MplCanvas(size=None)
         self.widget_experiments['setup']['text'] = QLabel(self)
         self.widget_experiments['setup']['text'].setText(f'''
-        2AF Experiment to be setup with the above images using the settings:
+        2AFC Experiment to be setup with the above images using the settings:
             Save folder: {self.default_save_dir}
             Image Display Size: {self.image_display_size}
             Image Calibration:
@@ -482,7 +482,7 @@ class make_experiment_2AF(QMainWindow):
         exp_order = []
         for trans in self.experiment_transforms:
             exp_order.append(save_utils.make_name_for_trans(trans))
-        csv_file = save_utils.save_2AF_experiment_results(
+        csv_file = save_utils.save_2AFC_experiment_results(
             self.original_params_order,
             exp_order,
             self.default_save_dir,

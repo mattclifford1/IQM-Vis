@@ -69,7 +69,7 @@ def build_exp(build_IQM_Vis):
     QtTest.QTest.qWait(500)
 
     qtbotbis.mouseClick(
-        test_window.window.widget_controls['button']['launch_exp_2AF'], QtCore.Qt.MouseButton.LeftButton)
+        test_window.window.widget_controls['button']['launch_exp_2AFC'], QtCore.Qt.MouseButton.LeftButton)
     QtTest.QTest.qWait(500)
     yield test_window, qtbotbis
     QtTest.QTest.qWait(500)
@@ -79,40 +79,40 @@ def test_experiment_runs(build_exp):
     test_window, qtbotbis = build_exp
     
     # test launched
-    assert test_window.window.experiment_2AF.experiments_tab.currentIndex() == 0
+    assert test_window.window.experiment_2AFC.experiments_tab.currentIndex() == 0
 
     # Start experiment
     qtbotbis.mouseClick(
-        test_window.window.experiment_2AF.widget_experiments['setup']['start_button'],
+        test_window.window.experiment_2AFC.widget_experiments['setup']['start_button'],
         QtCore.Qt.MouseButton.LeftButton)
-    assert test_window.window.experiment_2AF.experiments_tab.currentIndex() == 1
+    assert test_window.window.experiment_2AFC.experiments_tab.currentIndex() == 1
 
     # Start
     qtbotbis.mouseClick(
-        test_window.window.experiment_2AF.widget_experiments['preamble']['start_button'],
+        test_window.window.experiment_2AFC.widget_experiments['preamble']['start_button'],
         QtCore.Qt.MouseButton.LeftButton)
-    assert test_window.window.experiment_2AF.experiments_tab.currentIndex() == 2
+    assert test_window.window.experiment_2AFC.experiments_tab.currentIndex() == 2
 
 
     # run through experiment
     i = 0
-    while test_window.window.experiment_2AF.experiments_tab.currentIndex() == 2 and i < 50:
+    while test_window.window.experiment_2AFC.experiments_tab.currentIndex() == 2 and i < 50:
         # just click left image
         qtbotbis.mouseClick(
-            test_window.window.experiment_2AF.widget_experiments['exp']['A']['data'], QtCore.Qt.MouseButton.LeftButton)
+            test_window.window.experiment_2AFC.widget_experiments['exp']['A']['data'], QtCore.Qt.MouseButton.LeftButton)
         QtTest.QTest.qWait(50)
         i += 1
 
     # check finished
     QtTest.QTest.qWait(500)
-    assert test_window.window.experiment_2AF.experiments_tab.currentIndex() == 3
+    assert test_window.window.experiment_2AFC.experiments_tab.currentIndex() == 3
     QtTest.QTest.qWait(100)
 
 
     # leave experiment
     QtTest.QTest.qWait(1000)
     qtbotbis.mouseClick(
-        test_window.window.experiment_2AF.widget_experiments['final']['quit_button'], QtCore.Qt.MouseButton.LeftButton)
+        test_window.window.experiment_2AFC.widget_experiments['final']['quit_button'], QtCore.Qt.MouseButton.LeftButton)
 
 
 

@@ -117,7 +117,7 @@ def save_JND_experiment_results(trans_names,
     return human_experiment_csv_file
 
     
-def save_2AF_experiment_results(trans_names, 
+def save_2AFC_experiment_results(trans_names, 
                                 results_order, 
                                 save_dir, 
                                 times_taken=None, 

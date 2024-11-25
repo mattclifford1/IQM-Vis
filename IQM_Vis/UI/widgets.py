@@ -151,8 +151,8 @@ class widgets():
                 self.widget_im_num_hash[im] = im # store the ind number of each im widget preview
 
         # launch experiment buttons
-        self.widget_controls['button']['launch_exp_2AF'] = QPushButton('Run 2AF Experiment', self)
-        self.widget_controls['button']['launch_exp_2AF'].clicked.connect(self.launch_experiment_2AF)
+        self.widget_controls['button']['launch_exp_2AFC'] = QPushButton('Run 2AFC Experiment', self)
+        self.widget_controls['button']['launch_exp_2AFC'].clicked.connect(self.launch_experiment_2AFC)
         self.widget_controls['button']['launch_exp_JND'] = QPushButton('Run JND Experiment', self)
         self.widget_controls['button']['launch_exp_JND'].clicked.connect(self.launch_experiment_JND)
         # load experiment button
@@ -739,7 +739,7 @@ class widgets():
             self.experiment_JND.showFullScreen()
             
 
-    def launch_experiment_2AF(self):
+    def launch_experiment_2AFC(self):
         '''Launch the 2 alternate forced choice experiment'''
         # first get all the checked transforms and their parameters
         checked_transformation_params = {}
@@ -752,7 +752,7 @@ class widgets():
                 name = self.widget_experiment_params[trans]['name'].text()
                 checked_transformation_params[name] = data
         if self.checked_transformations != {}:
-            self.experiment_2AF = IQM_Vis.UI.make_experiment_2AF(checked_transformation_params,
+            self.experiment_2AFC = IQM_Vis.UI.make_experiment_2AFC(checked_transformation_params,
                                                          self.data_stores[0],
                                                          self.image_display_size,
                                                          self.rgb_brightness,
@@ -761,16 +761,16 @@ class widgets():
                                                          self.pre_processing_option,
                                                          self.post_processing_option,
                                                          self.checked_metrics)
-            self.experiment_2AF.saved_experiment.connect(
-                self.change_human_scores_after_exp_2AF)
-            self.experiment_2AF.show()
-            self.experiment_2AF.showFullScreen()
+            self.experiment_2AFC.saved_experiment.connect(
+                self.change_human_scores_after_exp_2AFC)
+            self.experiment_2AFC.show()
+            self.experiment_2AFC.showFullScreen()
         else:
             self.status_bar.showMessage('Cannot run experiment without transforms', 5000)
 
     @pyqtSlot(str)
-    def change_human_scores_after_exp_2AF(self, path):
-        self._change_human_exp_2AF(path)
+    def change_human_scores_after_exp_2AFC(self, path):
+        self._change_human_exp_2AFC(path)
 
     @pyqtSlot(str)
     def change_human_scores_after_exp_JND(self, path):

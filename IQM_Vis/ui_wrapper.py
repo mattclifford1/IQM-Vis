@@ -16,13 +16,14 @@ import numpy as np
 try:
     from PyQt6.QtWidgets import QApplication
     import IQM_Vis
-    from IQM_Vis.UI.main import make_app
     from IQM_Vis.utils import image_utils
-    from IQM_Vis.examples.images import DEFAULT_IMAGES
     import matplotlib
     matplotlib.use("Qt5Agg")
 except ImportError:
     warnings.warn('Cannot load PyQt6 library - running IQM_Vis package in headless mode')
+    
+from IQM_Vis.UI.main import make_app
+from IQM_Vis.examples.images import DEFAULT_IMAGES
 
 
 class make_UI:

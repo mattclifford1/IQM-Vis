@@ -194,7 +194,7 @@ class layout(QMainWindow):
         experiment_controls.addLayout(save_button_exp)
         # run experiment button
         experiment_button = QHBoxLayout()
-        experiment_button.addWidget(self.widget_controls['button']['launch_exp_2AF'])
+        experiment_button.addWidget(self.widget_controls['button']['launch_exp_2AFC'])
         experiment_button.addWidget(self.widget_controls['button']['launch_exp_JND'])
         experiment_button.addStretch()
         experiment_controls.addLayout(experiment_button)
