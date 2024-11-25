@@ -32,6 +32,8 @@ class widgets():
         '''
         create all the widgets we need and init params
         '''
+        self.export_in_progress = False
+        self.last_export = None
         self.tool_tip_style = """QToolTip {background-color: black; color: white; border: black solid 1px}"""
         # first setup the slider data
         self.sliders = {'transforms': {}, 'metric_params': {}}
@@ -152,8 +154,10 @@ class widgets():
 
         # launch experiment buttons
         self.widget_controls['button']['launch_exp_2AFC'] = QPushButton('Run 2AFC Experiment', self)
+        self.widget_controls['button']['launch_exp_2AFC'].setToolTip('Two Alternative Forced Choice Experiment')
         self.widget_controls['button']['launch_exp_2AFC'].clicked.connect(self.launch_experiment_2AFC)
         self.widget_controls['button']['launch_exp_JND'] = QPushButton('Run JND Experiment', self)
+        self.widget_controls['button']['launch_exp_JND'].setToolTip('Just Noticeable Difference Experiment')
         self.widget_controls['button']['launch_exp_JND'].clicked.connect(self.launch_experiment_JND)
         # load experiment button
         self.widget_controls['button']['load_exp'] = QPushButton('Load Experiment', self)
@@ -641,11 +645,11 @@ class widgets():
                     self.widget_export[trans][widget].setStyleSheet(f"QLineEdit {{color: gray;}}\nQLabel {{color: gray;}}")
 
     def export_trans_images(self):
+        self.export_in_progress = True
         # make save folder
-        image_name = f"{self.data_stores[0].get_reference_image_name()}-export"
-
+        dir_folder = self.get_export_dir(0)
         save_folder = os.path.join(
-            self.default_save_dir, image_name, f"images-{str(datetime.datetime.now()).split('.')[0]}")
+            dir_folder, f"images-{str(datetime.datetime.now()).split('.')[0]}")
         if not os.path.exists(save_folder):
             os.makedirs(save_folder)
 
@@ -683,6 +687,10 @@ class widgets():
             image_utils.save_image(img, os.path.join(
                 save_folder, f'{save_utils.make_name_for_trans(trans_info)}.png'))
         self.status_bar.showMessage(f'Images saved to {save_folder}', 5000)
+        self.export_in_progress = False
+        self.last_export = save_folder
+
+
 
     def open_mlp_new(self, mpl_canvas):
         fig = gui_utils.break_out_mlp(mpl_canvas)

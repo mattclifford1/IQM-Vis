@@ -532,10 +532,14 @@ class images:
         # show fig in new window
         gui_utils.matplotlib.pyplot.show()
 
+    def get_export_dir(self, i):
+        image_name = f"{self.data_stores[i].get_reference_image_name()}"
+        save_path = os.path.join(self.default_save_dir, 'exports', image_name)
+        return save_path
+
     def set_save_dir_mpl(self, i=0):
         # set the default save path
-        image_name = f"{self.data_stores[i].get_reference_image_name()}-export"
-        save_path = os.path.join(self.default_save_dir, image_name)
+        save_path = self.get_export_dir(i)
         if not os.path.exists(save_path):
             os.makedirs(save_path)
         gui_utils.matplotlib.rcParams['savefig.directory'] = save_path

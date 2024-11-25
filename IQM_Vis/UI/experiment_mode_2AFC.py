@@ -54,6 +54,7 @@ class make_experiment_2AFC(QMainWindow):
         self.rgb_brightness = rgb_brightness
         self.display_brightness = display_brightness
         self.default_save_dir = default_save_dir
+        self.default_save_dir = os.path.join(default_save_dir, '2AFC')
         
         self.processing = {'pre': image_preprocessing,
                            'post': image_postprocessing}

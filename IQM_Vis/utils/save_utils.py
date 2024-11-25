@@ -9,7 +9,7 @@ import json
 import pickle
 import pandas as pd
 
-DEFAULT_SAVE_DIR = os.path.join(os.path.expanduser("~"), 'IQM-Vis-experiments')
+DEFAULT_SAVE_DIR = os.path.join(os.path.expanduser("~"), 'IQM-Vis')
 
 ''' getters for experiment files from save dir '''
 def get_human_scores_file(dir):
