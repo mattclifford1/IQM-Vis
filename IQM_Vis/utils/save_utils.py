@@ -82,16 +82,19 @@ def save_and_merge_df_as_csv(df, file):
     df.to_csv(file, index=True)
 
 
-def save_IQM_experiment_results(df, file):
+def save_and_merge_rm_duplicates_df_as_csv(df, file):
     '''save only new IQM rows'''
-    print(df)
     if os.path.exists(file):
         df_saved = pd.read_csv(file)
-        print(df_saved)
-        # index_name = df.index.name
-        # df = pd.merge(df.reset_index(), df_saved, how='outer')
-        # df.set_index(index_name, inplace=True)
-    df.to_csv(file, index=True)
+        index_name = df.index.name
+        df = pd.merge(df.reset_index(), df_saved, how='outer')
+        df.set_index(index_name, inplace=True)
+        # remove duplicates
+        df = df[~df.index.duplicated(keep='last')]
+    # sort columns for consistency
+    cols = df.columns.tolist()
+    cols.sort()
+    df.to_csv(file, index=True, columns=cols)
 
 def save_JND_experiment_results(trans_names,
                                 experiment_results,
@@ -123,7 +126,7 @@ def save_JND_experiment_results(trans_names,
     # save IQM results
     if not isinstance(IQM_scores_df, type(None)):
         IQM_file = get_IQM_file(save_dir)
-        save_IQM_experiment_results(IQM_scores_df, IQM_file)
+        save_and_merge_rm_duplicates_df_as_csv(IQM_scores_df, IQM_file)
 
     return human_experiment_csv_file
 
@@ -159,7 +162,7 @@ def save_2AFC_experiment_results(trans_names,
     # save IQM results
     if not isinstance(IQM_scores_df, type(None)):
         IQM_file = get_IQM_file(save_dir)
-        save_IQM_experiment_results(IQM_scores_df, IQM_file)
+        save_and_merge_rm_duplicates_df_as_csv(IQM_scores_df, IQM_file)
 
     return human_experiment_csv_file
 
@@ -172,6 +175,6 @@ def load_json_dict(path):
         return json.load(fp)
 
 def make_name_for_trans(trans):
-    splitter = '-----'
+    # splitter = '-----'
     splitter = '<>'
     return f"{trans['transform_name']}{splitter}{trans['transform_value']}"
