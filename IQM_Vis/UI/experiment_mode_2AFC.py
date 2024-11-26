@@ -56,6 +56,7 @@ class make_experiment_2AFC(QMainWindow):
         self.default_save_dir = default_save_dir
         self.default_save_dir = os.path.join(default_save_dir, '2AFC')
         
+        
         self.processing = {'pre': image_preprocessing,
                            'post': image_postprocessing}
 
@@ -73,9 +74,13 @@ class make_experiment_2AFC(QMainWindow):
         self.saved = False
         self.quit_experiment = False
         self.get_all_images()
+        
         # make the experiment directory
         self.default_save_dir = os.path.join(
             self.default_save_dir, self.image_name)
+        # make unique save dir name
+        self.new_save_dir = self.get_unique_save_dir()
+        
         self._init_experiment_window_widgets()
         self.get_metric_scores()
         self.experiment_layout()
@@ -412,28 +417,35 @@ class make_experiment_2AFC(QMainWindow):
         else:
             self.widget_experiments['final']['save_label'].setText(f'Save failed to {self.default_save_dir}')
 
-    def save_experiment(self):
+    def get_trans_funcs(self):
         # get the current transform functions
         trans_funcs = {}
         for single_trans in self.experiment_trans_params:
             trans_name = list(single_trans.keys())[0]
             trans_funcs[trans_name] = self.checked_transformation_params[trans_name]['function']
-        
+        return trans_funcs
+    
+    def get_unique_save_dir(self):
+        # get the current transform functions
+        trans_funcs = self.get_trans_funcs()
+
         # get a unique directory (same image with diff trans need a new dir)
         i = 1
         unique_dir_found = False
         new_dir = True
         while unique_dir_found == False:
-            exp_save_dir = f'{self.default_save_dir}-experiment-{i}'
+            exp_save_dir = os.path.join(
+                self.default_save_dir, f'experiment-{i}')
             if os.path.exists(exp_save_dir):
                 # get transform funcs and params
                 exp_trans_params = save_utils.load_obj(
                     os.path.join(exp_save_dir, 'transforms', 'transform_params.pkl'))
                 exp_trans_funcs = save_utils.load_obj(
                     os.path.join(exp_save_dir, 'transforms', 'transform_functions.pkl'))
-                
+
                 # get image processing saved params
-                processing_file = save_utils.get_image_processing_file(exp_save_dir)
+                processing_file = save_utils.get_image_processing_file(
+                    exp_save_dir)
                 procesing_same = False
                 if os.path.exists(processing_file):
                     processing = save_utils.load_json_dict(processing_file)
@@ -441,7 +453,9 @@ class make_experiment_2AFC(QMainWindow):
                         procesing_same = True
 
                 # check if experiment is the same
-                if (exp_trans_params == self.original_params_order) and (trans_funcs == exp_trans_funcs) and procesing_same:
+                if ((exp_trans_params == self.original_params_order) 
+                    and (trans_funcs == exp_trans_funcs) 
+                    and procesing_same):
                     self.default_save_dir = exp_save_dir
                     unique_dir_found = True
                     new_dir = False
@@ -450,6 +464,12 @@ class make_experiment_2AFC(QMainWindow):
             else:
                 self.default_save_dir = exp_save_dir
                 unique_dir_found = True
+        return new_dir
+    
+    def save_experiment(self):
+        # get the current transform functions
+        trans_funcs = self.get_trans_funcs()
+
         # make all the dirs and subdirs
         os.makedirs(self.default_save_dir, exist_ok=True)
         os.makedirs(os.path.join(self.default_save_dir, 'images'), exist_ok=True)
@@ -463,7 +483,7 @@ class make_experiment_2AFC(QMainWindow):
             if hasattr(self, 'ref_image_unprocessed'):
                 image_utils.save_image(self.ref_image_unprocessed,
                                         save_utils.get_original_unprocessed_image_file(self.default_save_dir))
-        if new_dir == True:
+        if self.new_save_dir == True:
             for trans in self.experiment_transforms:
                 image_utils.save_image(
                     trans['image'], os.path.join(self.default_save_dir, 'images', f'{save_utils.make_name_for_trans(trans)}.png'))
