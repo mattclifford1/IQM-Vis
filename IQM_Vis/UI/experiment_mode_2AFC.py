@@ -409,7 +409,6 @@ class make_experiment_2AFC(QMainWindow):
         else:
             self.widget_experiments['final']['save_label'].setText(f'Save failed to {self.default_save_dir}')
 
-
     def save_experiment(self):
         # get the current transform functions
         trans_funcs = {}
@@ -491,7 +490,6 @@ class make_experiment_2AFC(QMainWindow):
             self.IQM_scores_df)
         self.saved = True
         self.saved_experiment.emit(csv_file)
-
 
     ''' sorting algorithm resource: https://www.geeksforgeeks.org/quick-sort/'''
     def quick_sort(self):

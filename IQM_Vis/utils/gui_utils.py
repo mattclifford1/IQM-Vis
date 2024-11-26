@@ -79,12 +79,17 @@ def get_metric_image_name(metric, data_store):
 
 def get_trans_dict_from_str(trans_str, return_dict=False):
     # determine which experiment formatting we are using
-    splitter = '='
-    if len(trans_str.split(splitter)) == 1:
+    if len(trans_str.split('-----')) != 1:
         splitter = '-----'   # legacy code experiment format - illegible with negative numbers
-    if len(trans_str.split(splitter)) == 1:
+    elif len(trans_str.split('::')) != 1:
         splitter = '::'   # legacy code experiment format - didn't work with windows filesystem
-    
+    elif len(trans_str.split('<>')) != 1:
+        splitter = '<>'   # newer code experiment format
+    elif len(trans_str.split('=')) != 1:
+        splitter = '='   # legacy experiment format
+    else:
+        raise ValueError('No splitter found in transformation string')
+    # split the string into the transformation and the value    
     trans = splitter.join(trans_str.split(splitter)[:-1])
     # error with duplicated columns in csv with pandas load
     try:
