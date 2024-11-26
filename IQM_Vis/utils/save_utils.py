@@ -9,6 +9,8 @@ import json
 import pickle
 import pandas as pd
 
+from IQM_Vis.utils import image_utils
+
 DEFAULT_SAVE_DIR = os.path.join(os.path.expanduser("~"), 'IQM-Vis')
 
 ''' getters for experiment files from save dir '''
@@ -65,6 +67,24 @@ def load_obj(pickle_path):
     except:
         return None
     
+def get_JND_image_names(dir):
+    ''' load the image names from a JND experiment '''
+    images_dir = get_JND_ref_image_dir(dir)
+    if not os.path.exists(images_dir):
+        return None
+    try:
+        # get all file names in the directory
+        return os.listdir(images_dir)
+    except:
+        return None
+    
+def get_JND_ref_image_dir(dir):
+    return  os.path.join(dir, 'reference_images')
+
+def get_JND_ref_image_unprocessed_dir(dir):
+    return  os.path.join(dir, 'reference_images_unprocessed')
+
+
 def save_df_as_csv(df, file, index=False):
     if os.path.exists(file):
         df_saved = pd.read_csv(file)
