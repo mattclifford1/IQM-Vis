@@ -116,20 +116,37 @@ def save_and_merge_rm_duplicates_df_as_csv(df, file):
     cols.sort()
     df.to_csv(file, index=True, columns=cols)
 
-def save_JND_experiment_results(trans_names,
-                                experiment_results,
+
+def get_JND_user_ID(dir):
+    human_experiment_csv_file = get_human_scores_file(dir)
+    if not os.path.exists(human_experiment_csv_file):
+        return 1
+    df = pd.read_csv(human_experiment_csv_file)
+    # get the last user ID
+    return df['User ID'].max() + 1
+
+def save_JND_experiment_results(experiment_results,
                                 save_dir,
                                 times_taken=None,
                                 IQM_scores_df=None):
 
-    results = {}
+    # User ID
+    ID = get_JND_user_ID(save_dir)
+    results = {'ImageName': [],
+               'UserDecision': [],
+               'Transform': [],
+               'TimeTaken': [],
+               'User ID': []}
     for image_data in experiment_results:
-        results[make_name_for_trans(image_data)] = [image_data['user_decision']]
+        results['ImageName'].append(image_data['ref_name'])
+        results['UserDecision'].append(image_data['user_decision'])
+        results['Transform'].append(make_name_for_trans(image_data))
+        results['TimeTaken'].append(image_data['time_taken'])
+        results['User ID'].append(ID)
+        # results[make_name_for_trans(image_data)] = [image_data['user_decision']]
 
     # make df
     df = pd.DataFrame.from_dict(results)
-    # re order so that the trans_names are acending order as given
-    df = df[trans_names]
     # save results
     human_experiment_csv_file = get_human_scores_file(save_dir)
     save_df_as_csv(df, human_experiment_csv_file, index=False)

@@ -204,14 +204,14 @@ class make_experiment_JND(QMainWindow):
                 data = {'transform_name': trans_name,
                         'transform_value': param,
                         'image': img,
-                        'ref name': ref_name}
+                        'ref_name': ref_name}
                 self.experiment_transforms.append(data)
         
             # add reference image to list
             data = {'transform_name': 'None',
                     'transform_value': 'None',
                     'image': ref_image,
-                    'ref name': ref_name}
+                    'ref_name': ref_name}
             self.experiment_transforms.append(data)
 
             # update user
@@ -421,7 +421,7 @@ class make_experiment_JND(QMainWindow):
 
         # Display reference image
         gui_utils.change_im(self.widget_experiments['exp']['Reference']['data'], 
-                            self.all_ref_images[self.experiment_transforms[self.curr_im_ind]['ref name']],
+                            self.all_ref_images[self.experiment_transforms[self.curr_im_ind]['ref_name']],
                             resize=self.image_display_size, 
                             rgb_brightness=self.rgb_brightness, 
                             display_brightness=self.display_brightness)
@@ -532,7 +532,7 @@ class make_experiment_JND(QMainWindow):
                     trans['image'], 
                     os.path.join(self.default_save_dir, 
                                  'images',
-                                 f"{save_utils.make_name_for_trans(trans)}-{trans['ref name']}{self.save_im_format}",
+                                 f"{save_utils.make_name_for_trans(trans)}-{trans['ref_name']}{self.save_im_format}",
                                  ))
             # save the transformations
             save_utils.save_obj(
@@ -548,7 +548,6 @@ class make_experiment_JND(QMainWindow):
 
         # save the experiment results
         csv_file = save_utils.save_JND_experiment_results(
-            self.original_params_order,
             self.experiment_transforms,
             self.default_save_dir,
             self.times_taken,
@@ -565,6 +564,7 @@ class make_experiment_JND(QMainWindow):
 
         # log decision
         self.experiment_transforms[self.curr_im_ind]['user_decision'] = decision
+        self.experiment_transforms[self.curr_im_ind]['time_taken'] = time.time()-self.time0
 
         # move to next image
         self.curr_im_ind += 1
@@ -573,7 +573,7 @@ class make_experiment_JND(QMainWindow):
         else:
             # Display reference image
             gui_utils.change_im(self.widget_experiments['exp']['Reference']['data'],
-                                self.all_ref_images[self.experiment_transforms[self.curr_im_ind]['ref name']],
+                                self.all_ref_images[self.experiment_transforms[self.curr_im_ind]['ref_name']],
                                 resize=self.image_display_size,
                                 rgb_brightness=self.rgb_brightness,
                                 display_brightness=self.display_brightness)
@@ -583,6 +583,8 @@ class make_experiment_JND(QMainWindow):
                                 resize=self.image_display_size, 
                                 rgb_brightness=self.rgb_brightness, 
                                 display_brightness=self.display_brightness)
+        # reset time
+        self.time0 = time.time()
 
     def get_single_transform_im(self, single_trans_dict):
         trans_name = list(single_trans_dict)[0]
