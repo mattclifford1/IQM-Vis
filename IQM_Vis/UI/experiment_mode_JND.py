@@ -332,19 +332,18 @@ class make_experiment_JND(QMainWindow):
         experiment_mode_info.addLayout(experiment_info_buttons)
 
         ''' experiment '''
+        same_diff_button = QHBoxLayout()
+        same_diff_button.addWidget(self.widget_experiments['exp']['same_button'])
+        same_diff_button.addWidget(self.widget_experiments['exp']['diff_button'])
+        same_diff_button.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
         info = QVBoxLayout()
         info.addWidget(self.widget_experiments['exp']['info'])
         info.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        exp_buttons = QVBoxLayout()
-        same_diff = QHBoxLayout()
-        same_diff.addWidget(self.widget_experiments['exp']['same_button'])
-        same_diff.addWidget(self.widget_experiments['exp']['diff_button'])
-        same_diff.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-        exp_buttons.addLayout(same_diff)
-        exp_buttons.addWidget(self.widget_experiments['exp']['quit_button'])
-        exp_buttons.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        quit_button = QVBoxLayout()
+        quit_button.addWidget(self.widget_experiments['exp']['quit_button'])
+        quit_button.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         layouts = []
         for im in ['Reference', 'Comparison']:
@@ -362,8 +361,9 @@ class make_experiment_JND(QMainWindow):
 
         run_experiment = QVBoxLayout()
         run_experiment.addLayout(info)
+        run_experiment.addLayout(same_diff_button)
         run_experiment.addLayout(experiment_images)
-        run_experiment.addLayout(exp_buttons)
+        run_experiment.addLayout(quit_button)
         run_experiment.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         ''' finished '''
