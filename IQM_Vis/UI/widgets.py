@@ -97,6 +97,7 @@ class widgets():
                 self.widget_row[i]['metrics']['range']['data'].setStyleSheet(self.tool_tip_style)
                 self.widget_row[i]['metrics']['range']['save_button'] = QPushButton('Adjust or Save', self)
                 self.widget_row[i]['metrics']['range']['save_button'].clicked.connect(partial(self.plot_metric_range_mlp, i))
+            # correlation graphs
             self.widget_row[i]['metrics']['correlation'] = {}
             self.widget_row[i]['metrics']['correlation']['label'] = QLabel(self)
             self.widget_row[i]['metrics']['correlation']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -104,6 +105,15 @@ class widgets():
             self.widget_row[i]['metrics']['correlation']['data'] = gui_utils.MplCanvas(size=(self.graph_size/10, self.graph_size/10))
             self.widget_row[i]['metrics']['correlation']['data'].setToolTip('Human scores versus IQMs.\nMean shown with points\nStandard deviation shown with bars.\nClick points to show image.')
             self.widget_row[i]['metrics']['correlation']['data'].setStyleSheet(self.tool_tip_style)
+            # JND graphs
+            self.widget_row[i]['metrics']['JND'] = {}
+            self.widget_row[i]['metrics']['JND']['label'] = QLabel(self)
+            self.widget_row[i]['metrics']['JND']['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+            self.widget_row[i]['metrics']['JND']['label'].setText('Just Noticeable Difference')
+            self.widget_row[i]['metrics']['JND']['data'] = gui_utils.MplCanvas(size=(self.graph_size/10, self.graph_size/10))
+            self.widget_row[i]['metrics']['JND']['data'].setToolTip(
+                'Just Noticeable Difference shows the perceivable effect of a distortion for a human subject.')
+            self.widget_row[i]['metrics']['JND']['data'].setStyleSheet(self.tool_tip_style)
 
 
         '''buttons'''
@@ -159,9 +169,12 @@ class widgets():
         self.widget_controls['button']['launch_exp_JND'] = QPushButton('Run JND Experiment', self)
         self.widget_controls['button']['launch_exp_JND'].setToolTip('Just Noticeable Difference Experiment')
         self.widget_controls['button']['launch_exp_JND'].clicked.connect(self.launch_experiment_JND)
-        # load experiment button
+        # load 2AFC experiment button
         self.widget_controls['button']['load_exp'] = QPushButton('Load Experiment', self)
         self.widget_controls['button']['load_exp'].clicked.connect(self.load_experiment_from_dir)
+        # load JNDexperiment button
+        self.widget_controls['button']['load_exp_JND'] = QPushButton('Load Experiment', self)
+        self.widget_controls['button']['load_exp_JND'].clicked.connect(self.load_experiment_from_dir_JND)
         # export images button
         self.widget_controls['button']['export_images'] = QPushButton('Export Images', self)
         self.widget_controls['button']['export_images'].clicked.connect(self.export_trans_images)

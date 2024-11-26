@@ -12,7 +12,7 @@ import pandas as pd
 from PyQt6.QtWidgets import QApplication, QFileDialog
 from PyQt6.QtCore import pyqtSignal, QThread
 import IQM_Vis
-from IQM_Vis.utils import gui_utils, plot_utils, image_utils
+from IQM_Vis.utils import gui_utils, plot_utils, image_utils, save_utils
 
 # sub class used by IQM_Vis.main.make_app to control all of the image widgets
 class images:
@@ -267,38 +267,77 @@ class images:
         self._load_experiment_extras(os.path.dirname(file))
         self.update_status_bar(f'Loaded experiment file: {file}', 10000)
 
-    def _change_human_exp_JND(self, file, change_image=True):
-        # load image
-        if change_image == True:
-            self._load_experiment_image(os.path.dirname(file))
+    def _change_human_exp_JND(self, file):
         # load the csv human scores file and take mean of all experiments
         self.update_status_bar(f'Loading experiment file: {file}', 10000)
         if os.path.exists(file):
+            # now extract all the useful data from the csv
             df = pd.read_csv(file)
-            # for i, data_store in enumerate(self.data_stores):
-            #     self.human_experiment_scores[i] = {'mean': df.mean().to_dict(),
-            #                                        'std': df.std().to_dict()}
-            #     # cache this as the last used dataset for this image
-            #     self.human_experiment_cache[data_store.get_reference_image_name(
-            #     )] = os.path.dirname(file)
-            # self.human_scores_file = file
-            print(df)
+            # unique values for transform in df
+            transforms = list(df['Transform'].unique())
+            if 'None<>None' in transforms:
+                transforms.remove('None<>None')
+            trans_types = {}
+            params = {}
+            for single_trans in transforms:
+                trans, trans_value = gui_utils.get_trans_dict_from_str(
+                    single_trans)
+                trans_types[trans] = 1 # just to get the keys
+                params[trans_value] = 1 # just to get the keys
+
+            # currently only one transformation type is supported
+            if len(trans_types) > 1:
+                self.update_status_bar(
+                    'Warning: More than one transformation type in JND file', 10000)
+                return
+            
+            transform_name = list(trans_types.keys())[0]
+            self.current_JND_transform = transform_name
+            params = list(params.keys())
+            params.sort()
+
+            # get the decisions for each parameter
+            decisions = {}
+            for param in params:
+                name = save_utils.make_name_for_trans({'transform_name': transform_name, 
+                                                       'transform_value': param})
+                user_choices = df[df['Transform']
+                                      == f'{name}']['UserDecision'].values
+                # convert to plotable format
+                values = []
+                for choice in user_choices:
+                    if choice == 'diff':
+                        values.append(1)
+                    elif choice == 'same':
+                        values.append(0)
+                    else:
+                        values.append(-1)
+                decisions[param] = values
+                
+            self.human_experiment_scores_JND = []
+            for i, data_store in enumerate(self.data_stores):
+                self.human_experiment_scores_JND.append(decisions)
+            self.human_scores_JND_file = file
         else:
             self.update_status_bar(f'No experiment file: {file}', 10000)
             return
-        self._load_experiment_extras(os.path.dirname(file))
+        self._load_experiment_extras_JND(os.path.dirname(file))
         self.update_status_bar(f'Loaded experiment file: {file}', 10000)
 
     def _load_experiment(self, dir, change_image=True):
         file = IQM_Vis.utils.save_utils.get_human_scores_file(dir)
         self._change_human_exp_2AFC(file, change_image=change_image)
 
+    def _load_experiment_JND(self, dir):
+        file = IQM_Vis.utils.save_utils.get_human_scores_file(dir)
+        self._change_human_exp_JND(file)
+
     def load_experiment_from_dir(self):
         # get the file opener for the user
         try:
             start_dir = IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR
             dir = QFileDialog.getExistingDirectory(self, 
-                                                   'Choose Experiment Folder',
+                                                   'Choose 2AFC Experiment Folder',
                                                    start_dir)
         except:
             return
@@ -306,6 +345,20 @@ class images:
         if dir == '':
             return   
         self._load_experiment(dir)
+
+    def load_experiment_from_dir_JND(self):
+        # get the file opener for the user
+        try:
+            start_dir = IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR
+            dir = QFileDialog.getExistingDirectory(self, 
+                                                   'Choose JND Experiment Folder',
+                                                   start_dir)
+        except:
+            return
+
+        if dir == '':
+            return   
+        self._load_experiment_JND(dir)
 
     def _load_experiment_image(self, dir):
         # load image if available already
@@ -352,6 +405,33 @@ class images:
         self.reset_correlation_data()
         self.display_metric_correlation_plot()
         self.tabs['graph'].setCurrentIndex(3)
+
+    def _load_experiment_extras_JND(self, dir):
+        # load the image processing if available
+        processing_file = IQM_Vis.utils.save_utils.get_image_processing_file(dir)
+        if os.path.exists(processing_file):
+            processing = IQM_Vis.utils.save_utils.load_json_dict(
+                processing_file)
+            updated = False
+            for name, options_var, change_func in zip(['pre', 'post'], 
+                                                      [self.pre_processing_options, self.post_processing_options], 
+                                                      [self.change_pre_processing, self.change_post_processing]):
+                if processing[name] in options_var:
+                    if processing[name] != self.widget_settings[f'image_{name}_processing']['widget'].currentText():
+                        self.widget_settings[f'image_{name}_processing']['widget'].setCurrentText(
+                            processing[name])
+                        change_func()
+                        updated = True
+                else:
+                    self.update_status_bar(
+                        f'Could not load image setting: {processing[name]}')
+            if updated == True:
+                self.update_image_settings()
+        else:
+            self.update_status_bar(f'Warning: No settings file ({processing_file}), make sure image pre/post processing settings are correct')
+
+        self.display_metric_JND_plot()
+        self.tabs['graph'].setCurrentIndex(4)
 
     '''
     metric updaters
@@ -547,6 +627,27 @@ class images:
     '''
     metric correlation plots
     '''
+    def display_metric_JND_plot(self):
+        for i, data_store in enumerate(self.data_stores):
+            axes = self.widget_row[i]['metrics']['JND']['data']
+            x = []
+            y = []
+            for val, decisions in self.human_experiment_scores_JND[i].items():
+                for decision in decisions:
+                    x.append(val)
+                    y.append(decision)
+            sp = plot_utils.scatter_plotter(axes,
+                                            x_label=f'{self.current_JND_transform} Value',
+                                            y_label='User Decision')
+            sp.plot(x, y)
+            sp.show()
+
+            # ax.scatter(x, y)
+            # ax.set_xlabel(f'{self.current_JND_transform} Value')
+            # ax.set_ylabel('User Decision')
+            # # ax.set_title(f'{self.current_JND_transform} vs User Decision')
+            # plot.show()
+
     def display_metric_correlation_plot(self):
         if self.checked_metrics == []:
             for i, data_store in enumerate(self.data_stores):

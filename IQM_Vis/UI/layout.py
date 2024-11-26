@@ -112,6 +112,19 @@ class layout(QMainWindow):
                 '''load experiment'''
                 correlation_graph.addWidget(self.widget_controls['button']['load_exp'])
                 utils.add_layout_to_tab(self.tabs['graph'], correlation_graph, 'Correlation')
+            if 'JND' in self.widget_row[i]['metrics'].keys():
+                JND_graph = QVBoxLayout()
+                JND_graph.addWidget(self.widget_row[i]['metrics']['JND']['label'])
+                graph = QGridLayout()
+                graph.addWidget(self.widget_row[i]['metrics']['JND']['data'], 0, 0, im_height, im_width)
+                JND_graph.addLayout(graph)  # need for matplotlib? - test this...    (grid)
+                '''graph controls''' # will add to last one since there is one widget to control all
+                graph_controls = QHBoxLayout()
+                JND_graph.addLayout(graph_controls)
+                '''load experiment'''
+                JND_graph.addWidget(self.widget_controls['button']['load_exp_JND'])
+                utils.add_layout_to_tab(self.tabs['graph'], JND_graph, 'JND')
+
             graph_layouts.addWidget(self.tabs['graph'])
             graph_layouts.addStretch()
 
