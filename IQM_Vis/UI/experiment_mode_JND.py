@@ -66,6 +66,7 @@ class make_experiment_JND(QMainWindow):
             self.default_save_dir, self.dataset_name)
         self.dataset_name = dataset_name
         self.curr_im_ind = 0
+        self.save_im_format = '.png'
         
         self.processing = {'pre': image_preprocessing,
                            'post': image_postprocessing}
@@ -94,6 +95,10 @@ class make_experiment_JND(QMainWindow):
         QApplication.processEvents()
         # get all images and show them
         self.get_all_images()
+
+        # make unique save dir name
+        self.new_save_dir = self.get_unique_save_dir()
+
         self.show_all_images()
         self.get_metric_scores()
 
@@ -446,19 +451,24 @@ class make_experiment_JND(QMainWindow):
         else:
             self.widget_experiments['final']['save_label'].setText(f'Save failed to {self.default_save_dir}')
 
-    def save_experiment(self):
+    def get_trans_funcs(self):
         # get the current transform functions
         trans_funcs = {}
         for single_trans in self.experiment_trans_params:
             trans_name = list(single_trans.keys())[0]
             trans_funcs[trans_name] = self.checked_transformation_params[trans_name]['function']
-        
+        return trans_funcs
+    
+    def get_unique_save_dir(self):
+        '''get directory that is unique based on if it's the same experiment or not'''
+        trans_funcs = self.get_trans_funcs()
+
         # get a unique directory (same image with diff trans need a new dir)
         i = 1
         unique_dir_found = False
         new_dir = True
         while unique_dir_found == False:
-            exp_save_dir = f'{self.default_save_dir}-experiment-{i}'
+            exp_save_dir = os.path.join(self.default_save_dir, f'experiment-{i}')
             if os.path.exists(exp_save_dir):
                 # get transform funcs and params
                 exp_trans_params = save_utils.load_obj(
@@ -466,8 +476,15 @@ class make_experiment_JND(QMainWindow):
                 exp_trans_funcs = save_utils.load_obj(
                     os.path.join(exp_save_dir, 'transforms', 'transform_functions.pkl'))
                 
+                # get ref image names
+                im_names = save_utils.get_JND_image_names(exp_save_dir)
+                curr_im_names = list(self.all_ref_images.keys())
+                # add file extension to names
+                curr_im_names = [f'{name}{self.save_im_format}' for name in curr_im_names]
+
                 # get image processing saved params
-                processing_file = save_utils.get_image_processing_file(exp_save_dir)
+                processing_file = save_utils.get_image_processing_file(
+                    exp_save_dir)
                 procesing_same = False
                 if os.path.exists(processing_file):
                     processing = save_utils.load_json_dict(processing_file)
@@ -475,7 +492,10 @@ class make_experiment_JND(QMainWindow):
                         procesing_same = True
 
                 # check if experiment is the same
-                if (exp_trans_params == self.original_params_order) and (trans_funcs == exp_trans_funcs) and procesing_same:
+                if ((exp_trans_params == self.original_params_order) 
+                    and (trans_funcs == exp_trans_funcs) 
+                    and procesing_same
+                    and (im_names == curr_im_names)):
                     self.default_save_dir = exp_save_dir
                     unique_dir_found = True
                     new_dir = False
@@ -484,23 +504,36 @@ class make_experiment_JND(QMainWindow):
             else:
                 self.default_save_dir = exp_save_dir
                 unique_dir_found = True
+
+        return new_dir
+
+    def save_experiment(self):
+        # get the current transform functions
+        trans_funcs = self.get_trans_funcs()
+        
         # make all the dirs and subdirs
         os.makedirs(self.default_save_dir, exist_ok=True)
+        os.makedirs(os.path.join(save_utils.get_JND_ref_image_dir(self.default_save_dir)), exist_ok=True)
         os.makedirs(os.path.join(self.default_save_dir, 'images'), exist_ok=True)
         os.makedirs(os.path.join(self.default_save_dir, 'transforms'), exist_ok=True)
 
-        # save experiment images
-        if not os.path.exists(save_utils.get_original_image_file(self.default_save_dir)):
-            image_utils.save_image(self.ref_image,
-                                    save_utils.get_original_image_file(self.default_save_dir))
-        if not os.path.exists(save_utils.get_original_unprocessed_image_file(self.default_save_dir)):
+        if not os.path.exists(save_utils.get_JND_ref_image_unprocessed_dir(self.default_save_dir)):
             if hasattr(self, 'ref_image_unprocessed'):
                 image_utils.save_image(self.ref_image_unprocessed,
                                         save_utils.get_original_unprocessed_image_file(self.default_save_dir))
-        if new_dir == True:
+        if self.new_save_dir == True:
+            # save experiment images
+            for name, im in self.all_ref_images.items():
+                image_utils.save_image(im,
+                                       os.path.join(save_utils.get_JND_ref_image_dir(self.default_save_dir), 
+                                                    f'{name}{self.save_im_format}'))
             for trans in self.experiment_transforms:
                 image_utils.save_image(
-                    trans['image'], os.path.join(self.default_save_dir, 'images', f'{save_utils.make_name_for_trans(trans)}.png'))
+                    trans['image'], 
+                    os.path.join(self.default_save_dir, 
+                                 'images',
+                                 f"{save_utils.make_name_for_trans(trans)}-{trans['ref name']}{self.save_im_format}",
+                                 ))
             # save the transformations
             save_utils.save_obj(
                 save_utils.get_transform_params_file(self.default_save_dir),
