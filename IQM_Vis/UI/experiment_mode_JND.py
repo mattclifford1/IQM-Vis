@@ -65,6 +65,7 @@ class make_experiment_JND(QMainWindow):
         self.default_save_dir = os.path.join(
             self.default_save_dir, self.dataset_name)
         self.dataset_name = dataset_name
+        self.curr_im_ind = 0
         
         self.processing = {'pre': image_preprocessing,
                            'post': image_postprocessing}
@@ -211,7 +212,6 @@ class make_experiment_JND(QMainWindow):
             # update user
             self.widget_experiments['setup']['text'].setText(
                 f'''Loading all images in the dataset {i+1}/{len(self.data_store)}''')
-            print(f'Loading all images in the dataset {i+1}/{len(self.data_store)}')
 
         # shuffle the images list
         random.shuffle(self.experiment_transforms)
@@ -415,16 +415,22 @@ class make_experiment_JND(QMainWindow):
         self.experiments_tab.setCurrentIndex(2)
 
         # Display reference image
-        gui_utils.change_im(self.widget_experiments['exp']['Reference']['data'], self.ref_image,
-                            resize=self.image_display_size, rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
+        gui_utils.change_im(self.widget_experiments['exp']['Reference']['data'], 
+                            self.all_ref_images[self.experiment_transforms[self.curr_im_ind]['ref name']],
+                            resize=self.image_display_size, 
+                            rgb_brightness=self.rgb_brightness, 
+                            display_brightness=self.display_brightness)
 
         # exp data holder
         self.times_taken = []
         self.time0 = time.time()
         self.curr_im_ind = 0
         # Display comparison image
-        gui_utils.change_im(self.widget_experiments['exp']['Comparison']['data'], self.experiment_transforms[self.curr_im_ind]['image'],
-                            resize=self.image_display_size, rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
+        gui_utils.change_im(self.widget_experiments['exp']['Comparison']['data'], 
+                            self.experiment_transforms[self.curr_im_ind]['image'],
+                            resize=self.image_display_size, 
+                            rgb_brightness=self.rgb_brightness, 
+                            display_brightness=self.display_brightness)
 
     def finish_experiment(self):
         self.experiments_tab.setTabEnabled(3, True)
@@ -532,8 +538,18 @@ class make_experiment_JND(QMainWindow):
         if self.curr_im_ind ==  len(self.experiment_transforms):
             self.finish_experiment()
         else:
-            gui_utils.change_im(self.widget_experiments['exp']['Comparison']['data'], self.experiment_transforms[self.curr_im_ind]['image'],
-                                resize=self.image_display_size, rgb_brightness=self.rgb_brightness, display_brightness=self.display_brightness)
+            # Display reference image
+            gui_utils.change_im(self.widget_experiments['exp']['Reference']['data'],
+                                self.all_ref_images[self.experiment_transforms[self.curr_im_ind]['ref name']],
+                                resize=self.image_display_size,
+                                rgb_brightness=self.rgb_brightness,
+                                display_brightness=self.display_brightness)
+            # Comparison image
+            gui_utils.change_im(self.widget_experiments['exp']['Comparison']['data'], 
+                                self.experiment_transforms[self.curr_im_ind]['image'],
+                                resize=self.image_display_size, 
+                                rgb_brightness=self.rgb_brightness, 
+                                display_brightness=self.display_brightness)
 
     def get_single_transform_im(self, single_trans_dict):
         trans_name = list(single_trans_dict)[0]
