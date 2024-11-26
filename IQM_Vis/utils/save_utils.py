@@ -127,7 +127,6 @@ def get_JND_user_ID(dir):
 
 def save_JND_experiment_results(experiment_results,
                                 save_dir,
-                                times_taken=None,
                                 IQM_scores_df=None):
 
     # User ID
@@ -150,15 +149,6 @@ def save_JND_experiment_results(experiment_results,
     # save results
     human_experiment_csv_file = get_human_scores_file(save_dir)
     save_df_as_csv(df, human_experiment_csv_file, index=False)
-
-    # save times taken
-    if times_taken != None:
-        times_file = get_human_times_file(save_dir)
-        data = {'mean time (seconds)': [sum(times_taken)/len(times_taken)],
-                'total time (seconds)': [sum(times_taken)],
-                'number of comparisons': [len(times_taken)],
-                'individual times (seconds)': [str(times_taken)]}
-        save_df_as_csv(pd.DataFrame.from_dict(data), times_file)
 
     # save IQM results
     if not isinstance(IQM_scores_df, type(None)):

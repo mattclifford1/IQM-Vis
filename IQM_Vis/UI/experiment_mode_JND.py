@@ -221,21 +221,26 @@ class make_experiment_JND(QMainWindow):
         # shuffle the images list
         random.shuffle(self.experiment_transforms)
 
-    def get_metric_scores(self):
+    def get_metric_scores(self, calc=False):
         '''get IQM scores to save alongside the experiment for plotting/analysis purposes'''
-        IQM_scores = {}
-        for data in self.experiment_transforms:
-            score_dict = self.data_store.get_metrics(transformed_image=data['image'],
-                                                 metrics_to_use=self.checked_metrics)
-            scores = []
-            metrics = []
-            for name, score in score_dict.items():
-                metrics.append(name)
-                scores.append(float(score))
-            IQM_scores[save_utils.make_name_for_trans(data)] = scores
-        IQM_scores['IQM'] = metrics
-        self.IQM_scores_df = pd.DataFrame.from_dict(IQM_scores)
-        self.IQM_scores_df.set_index('IQM', inplace=True)
+        self.IQM_scores_df = None
+        if len(self.checked_metrics) == 0:
+            return
+        if calc == True:
+            ''' this currently doesn't work and might be a bit taxing to do for all images'''
+            IQM_scores = {}
+            for data in self.experiment_transforms:
+                score_dict = self.data_store.get_metrics(transformed_image=data['image'],
+                                                    metrics_to_use=self.checked_metrics)
+                scores = []
+                metrics = []
+                for name, score in score_dict.items():
+                    metrics.append(name)
+                    scores.append(float(score))
+                IQM_scores[save_utils.make_name_for_trans(data)] = scores
+            IQM_scores['IQM'] = metrics
+            self.IQM_scores_df = pd.DataFrame.from_dict(IQM_scores)
+            self.IQM_scores_df.set_index('IQM', inplace=True)
 
     def _init_experiment_window_widgets(self):
         self.widget_experiments = {'exp': {}, 'preamble': {}, 'setup': {}, 'final':{}}
@@ -427,7 +432,6 @@ class make_experiment_JND(QMainWindow):
                             display_brightness=self.display_brightness)
 
         # exp data holder
-        self.times_taken = []
         self.time0 = time.time()
         self.curr_im_ind = 0
         # Display comparison image
@@ -478,9 +482,11 @@ class make_experiment_JND(QMainWindow):
                 
                 # get ref image names
                 im_names = save_utils.get_JND_image_names(exp_save_dir)
+                im_names.sort()
                 curr_im_names = list(self.all_ref_images.keys())
                 # add file extension to names
                 curr_im_names = [f'{name}{self.save_im_format}' for name in curr_im_names]
+                curr_im_names.sort()
 
                 # get image processing saved params
                 processing_file = save_utils.get_image_processing_file(
@@ -550,7 +556,6 @@ class make_experiment_JND(QMainWindow):
         csv_file = save_utils.save_JND_experiment_results(
             self.experiment_transforms,
             self.default_save_dir,
-            self.times_taken,
             self.IQM_scores_df)
         self.saved = True
         self.saved_experiment.emit(csv_file)
@@ -560,7 +565,6 @@ class make_experiment_JND(QMainWindow):
             raise ValueError(f'user decision for JND experiment needs to be same or diff')
         
         # save time it took 
-        self.times_taken.append(time.time()-self.time0)
 
         # log decision
         self.experiment_transforms[self.curr_im_ind]['user_decision'] = decision
