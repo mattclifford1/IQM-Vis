@@ -10,6 +10,7 @@ import threading
 import warnings
 import time
 from functools import partial
+import copy
 
 import numpy as np
 import pandas as pd
@@ -43,6 +44,7 @@ class make_experiment_JND(QMainWindow):
                  rgb_brightness,
                  display_brightness,
                  default_save_dir=save_utils.DEFAULT_SAVE_DIR,
+                 dataset_name='dataset1',
                  image_preprocessing='None',
                  image_postprocessing='None',
                  checked_metrics={}):
@@ -54,11 +56,15 @@ class make_experiment_JND(QMainWindow):
             raise AttributeError(f'Just Noticable difference experiment can only use one transform/distortion')
 
         self.checked_metrics = checked_metrics
-        self.data_store = data_store
+        self.data_store = copy.copy(data_store)
         self.image_display_size = image_display_size
         self.rgb_brightness = rgb_brightness
         self.display_brightness = display_brightness
         self.default_save_dir = os.path.join(default_save_dir, 'JND')
+        self.dataset_name = dataset_name
+        self.default_save_dir = os.path.join(
+            self.default_save_dir, self.dataset_name)
+        self.dataset_name = dataset_name
         
         self.processing = {'pre': image_preprocessing,
                            'post': image_postprocessing}
@@ -73,9 +79,7 @@ class make_experiment_JND(QMainWindow):
         self.stop_event = threading.Event()
         self.saved = False
         self.quit_experiment = False
-        self.get_all_images()
         self._init_experiment_window_widgets()
-        self.get_metric_scores()
         self.experiment_layout()
         self.setCentralWidget(self.experiments_tab)
         self.setWindowTitle('JND Experiment')
@@ -84,7 +88,13 @@ class make_experiment_JND(QMainWindow):
         cp = self.screen().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
+        # wait for the window to show before loading images
+        # self.show()
+        QApplication.processEvents()
+        # get all images and show them
+        self.get_all_images()
         self.show_all_images()
+        self.get_metric_scores()
 
     def closeEvent(self, event):
         # Ask for confirmation if not saved
@@ -115,10 +125,24 @@ class make_experiment_JND(QMainWindow):
         self.close()
 
     def show_all_images(self, tab='setup'):
+        self.widget_experiments['setup']['text'].setText(f'''
+        JND Experiment to be setup with the above images using the settings:
+            Save folder: {self.default_save_dir}
+            Image Display Size: {self.image_display_size}
+            Image Calibration:
+                Max RGB Brightness: {self.rgb_brightness}
+                Max Display Brightness: {self.display_brightness}
+
+            Number of Comparisons: {int(len(self.experiment_transforms))}
+
+        Click the Setup button to setup up the experiment and hand over to the test subject.
+        ''')
         self.widget_experiments[tab]['images'].axes.axis('off')
-        rows = int(len(self.experiment_transforms)**0.5)
-        cols = int(np.ceil(len(self.experiment_transforms)/rows))
+        rows = min(int(len(self.experiment_transforms)**0.5), 5)
+        cols = min(int(np.ceil(len(self.experiment_transforms)/rows)), 5)
         for i, trans in enumerate(self.experiment_transforms):
+            if i == rows*cols:
+                break
             ax = self.widget_experiments[tab]['images'].figure.add_subplot(
                 rows, cols, i+1)
             ax.imshow(image_utils.calibrate_brightness(
@@ -137,9 +161,7 @@ class make_experiment_JND(QMainWindow):
         # QApplication.processEvents()
             
     def get_all_images(self):
-        ''' save image name '''
-        self.image_name = self.data_store.get_reference_image_name()
-        ''' load all transformed images and sort them via MSE '''
+        
         # get all the transform values
         self.experiment_trans_params = plot_utils.get_all_single_transform_params(
             self.checked_transformation_params, num_steps='from_dict')
@@ -154,27 +176,42 @@ class make_experiment_JND(QMainWindow):
             self.original_params_order.append(
                 save_utils.make_name_for_trans(data))
 
-        # REFERENCE image
-        self.ref_image = self.data_store.get_reference_image()
-        if hasattr(self.data_store, 'get_reference_unprocessed'):
-            self.ref_image_unprocessed = self.data_store.get_reference_unprocessed()
 
-        # load all images
+        # all images in the dataset
+        self.all_ref_images = {}
         self.experiment_transforms = []
-        for single_trans in self.experiment_trans_params:
-            trans_name = list(single_trans.keys())[0]
-            param = single_trans[trans_name]
-            img = self.get_single_transform_im(single_trans)
-            data = {'transform_name': trans_name,
-                    'transform_value': param,
-                    'image': img}
-            self.experiment_transforms.append(data)
+        for i in range(len(self.data_store)):
+            # load the image in dataset
+            self.data_store[i]
+            # REFERENCE image
+            ref_image = self.data_store.get_reference_image()
+            ref_name = self.data_store.get_reference_image_name()
+            # save name and image
+            self.all_ref_images[ref_name] = ref_image
+            # if hasattr(self.data_store, 'get_reference_unprocessed'):
+            #     self.ref_image_unprocessed = self.data_store.get_reference_unprocessed()
+            # get all transformed images
+            for single_trans in self.experiment_trans_params:
+                trans_name = list(single_trans.keys())[0]
+                param = single_trans[trans_name]
+                img = self.get_single_transform_im(single_trans)
+                data = {'transform_name': trans_name,
+                        'transform_value': param,
+                        'image': img,
+                        'ref name': ref_name}
+                self.experiment_transforms.append(data)
         
-        # add reference image to list
-        data = {'transform_name': 'None',
-                'transform_value': 'None',
-                'image': self.ref_image}
-        self.experiment_transforms.append(data)
+            # add reference image to list
+            data = {'transform_name': 'None',
+                    'transform_value': 'None',
+                    'image': ref_image,
+                    'ref name': ref_name}
+            self.experiment_transforms.append(data)
+
+            # update user
+            self.widget_experiments['setup']['text'].setText(
+                f'''Loading all images in the dataset {i+1}/{len(self.data_store)}''')
+            print(f'Loading all images in the dataset {i+1}/{len(self.data_store)}')
 
         # shuffle the images list
         random.shuffle(self.experiment_transforms)
@@ -207,18 +244,7 @@ class make_experiment_JND(QMainWindow):
                   self.widget_experiments['setup']['quit_button'], self.quit)
         self.widget_experiments['setup']['images'] = gui_utils.MplCanvas(size=None)
         self.widget_experiments['setup']['text'] = QLabel(self)
-        self.widget_experiments['setup']['text'].setText(f'''
-        JND Experiment to be setup with the above images using the settings:
-            Save folder: {self.default_save_dir}
-            Image Display Size: {self.image_display_size}
-            Image Calibration:
-                Max RGB Brightness: {self.rgb_brightness}
-                Max Display Brightness: {self.display_brightness}
-
-            Number of Comparisons: {int(len(self.experiment_transforms))}
-
-        Click the Setup button to setup up the experiment and hand over to the test subject.
-        ''')
+        self.widget_experiments['setup']['text'].setText(f'''Loading all images in the dataset''')
         # self.widget_experiments['setup']['text'].setAlignment(
         #     Qt.AlignmentFlag.AlignCenter)
 
@@ -420,9 +446,7 @@ class make_experiment_JND(QMainWindow):
         for single_trans in self.experiment_trans_params:
             trans_name = list(single_trans.keys())[0]
             trans_funcs[trans_name] = self.checked_transformation_params[trans_name]['function']
-        # make the experiment directory
-        self.default_save_dir = os.path.join(
-            self.default_save_dir, self.image_name)
+        
         # get a unique directory (same image with diff trans need a new dir)
         i = 1
         unique_dir_found = False

@@ -741,14 +741,15 @@ class widgets():
         else:
             # run JND experiment
             self.experiment_JND = IQM_Vis.UI.make_experiment_JND(checked_transformation_params,
-                                                             self.data_stores[0],
-                                                             self.image_display_size,
-                                                             self.rgb_brightness,
-                                                             self.display_brightness,
-                                                             self.default_save_dir,
-                                                             self.pre_processing_option,
-                                                             self.post_processing_option,
-                                                             self.checked_metrics)
+                                                                 self.data_stores[0],
+                                                                 self.image_display_size,
+                                                                 self.rgb_brightness,
+                                                                 self.display_brightness,
+                                                                 self.default_save_dir,
+                                                                 self.default_dataset_name,
+                                                                 self.pre_processing_option,
+                                                                 self.post_processing_option,
+                                                                 self.checked_metrics)
             self.experiment_JND.saved_experiment.connect(
                 self.change_human_scores_after_exp_JND)
             self.experiment_JND.show()

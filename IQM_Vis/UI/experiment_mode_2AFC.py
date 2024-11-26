@@ -73,6 +73,9 @@ class make_experiment_2AFC(QMainWindow):
         self.saved = False
         self.quit_experiment = False
         self.get_all_images()
+        # make the experiment directory
+        self.default_save_dir = os.path.join(
+            self.default_save_dir, self.image_name)
         self._init_experiment_window_widgets()
         self.get_metric_scores()
         self.experiment_layout()
@@ -415,9 +418,7 @@ class make_experiment_2AFC(QMainWindow):
         for single_trans in self.experiment_trans_params:
             trans_name = list(single_trans.keys())[0]
             trans_funcs[trans_name] = self.checked_transformation_params[trans_name]['function']
-        # make the experiment directory
-        self.default_save_dir = os.path.join(
-            self.default_save_dir, self.image_name)
+        
         # get a unique directory (same image with diff trans need a new dir)
         i = 1
         unique_dir_found = False
