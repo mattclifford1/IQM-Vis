@@ -12,10 +12,18 @@ IQM\_Vis.UI.custom\_widgets module
    :undoc-members:
    :show-inheritance:
 
-IQM\_Vis.UI.experiment\_mode module
------------------------------------
+IQM\_Vis.UI.experiment\_mode\_2AFC module
+-----------------------------------------
 
-.. automodule:: IQM_Vis.UI.experiment_mode
+.. automodule:: IQM_Vis.UI.experiment_mode_2AFC
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+IQM\_Vis.UI.experiment\_mode\_JND module
+----------------------------------------
+
+.. automodule:: IQM_Vis.UI.experiment_mode_JND
    :members:
    :undoc-members:
    :show-inheritance:

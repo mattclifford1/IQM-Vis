@@ -104,6 +104,18 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.get_IQM_file" title="IQM_Vis.utils.save_utils.get_IQM_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_IQM_file</span></code></a>(dir)</p></td>
 <td><p></p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.get_JND_image_names" title="IQM_Vis.utils.save_utils.get_JND_image_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_JND_image_names</span></code></a>(dir)</p></td>
+<td><p>load the image names from a JND experiment</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.get_JND_ref_image_dir" title="IQM_Vis.utils.save_utils.get_JND_ref_image_dir"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_JND_ref_image_dir</span></code></a>(dir)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.get_JND_ref_image_unprocessed_dir" title="IQM_Vis.utils.save_utils.get_JND_ref_image_unprocessed_dir"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_JND_ref_image_unprocessed_dir</span></code></a>(dir)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.get_JND_user_ID" title="IQM_Vis.utils.save_utils.get_JND_user_ID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_JND_user_ID</span></code></a>(dir)</p></td>
+<td><p></p></td>
+</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.get_human_scores_file" title="IQM_Vis.utils.save_utils.get_human_scores_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_human_scores_file</span></code></a>(dir)</p></td>
 <td><p></p></td>
 </tr>
@@ -137,14 +149,20 @@
 <tr class="row-even"><td><p><a class="reference internal" href="../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.make_name_for_trans" title="IQM_Vis.utils.save_utils.make_name_for_trans"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_name_for_trans</span></code></a>(trans)</p></td>
 <td><p></p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.save_2AFC_experiment_results" title="IQM_Vis.utils.save_utils.save_2AFC_experiment_results"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_2AFC_experiment_results</span></code></a>(trans_names, ...)</p></td>
+<td><p>save all the experiment reults as csvs</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.save_JND_experiment_results" title="IQM_Vis.utils.save_utils.save_JND_experiment_results"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_JND_experiment_results</span></code></a>(...[, IQM_scores_df])</p></td>
+<td><p></p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.save_and_merge_df_as_csv" title="IQM_Vis.utils.save_utils.save_and_merge_df_as_csv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_and_merge_df_as_csv</span></code></a>(df, file)</p></td>
 <td><p>df need to be indexed</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.save_df_as_csv" title="IQM_Vis.utils.save_utils.save_df_as_csv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_df_as_csv</span></code></a>(df, file[, index])</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.save_and_merge_rm_duplicates_df_as_csv" title="IQM_Vis.utils.save_utils.save_and_merge_rm_duplicates_df_as_csv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_and_merge_rm_duplicates_df_as_csv</span></code></a>(df, file)</p></td>
+<td><p>save only new IQM rows</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.save_experiment_results" title="IQM_Vis.utils.save_utils.save_experiment_results"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_experiment_results</span></code></a>(trans_names, ...[, ...])</p></td>
-<td><p>save all the experiment reults as csvs</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.save_df_as_csv" title="IQM_Vis.utils.save_utils.save_df_as_csv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_df_as_csv</span></code></a>(df, file[, index])</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.save_json_dict" title="IQM_Vis.utils.save_utils.save_json_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_json_dict</span></code></a>(path, dict_)</p></td>
 <td><p></p></td>

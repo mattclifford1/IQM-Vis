@@ -1,4 +1,4 @@
-IQM\_Vis.utils.save\_utils
+﻿IQM\_Vis.utils.save\_utils
 ==========================
 
 .. automodule:: IQM_Vis.utils.save_utils
@@ -20,6 +20,10 @@ IQM\_Vis.utils.save\_utils
    .. autosummary::
    
       get_IQM_file
+      get_JND_image_names
+      get_JND_ref_image_dir
+      get_JND_ref_image_unprocessed_dir
+      get_JND_user_ID
       get_human_scores_file
       get_human_times_file
       get_image_name_from_human_scores
@@ -31,9 +35,11 @@ IQM\_Vis.utils.save\_utils
       load_json_dict
       load_obj
       make_name_for_trans
+      save_2AFC_experiment_results
+      save_JND_experiment_results
       save_and_merge_df_as_csv
+      save_and_merge_rm_duplicates_df_as_csv
       save_df_as_csv
-      save_experiment_results
       save_json_dict
       save_obj
    

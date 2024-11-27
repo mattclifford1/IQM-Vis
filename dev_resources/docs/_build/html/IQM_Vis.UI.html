@@ -119,161 +119,302 @@
 </dd></dl>
 
 </section>
-<section id="module-IQM_Vis.UI.experiment_mode">
-<span id="iqm-vis-ui-experiment-mode-module"></span><h2>IQM_Vis.UI.experiment_mode module<a class="headerlink" href="#module-IQM_Vis.UI.experiment_mode" title="Permalink to this heading"></a></h2>
+<section id="module-IQM_Vis.UI.experiment_mode_2AFC">
+<span id="iqm-vis-ui-experiment-mode-2afc-module"></span><h2>IQM_Vis.UI.experiment_mode_2AFC module<a class="headerlink" href="#module-IQM_Vis.UI.experiment_mode_2AFC" title="Permalink to this heading"></a></h2>
 <p>create experiment window</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.experiment_mode.</span></span><span class="sig-name descname"><span class="pre">make_experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checked_transformation_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_store</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_display_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rgb_brightness</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_brightness</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/home/matt/IQM-Vis-experiments'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_preprocessing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'None'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_postprocessing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'None'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checked_metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.experiment_mode_2AFC.</span></span><span class="sig-name descname"><span class="pre">make_experiment_2AFC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checked_transformation_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_store</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_display_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rgb_brightness</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_brightness</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/home/matt/IQM-Vis'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_preprocessing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'None'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_postprocessing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'None'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checked_metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QMainWindow</span></code></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.calc_max_comparisons">
-<span class="sig-name descname"><span class="pre">calc_max_comparisons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_images</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.calc_max_comparisons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.calc_max_comparisons" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.calc_max_comparisons">
+<span class="sig-name descname"><span class="pre">calc_max_comparisons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_images</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC.calc_max_comparisons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.calc_max_comparisons" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.change_experiment_images">
-<span class="sig-name descname"><span class="pre">change_experiment_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A_trans</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B_trans</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.change_experiment_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.change_experiment_images" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.change_experiment_images">
+<span class="sig-name descname"><span class="pre">change_experiment_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A_trans</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B_trans</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC.change_experiment_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.change_experiment_images" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.click_completed">
-<span class="sig-name descname"><span class="pre">click_completed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.click_completed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.click_completed" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.click_completed">
+<span class="sig-name descname"><span class="pre">click_completed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC.click_completed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.click_completed" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.clicked_image">
-<span class="sig-name descname"><span class="pre">clicked_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">widget_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.clicked_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.clicked_image" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.clicked_image">
+<span class="sig-name descname"><span class="pre">clicked_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">widget_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC.clicked_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.clicked_image" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.closeEvent">
-<span class="sig-name descname"><span class="pre">closeEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">QCloseEvent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.closeEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.closeEvent" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.closeEvent">
+<span class="sig-name descname"><span class="pre">closeEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">QCloseEvent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC.closeEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.closeEvent" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.experiment_layout">
-<span class="sig-name descname"><span class="pre">experiment_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.experiment_layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.experiment_layout" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.experiment_layout">
+<span class="sig-name descname"><span class="pre">experiment_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC.experiment_layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.experiment_layout" title="Permalink to this definition"></a></dt>
 <dd><p>setup</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.finish_experiment">
-<span class="sig-name descname"><span class="pre">finish_experiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.finish_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.finish_experiment" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.finish_experiment">
+<span class="sig-name descname"><span class="pre">finish_experiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC.finish_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.finish_experiment" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.get_all_images">
-<span class="sig-name descname"><span class="pre">get_all_images</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.get_all_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.get_all_images" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.get_all_images">
+<span class="sig-name descname"><span class="pre">get_all_images</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC.get_all_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.get_all_images" title="Permalink to this definition"></a></dt>
 <dd><p>save image name</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.get_metric_scores">
-<span class="sig-name descname"><span class="pre">get_metric_scores</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.get_metric_scores"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.get_metric_scores" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.get_metric_scores">
+<span class="sig-name descname"><span class="pre">get_metric_scores</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC.get_metric_scores"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.get_metric_scores" title="Permalink to this definition"></a></dt>
 <dd><p>get IQM scores to save alongside the experiment for plotting/analysis purposes</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.get_single_transform_im">
-<span class="sig-name descname"><span class="pre">get_single_transform_im</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">single_trans_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.get_single_transform_im"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.get_single_transform_im" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.get_single_transform_im">
+<span class="sig-name descname"><span class="pre">get_single_transform_im</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">single_trans_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC.get_single_transform_im"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.get_single_transform_im" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.init_style">
-<span class="sig-name descname"><span class="pre">init_style</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'light'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">css_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.init_style"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.init_style" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.get_trans_funcs">
+<span class="sig-name descname"><span class="pre">get_trans_funcs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC.get_trans_funcs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.get_trans_funcs" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.partition">
-<span class="sig-name descname"><span class="pre">partition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.partition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.partition" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.get_unique_save_dir">
+<span class="sig-name descname"><span class="pre">get_unique_save_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC.get_unique_save_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.get_unique_save_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.init_style">
+<span class="sig-name descname"><span class="pre">init_style</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'light'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">css_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC.init_style"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.init_style" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.partition">
+<span class="sig-name descname"><span class="pre">partition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC.partition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.partition" title="Permalink to this definition"></a></dt>
 <dd><p>given an unsorted partition of the array between low and high, order
 elements lower than a given pivot point to the left and higher to the right</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.quick_sort">
-<span class="sig-name descname"><span class="pre">quick_sort</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.quick_sort"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.quick_sort" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.quick_sort">
+<span class="sig-name descname"><span class="pre">quick_sort</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC.quick_sort"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.quick_sort" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.quit">
-<span class="sig-name descname"><span class="pre">quit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.quit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.quit" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.quit">
+<span class="sig-name descname"><span class="pre">quit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC.quit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.quit" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.reset_clicked_image">
-<span class="sig-name descname"><span class="pre">reset_clicked_image</span></span><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.reset_clicked_image" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.reset_clicked_image">
+<span class="sig-name descname"><span class="pre">reset_clicked_image</span></span><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.reset_clicked_image" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.reset_experiment">
-<span class="sig-name descname"><span class="pre">reset_experiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.reset_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.reset_experiment" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.reset_experiment">
+<span class="sig-name descname"><span class="pre">reset_experiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC.reset_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.reset_experiment" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.save_experiment">
-<span class="sig-name descname"><span class="pre">save_experiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.save_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.save_experiment" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.save_experiment">
+<span class="sig-name descname"><span class="pre">save_experiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC.save_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.save_experiment" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.saved_experiment">
-<span class="sig-name descname"><span class="pre">saved_experiment</span></span><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.saved_experiment" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.saved_experiment">
+<span class="sig-name descname"><span class="pre">saved_experiment</span></span><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.saved_experiment" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.setup_experiment">
-<span class="sig-name descname"><span class="pre">setup_experiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.setup_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.setup_experiment" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.setup_experiment">
+<span class="sig-name descname"><span class="pre">setup_experiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC.setup_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.setup_experiment" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.show_all_images">
-<span class="sig-name descname"><span class="pre">show_all_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tab</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'setup'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.show_all_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.show_all_images" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.show_all_images">
+<span class="sig-name descname"><span class="pre">show_all_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tab</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'setup'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC.show_all_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.show_all_images" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.start_experiment">
-<span class="sig-name descname"><span class="pre">start_experiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.start_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.start_experiment" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.start_experiment">
+<span class="sig-name descname"><span class="pre">start_experiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC.start_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.start_experiment" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.swap_inds">
-<span class="sig-name descname"><span class="pre">swap_inds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.swap_inds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.swap_inds" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.swap_inds">
+<span class="sig-name descname"><span class="pre">swap_inds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC.swap_inds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.swap_inds" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.make_experiment.toggle_experiment">
-<span class="sig-name descname"><span class="pre">toggle_experiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#make_experiment.toggle_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.make_experiment.toggle_experiment" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.toggle_experiment">
+<span class="sig-name descname"><span class="pre">toggle_experiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#make_experiment_2AFC.toggle_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.toggle_experiment" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.reset_image_widget_to_black">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.experiment_mode.</span></span><span class="sig-name descname"><span class="pre">reset_image_widget_to_black</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#reset_image_widget_to_black"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.reset_image_widget_to_black" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.reset_image_widget_to_black">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.experiment_mode_2AFC.</span></span><span class="sig-name descname"><span class="pre">reset_image_widget_to_black</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#reset_image_widget_to_black"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.reset_image_widget_to_black" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QObject</span></code></p>
 <p>change clicked image to black and pause</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.reset_image_widget_to_black.change_to_solid">
-<span class="sig-name descname"><span class="pre">change_to_solid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#reset_image_widget_to_black.change_to_solid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.reset_image_widget_to_black.change_to_solid" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.reset_image_widget_to_black.change_to_solid">
+<span class="sig-name descname"><span class="pre">change_to_solid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#reset_image_widget_to_black.change_to_solid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.reset_image_widget_to_black.change_to_solid" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.reset_image_widget_to_black.completed">
-<span class="sig-name descname"><span class="pre">completed</span></span><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.reset_image_widget_to_black.completed" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.reset_image_widget_to_black.completed">
+<span class="sig-name descname"><span class="pre">completed</span></span><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.reset_image_widget_to_black.completed" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.reset_image_widget_to_black.stop">
-<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#reset_image_widget_to_black.stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.reset_image_widget_to_black.stop" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.reset_image_widget_to_black.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#reset_image_widget_to_black.stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.reset_image_widget_to_black.stop" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode.sort_list">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.experiment_mode.</span></span><span class="sig-name descname"><span class="pre">sort_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode.html#sort_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode.sort_list" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_2AFC.sort_list">
+<span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.experiment_mode_2AFC.</span></span><span class="sig-name descname"><span class="pre">sort_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_2AFC.html#sort_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_2AFC.sort_list" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
+
+</section>
+<section id="module-IQM_Vis.UI.experiment_mode_JND">
+<span id="iqm-vis-ui-experiment-mode-jnd-module"></span><h2>IQM_Vis.UI.experiment_mode_JND module<a class="headerlink" href="#module-IQM_Vis.UI.experiment_mode_JND" title="Permalink to this heading"></a></h2>
+<p>create experiment window JND</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.make_experiment_JND">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.experiment_mode_JND.</span></span><span class="sig-name descname"><span class="pre">make_experiment_JND</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checked_transformation_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_store</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_display_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rgb_brightness</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_brightness</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/home/matt/IQM-Vis'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'dataset1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_preprocessing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'None'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_postprocessing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'None'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_im_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_im_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checked_metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_JND.html#make_experiment_JND"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.make_experiment_JND" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QMainWindow</span></code></p>
+<p><a class="reference external" href="https://www.verywellmind.com/what-is-the-just-noticeable-difference-2795306">https://www.verywellmind.com/what-is-the-just-noticeable-difference-2795306</a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.closeEvent">
+<span class="sig-name descname"><span class="pre">closeEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">QCloseEvent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_JND.html#make_experiment_JND.closeEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.closeEvent" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.experiment_layout">
+<span class="sig-name descname"><span class="pre">experiment_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_JND.html#make_experiment_JND.experiment_layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.experiment_layout" title="Permalink to this definition"></a></dt>
+<dd><p>setup</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.finish_experiment">
+<span class="sig-name descname"><span class="pre">finish_experiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_JND.html#make_experiment_JND.finish_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.finish_experiment" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.get_all_images">
+<span class="sig-name descname"><span class="pre">get_all_images</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_JND.html#make_experiment_JND.get_all_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.get_all_images" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.get_metric_scores">
+<span class="sig-name descname"><span class="pre">get_metric_scores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">calc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_JND.html#make_experiment_JND.get_metric_scores"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.get_metric_scores" title="Permalink to this definition"></a></dt>
+<dd><p>get IQM scores to save alongside the experiment for plotting/analysis purposes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.get_single_transform_im">
+<span class="sig-name descname"><span class="pre">get_single_transform_im</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">single_trans_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_JND.html#make_experiment_JND.get_single_transform_im"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.get_single_transform_im" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.get_trans_funcs">
+<span class="sig-name descname"><span class="pre">get_trans_funcs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_JND.html#make_experiment_JND.get_trans_funcs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.get_trans_funcs" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.get_unique_save_dir">
+<span class="sig-name descname"><span class="pre">get_unique_save_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_JND.html#make_experiment_JND.get_unique_save_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.get_unique_save_dir" title="Permalink to this definition"></a></dt>
+<dd><p>get directory that is unique based on if it’s the same experiment or not</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.init_style">
+<span class="sig-name descname"><span class="pre">init_style</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'light'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">css_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_JND.html#make_experiment_JND.init_style"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.init_style" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.quit">
+<span class="sig-name descname"><span class="pre">quit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_JND.html#make_experiment_JND.quit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.quit" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.reset_clicked_image">
+<span class="sig-name descname"><span class="pre">reset_clicked_image</span></span><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.reset_clicked_image" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.reset_experiment">
+<span class="sig-name descname"><span class="pre">reset_experiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_JND.html#make_experiment_JND.reset_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.reset_experiment" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.save_experiment">
+<span class="sig-name descname"><span class="pre">save_experiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_JND.html#make_experiment_JND.save_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.save_experiment" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.saved_experiment">
+<span class="sig-name descname"><span class="pre">saved_experiment</span></span><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.saved_experiment" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.setup_experiment">
+<span class="sig-name descname"><span class="pre">setup_experiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_JND.html#make_experiment_JND.setup_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.setup_experiment" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.show_all_images">
+<span class="sig-name descname"><span class="pre">show_all_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tab</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'setup'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_JND.html#make_experiment_JND.show_all_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.show_all_images" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.start_experiment">
+<span class="sig-name descname"><span class="pre">start_experiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_JND.html#make_experiment_JND.start_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.start_experiment" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.toggle_experiment">
+<span class="sig-name descname"><span class="pre">toggle_experiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_JND.html#make_experiment_JND.toggle_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.toggle_experiment" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.user_decision">
+<span class="sig-name descname"><span class="pre">user_decision</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">decision</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_JND.html#make_experiment_JND.user_decision"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.make_experiment_JND.user_decision" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.reset_image_widget_to_black">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.experiment_mode_JND.</span></span><span class="sig-name descname"><span class="pre">reset_image_widget_to_black</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_JND.html#reset_image_widget_to_black"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.reset_image_widget_to_black" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QObject</span></code></p>
+<p>change clicked image to black and pause</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.reset_image_widget_to_black.change_to_solid">
+<span class="sig-name descname"><span class="pre">change_to_solid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_JND.html#reset_image_widget_to_black.change_to_solid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.reset_image_widget_to_black.change_to_solid" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.reset_image_widget_to_black.completed">
+<span class="sig-name descname"><span class="pre">completed</span></span><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.reset_image_widget_to_black.completed" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.experiment_mode_JND.reset_image_widget_to_black.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/experiment_mode_JND.html#reset_image_widget_to_black.stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.experiment_mode_JND.reset_image_widget_to_black.stop" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 </section>
 <section id="module-IQM_Vis.UI.images">
@@ -330,6 +471,11 @@ elements lower than a given pivot point to the left and higher to the right</p>
 <dd></dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.images.images.display_metric_JND_plot">
+<span class="sig-name descname"><span class="pre">display_metric_JND_plot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.display_metric_JND_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.display_metric_JND_plot" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="IQM_Vis.UI.images.images.display_metric_correlation_plot">
 <span class="sig-name descname"><span class="pre">display_metric_correlation_plot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.display_metric_correlation_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.display_metric_correlation_plot" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -365,6 +511,11 @@ elements lower than a given pivot point to the left and higher to the right</p>
 <dd></dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.images.images.get_export_dir">
+<span class="sig-name descname"><span class="pre">get_export_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.get_export_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.get_export_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="IQM_Vis.UI.images.images.get_metrics_over_all_trans_with_init_values">
 <span class="sig-name descname"><span class="pre">get_metrics_over_all_trans_with_init_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.get_metrics_over_all_trans_with_init_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.get_metrics_over_all_trans_with_init_values" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -378,6 +529,11 @@ elements lower than a given pivot point to the left and higher to the right</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="IQM_Vis.UI.images.images.load_experiment_from_dir">
 <span class="sig-name descname"><span class="pre">load_experiment_from_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.load_experiment_from_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.load_experiment_from_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.images.images.load_experiment_from_dir_JND">
+<span class="sig-name descname"><span class="pre">load_experiment_from_dir_JND</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/images.html#images.load_experiment_from_dir_JND"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.images.images.load_experiment_from_dir_JND" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -481,7 +637,7 @@ elements lower than a given pivot point to the left and higher to the right</p>
 <p>main entry point to initialise the UI</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="IQM_Vis.UI.main.make_app">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.main.</span></span><span class="sig-name descname"><span class="pre">make_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_stores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transformations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_info_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'graph'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_avg_graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_range_graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_display_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/home/matt/IQM-Vis-experiments'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">restrict_options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_steps_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">11</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_step_experiment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_images_scroll_show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/main.html#make_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.main.make_app" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.main.</span></span><span class="sig-name descname"><span class="pre">make_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_stores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transformations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_info_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'graph'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_avg_graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_range_graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_display_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/home/matt/IQM-Vis'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_dataset_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'dataset1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">restrict_options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_steps_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">11</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_step_experiment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_images_scroll_show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/main.html#make_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.main.make_app" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#IQM_Vis.UI.widgets.widgets" title="IQM_Vis.UI.widgets.widgets"><code class="xref py py-class docutils literal notranslate"><span class="pre">widgets</span></code></a>, <a class="reference internal" href="#IQM_Vis.UI.layout.layout" title="IQM_Vis.UI.layout.layout"><code class="xref py py-class docutils literal notranslate"><span class="pre">layout</span></code></a>, <a class="reference internal" href="#IQM_Vis.UI.images.images" title="IQM_Vis.UI.images.images"><code class="xref py py-class docutils literal notranslate"><span class="pre">images</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="IQM_Vis.UI.main.make_app.change_save_folder">
@@ -641,6 +797,24 @@ useful info about PyQt6 threads: <a class="reference external" href="https://www
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.UI.widgets.</span></span><span class="sig-name descname"><span class="pre">widgets</span></span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.JND_dataset_range_lower">
+<span class="sig-name descname"><span class="pre">JND_dataset_range_lower</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">txt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.JND_dataset_range_lower"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.JND_dataset_range_lower" title="Permalink to this definition"></a></dt>
+<dd><p>change the dataset_name we are using</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.JND_dataset_range_upper">
+<span class="sig-name descname"><span class="pre">JND_dataset_range_upper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">txt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.JND_dataset_range_upper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.JND_dataset_range_upper" title="Permalink to this definition"></a></dt>
+<dd><p>change the dataset_name we are using</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.change_dataset_name">
+<span class="sig-name descname"><span class="pre">change_dataset_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">txt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.change_dataset_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.change_dataset_name" title="Permalink to this definition"></a></dt>
+<dd><p>change the dataset_name we are using</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.change_display_im_display_brightness">
 <span class="sig-name descname"><span class="pre">change_display_im_display_brightness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.change_display_im_display_brightness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.change_display_im_display_brightness" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -661,8 +835,13 @@ useful info about PyQt6 threads: <a class="reference external" href="https://www
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.change_human_scores_after_exp">
-<span class="sig-name descname"><span class="pre">change_human_scores_after_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.change_human_scores_after_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.change_human_scores_after_exp" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.change_human_scores_after_exp_2AFC">
+<span class="sig-name descname"><span class="pre">change_human_scores_after_exp_2AFC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.change_human_scores_after_exp_2AFC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.change_human_scores_after_exp_2AFC" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.change_human_scores_after_exp_JND">
+<span class="sig-name descname"><span class="pre">change_human_scores_after_exp_JND</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.change_human_scores_after_exp_JND"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.change_human_scores_after_exp_JND" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -739,9 +918,16 @@ useful info about PyQt6 threads: <a class="reference external" href="https://www
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.launch_experiment">
-<span class="sig-name descname"><span class="pre">launch_experiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.launch_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.launch_experiment" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.launch_experiment_2AFC">
+<span class="sig-name descname"><span class="pre">launch_experiment_2AFC</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.launch_experiment_2AFC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.launch_experiment_2AFC" title="Permalink to this definition"></a></dt>
+<dd><p>Launch the 2 alternate forced choice experiment</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.launch_experiment_JND">
+<span class="sig-name descname"><span class="pre">launch_experiment_JND</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/UI/widgets.html#widgets.launch_experiment_JND"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.UI.widgets.widgets.launch_experiment_JND" title="Permalink to this definition"></a></dt>
+<dd><p>launch the Just Noticable difference experiment</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="IQM_Vis.UI.widgets.widgets.make_slider_range">

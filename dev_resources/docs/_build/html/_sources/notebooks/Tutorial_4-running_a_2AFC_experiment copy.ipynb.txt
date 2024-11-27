@@ -5,18 +5,20 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "# Tutorial 4: Running an Experiment\n",
+    "# Tutorial 4: Running a 2AFC Experiment\n",
     "\n",
-    "In this tutorial we will go through how to setup and run an experiment.\n",
+    "In this tutorial we will go through how to setup and run a 2 Alternate Forced Choice experiment.\n",
     "\n",
     "First you need to Launch the UI with your required customisations (see previous tutorials).\n",
     "\n",
     "Things to setup:\n",
-    "- Load your own images\n",
+    "- Load your own images and select the image which you want to test\n",
     "\n",
-    "- Make sure that the settings are corrects (Image Display Size, Luminance Calibration etc.)\n",
+    "- Make sure that the settings are correct in the 'image settings' tab (Image Display Size, Luminance Calibration etc.)\n",
     "\n",
-    "- Only the required transforms are selected\n",
+    "- Only the required transforms are selected in the 'experiments' tab with the correct range and number of steps\n",
+    "\n",
+    "- Check that the Root Save Folder is correct\n",
     "\n",
     "Once you are ready, press the 'Run 2AFC Experiment' button, this will launch the experiment:\n",
     "\n",
@@ -30,9 +32,11 @@
    "source": [
     "## Experiment Screen\n",
     "\n",
-    "The first screen will show the settings and images used for the experiment\n",
+    "The first screen will show the settings and images used for the experiment. Double checl the Save folder matches what the experiment type and image name, a unique experiment number will be generated based on any saved experiments that use the same image but use different transforms or processing etc.\n",
     "\n",
     "![](./resources/experiment_1.png)\n",
+    "\n",
+    "The Expected Number of Comparison shows how many clicks the user should expect to do.\n",
     "\n",
     "If everything is correct, click the 'Setup' button. This will take you to the experiment information screen for the participant to read."
    ]
@@ -58,6 +62,8 @@
     "\n",
     "The experiment uses the quick sort algorithm with the user giving the pairwise most similar image until the images are sorted.\n",
     "\n",
+    "The user needs to click on the image which they believe is most similar to the reference image.\n",
+    "\n",
     "![](./resources/experiment_3.png)"
    ]
   },
@@ -66,7 +72,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "### Experiment Finsihed\n",
+    "### Experiment Finished\n",
     "\n",
     "Once the images are sorted you will be shown the sorting order and the folder when the experiments are saved. \n",
     "\n",
@@ -82,15 +88,25 @@
    "source": [
     "# Visualising the experiment results\n",
     "\n",
-    "To visualise the experiment correlation plots, return to the main UI and load the experiment using the menu option: File>Load Human Scores. \n",
-    "\n",
-    "From here select the experiment image-results.csv. This will load the scores and the correlation plot against IQMs will be generated. \n",
+    "The experiment results will be automatically loaded into the 'Correlation' tab in IQM-Vis\n",
     "\n",
     "On the plot you can click on points to view the corresponding transformation that might disagree with the correlation with a metric.\n",
+    "\n",
+    "Use the right and left buttons below the graph to scroll through the different selected metrics.\n",
+    "\n",
+    "The Spearmean's and Pearson's correlation will be shown in the figure title.\n",
+    "\n",
+    "![](./resources/correlation_plot.png)\n",
+    "\n",
     "N.B. make sure the UI has that transformation loaded and the metrics selected you want to compare against.\n",
     "\n",
-    "![](./resources/correlation_plot.png)"
+    "To load previously saved experiments the experiment using the menu option: File>Load Human Scores, or use the 'Load Experiment' button below the graph."
    ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": []
   }
  ],
  "metadata": {

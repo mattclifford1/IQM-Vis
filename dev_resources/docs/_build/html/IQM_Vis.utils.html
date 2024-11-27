@@ -436,13 +436,34 @@ useful when doing experiments to make a dataset</p>
 <p>utils for saving experiments, images and figures</p>
 <dl class="py data">
 <dt class="sig sig-object py" id="IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.utils.save_utils.</span></span><span class="sig-name descname"><span class="pre">DEFAULT_SAVE_DIR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/home/matt/IQM-Vis-experiments'</span></em><a class="headerlink" href="#IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">IQM_Vis.utils.save_utils.</span></span><span class="sig-name descname"><span class="pre">DEFAULT_SAVE_DIR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/home/matt/IQM-Vis'</span></em><a class="headerlink" href="#IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR" title="Permalink to this definition"></a></dt>
 <dd><p>getters for experiment files from save dir</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="IQM_Vis.utils.save_utils.get_IQM_file">
 <span class="sig-prename descclassname"><span class="pre">IQM_Vis.utils.save_utils.</span></span><span class="sig-name descname"><span class="pre">get_IQM_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/utils/save_utils.html#get_IQM_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.utils.save_utils.get_IQM_file" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="IQM_Vis.utils.save_utils.get_JND_image_names">
+<span class="sig-prename descclassname"><span class="pre">IQM_Vis.utils.save_utils.</span></span><span class="sig-name descname"><span class="pre">get_JND_image_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/utils/save_utils.html#get_JND_image_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.utils.save_utils.get_JND_image_names" title="Permalink to this definition"></a></dt>
+<dd><p>load the image names from a JND experiment</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="IQM_Vis.utils.save_utils.get_JND_ref_image_dir">
+<span class="sig-prename descclassname"><span class="pre">IQM_Vis.utils.save_utils.</span></span><span class="sig-name descname"><span class="pre">get_JND_ref_image_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/utils/save_utils.html#get_JND_ref_image_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.utils.save_utils.get_JND_ref_image_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="IQM_Vis.utils.save_utils.get_JND_ref_image_unprocessed_dir">
+<span class="sig-prename descclassname"><span class="pre">IQM_Vis.utils.save_utils.</span></span><span class="sig-name descname"><span class="pre">get_JND_ref_image_unprocessed_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/utils/save_utils.html#get_JND_ref_image_unprocessed_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.utils.save_utils.get_JND_ref_image_unprocessed_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="IQM_Vis.utils.save_utils.get_JND_user_ID">
+<span class="sig-prename descclassname"><span class="pre">IQM_Vis.utils.save_utils.</span></span><span class="sig-name descname"><span class="pre">get_JND_user_ID</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/utils/save_utils.html#get_JND_user_ID"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.utils.save_utils.get_JND_user_ID" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -502,21 +523,32 @@ useful when doing experiments to make a dataset</p>
 <dd></dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="IQM_Vis.utils.save_utils.save_2AFC_experiment_results">
+<span class="sig-prename descclassname"><span class="pre">IQM_Vis.utils.save_utils.</span></span><span class="sig-name descname"><span class="pre">save_2AFC_experiment_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trans_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results_order</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">times_taken</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">IQM_scores_df</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/utils/save_utils.html#save_2AFC_experiment_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.utils.save_utils.save_2AFC_experiment_results" title="Permalink to this definition"></a></dt>
+<dd><p>save all the experiment reults as csvs</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="IQM_Vis.utils.save_utils.save_JND_experiment_results">
+<span class="sig-prename descclassname"><span class="pre">IQM_Vis.utils.save_utils.</span></span><span class="sig-name descname"><span class="pre">save_JND_experiment_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment_results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">IQM_scores_df</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/utils/save_utils.html#save_JND_experiment_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.utils.save_utils.save_JND_experiment_results" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="IQM_Vis.utils.save_utils.save_and_merge_df_as_csv">
 <span class="sig-prename descclassname"><span class="pre">IQM_Vis.utils.save_utils.</span></span><span class="sig-name descname"><span class="pre">save_and_merge_df_as_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/utils/save_utils.html#save_and_merge_df_as_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.utils.save_utils.save_and_merge_df_as_csv" title="Permalink to this definition"></a></dt>
 <dd><p>df need to be indexed</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="IQM_Vis.utils.save_utils.save_and_merge_rm_duplicates_df_as_csv">
+<span class="sig-prename descclassname"><span class="pre">IQM_Vis.utils.save_utils.</span></span><span class="sig-name descname"><span class="pre">save_and_merge_rm_duplicates_df_as_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/utils/save_utils.html#save_and_merge_rm_duplicates_df_as_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.utils.save_utils.save_and_merge_rm_duplicates_df_as_csv" title="Permalink to this definition"></a></dt>
+<dd><p>save only new IQM rows</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="IQM_Vis.utils.save_utils.save_df_as_csv">
 <span class="sig-prename descclassname"><span class="pre">IQM_Vis.utils.save_utils.</span></span><span class="sig-name descname"><span class="pre">save_df_as_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/utils/save_utils.html#save_df_as_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.utils.save_utils.save_df_as_csv" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="IQM_Vis.utils.save_utils.save_experiment_results">
-<span class="sig-prename descclassname"><span class="pre">IQM_Vis.utils.save_utils.</span></span><span class="sig-name descname"><span class="pre">save_experiment_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trans_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results_order</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">times_taken</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">IQM_scores_df</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/utils/save_utils.html#save_experiment_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.utils.save_utils.save_experiment_results" title="Permalink to this definition"></a></dt>
-<dd><p>save all the experiment reults as csvs</p>
-</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="IQM_Vis.utils.save_utils.save_json_dict">

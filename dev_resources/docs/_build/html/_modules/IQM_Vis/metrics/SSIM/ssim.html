@@ -196,63 +196,65 @@
     <span class="k">return</span> <span class="n">ssim_per_channel</span><span class="p">,</span> <span class="n">cs</span>
 
 
-<div class="viewcode-block" id="ssim"><a class="viewcode-back" href="../../../../IQM_Vis.metrics.SSIM.html#IQM_Vis.metrics.SSIM.ssim.ssim">[docs]</a><span class="k">def</span> <span class="nf">ssim</span><span class="p">(</span>
-    <span class="n">X</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
-    <span class="n">Y</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
-    <span class="n">data_range</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">255</span><span class="p">,</span>
-    <span class="n">size_average</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">win_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">11</span><span class="p">,</span>
-    <span class="n">win_sigma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.5</span><span class="p">,</span>
-    <span class="n">win</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">K</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">),</span>
-    <span class="n">nonnegative_ssim</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot; interface of ssim</span>
-<span class="sd">    Args:</span>
-<span class="sd">        X (torch.Tensor): a batch of images, (N,C,H,W)</span>
-<span class="sd">        Y (torch.Tensor): a batch of images, (N,C,H,W)</span>
-<span class="sd">        data_range (float or int, optional): value range of input images. (usually 1.0 or 255)</span>
-<span class="sd">        size_average (bool, optional): if size_average=True, ssim of all images will be averaged as a scalar</span>
-<span class="sd">        win_size: (int, optional): the size of gauss kernel</span>
-<span class="sd">        win_sigma: (float, optional): sigma of normal distribution</span>
-<span class="sd">        win (torch.Tensor, optional): 1-D gauss kernel. if None, a new kernel will be created according to win_size and win_sigma</span>
-<span class="sd">        K (list or tuple, optional): scalar constants (K1, K2). Try a larger K2 constant (e.g. 0.4) if you get a negative or NaN results.</span>
-<span class="sd">        nonnegative_ssim (bool, optional): force the ssim response to be nonnegative with relu</span>
+<span class="c1"># not currently used to commenting for coverage</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        torch.Tensor: ssim results</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">Y</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input images should have the same dimensions, but got </span><span class="si">{</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">Y</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+<span class="c1"># def ssim(</span>
+<span class="c1">#     X: Tensor,</span>
+<span class="c1">#     Y: Tensor,</span>
+<span class="c1">#     data_range: float = 255,</span>
+<span class="c1">#     size_average: bool = True,</span>
+<span class="c1">#     win_size: int = 11,</span>
+<span class="c1">#     win_sigma: float = 1.5,</span>
+<span class="c1">#     win: Optional[Tensor] = None,</span>
+<span class="c1">#     K: Union[Tuple[float, float], List[float]] = (0.01, 0.03),</span>
+<span class="c1">#     nonnegative_ssim: bool = False,</span>
+<span class="c1"># ) -&gt; Tensor:</span>
+<span class="c1">#     r&quot;&quot;&quot; interface of ssim</span>
+<span class="c1">#     Args:</span>
+<span class="c1">#         X (torch.Tensor): a batch of images, (N,C,H,W)</span>
+<span class="c1">#         Y (torch.Tensor): a batch of images, (N,C,H,W)</span>
+<span class="c1">#         data_range (float or int, optional): value range of input images. (usually 1.0 or 255)</span>
+<span class="c1">#         size_average (bool, optional): if size_average=True, ssim of all images will be averaged as a scalar</span>
+<span class="c1">#         win_size: (int, optional): the size of gauss kernel</span>
+<span class="c1">#         win_sigma: (float, optional): sigma of normal distribution</span>
+<span class="c1">#         win (torch.Tensor, optional): 1-D gauss kernel. if None, a new kernel will be created according to win_size and win_sigma</span>
+<span class="c1">#         K (list or tuple, optional): scalar constants (K1, K2). Try a larger K2 constant (e.g. 0.4) if you get a negative or NaN results.</span>
+<span class="c1">#         nonnegative_ssim (bool, optional): force the ssim response to be nonnegative with relu</span>
 
-    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
-        <span class="n">Y</span> <span class="o">=</span> <span class="n">Y</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+<span class="c1">#     Returns:</span>
+<span class="c1">#         torch.Tensor: ssim results</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     if not X.shape == Y.shape:</span>
+<span class="c1">#         raise ValueError(f&quot;Input images should have the same dimensions, but got {X.shape} and {Y.shape}.&quot;)</span>
 
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input images should be 4-d or 5-d tensors, but got </span><span class="si">{</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1">#     for d in range(len(X.shape) - 1, 1, -1):</span>
+<span class="c1">#         X = X.squeeze(dim=d)</span>
+<span class="c1">#         Y = Y.squeeze(dim=d)</span>
 
-    <span class="c1">#if not X.type() == Y.type():</span>
-    <span class="c1">#    raise ValueError(f&quot;Input images should have the same dtype, but got {X.type()} and {Y.type()}.&quot;)</span>
+<span class="c1">#     if len(X.shape) not in (4, 5):</span>
+<span class="c1">#         raise ValueError(f&quot;Input images should be 4-d or 5-d tensors, but got {X.shape}&quot;)</span>
 
-    <span class="k">if</span> <span class="n">win</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># set win_size</span>
-        <span class="n">win_size</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="c1">#     #if not X.type() == Y.type():</span>
+<span class="c1">#     #    raise ValueError(f&quot;Input images should have the same dtype, but got {X.type()} and {Y.type()}.&quot;)</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">win_size</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Window size should be odd.&quot;</span><span class="p">)</span>
+<span class="c1">#     if win is not None:  # set win_size</span>
+<span class="c1">#         win_size = win.shape[-1]</span>
 
-    <span class="k">if</span> <span class="n">win</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">win</span> <span class="o">=</span> <span class="n">_fspecial_gauss_1d</span><span class="p">(</span><span class="n">win_size</span><span class="p">,</span> <span class="n">win_sigma</span><span class="p">)</span>
-        <span class="n">win</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+<span class="c1">#     if not (win_size % 2 == 1):</span>
+<span class="c1">#         raise ValueError(&quot;Window size should be odd.&quot;)</span>
 
-    <span class="n">ssim_per_channel</span><span class="p">,</span> <span class="n">cs</span> <span class="o">=</span> <span class="n">_ssim</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">data_range</span><span class="o">=</span><span class="n">data_range</span><span class="p">,</span> <span class="n">win</span><span class="o">=</span><span class="n">win</span><span class="p">,</span> <span class="n">size_average</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">K</span><span class="o">=</span><span class="n">K</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">nonnegative_ssim</span><span class="p">:</span>
-        <span class="n">ssim_per_channel</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">ssim_per_channel</span><span class="p">)</span>
+<span class="c1">#     if win is None:</span>
+<span class="c1">#         win = _fspecial_gauss_1d(win_size, win_sigma)</span>
+<span class="c1">#         win = win.repeat([X.shape[1]] + [1] * (len(X.shape) - 1))</span>
+
+<span class="c1">#     ssim_per_channel, cs = _ssim(X, Y, data_range=data_range, win=win, size_average=False, K=K)</span>
+<span class="c1">#     if nonnegative_ssim:</span>
+<span class="c1">#         ssim_per_channel = torch.relu(ssim_per_channel)</span>
     
-    <span class="k">if</span> <span class="n">size_average</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">ssim_per_channel</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">ssim_per_channel</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+<span class="c1">#     if size_average:</span>
+<span class="c1">#         return ssim_per_channel.mean()</span>
+<span class="c1">#     else:</span>
+<span class="c1">#         return ssim_per_channel.mean(1)</span>
 
 
 <div class="viewcode-block" id="ms_ssim"><a class="viewcode-back" href="../../../../IQM_Vis.metrics.SSIM.html#IQM_Vis.metrics.SSIM.ssim.ms_ssim">[docs]</a><span class="k">def</span> <span class="nf">ms_ssim</span><span class="p">(</span>
@@ -337,90 +339,92 @@
         <span class="k">return</span> <span class="n">ms_ssim_val</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="SSIM"><a class="viewcode-back" href="../../../../IQM_Vis.metrics.SSIM.html#IQM_Vis.metrics.SSIM.ssim.SSIM">[docs]</a><span class="k">class</span> <span class="nc">SSIM</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">data_range</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">255</span><span class="p">,</span>
-        <span class="n">size_average</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="n">win_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">11</span><span class="p">,</span>
-        <span class="n">win_sigma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.5</span><span class="p">,</span>
-        <span class="n">channel</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
-        <span class="n">spatial_dims</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
-        <span class="n">K</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">),</span>
-        <span class="n">nonnegative_ssim</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot; class for ssim</span>
-<span class="sd">        Args:</span>
-<span class="sd">            data_range (float or int, optional): value range of input images. (usually 1.0 or 255)</span>
-<span class="sd">            size_average (bool, optional): if size_average=True, ssim of all images will be averaged as a scalar</span>
-<span class="sd">            win_size: (int, optional): the size of gauss kernel</span>
-<span class="sd">            win_sigma: (float, optional): sigma of normal distribution</span>
-<span class="sd">            channel (int, optional): input channels (default: 3)</span>
-<span class="sd">            K (list or tuple, optional): scalar constants (K1, K2). Try a larger K2 constant (e.g. 0.4) if you get a negative or NaN results.</span>
-<span class="sd">            nonnegative_ssim (bool, optional): force the ssim response to be nonnegative with relu.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="c1"># not currently used to commenting for coverage</span>
 
-        <span class="nb">super</span><span class="p">(</span><span class="n">SSIM</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">win_size</span> <span class="o">=</span> <span class="n">win_size</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">win</span> <span class="o">=</span> <span class="n">_fspecial_gauss_1d</span><span class="p">(</span><span class="n">win_size</span><span class="p">,</span> <span class="n">win_sigma</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="n">channel</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">spatial_dims</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">size_average</span> <span class="o">=</span> <span class="n">size_average</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_range</span> <span class="o">=</span> <span class="n">data_range</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">K</span> <span class="o">=</span> <span class="n">K</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">nonnegative_ssim</span> <span class="o">=</span> <span class="n">nonnegative_ssim</span>
+<span class="c1"># class SSIM(torch.nn.Module):</span>
+<span class="c1">#     def __init__(</span>
+<span class="c1">#         self,</span>
+<span class="c1">#         data_range: float = 255,</span>
+<span class="c1">#         size_average: bool = True,</span>
+<span class="c1">#         win_size: int = 11,</span>
+<span class="c1">#         win_sigma: float = 1.5,</span>
+<span class="c1">#         channel: int = 3,</span>
+<span class="c1">#         spatial_dims: int = 2,</span>
+<span class="c1">#         K: Union[Tuple[float, float], List[float]] = (0.01, 0.03),</span>
+<span class="c1">#         nonnegative_ssim: bool = False,</span>
+<span class="c1">#     ) -&gt; None:</span>
+<span class="c1">#         r&quot;&quot;&quot; class for ssim</span>
+<span class="c1">#         Args:</span>
+<span class="c1">#             data_range (float or int, optional): value range of input images. (usually 1.0 or 255)</span>
+<span class="c1">#             size_average (bool, optional): if size_average=True, ssim of all images will be averaged as a scalar</span>
+<span class="c1">#             win_size: (int, optional): the size of gauss kernel</span>
+<span class="c1">#             win_sigma: (float, optional): sigma of normal distribution</span>
+<span class="c1">#             channel (int, optional): input channels (default: 3)</span>
+<span class="c1">#             K (list or tuple, optional): scalar constants (K1, K2). Try a larger K2 constant (e.g. 0.4) if you get a negative or NaN results.</span>
+<span class="c1">#             nonnegative_ssim (bool, optional): force the ssim response to be nonnegative with relu.</span>
+<span class="c1">#         &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="SSIM.forward"><a class="viewcode-back" href="../../../../IQM_Vis.metrics.SSIM.html#IQM_Vis.metrics.SSIM.ssim.SSIM.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">ssim</span><span class="p">(</span>
-            <span class="n">X</span><span class="p">,</span>
-            <span class="n">Y</span><span class="p">,</span>
-            <span class="n">data_range</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_range</span><span class="p">,</span>
-            <span class="n">size_average</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">size_average</span><span class="p">,</span>
-            <span class="n">win</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="p">,</span>
-            <span class="n">K</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">,</span>
-            <span class="n">nonnegative_ssim</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nonnegative_ssim</span><span class="p">,</span>
-        <span class="p">)</span></div></div>
+<span class="c1">#         super(SSIM, self).__init__()</span>
+<span class="c1">#         self.win_size = win_size</span>
+<span class="c1">#         self.win = _fspecial_gauss_1d(win_size, win_sigma).repeat([channel, 1] + [1] * spatial_dims)</span>
+<span class="c1">#         self.size_average = size_average</span>
+<span class="c1">#         self.data_range = data_range</span>
+<span class="c1">#         self.K = K</span>
+<span class="c1">#         self.nonnegative_ssim = nonnegative_ssim</span>
+
+<span class="c1">#     def forward(self, X: Tensor, Y: Tensor) -&gt; Tensor:</span>
+<span class="c1">#         return ssim(</span>
+<span class="c1">#             X,</span>
+<span class="c1">#             Y,</span>
+<span class="c1">#             data_range=self.data_range,</span>
+<span class="c1">#             size_average=self.size_average,</span>
+<span class="c1">#             win=self.win,</span>
+<span class="c1">#             K=self.K,</span>
+<span class="c1">#             nonnegative_ssim=self.nonnegative_ssim,</span>
+<span class="c1">#         )</span>
 
 
-<div class="viewcode-block" id="MS_SSIM"><a class="viewcode-back" href="../../../../IQM_Vis.metrics.SSIM.html#IQM_Vis.metrics.SSIM.ssim.MS_SSIM">[docs]</a><span class="k">class</span> <span class="nc">MS_SSIM</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">data_range</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">255</span><span class="p">,</span>
-        <span class="n">size_average</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="n">win_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">11</span><span class="p">,</span>
-        <span class="n">win_sigma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.5</span><span class="p">,</span>
-        <span class="n">channel</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
-        <span class="n">spatial_dims</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
-        <span class="n">weights</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">K</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">),</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot; class for ms-ssim</span>
-<span class="sd">        Args:</span>
-<span class="sd">            data_range (float or int, optional): value range of input images. (usually 1.0 or 255)</span>
-<span class="sd">            size_average (bool, optional): if size_average=True, ssim of all images will be averaged as a scalar</span>
-<span class="sd">            win_size: (int, optional): the size of gauss kernel</span>
-<span class="sd">            win_sigma: (float, optional): sigma of normal distribution</span>
-<span class="sd">            channel (int, optional): input channels (default: 3)</span>
-<span class="sd">            weights (list, optional): weights for different levels</span>
-<span class="sd">            K (list or tuple, optional): scalar constants (K1, K2). Try a larger K2 constant (e.g. 0.4) if you get a negative or NaN results.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="c1"># class MS_SSIM(torch.nn.Module):</span>
+<span class="c1">#     def __init__(</span>
+<span class="c1">#         self,</span>
+<span class="c1">#         data_range: float = 255,</span>
+<span class="c1">#         size_average: bool = True,</span>
+<span class="c1">#         win_size: int = 11,</span>
+<span class="c1">#         win_sigma: float = 1.5,</span>
+<span class="c1">#         channel: int = 3,</span>
+<span class="c1">#         spatial_dims: int = 2,</span>
+<span class="c1">#         weights: Optional[List[float]] = None,</span>
+<span class="c1">#         K: Union[Tuple[float, float], List[float]] = (0.01, 0.03),</span>
+<span class="c1">#     ) -&gt; None:</span>
+<span class="c1">#         r&quot;&quot;&quot; class for ms-ssim</span>
+<span class="c1">#         Args:</span>
+<span class="c1">#             data_range (float or int, optional): value range of input images. (usually 1.0 or 255)</span>
+<span class="c1">#             size_average (bool, optional): if size_average=True, ssim of all images will be averaged as a scalar</span>
+<span class="c1">#             win_size: (int, optional): the size of gauss kernel</span>
+<span class="c1">#             win_sigma: (float, optional): sigma of normal distribution</span>
+<span class="c1">#             channel (int, optional): input channels (default: 3)</span>
+<span class="c1">#             weights (list, optional): weights for different levels</span>
+<span class="c1">#             K (list or tuple, optional): scalar constants (K1, K2). Try a larger K2 constant (e.g. 0.4) if you get a negative or NaN results.</span>
+<span class="c1">#         &quot;&quot;&quot;</span>
 
-        <span class="nb">super</span><span class="p">(</span><span class="n">MS_SSIM</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">win_size</span> <span class="o">=</span> <span class="n">win_size</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">win</span> <span class="o">=</span> <span class="n">_fspecial_gauss_1d</span><span class="p">(</span><span class="n">win_size</span><span class="p">,</span> <span class="n">win_sigma</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="n">channel</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">spatial_dims</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">size_average</span> <span class="o">=</span> <span class="n">size_average</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_range</span> <span class="o">=</span> <span class="n">data_range</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">=</span> <span class="n">weights</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">K</span> <span class="o">=</span> <span class="n">K</span>
+<span class="c1">#         super(MS_SSIM, self).__init__()</span>
+<span class="c1">#         self.win_size = win_size</span>
+<span class="c1">#         self.win = _fspecial_gauss_1d(win_size, win_sigma).repeat([channel, 1] + [1] * spatial_dims)</span>
+<span class="c1">#         self.size_average = size_average</span>
+<span class="c1">#         self.data_range = data_range</span>
+<span class="c1">#         self.weights = weights</span>
+<span class="c1">#         self.K = K</span>
 
-<div class="viewcode-block" id="MS_SSIM.forward"><a class="viewcode-back" href="../../../../IQM_Vis.metrics.SSIM.html#IQM_Vis.metrics.SSIM.ssim.MS_SSIM.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">ms_ssim</span><span class="p">(</span>
-            <span class="n">X</span><span class="p">,</span>
-            <span class="n">Y</span><span class="p">,</span>
-            <span class="n">data_range</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_range</span><span class="p">,</span>
-            <span class="n">size_average</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">size_average</span><span class="p">,</span>
-            <span class="n">win</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="p">,</span>
-            <span class="n">weights</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">,</span>
-            <span class="n">K</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">,</span>
-        <span class="p">)</span></div></div>
+<span class="c1">#     def forward(self, X: Tensor, Y: Tensor) -&gt; Tensor:</span>
+<span class="c1">#         return ms_ssim(</span>
+<span class="c1">#             X,</span>
+<span class="c1">#             Y,</span>
+<span class="c1">#             data_range=self.data_range,</span>
+<span class="c1">#             size_average=self.size_average,</span>
+<span class="c1">#             win=self.win,</span>
+<span class="c1">#             weights=self.weights,</span>
+<span class="c1">#             K=self.K,</span>
+<span class="c1">#         )</span>
 </pre></div>
 
            </div>

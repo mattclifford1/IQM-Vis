@@ -23,6 +23,7 @@ IQM\_Vis.UI.images
       ~images.change_to_specific_trans
       ~images.completed_range_results
       ~images.display_images
+      ~images.display_metric_JND_plot
       ~images.display_metric_correlation_plot
       ~images.display_metric_images
       ~images.display_metric_range_plot
@@ -30,9 +31,11 @@ IQM\_Vis.UI.images
       ~images.display_metrics_graph
       ~images.display_metrics_text
       ~images.display_radar_plots
+      ~images.get_export_dir
       ~images.get_metrics_over_all_trans_with_init_values
       ~images.init_worker_thread
       ~images.load_experiment_from_dir
+      ~images.load_experiment_from_dir_JND
       ~images.load_human_experiment
       ~images.load_new_images_folder
       ~images.load_new_single_image
