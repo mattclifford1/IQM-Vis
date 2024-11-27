@@ -5,6 +5,7 @@ UI image functions
 # License: BSD 3-Clause License
 
 import os
+from functools import partial
 import imghdr
 import glob
 import numpy as np
@@ -313,7 +314,8 @@ class images:
                     else:
                         values.append(-1)
                 decisions[param] = values
-                
+            
+            self.JND_trans = transform_name
             self.human_experiment_scores_JND = []
             for i, data_store in enumerate(self.data_stores):
                 self.human_experiment_scores_JND.append(decisions)
@@ -630,16 +632,46 @@ class images:
     def display_metric_JND_plot(self):
         for i, data_store in enumerate(self.data_stores):
             axes = self.widget_row[i]['metrics']['JND']['data']
-            x = []
-            y = []
+            all = {} # to calucalte std of each 
             for val, decisions in self.human_experiment_scores_JND[i].items():
                 for decision in decisions:
-                    x.append(val)
-                    y.append(decision)
+                    if val in all.keys():
+                        all[val].append(decision)
+                    else:
+                        all[val] = [decision]
+
+            # calculate mean and std decision of each val
+            x = []
+            y = []
+            e = []
+            labels = []
+            for val, decisions in all.items():
+                x.append(val)
+                y.append(np.mean(decisions))
+                e.append(np.std(decisions))
+                labels.append(f'{self.JND_trans}={val}')
+
             sp = plot_utils.scatter_plotter(axes,
                                             x_label=f'{self.current_JND_transform} Value',
                                             y_label='User Decision')
-            sp.plot(x, y)
+            sp.plot(x, y, annotations=labels, error=e)
+
+            # # make interactive hover for points
+            # annot = sp.ax.axes.annotate("", xy=(0, 0), xytext=(0, 0), textcoords="offset points",
+            #                             bbox=dict(boxstyle="round", fc="w"),
+            #                             arrowprops=dict(arrowstyle="->")
+            #                             )
+            # annot.set_visible(False)
+            # sp.ax.figure.canvas.mpl_connect(
+            #     "motion_notify_event", partial(plot_utils.hover_scatter, sp, annot))
+            # sp.ax.figure.canvas.mpl_connect(
+            #     "pick_event", partial(plot_utils.click_scatter, sp, plot_utils.change_trans_value_signal))
+
+            
+            # sp = plot_utils.scatter_plotter(axes,
+            #                                 x_label=f'{self.current_JND_transform} Value',
+            #                                 y_label='User Decision')
+            # sp.plot(x, y)
             sp.show()
 
             # ax.scatter(x, y)
