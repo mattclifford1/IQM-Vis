@@ -151,7 +151,7 @@ def save_JND_experiment_results(experiment_results,
     save_df_as_csv(df, human_experiment_csv_file, index=False)
 
     # save IQM results
-    if not isinstance(IQM_scores_df, type(None)):
+    if not isinstance(IQM_scores_df, type(None)) and not IQM_scores_df.empty:
         IQM_file = get_IQM_file(save_dir)
         save_and_merge_rm_duplicates_df_as_csv(IQM_scores_df, IQM_file)
 
