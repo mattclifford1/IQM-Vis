@@ -1,4 +1,4 @@
-﻿IQM\_Vis.metrics.NLPD\_torch.utils
+IQM\_Vis.metrics.NLPD\_torch.utils
 ==================================
 
 .. automodule:: IQM_Vis.metrics.NLPD_torch.utils
