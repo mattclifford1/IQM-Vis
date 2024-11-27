@@ -14,7 +14,7 @@ class ClickLabel(QLabel):
         super().__init__()
         self.name = name
 
-    def mousePressEvent(self, event):
+    def mousePressEvent(self, event=None):
         self.clicked.emit(self.objectName(), self.name)
 
 

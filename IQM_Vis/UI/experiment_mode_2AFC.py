@@ -261,8 +261,9 @@ class make_experiment_2AFC(QMainWindow):
                   self.widget_experiments['preamble']['quit_button'], self.quit)
 
         ''' experiment tab '''
+        self.exp_info_text = 'Click on which image, A or B, is most similar to the reference image (or use left/right arrows)'
         self.widget_experiments['exp']['info'] = QLabel(
-            'Click on which image, A or B, is most similar to the reference image', self)
+            self.exp_info_text, self)
         for image in ['Reference', 'A', 'B']:
             self.widget_experiments['exp'][image] = {}
             self.widget_experiments['exp'][image]['data'] = ClickLabel(image)
@@ -272,6 +273,12 @@ class make_experiment_2AFC(QMainWindow):
             self.widget_experiments['exp'][image]['label'].setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.widget_experiments['exp']['A']['data'].clicked.connect(self.clicked_image)
         self.widget_experiments['exp']['B']['data'].clicked.connect(self.clicked_image)
+        # shortcuts keyboard
+        QShortcut(QKeySequence(
+            "left"), self.widget_experiments['exp']['A']['data'], self.widget_experiments['exp']['A']['data'].mousePressEvent)
+        QShortcut(QKeySequence(
+            "right"), self.widget_experiments['exp']['B']['data'], self.widget_experiments['exp']['B']['data'].mousePressEvent)
+        # quit
         self.widget_experiments['exp']['quit_button'] = QPushButton('Quit', self)
         self.widget_experiments['exp']['quit_button'].clicked.connect(self.quit)
         QShortcut(QKeySequence("Ctrl+Q"),
@@ -367,6 +374,10 @@ class make_experiment_2AFC(QMainWindow):
 
     ''' experiment running functions'''
     def setup_experiment(self):
+        self.click_counter = 0
+        self.max_text = f'{int(self.min_expected_comps)}-{int(self.max_expected_comps)}'
+        self.widget_experiments['exp']['info'].setText(
+            f'{self.exp_info_text} {self.click_counter}/{self.max_text}')
         self.experiments_tab.setCurrentIndex(1)
         self.experiments_tab.setTabEnabled(0, False)
         self.experiments_tab.setTabEnabled(2, False)
@@ -393,6 +404,7 @@ class make_experiment_2AFC(QMainWindow):
         self.init_style('light')
 
     def start_experiment(self):
+        self.running_experiment = True
         self.init_style('dark')
         self.experiments_tab.setCurrentIndex(2)
 
@@ -406,11 +418,12 @@ class make_experiment_2AFC(QMainWindow):
         # self.quick_sort(0, len(self.experiment_transforms)-1)
 
     def finish_experiment(self):
+        self.running_experiment = False
         self.experiments_tab.setTabEnabled(3, True)
         self.show_all_images(tab='final')
         self.init_style('light')
         self.experiments_tab.setCurrentIndex(3)
-        # self.experiments_tab.setTabEnabled(2, False)
+        self.experiments_tab.setTabEnabled(2, False)
         self.save_experiment()
         if self.saved == True:
             self.widget_experiments['final']['save_label'].setText(f'Saved to {self.default_save_dir}')
@@ -577,6 +590,13 @@ class make_experiment_2AFC(QMainWindow):
     def clicked_image(self, image_name, widget_name):
         if self.able_to_click == False:
             return
+        if self.running_experiment == False:
+            return
+        self.click_counter += 1
+        self.exp_info_text = 'Click on which image, A or B, is most similar to the reference image (or use left/right arrows)'
+
+        self.widget_experiments['exp']['info'].setText(f'{self.exp_info_text} {self.click_counter}/{self.max_text}')
+        
         self.able_to_click = False
         # get comparison to pivot
         trans_str = image_name[len(self.image_name)+1:]

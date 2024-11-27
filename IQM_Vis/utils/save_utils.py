@@ -187,7 +187,8 @@ def save_2AFC_experiment_results(trans_names,
         save_df_as_csv(pd.DataFrame.from_dict(data), times_file)
 
     # save IQM results
-    if not isinstance(IQM_scores_df, type(None)):
+    if not isinstance(IQM_scores_df, type(None)) and not IQM_scores_df.empty:
+        print(IQM_scores_df)
         IQM_file = get_IQM_file(save_dir)
         save_and_merge_rm_duplicates_df_as_csv(IQM_scores_df, IQM_file)
 
