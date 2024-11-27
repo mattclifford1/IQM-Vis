@@ -259,10 +259,20 @@ class widgets():
             self.change_dataset_name)
         self.widget_controls['label']['exp_im_nums'] = QLabel(self)
         self.widget_controls['label']['exp_im_nums'].setText('Dataset Range (JND):')
-        self.widget_controls['label']['steps_edit'] = QLineEdit()
-        self.widget_controls['label']['steps_edit'].setValidator(QIntValidator())
-        self.widget_controls['label']['steps_edit'].setText(f"{len(self.data_stores[0])}")
-        self.widget_controls['label']['steps_edit'].textChanged.connect(self.JND_dataset_range)
+        self.widget_controls['label']['exp_im_nums_dash'] = QLabel(self)
+        self.widget_controls['label']['exp_im_nums_dash'].setText('-')
+        self.widget_controls['label']['range_edit_lower'] = QLineEdit()
+        self.widget_controls['label']['range_edit_lower'].setValidator(QIntValidator())
+        self.exp_range_lower = 1
+        self.widget_controls['label']['range_edit_lower'].setText(
+            f"{self.exp_range_lower}")
+        self.widget_controls['label']['range_edit_lower'].textChanged.connect(self.JND_dataset_range_lower)
+        self.widget_controls['label']['range_edit_upper'] = QLineEdit()
+        self.widget_controls['label']['range_edit_upper'].setValidator(QIntValidator())
+        self.exp_range_upper = len(self.data_stores[0])
+        self.widget_controls['label']['range_edit_upper'].setText(
+            f"{self.exp_range_upper}")
+        self.widget_controls['label']['range_edit_upper'].textChanged.connect(self.JND_dataset_range_upper)
 
         ''' export options '''
         self.widget_export = {}
@@ -535,17 +545,31 @@ class widgets():
             ''' change the dataset_name we are using '''
             self.default_dataset_name = txt
 
-    def JND_dataset_range(self, txt):
+    def JND_dataset_range_lower(self, txt):
         ''' change the dataset_name we are using '''
-        if not isinstance(txt, int):
+        try:
+            self.exp_range_lower = int(txt)
+        except:
             return  
-        self.JND_dataset_range = int(txt)
-        if self.JND_dataset_range < 1:
-            self.JND_dataset_range = 1
-        elif self.JND_dataset_range > len(self.data_stores[0]):
-            self.JND_dataset_range = len(self.data_stores[0])
-        self.widget_controls['label']['steps_edit'].setText(
-            f"{self.JND_dataset_range}")
+        if self.exp_range_lower < 1:
+            self.exp_range_lower = 1
+        elif self.exp_range_lower > self.exp_range_upper:
+            self.exp_range_lower = self.exp_range_upper
+        self.widget_controls['label']['range_edit_lower'].setText(
+            f"{self.exp_range_lower}")
+
+    def JND_dataset_range_upper(self, txt):
+        ''' change the dataset_name we are using '''
+        try:
+            self.exp_range_upper = int(txt)
+        except:
+            return
+        if self.exp_range_upper < self.exp_range_lower:
+            self.exp_range_upper = self.exp_range_lower
+        elif self.exp_range_upper > len(self.data_stores[0]):
+            self.exp_range_upper = len(self.data_stores[0])
+        self.widget_controls['label']['range_edit_upper'].setText(
+            f"{self.exp_range_upper}")
     '''
     images settings apply
     '''
