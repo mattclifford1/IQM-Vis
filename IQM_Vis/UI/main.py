@@ -337,10 +337,6 @@ class make_app(widgets, layout, images):
         self.widget_controls['label']['exp_change_save'].setText(f'Save Folder: {self.default_save_dir}')
         self.widget_controls['label']['export_change_save'].setText(f'Save Folder: {self.default_save_dir}')
 
-    def change_dataset_name(self, txt):
-        ''' change the dataset_name we are using '''
-        self.default_dataset_name = txt
-
 def set_checked_menu_from_iterable(main_menu, iterable, name, action_store, connect_func, restrict_options=None):
     _menu = main_menu.addMenu(name)
     _menu.triggered.connect(connect_func)

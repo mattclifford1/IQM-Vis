@@ -213,6 +213,15 @@ class layout(QMainWindow):
             self.widget_controls['button']['exp_change_dataset_name'])
         dataset_name_exp.addStretch()
         experiment_controls.addLayout(dataset_name_exp)
+        # Dataset RAnge nums
+        dataset_range_exp = QHBoxLayout()
+        dataset_range_exp.addWidget(
+            self.widget_controls['label']['exp_im_nums'])
+        dataset_range_exp.addWidget(
+            self.widget_controls['label']['steps_edit'])
+        dataset_range_exp.addStretch()
+        experiment_controls.addLayout(dataset_range_exp)
+
         # run experiment button
         experiment_button = QHBoxLayout()
         experiment_button.addWidget(self.widget_controls['button']['launch_exp_2AFC'])

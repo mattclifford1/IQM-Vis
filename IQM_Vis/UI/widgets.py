@@ -251,12 +251,18 @@ class widgets():
         self.widget_controls['button']['exp_change_save'].clicked.connect(self.change_save_folder)
         # dataset name
         self.widget_controls['label']['exp_change_dataset_name'] = QLabel(self)
-        self.widget_controls['label']['exp_change_dataset_name'].setText(f'Dataset Name')
+        self.widget_controls['label']['exp_change_dataset_name'].setText(f'Dataset Name (JND)')
         self.widget_controls['button']['exp_change_dataset_name'] = QLineEdit(self)
         self.widget_controls['button']['exp_change_dataset_name'].setText(
             self.default_dataset_name)
         self.widget_controls['button']['exp_change_dataset_name'].textChanged.connect(
             self.change_dataset_name)
+        self.widget_controls['label']['exp_im_nums'] = QLabel(self)
+        self.widget_controls['label']['exp_im_nums'].setText('Dataset Range (JND):')
+        self.widget_controls['label']['steps_edit'] = QLineEdit()
+        self.widget_controls['label']['steps_edit'].setValidator(QIntValidator())
+        self.widget_controls['label']['steps_edit'].setText(f"{len(self.data_stores[0])}")
+        self.widget_controls['label']['steps_edit'].textChanged.connect(self.JND_dataset_range)
 
         ''' export options '''
         self.widget_export = {}
@@ -524,6 +530,22 @@ class widgets():
             self.plot_data_lim = self.data_lims['fixed']
         self.redo_plots(calc_range=False)
 
+
+    def change_dataset_name(self, txt):
+            ''' change the dataset_name we are using '''
+            self.default_dataset_name = txt
+
+    def JND_dataset_range(self, txt):
+        ''' change the dataset_name we are using '''
+        if not isinstance(txt, int):
+            return  
+        self.JND_dataset_range = int(txt)
+        if self.JND_dataset_range < 1:
+            self.JND_dataset_range = 1
+        elif self.JND_dataset_range > len(self.data_stores[0]):
+            self.JND_dataset_range = len(self.data_stores[0])
+        self.widget_controls['label']['steps_edit'].setText(
+            f"{self.JND_dataset_range}")
     '''
     images settings apply
     '''
