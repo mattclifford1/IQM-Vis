@@ -280,8 +280,8 @@ class make_experiment_JND(QMainWindow):
                   self.widget_experiments['preamble']['quit_button'], self.quit)
 
         ''' experiment tab '''
-        self.widget_experiments['exp']['info'] = QLabel(
-            'Click same or different for the two images shown (or press the S or D key)', self)
+        self.exp_info_text = 'Click same or different for the two images shown (or press the S or D key)'
+        self.widget_experiments['exp']['info'] = QLabel(self.exp_info_text, self)
         for image in ['Reference', 'Comparison']:
             self.widget_experiments['exp'][image] = {}
             self.widget_experiments['exp'][image]['data'] = ClickLabel(image)
@@ -593,6 +593,9 @@ class make_experiment_JND(QMainWindow):
                                 resize=self.image_display_size, 
                                 rgb_brightness=self.rgb_brightness, 
                                 display_brightness=self.display_brightness)
+            self.widget_experiments['exp']['info'].setText(
+                f'{self.exp_info_text} {self.curr_im_ind+1}/{len(self.experiment_transforms)}')
+
         # reset time
         self.time0 = time.time()
 

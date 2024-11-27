@@ -593,9 +593,8 @@ class make_experiment_2AFC(QMainWindow):
         if self.running_experiment == False:
             return
         self.click_counter += 1
-        self.exp_info_text = 'Click on which image, A or B, is most similar to the reference image (or use left/right arrows)'
 
-        self.widget_experiments['exp']['info'].setText(f'{self.exp_info_text} {self.click_counter}/{self.max_text}')
+        self.widget_experiments['exp']['info'].setText(f'{self.exp_info_text} {self.click_counter+1}/{self.max_text}')
         
         self.able_to_click = False
         # get comparison to pivot
