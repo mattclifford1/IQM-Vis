@@ -281,7 +281,7 @@ class make_experiment_JND(QMainWindow):
 
         ''' experiment tab '''
         self.widget_experiments['exp']['info'] = QLabel(
-            'Click same or different for the two images shown', self)
+            'Click same or different for the two images shown (or press the S or D key)', self)
         for image in ['Reference', 'Comparison']:
             self.widget_experiments['exp'][image] = {}
             self.widget_experiments['exp'][image]['data'] = ClickLabel(image)
@@ -296,6 +296,10 @@ class make_experiment_JND(QMainWindow):
         self.widget_experiments['exp']['diff_button'].clicked.connect(partial(self.user_decision, 'diff'))
         self.widget_experiments['exp']['quit_button'] = QPushButton('Quit', self)
         self.widget_experiments['exp']['quit_button'].clicked.connect(self.quit)
+        QShortcut(QKeySequence("S"), self.widget_experiments['exp']['same_button'], partial(
+            self.user_decision, 'same'))
+        QShortcut(QKeySequence("D"), self.widget_experiments['exp']['same_button'], partial(
+            self.user_decision, 'diff'))
         QShortcut(QKeySequence("Ctrl+Q"),
                   self.widget_experiments['exp']['quit_button'], self.quit)
 
@@ -563,7 +567,9 @@ class make_experiment_JND(QMainWindow):
     def user_decision(self, decision):
         if decision not in ['same', 'diff']:
             raise ValueError(f'user decision for JND experiment needs to be same or diff')
-        
+        # make sure we don't go beyond the data set with acciental key presses
+        if self.curr_im_ind >=  len(self.experiment_transforms):
+            return
         # save time it took 
 
         # log decision
