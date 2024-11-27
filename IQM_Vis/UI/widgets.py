@@ -808,6 +808,8 @@ class widgets():
                                                                  self.default_dataset_name,
                                                                  self.pre_processing_option,
                                                                  self.post_processing_option,
+                                                                 self.exp_range_lower,
+                                                                 self.exp_range_upper,
                                                                  self.checked_metrics)
             self.experiment_JND.saved_experiment.connect(
                 self.change_human_scores_after_exp_JND)

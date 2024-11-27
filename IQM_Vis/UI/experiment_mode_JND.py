@@ -47,6 +47,8 @@ class make_experiment_JND(QMainWindow):
                  dataset_name='dataset1',
                  image_preprocessing='None',
                  image_postprocessing='None',
+                 lower_im_num=1,
+                 upper_im_num=1,
                  checked_metrics={}):
         super().__init__()
         self.checked_transformation_params = checked_transformation_params
@@ -67,7 +69,9 @@ class make_experiment_JND(QMainWindow):
         self.dataset_name = dataset_name
         self.curr_im_ind = 0
         self.save_im_format = '.png'
-        
+        self.lower_im_num = lower_im_num
+        self.upper_im_num = upper_im_num
+
         self.processing = {'pre': image_preprocessing,
                            'post': image_postprocessing}
 
@@ -186,7 +190,8 @@ class make_experiment_JND(QMainWindow):
         # all images in the dataset
         self.all_ref_images = {}
         self.experiment_transforms = []
-        for i in range(len(self.data_store)):
+
+        for i in range(max(self.lower_im_num-1, 0), min(len(self.data_store), self.upper_im_num)):
             # load the image in dataset
             self.data_store[i]
             # REFERENCE image
