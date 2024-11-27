@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tutorial 3: Customisation Details &mdash; IQM-Vis 0.2 documentation</title>
@@ -14,8 +14,9 @@
   <![endif]-->
   
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -32,15 +33,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            IQM-Vis
+            <a href="../index.html" class="icon icon-home"> IQM-Vis
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -91,7 +88,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
           <li class="breadcrumb-item"><a href="../Tutorials.html">Tutorials</a></li>
       <li class="breadcrumb-item active">Tutorial 3: Customisation Details</li>
       <li class="wy-breadcrumbs-aside">
@@ -106,7 +103,7 @@
   <p>View the whole notebook: <a class="reference external" href="https://github.com/mattclifford1/IQM-Vis/tree/main/dev_resources/docs/notebooks/Tutorial_3-Advanced-Customisations.ipynb">https://github.com/mattclifford1/IQM-Vis/tree/main/dev_resources/docs/notebooks/Tutorial_3-Advanced-Customisations.ipynb</a></p>
 <hr class="docutils" />
 <section id="Tutorial-3:-Customisation-Details">
-<h1>Tutorial 3: Customisation Details<a class="headerlink" href="#Tutorial-3:-Customisation-Details" title="Permalink to this heading"></a></h1>
+<h1>Tutorial 3: Customisation Details<a class="headerlink" href="#Tutorial-3:-Customisation-Details" title="Permalink to this headline"></a></h1>
 <p>In this notebook we will expand on tutorial 2 by showing you exactly what form the transformations and IQMs need to be in.</p>
 <p>Let’s start by importing the package.</p>
 <div class="nbinput nblast docutils container">
@@ -118,7 +115,7 @@
 </div>
 </div>
 <section id="Metrics">
-<h2>Metrics<a class="headerlink" href="#Metrics" title="Permalink to this heading"></a></h2>
+<h2>Metrics<a class="headerlink" href="#Metrics" title="Permalink to this headline"></a></h2>
 <p>A metric is defined as a callable object e.g. a function.</p>
 <p>Custom metrics need to take arguments: - im_ref: the reference image (numpy array - float in the range 0-1) - im_comp: the comparison/distorted image (numpy array - float in the range 0-1) - **kwargs: peel off any extra key word arguments that might be called to the function</p>
 <p>Metrics need to return a single value (float) with the score</p>
@@ -183,7 +180,7 @@
 </div>
 </section>
 <section id="Transformations">
-<h2>Transformations<a class="headerlink" href="#Transformations" title="Permalink to this heading"></a></h2>
+<h2>Transformations<a class="headerlink" href="#Transformations" title="Permalink to this headline"></a></h2>
 <p>Transforms/distortions are callable with the following arguments: - image: image to be transformed (numpy array - float in the range 0-1) - param: value of the parameter of the transformation</p>
 <p>Transforms need to return a numpy array of the same shape as the image input and be within the bounds 0-1.</p>
 <p>For example we can make our own brightness adjuster, note the parameter ‘value’ can be called anything:</p>
@@ -207,7 +204,7 @@
 </div>
 </section>
 <section id="Making-the-UI">
-<h2>Making the UI<a class="headerlink" href="#Making-the-UI" title="Permalink to this heading"></a></h2>
+<h2>Making the UI<a class="headerlink" href="#Making-the-UI" title="Permalink to this headline"></a></h2>
 <p>Now make the UI as shown in tutorial 2</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:

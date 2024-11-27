@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>IQM_Vis.data_handlers package &mdash; IQM-Vis 0.2 documentation</title>
@@ -13,8 +13,9 @@
   <![endif]-->
   
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
@@ -27,15 +28,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="index.html" class="icon icon-home">
-            IQM-Vis
+            <a href="index.html" class="icon icon-home"> IQM-Vis
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -76,7 +73,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li><a href="index.html" class="icon icon-home"></a></li>
       <li class="breadcrumb-item active">IQM_Vis.data_handlers package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/IQM_Vis.data_handlers.rst.txt" rel="nofollow"> View page source</a>
@@ -88,12 +85,12 @@
            <div itemprop="articleBody">
              
   <section id="iqm-vis-data-handlers-package">
-<h1>IQM_Vis.data_handlers package<a class="headerlink" href="#iqm-vis-data-handlers-package" title="Permalink to this heading"></a></h1>
+<h1>IQM_Vis.data_handlers package<a class="headerlink" href="#iqm-vis-data-handlers-package" title="Permalink to this headline"></a></h1>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
 </section>
 <section id="module-IQM_Vis.data_handlers.data_api">
-<span id="iqm-vis-data-handlers-data-api-module"></span><h2>IQM_Vis.data_handlers.data_api module<a class="headerlink" href="#module-IQM_Vis.data_handlers.data_api" title="Permalink to this heading"></a></h2>
+<span id="iqm-vis-data-handlers-data-api-module"></span><h2>IQM_Vis.data_handlers.data_api module<a class="headerlink" href="#module-IQM_Vis.data_handlers.data_api" title="Permalink to this headline"></a></h2>
 <p>generic image and metric data class constructor
 both use the same image for reference and transformed</p>
 <dl class="py class">
@@ -119,11 +116,11 @@ to achieve this we convert to a bytes array (input to __call__) then load this f
 <dl class="py class">
 <dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api.dataset_holder">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.data_handlers.data_api.</span></span><span class="sig-name descname"><span class="pre">dataset_holder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_list:</span> <span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_images:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_loader=&lt;function</span> <span class="pre">load_image&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_pre_processing=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_post_processing=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_list_to_transform=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">human_exp_csv=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api.html#dataset_holder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api.dataset_holder" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataset_loader" title="IQM_Vis.data_handlers.data_api_abstract.base_dataset_loader"><code class="xref py py-class docutils literal notranslate"><span class="pre">base_dataset_loader</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataset_loader" title="IQM_Vis.data_handlers.data_api_abstract.base_dataset_loader"><code class="xref py py-class docutils literal notranslate"><span class="pre">IQM_Vis.data_handlers.data_api_abstract.base_dataset_loader</span></code></a></p>
 <p>Stores images and metrics to communicate with the UI via the IQM-Vis data
 API.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>image_list</strong> (<em>list</em>) – list of image file paths</p></li>
 <li><p><strong>metrics</strong> (<em>dict</em>) – dictionary with keys of the metric names and values
@@ -217,12 +214,12 @@ the reference image. (Defaults to None)</p></li>
 
 </section>
 <section id="module-IQM_Vis.data_handlers.data_api_abstract">
-<span id="iqm-vis-data-handlers-data-api-abstract-module"></span><h2>IQM_Vis.data_handlers.data_api_abstract module<a class="headerlink" href="#module-IQM_Vis.data_handlers.data_api_abstract" title="Permalink to this heading"></a></h2>
+<span id="iqm-vis-data-handlers-data-api-abstract-module"></span><h2>IQM_Vis.data_handlers.data_api_abstract module<a class="headerlink" href="#module-IQM_Vis.data_handlers.data_api_abstract" title="Permalink to this headline"></a></h2>
 <p>blueprint for data loader API</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api_abstract.base_dataloader">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.data_handlers.data_api_abstract.</span></span><span class="sig-name descname"><span class="pre">base_dataloader</span></span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api_abstract.html#base_dataloader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_image_to_transform">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_image_to_transform</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api_abstract.html#base_dataloader.get_image_to_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader.get_image_to_transform" title="Permalink to this definition"></a></dt>
@@ -268,7 +265,7 @@ the reference image. (Defaults to None)</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api_abstract.base_dataset_loader">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IQM_Vis.data_handlers.data_api_abstract.</span></span><span class="sig-name descname"><span class="pre">base_dataset_loader</span></span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api_abstract.html#base_dataset_loader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataset_loader" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader" title="IQM_Vis.data_handlers.data_api_abstract.base_dataloader"><code class="xref py py-class docutils literal notranslate"><span class="pre">base_dataloader</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataloader" title="IQM_Vis.data_handlers.data_api_abstract.base_dataloader"><code class="xref py py-class docutils literal notranslate"><span class="pre">IQM_Vis.data_handlers.data_api_abstract.base_dataloader</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="IQM_Vis.data_handlers.data_api_abstract.base_dataset_loader.get_reference_image_by_index">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_reference_image_by_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IQM_Vis/data_handlers/data_api_abstract.html#base_dataset_loader.get_reference_image_by_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IQM_Vis.data_handlers.data_api_abstract.base_dataset_loader.get_reference_image_by_index" title="Permalink to this definition"></a></dt>
@@ -278,7 +275,7 @@ the reference image. (Defaults to None)</p></li>
 
 </section>
 <section id="module-IQM_Vis.data_handlers">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-IQM_Vis.data_handlers" title="Permalink to this heading"></a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-IQM_Vis.data_handlers" title="Permalink to this headline"></a></h2>
 </section>
 </section>
 

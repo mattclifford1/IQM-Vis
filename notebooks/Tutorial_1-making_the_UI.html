@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tutorial 1: Making the UI &mdash; IQM-Vis 0.2 documentation</title>
@@ -14,8 +14,9 @@
   <![endif]-->
   
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -32,15 +33,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            IQM-Vis
+            <a href="../index.html" class="icon icon-home"> IQM-Vis
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -100,7 +97,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
           <li class="breadcrumb-item"><a href="../Tutorials.html">Tutorials</a></li>
       <li class="breadcrumb-item active">Tutorial 1: Making the UI</li>
       <li class="wy-breadcrumbs-aside">
@@ -115,7 +112,7 @@
   <p>View the whole notebook: <a class="reference external" href="https://github.com/mattclifford1/IQM-Vis/tree/main/dev_resources/docs/notebooks/Tutorial_1-making_the_UI.ipynb">https://github.com/mattclifford1/IQM-Vis/tree/main/dev_resources/docs/notebooks/Tutorial_1-making_the_UI.ipynb</a></p>
 <hr class="docutils" />
 <section id="Tutorial-1:-Making-the-UI">
-<h1>Tutorial 1: Making the UI<a class="headerlink" href="#Tutorial-1:-Making-the-UI" title="Permalink to this heading"></a></h1>
+<h1>Tutorial 1: Making the UI<a class="headerlink" href="#Tutorial-1:-Making-the-UI" title="Permalink to this headline"></a></h1>
 <p>In this tutorial we will go through how to launch the default UI. This includes all theh metrics and transformations provided by IQM-Vis. Settings and images can then be changed from within the UI if required.</p>
 <p>To launch the UI all we need to do is import the packge and call the make function:</p>
 <p>N.B. You can run this from a notebook but it recommended to copy and paste this as a python script.</p>
@@ -132,47 +129,47 @@
 <p>This will produce a blank UI with a default image.</p>
 <img alt="../_images/UI-blank.png" src="../_images/UI-blank.png" />
 <section id="Adding-transformations-and-metrics">
-<h2>Adding transformations and metrics<a class="headerlink" href="#Adding-transformations-and-metrics" title="Permalink to this heading"></a></h2>
+<h2>Adding transformations and metrics<a class="headerlink" href="#Adding-transformations-and-metrics" title="Permalink to this headline"></a></h2>
 <p>Use the menu bar items to add default transformations and metrics.</p>
 <img alt="../_images/UI-checked.png" src="../_images/UI-checked.png" />
 </section>
 <section id="Loading-your-own-images">
-<h2>Loading your own images<a class="headerlink" href="#Loading-your-own-images" title="Permalink to this heading"></a></h2>
+<h2>Loading your own images<a class="headerlink" href="#Loading-your-own-images" title="Permalink to this headline"></a></h2>
 <p>To add your own images, navigate to File&gt;Load New Images. You need to then select a directory that contains only images.</p>
 </section>
 <section id="Settings">
-<h2>Settings<a class="headerlink" href="#Settings" title="Permalink to this heading"></a></h2>
+<h2>Settings<a class="headerlink" href="#Settings" title="Permalink to this headline"></a></h2>
 <p>In the settings tab we adjust some of the display and image settings. N.B.: you have to click ‘Apply Settings’ for any changes to take place.</p>
 <img alt="../_images/settings.png" src="../_images/settings.png" />
 <section id="Image-Pre-Processing:">
-<h3>Image Pre Processing:<a class="headerlink" href="#Image-Pre-Processing:" title="Permalink to this heading"></a></h3>
+<h3>Image Pre Processing:<a class="headerlink" href="#Image-Pre-Processing:" title="Permalink to this headline"></a></h3>
 <p>function to apply to the image before any transformations or metrics e.g. making the image smaller</p>
 </section>
 <section id="Image-Post-Processing:">
-<h3>Image Post Processing:<a class="headerlink" href="#Image-Post-Processing:" title="Permalink to this heading"></a></h3>
+<h3>Image Post Processing:<a class="headerlink" href="#Image-Post-Processing:" title="Permalink to this headline"></a></h3>
 <p>function to apply to the image after any transformations but before metrics e.g. cropping the images to before black boarders from an image rotation</p>
 </section>
 <section id="Image-Display-Size:">
-<h3>Image Display Size:<a class="headerlink" href="#Image-Display-Size:" title="Permalink to this heading"></a></h3>
+<h3>Image Display Size:<a class="headerlink" href="#Image-Display-Size:" title="Permalink to this headline"></a></h3>
 <p>Size of the image in the UI</p>
 </section>
 <section id="Graph-Display-Size:">
-<h3>Graph Display Size:<a class="headerlink" href="#Graph-Display-Size:" title="Permalink to this heading"></a></h3>
+<h3>Graph Display Size:<a class="headerlink" href="#Graph-Display-Size:" title="Permalink to this headline"></a></h3>
 <p>Size of the graphs in the UI</p>
 </section>
 <section id="Graph/Experiment-Step-Size:">
-<h3>Graph/Experiment Step Size:<a class="headerlink" href="#Graph/Experiment-Step-Size:" title="Permalink to this heading"></a></h3>
+<h3>Graph/Experiment Step Size:<a class="headerlink" href="#Graph/Experiment-Step-Size:" title="Permalink to this headline"></a></h3>
 <p>Number of steps used when calculating transformations over their parameter range for range graphs and experiments. E.g. a paramter on the range [-1, 1] with 5 step values would use the range of parameters: [-1, -0.5, 0, 0.5, 1]</p>
 </section>
 <section id="RGB-Max-Brightness:">
-<h3>RGB Max Brightness:<a class="headerlink" href="#RGB-Max-Brightness:" title="Permalink to this heading"></a></h3>
+<h3>RGB Max Brightness:<a class="headerlink" href="#RGB-Max-Brightness:" title="Permalink to this headline"></a></h3>
 <p>The luminance value corresponding to the maximum RGB value (1, 1, 1), measured in candelas per meter squared</p>
 </section>
 <section id="Dispaly-Max-Brightness:">
-<h3>Dispaly Max Brightness:<a class="headerlink" href="#Dispaly-Max-Brightness:" title="Permalink to this heading"></a></h3>
+<h3>Dispaly Max Brightness:<a class="headerlink" href="#Dispaly-Max-Brightness:" title="Permalink to this headline"></a></h3>
 <p>The luminance value corresponding to the maximum brightness the computer screen can produce, measured in candelas per meter squared</p>
 <section id="Other-Settings">
-<h4>Other Settings<a class="headerlink" href="#Other-Settings" title="Permalink to this heading"></a></h4>
+<h4>Other Settings<a class="headerlink" href="#Other-Settings" title="Permalink to this headline"></a></h4>
 <p>N.B. to change the save project folder go to File&gt;Set Save Folder</p>
 </section>
 </section>

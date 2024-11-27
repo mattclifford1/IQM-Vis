@@ -12,8 +12,9 @@
   <![endif]-->
   
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="../../../about.html" />
@@ -26,15 +27,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../../../index.html" class="icon icon-home">
-            IQM-Vis
+            <a href="../../../index.html" class="icon icon-home"> IQM-Vis
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -75,7 +72,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
           <li class="breadcrumb-item"><a href="../metrics.html">IQM_Vis.metrics</a></li>
       <li class="breadcrumb-item active">IQM_Vis.metrics.perceptual_trad</li>
@@ -100,7 +97,7 @@
 
 
 <div class="viewcode-block" id="SSIM"><a class="viewcode-back" href="../../../_autosummary/IQM_Vis.metrics.SSIM.html#IQM_Vis.metrics.perceptual_trad.SSIM">[docs]</a><span class="k">class</span> <span class="nc">SSIM</span><span class="p">:</span>
-    <span class="sd">&#39;&#39;&#39;Structural Similarity Index Measure between two images. Images must have</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Structural Similarity Index Measure between two images. Images must have</span>
 <span class="sd">       the same dimensions. Score given is 1 - SSIM to give the loss/dissimilarity</span>
 
 <span class="sd">    Args:</span>
@@ -116,7 +113,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">preproccess_function</span> <span class="o">=</span> <span class="n">_numpy_to_torch_image</span></div>
 
 <div class="viewcode-block" id="SSIM.__call__"><a class="viewcode-back" href="../../../_autosummary/IQM_Vis.metrics.SSIM.html#IQM_Vis.metrics.perceptual_trad.SSIM.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">k1</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span> <span class="n">ssim_kernel_size</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;When an instance is called</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;When an instance is called</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            im_ref (np.array): Reference image</span>
@@ -157,7 +154,7 @@
 
 
 <div class="viewcode-block" id="MS_SSIM"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.perceptual_trad.MS_SSIM">[docs]</a><span class="k">class</span> <span class="nc">MS_SSIM</span><span class="p">:</span>
-    <span class="sd">&#39;&#39;&#39;Multi-Scale Structural Similarity Index Measure between two images.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Multi-Scale Structural Similarity Index Measure between two images.</span>
 <span class="sd">       Images must have the same dimensions. Score given is 1 - MS_SSIM to give the</span>
 <span class="sd">       loss/dissimilarity.</span>
 <span class="sd">       Note that images of small size, below 180 pixels will have their kernel size</span>
@@ -176,7 +173,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">preproccess_function</span> <span class="o">=</span> <span class="n">_numpy_to_torch_image</span>
 
 <div class="viewcode-block" id="MS_SSIM.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.perceptual_trad.MS_SSIM.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">k1</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span> <span class="n">mssim_kernel_size</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="o">**</span> <span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;When an instance is called</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;When an instance is called</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            im_ref (np.array): Reference image</span>
@@ -259,7 +256,7 @@
 
 
 <div class="viewcode-block" id="NLPD"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.perceptual_trad.NLPD">[docs]</a><span class="k">class</span> <span class="nc">NLPD</span><span class="p">:</span>
-    <span class="sd">&#39;&#39;&#39;Normalised Laplacian pyramid</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Normalised Laplacian pyramid</span>
 <span class="sd">    Proposed by Valero Laparra et al. https://www.uv.es/lapeva/papers/2016_HVEI.pdf .</span>
 <span class="sd">    NLPD is an image quality metric based on the transformations associated with the </span>
 <span class="sd">    early visual system: local luminance subtraction and local gain control.</span>
@@ -274,7 +271,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">nlpd_k</span> <span class="o">=</span> <span class="mi">1</span>
 
 <div class="viewcode-block" id="NLPD.__call__"><a class="viewcode-back" href="../../../IQM_Vis.metrics.html#IQM_Vis.metrics.perceptual_trad.NLPD.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im_ref</span><span class="p">,</span> <span class="n">im_comp</span><span class="p">,</span> <span class="n">nlpd_k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;When an instance is called</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;When an instance is called</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            im_ref (np.array): Reference image</span>

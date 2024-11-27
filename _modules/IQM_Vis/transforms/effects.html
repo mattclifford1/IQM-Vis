@@ -12,8 +12,9 @@
   <![endif]-->
   
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="../../../about.html" />
@@ -26,15 +27,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../../../index.html" class="icon icon-home">
-            IQM-Vis
+            <a href="../../../index.html" class="icon icon-home"> IQM-Vis
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -75,7 +72,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
           <li class="breadcrumb-item"><a href="../transforms.html">IQM_Vis.transforms</a></li>
       <li class="breadcrumb-item active">IQM_Vis.transforms.effects</li>
@@ -101,7 +98,7 @@
 
 
 <div class="viewcode-block" id="brightness"><a class="viewcode-back" href="../../../IQM_Vis.transforms.html#IQM_Vis.transforms.effects.brightness">[docs]</a><span class="k">def</span> <span class="nf">brightness</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Adjust image brightness. Image is clipped to the range (0, 1)</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Adjust image brightness. Image is clipped to the range (0, 1)</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.array): image to have its brightness adjusted</span>
@@ -117,7 +114,7 @@
 
 
 <div class="viewcode-block" id="binary_threshold"><a class="viewcode-back" href="../../../IQM_Vis.transforms.html#IQM_Vis.transforms.effects.binary_threshold">[docs]</a><span class="k">def</span> <span class="nf">binary_threshold</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;conver image to binary at a given threshold</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;conver image to binary at a given threshold</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.array): image to be thresholded</span>
@@ -138,7 +135,7 @@
 
 
 <div class="viewcode-block" id="jpeg_compression"><a class="viewcode-back" href="../../../IQM_Vis.transforms.html#IQM_Vis.transforms.effects.jpeg_compression">[docs]</a><span class="k">def</span> <span class="nf">jpeg_compression</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="mi">101</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;encode image using jpeg then decode</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;encode image using jpeg then decode</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.array): image to be compressed</span>
@@ -157,7 +154,7 @@
 
 
 <span class="k">def</span> <span class="nf">_encode_compression</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">encoder</span><span class="p">,</span> <span class="n">encode_param</span><span class="p">,</span> <span class="n">uint</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        generic image encoder for jpeg, png etc</span>
 <span class="sd">        using https://dev_resources/docs.opencv.org/3.4/d4/da8/group__imgcodecs.html to encode/decode</span>
 <span class="sd">        for encode types: https://dev_resources/docs.opencv.org/3.4/d6/d87/imgcodecs_8hpp.html</span>
@@ -180,7 +177,7 @@
 
 
 <div class="viewcode-block" id="contrast"><a class="viewcode-back" href="../../../IQM_Vis.transforms.html#IQM_Vis.transforms.effects.contrast">[docs]</a><span class="k">def</span> <span class="nf">contrast</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">contrast</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;adjust the contrast of an image</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;adjust the contrast of an image</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.array): image to have contrast adjusted</span>
@@ -202,7 +199,7 @@
 
 
 <div class="viewcode-block" id="hue"><a class="viewcode-back" href="../../../IQM_Vis.transforms.html#IQM_Vis.transforms.effects.hue">[docs]</a><span class="k">def</span> <span class="nf">hue</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;adjust the hue of an image</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;adjust the hue of an image</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.array): image to have hue adjusted</span>
@@ -216,7 +213,7 @@
 
 
 <div class="viewcode-block" id="saturation"><a class="viewcode-back" href="../../../IQM_Vis.transforms.html#IQM_Vis.transforms.effects.saturation">[docs]</a><span class="k">def</span> <span class="nf">saturation</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">sat</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;adjust the saturation of an image</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;adjust the saturation of an image</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.array): image to have saturation adjusted</span>
@@ -230,7 +227,7 @@
 
 
 <div class="viewcode-block" id="brightness_hsv"><a class="viewcode-back" href="../../../IQM_Vis.transforms.html#IQM_Vis.transforms.effects.brightness_hsv">[docs]</a><span class="k">def</span> <span class="nf">brightness_hsv</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;adjust the brightness of an image</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;adjust the brightness of an image</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.array): image to have brightness adjusted</span>
@@ -244,7 +241,7 @@
 
 
 <span class="k">def</span> <span class="nf">_adjust_HSV</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    adjust hue, saturation or brightness of an image,</span>
 <span class="sd">    image is float between 0, 1 and value is between -1 and 1</span>
 <span class="sd">    channels:</span>
@@ -277,7 +274,7 @@
 
 
 <div class="viewcode-block" id="blur"><a class="viewcode-back" href="../../../IQM_Vis.transforms.html#IQM_Vis.transforms.effects.blur">[docs]</a><span class="k">def</span> <span class="nf">blur</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Gaussian Blur on an image</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Gaussian Blur on an image</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.array): image to be rotated</span>
