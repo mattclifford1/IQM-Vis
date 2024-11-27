@@ -13,12 +13,16 @@ IQM\_Vis.UI.widgets
 
    .. autosummary::
    
+      ~widgets.JND_dataset_range_lower
+      ~widgets.JND_dataset_range_upper
       ~widgets.__init__
+      ~widgets.change_dataset_name
       ~widgets.change_display_im_display_brightness
       ~widgets.change_display_im_rgb_brightness
       ~widgets.change_display_im_size
       ~widgets.change_graph_size
-      ~widgets.change_human_scores_after_exp
+      ~widgets.change_human_scores_after_exp_2AFC
+      ~widgets.change_human_scores_after_exp_JND
       ~widgets.change_num_steps
       ~widgets.change_plot_lims
       ~widgets.change_post_processing
@@ -33,7 +37,8 @@ IQM\_Vis.UI.widgets
       ~widgets.export_trans_images
       ~widgets.generic_value_change
       ~widgets.init_widgets
-      ~widgets.launch_experiment
+      ~widgets.launch_experiment_2AFC
+      ~widgets.launch_experiment_JND
       ~widgets.make_slider_range
       ~widgets.open_mlp_new
       ~widgets.reset_slider_group

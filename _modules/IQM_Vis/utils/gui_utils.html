@@ -168,12 +168,17 @@
 
 <div class="viewcode-block" id="get_trans_dict_from_str"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.gui_utils.get_trans_dict_from_str">[docs]</a><span class="k">def</span> <span class="nf">get_trans_dict_from_str</span><span class="p">(</span><span class="n">trans_str</span><span class="p">,</span> <span class="n">return_dict</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="c1"># determine which experiment formatting we are using</span>
-    <span class="n">splitter</span> <span class="o">=</span> <span class="s1">&#39;=&#39;</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trans_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">splitter</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trans_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-----&#39;</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">splitter</span> <span class="o">=</span> <span class="s1">&#39;-----&#39;</span>   <span class="c1"># legacy code experiment format - illegible with negative numbers</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trans_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">splitter</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">trans_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">splitter</span> <span class="o">=</span> <span class="s1">&#39;::&#39;</span>   <span class="c1"># legacy code experiment format - didn&#39;t work with windows filesystem</span>
-    
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">trans_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;&lt;&gt;&#39;</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">splitter</span> <span class="o">=</span> <span class="s1">&#39;&lt;&gt;&#39;</span>   <span class="c1"># newer code experiment format</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">trans_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">splitter</span> <span class="o">=</span> <span class="s1">&#39;=&#39;</span>   <span class="c1"># legacy experiment format</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;No splitter found in transformation string&#39;</span><span class="p">)</span>
+    <span class="c1"># split the string into the transformation and the value    </span>
     <span class="n">trans</span> <span class="o">=</span> <span class="n">splitter</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">trans_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">splitter</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
     <span class="c1"># error with duplicated columns in csv with pandas load</span>
     <span class="k">try</span><span class="p">:</span>

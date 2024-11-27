@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IQM_Vis.UI.experiment_mode &mdash; IQM-Vis 0.2 documentation</title>
+  <title>IQM_Vis.UI.experiment_mode_2AFC &mdash; IQM-Vis 0.2 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
@@ -77,7 +77,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">IQM_Vis.UI.experiment_mode</li>
+      <li class="breadcrumb-item active">IQM_Vis.UI.experiment_mode_2AFC</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -86,7 +86,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for IQM_Vis.UI.experiment_mode</h1><div class="highlight"><pre>
+  <h1>Source code for IQM_Vis.UI.experiment_mode_2AFC</h1><div class="highlight"><pre>
 <span></span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">create experiment window</span>
 <span class="sd">&#39;&#39;&#39;</span>
@@ -119,7 +119,7 @@
 <span class="kn">from</span> <span class="nn">IQM_Vis.utils</span> <span class="kn">import</span> <span class="n">gui_utils</span><span class="p">,</span> <span class="n">plot_utils</span><span class="p">,</span> <span class="n">image_utils</span><span class="p">,</span> <span class="n">save_utils</span>
 
 
-<div class="viewcode-block" id="make_experiment"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment">[docs]</a><span class="k">class</span> <span class="nc">make_experiment</span><span class="p">(</span><span class="n">QMainWindow</span><span class="p">):</span>
+<div class="viewcode-block" id="make_experiment_2AFC"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC">[docs]</a><span class="k">class</span> <span class="nc">make_experiment_2AFC</span><span class="p">(</span><span class="n">QMainWindow</span><span class="p">):</span>
     <span class="n">saved_experiment</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
     <span class="n">reset_clicked_image</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
 
@@ -143,6 +143,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">rgb_brightness</span> <span class="o">=</span> <span class="n">rgb_brightness</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">display_brightness</span> <span class="o">=</span> <span class="n">display_brightness</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span> <span class="o">=</span> <span class="n">default_save_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">default_save_dir</span><span class="p">,</span> <span class="s1">&#39;2AFC&#39;</span><span class="p">)</span>
+        
         
         <span class="bp">self</span><span class="o">.</span><span class="n">processing</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;pre&#39;</span><span class="p">:</span> <span class="n">image_preprocessing</span><span class="p">,</span>
                            <span class="s1">&#39;post&#39;</span><span class="p">:</span> <span class="n">image_postprocessing</span><span class="p">}</span>
@@ -161,11 +163,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">saved</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">quit_experiment</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">get_all_images</span><span class="p">()</span>
+        
+        <span class="c1"># make the experiment directory</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_name</span><span class="p">)</span>
+        <span class="c1"># make unique save dir name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_save_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_unique_save_dir</span><span class="p">()</span>
+        
         <span class="bp">self</span><span class="o">.</span><span class="n">_init_experiment_window_widgets</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">get_metric_scores</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">experiment_layout</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">experiments_tab</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s1">&#39;Experiment&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s1">&#39;2AFC Experiment&#39;</span><span class="p">)</span>
         <span class="c1"># move to centre of the screen</span>
         <span class="n">qr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameGeometry</span><span class="p">()</span>
         <span class="n">cp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="p">()</span><span class="o">.</span><span class="n">availableGeometry</span><span class="p">()</span><span class="o">.</span><span class="n">center</span><span class="p">()</span>
@@ -173,7 +182,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">qr</span><span class="o">.</span><span class="n">topLeft</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">show_all_images</span><span class="p">()</span>
 
-<div class="viewcode-block" id="make_experiment.closeEvent"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.closeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<div class="viewcode-block" id="make_experiment_2AFC.closeEvent"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.closeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="c1"># Ask for confirmation if not saved</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved</span><span class="p">:</span>
             <span class="n">answer</span> <span class="o">=</span> <span class="n">QMessageBox</span><span class="o">.</span><span class="n">question</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
@@ -198,10 +207,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">clicked_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
             <span class="n">event</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="make_experiment.quit"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.quit">[docs]</a>    <span class="k">def</span> <span class="nf">quit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="make_experiment_2AFC.quit"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.quit">[docs]</a>    <span class="k">def</span> <span class="nf">quit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="make_experiment.show_all_images"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.show_all_images">[docs]</a>    <span class="k">def</span> <span class="nf">show_all_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tab</span><span class="o">=</span><span class="s1">&#39;setup&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="make_experiment_2AFC.show_all_images"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.show_all_images">[docs]</a>    <span class="k">def</span> <span class="nf">show_all_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tab</span><span class="o">=</span><span class="s1">&#39;setup&#39;</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="n">tab</span><span class="p">][</span><span class="s1">&#39;images&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
         <span class="n">rows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment_transforms</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
         <span class="n">cols</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment_transforms</span><span class="p">)</span><span class="o">/</span><span class="n">rows</span><span class="p">))</span>
@@ -217,7 +226,7 @@
         <span class="c1"># time.sleep(5)</span>
         <span class="c1"># QApplication.processEvents()</span>
             
-<div class="viewcode-block" id="make_experiment.get_all_images"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.get_all_images">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_images</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="make_experiment_2AFC.get_all_images"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.get_all_images">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_images</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; save image name &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_store</span><span class="o">.</span><span class="n">get_reference_image_name</span><span class="p">()</span>
         <span class="sd">&#39;&#39;&#39; load all transformed images and sort them via MSE &#39;&#39;&#39;</span>
@@ -269,13 +278,13 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">experiment_transforms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">calc_max_comparisons</span><span class="p">(</span><span class="n">num_images</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment_transforms</span><span class="p">))</span></div>
     
-<div class="viewcode-block" id="make_experiment.calc_max_comparisons"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.calc_max_comparisons">[docs]</a>    <span class="k">def</span> <span class="nf">calc_max_comparisons</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_images</span><span class="p">):</span>
+<div class="viewcode-block" id="make_experiment_2AFC.calc_max_comparisons"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.calc_max_comparisons">[docs]</a>    <span class="k">def</span> <span class="nf">calc_max_comparisons</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_images</span><span class="p">):</span>
         <span class="c1"># calc expected number of comparisons - </span>
         <span class="c1"># http://homepages.math.uic.edu/~leon/cs-mcs401-r07/handouts/quicksort-continued.pdf</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">min_expected_comps</span> <span class="o">=</span> <span class="n">num_images</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">num_images</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_expected_comps</span> <span class="o">=</span> <span class="mf">1.39</span> <span class="o">*</span> <span class="n">num_images</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">num_images</span><span class="p">)</span></div>
     
-<div class="viewcode-block" id="make_experiment.get_metric_scores"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.get_metric_scores">[docs]</a>    <span class="k">def</span> <span class="nf">get_metric_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="make_experiment_2AFC.get_metric_scores"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.get_metric_scores">[docs]</a>    <span class="k">def</span> <span class="nf">get_metric_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;get IQM scores to save alongside the experiment for plotting/analysis purposes&#39;&#39;&#39;</span>
         <span class="n">IQM_scores</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">experiment_transforms</span><span class="p">:</span>
@@ -304,7 +313,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;setup&#39;</span><span class="p">][</span><span class="s1">&#39;images&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gui_utils</span><span class="o">.</span><span class="n">MplCanvas</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;setup&#39;</span><span class="p">][</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;setup&#39;</span><span class="p">][</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&#39;&#39;</span>
-<span class="s1">        Experiment to be setup with the above images using the settings:</span>
+<span class="s1">        2AFC Experiment to be setup with the above images using the settings:</span>
 <span class="s1">            Save folder: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span><span class="si">}</span><span class="s1"></span>
 <span class="s1">            Image Display Size: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">image_display_size</span><span class="si">}</span><span class="s1"></span>
 <span class="s1">            Image Calibration:</span>
@@ -341,8 +350,9 @@
                   <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;preamble&#39;</span><span class="p">][</span><span class="s1">&#39;quit_button&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">quit</span><span class="p">)</span>
 
         <span class="sd">&#39;&#39;&#39; experiment tab &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exp_info_text</span> <span class="o">=</span> <span class="s1">&#39;Click on which image, A or B, is most similar to the reference image (or use left/right arrows)&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;exp&#39;</span><span class="p">][</span><span class="s1">&#39;info&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span>
-            <span class="s1">&#39;Click on which image, A or B, is most similar to the reference image&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">exp_info_text</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Reference&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;exp&#39;</span><span class="p">][</span><span class="n">image</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;exp&#39;</span><span class="p">][</span><span class="n">image</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ClickLabel</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
@@ -352,6 +362,12 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;exp&#39;</span><span class="p">][</span><span class="n">image</span><span class="p">][</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignmentFlag</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;exp&#39;</span><span class="p">][</span><span class="s1">&#39;A&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clicked_image</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;exp&#39;</span><span class="p">][</span><span class="s1">&#39;B&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clicked_image</span><span class="p">)</span>
+        <span class="c1"># shortcuts keyboard</span>
+        <span class="n">QShortcut</span><span class="p">(</span><span class="n">QKeySequence</span><span class="p">(</span>
+            <span class="s2">&quot;left&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;exp&#39;</span><span class="p">][</span><span class="s1">&#39;A&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;exp&#39;</span><span class="p">][</span><span class="s1">&#39;A&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mousePressEvent</span><span class="p">)</span>
+        <span class="n">QShortcut</span><span class="p">(</span><span class="n">QKeySequence</span><span class="p">(</span>
+            <span class="s2">&quot;right&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;exp&#39;</span><span class="p">][</span><span class="s1">&#39;B&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;exp&#39;</span><span class="p">][</span><span class="s1">&#39;B&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mousePressEvent</span><span class="p">)</span>
+        <span class="c1"># quit</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;exp&#39;</span><span class="p">][</span><span class="s1">&#39;quit_button&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s1">&#39;Quit&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;exp&#39;</span><span class="p">][</span><span class="s1">&#39;quit_button&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">quit</span><span class="p">)</span>
         <span class="n">QShortcut</span><span class="p">(</span><span class="n">QKeySequence</span><span class="p">(</span><span class="s2">&quot;Ctrl+Q&quot;</span><span class="p">),</span>
@@ -368,7 +384,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;final&#39;</span><span class="p">][</span><span class="s1">&#39;quit_button&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">quit</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;final&#39;</span><span class="p">][</span><span class="s1">&#39;save_label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s1">&#39;Not saved yet&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
 
-<div class="viewcode-block" id="make_experiment.experiment_layout"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.experiment_layout">[docs]</a>    <span class="k">def</span> <span class="nf">experiment_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="make_experiment_2AFC.experiment_layout"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.experiment_layout">[docs]</a>    <span class="k">def</span> <span class="nf">experiment_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; setup &#39;&#39;&#39;</span>
         <span class="n">experiment_text</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
         <span class="n">experiment_text</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;setup&#39;</span><span class="p">][</span><span class="s1">&#39;text&#39;</span><span class="p">])</span>
@@ -446,13 +462,17 @@
         <span class="c1"># return experiment_mode_layout</span>
 
     <span class="sd">&#39;&#39;&#39; experiment running functions&#39;&#39;&#39;</span>
-<div class="viewcode-block" id="make_experiment.setup_experiment"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.setup_experiment">[docs]</a>    <span class="k">def</span> <span class="nf">setup_experiment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="make_experiment_2AFC.setup_experiment"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.setup_experiment">[docs]</a>    <span class="k">def</span> <span class="nf">setup_experiment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">click_counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_expected_comps</span><span class="p">)</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_expected_comps</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;exp&#39;</span><span class="p">][</span><span class="s1">&#39;info&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">exp_info_text</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">click_counter</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">max_text</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">experiments_tab</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">experiments_tab</span><span class="o">.</span><span class="n">setTabEnabled</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">experiments_tab</span><span class="o">.</span><span class="n">setTabEnabled</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">experiments_tab</span><span class="o">.</span><span class="n">setTabEnabled</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="make_experiment.toggle_experiment"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.toggle_experiment">[docs]</a>    <span class="k">def</span> <span class="nf">toggle_experiment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="make_experiment_2AFC.toggle_experiment"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.toggle_experiment">[docs]</a>    <span class="k">def</span> <span class="nf">toggle_experiment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">running_experiment</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">reset_experiment</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">experiments_tab</span><span class="o">.</span><span class="n">setTabEnabled</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
@@ -468,11 +488,12 @@
             <span class="c1"># self.widget_experiments[&#39;preamble&#39;][&#39;start_button&#39;].setText(&#39;Reset&#39;)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">running_experiment</span> <span class="o">=</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="make_experiment.reset_experiment"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.reset_experiment">[docs]</a>    <span class="k">def</span> <span class="nf">reset_experiment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="make_experiment_2AFC.reset_experiment"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.reset_experiment">[docs]</a>    <span class="k">def</span> <span class="nf">reset_experiment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">experiments_tab</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">init_style</span><span class="p">(</span><span class="s1">&#39;light&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="make_experiment.start_experiment"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.start_experiment">[docs]</a>    <span class="k">def</span> <span class="nf">start_experiment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="make_experiment_2AFC.start_experiment"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.start_experiment">[docs]</a>    <span class="k">def</span> <span class="nf">start_experiment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">running_experiment</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">init_style</span><span class="p">(</span><span class="s1">&#39;dark&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">experiments_tab</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 
@@ -485,43 +506,48 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">sorting_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
         <span class="c1"># self.quick_sort(0, len(self.experiment_transforms)-1)</span>
 
-<div class="viewcode-block" id="make_experiment.finish_experiment"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.finish_experiment">[docs]</a>    <span class="k">def</span> <span class="nf">finish_experiment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="make_experiment_2AFC.finish_experiment"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.finish_experiment">[docs]</a>    <span class="k">def</span> <span class="nf">finish_experiment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">running_experiment</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">experiments_tab</span><span class="o">.</span><span class="n">setTabEnabled</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">show_all_images</span><span class="p">(</span><span class="n">tab</span><span class="o">=</span><span class="s1">&#39;final&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">init_style</span><span class="p">(</span><span class="s1">&#39;light&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">experiments_tab</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-        <span class="c1"># self.experiments_tab.setTabEnabled(2, False)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">experiments_tab</span><span class="o">.</span><span class="n">setTabEnabled</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save_experiment</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;final&#39;</span><span class="p">][</span><span class="s1">&#39;save_label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Saved to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;final&#39;</span><span class="p">][</span><span class="s1">&#39;save_label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Save failed to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
 
-
-<div class="viewcode-block" id="make_experiment.save_experiment"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.save_experiment">[docs]</a>    <span class="k">def</span> <span class="nf">save_experiment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="make_experiment_2AFC.get_trans_funcs"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.get_trans_funcs">[docs]</a>    <span class="k">def</span> <span class="nf">get_trans_funcs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># get the current transform functions</span>
         <span class="n">trans_funcs</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">single_trans</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">experiment_trans_params</span><span class="p">:</span>
             <span class="n">trans_name</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">single_trans</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">trans_funcs</span><span class="p">[</span><span class="n">trans_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked_transformation_params</span><span class="p">[</span><span class="n">trans_name</span><span class="p">][</span><span class="s1">&#39;function&#39;</span><span class="p">]</span>
-        <span class="c1"># make the experiment directory</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">trans_funcs</span></div>
+    
+<div class="viewcode-block" id="make_experiment_2AFC.get_unique_save_dir"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.get_unique_save_dir">[docs]</a>    <span class="k">def</span> <span class="nf">get_unique_save_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># get the current transform functions</span>
+        <span class="n">trans_funcs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_trans_funcs</span><span class="p">()</span>
+
         <span class="c1"># get a unique directory (same image with diff trans need a new dir)</span>
         <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="n">unique_dir_found</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">new_dir</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">while</span> <span class="n">unique_dir_found</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="n">exp_save_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span><span class="si">}</span><span class="s1">-experiment-</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="n">exp_save_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;experiment-</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">exp_save_dir</span><span class="p">):</span>
                 <span class="c1"># get transform funcs and params</span>
                 <span class="n">exp_trans_params</span> <span class="o">=</span> <span class="n">save_utils</span><span class="o">.</span><span class="n">load_obj</span><span class="p">(</span>
                     <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">exp_save_dir</span><span class="p">,</span> <span class="s1">&#39;transforms&#39;</span><span class="p">,</span> <span class="s1">&#39;transform_params.pkl&#39;</span><span class="p">))</span>
                 <span class="n">exp_trans_funcs</span> <span class="o">=</span> <span class="n">save_utils</span><span class="o">.</span><span class="n">load_obj</span><span class="p">(</span>
                     <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">exp_save_dir</span><span class="p">,</span> <span class="s1">&#39;transforms&#39;</span><span class="p">,</span> <span class="s1">&#39;transform_functions.pkl&#39;</span><span class="p">))</span>
-                
+
                 <span class="c1"># get image processing saved params</span>
-                <span class="n">processing_file</span> <span class="o">=</span> <span class="n">save_utils</span><span class="o">.</span><span class="n">get_image_processing_file</span><span class="p">(</span><span class="n">exp_save_dir</span><span class="p">)</span>
+                <span class="n">processing_file</span> <span class="o">=</span> <span class="n">save_utils</span><span class="o">.</span><span class="n">get_image_processing_file</span><span class="p">(</span>
+                    <span class="n">exp_save_dir</span><span class="p">)</span>
                 <span class="n">procesing_same</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">processing_file</span><span class="p">):</span>
                     <span class="n">processing</span> <span class="o">=</span> <span class="n">save_utils</span><span class="o">.</span><span class="n">load_json_dict</span><span class="p">(</span><span class="n">processing_file</span><span class="p">)</span>
@@ -529,7 +555,9 @@
                         <span class="n">procesing_same</span> <span class="o">=</span> <span class="kc">True</span>
 
                 <span class="c1"># check if experiment is the same</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">exp_trans_params</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">original_params_order</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">trans_funcs</span> <span class="o">==</span> <span class="n">exp_trans_funcs</span><span class="p">)</span> <span class="ow">and</span> <span class="n">procesing_same</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">((</span><span class="n">exp_trans_params</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">original_params_order</span><span class="p">)</span> 
+                    <span class="ow">and</span> <span class="p">(</span><span class="n">trans_funcs</span> <span class="o">==</span> <span class="n">exp_trans_funcs</span><span class="p">)</span> 
+                    <span class="ow">and</span> <span class="n">procesing_same</span><span class="p">):</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span> <span class="o">=</span> <span class="n">exp_save_dir</span>
                     <span class="n">unique_dir_found</span> <span class="o">=</span> <span class="kc">True</span>
                     <span class="n">new_dir</span> <span class="o">=</span> <span class="kc">False</span>
@@ -538,6 +566,12 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span> <span class="o">=</span> <span class="n">exp_save_dir</span>
                 <span class="n">unique_dir_found</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">new_dir</span></div>
+    
+<div class="viewcode-block" id="make_experiment_2AFC.save_experiment"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.save_experiment">[docs]</a>    <span class="k">def</span> <span class="nf">save_experiment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># get the current transform functions</span>
+        <span class="n">trans_funcs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_trans_funcs</span><span class="p">()</span>
+
         <span class="c1"># make all the dirs and subdirs</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span><span class="p">,</span> <span class="s1">&#39;images&#39;</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -551,7 +585,7 @@
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;ref_image_unprocessed&#39;</span><span class="p">):</span>
                 <span class="n">image_utils</span><span class="o">.</span><span class="n">save_image</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ref_image_unprocessed</span><span class="p">,</span>
                                         <span class="n">save_utils</span><span class="o">.</span><span class="n">get_original_unprocessed_image_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">new_dir</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_save_dir</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">trans</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">experiment_transforms</span><span class="p">:</span>
                 <span class="n">image_utils</span><span class="o">.</span><span class="n">save_image</span><span class="p">(</span>
                     <span class="n">trans</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">],</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span><span class="p">,</span> <span class="s1">&#39;images&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">save_utils</span><span class="o">.</span><span class="n">make_name_for_trans</span><span class="p">(</span><span class="n">trans</span><span class="p">)</span><span class="si">}</span><span class="s1">.png&#39;</span><span class="p">))</span>
@@ -571,7 +605,7 @@
         <span class="n">exp_order</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">trans</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">experiment_transforms</span><span class="p">:</span>
             <span class="n">exp_order</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">save_utils</span><span class="o">.</span><span class="n">make_name_for_trans</span><span class="p">(</span><span class="n">trans</span><span class="p">))</span>
-        <span class="n">csv_file</span> <span class="o">=</span> <span class="n">save_utils</span><span class="o">.</span><span class="n">save_experiment_results</span><span class="p">(</span>
+        <span class="n">csv_file</span> <span class="o">=</span> <span class="n">save_utils</span><span class="o">.</span><span class="n">save_2AFC_experiment_results</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">original_params_order</span><span class="p">,</span>
             <span class="n">exp_order</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span><span class="p">,</span>
@@ -580,9 +614,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">saved</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">saved_experiment</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">csv_file</span><span class="p">)</span></div>
 
-
     <span class="sd">&#39;&#39;&#39; sorting algorithm resource: https://www.geeksforgeeks.org/quick-sort/&#39;&#39;&#39;</span>
-<div class="viewcode-block" id="make_experiment.quick_sort"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.quick_sort">[docs]</a>    <span class="k">def</span> <span class="nf">quick_sort</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="make_experiment_2AFC.quick_sort"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.quick_sort">[docs]</a>    <span class="k">def</span> <span class="nf">quick_sort</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">times_taken</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_quick_sort</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment_transforms</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">quit_experiment</span> <span class="o">!=</span> <span class="kc">True</span><span class="p">:</span>
@@ -602,7 +635,7 @@
             <span class="c1"># Recursive call on the right of pivot</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_quick_sort</span><span class="p">(</span><span class="n">pi</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">high</span><span class="p">)</span>
 
-<div class="viewcode-block" id="make_experiment.partition"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.partition">[docs]</a>    <span class="k">def</span> <span class="nf">partition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">):</span>
+<div class="viewcode-block" id="make_experiment_2AFC.partition"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.partition">[docs]</a>    <span class="k">def</span> <span class="nf">partition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; given an unsorted partition of the array between low and high, order</span>
 <span class="sd">            elements lower than a given pivot point to the left and higher to the right&#39;&#39;&#39;</span>
         <span class="c1"># Choose the end element as pivot</span>
@@ -643,9 +676,15 @@
         <span class="c1"># Return the position from where partition is done</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">comp_pointer</span> <span class="o">+</span> <span class="mi">1</span></div>
 
-<div class="viewcode-block" id="make_experiment.clicked_image"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.clicked_image">[docs]</a>    <span class="k">def</span> <span class="nf">clicked_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_name</span><span class="p">,</span> <span class="n">widget_name</span><span class="p">):</span>
+<div class="viewcode-block" id="make_experiment_2AFC.clicked_image"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.clicked_image">[docs]</a>    <span class="k">def</span> <span class="nf">clicked_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_name</span><span class="p">,</span> <span class="n">widget_name</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">able_to_click</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">return</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">running_experiment</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">click_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;exp&#39;</span><span class="p">][</span><span class="s1">&#39;info&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">exp_info_text</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">click_counter</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">max_text</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        
         <span class="bp">self</span><span class="o">.</span><span class="n">able_to_click</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="c1"># get comparison to pivot</span>
         <span class="n">trans_str</span> <span class="o">=</span> <span class="n">image_name</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_name</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
@@ -659,20 +698,20 @@
                 <span class="s1">&#39;widget&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_experiments</span><span class="p">[</span><span class="s1">&#39;exp&#39;</span><span class="p">][</span><span class="n">widget_name</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reset_clicked_image</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># change to black image, after x amount of time will change to experimetn image</span></div>
         
-<div class="viewcode-block" id="make_experiment.click_completed"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.click_completed">[docs]</a>    <span class="k">def</span> <span class="nf">click_completed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="make_experiment_2AFC.click_completed"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.click_completed">[docs]</a>    <span class="k">def</span> <span class="nf">click_completed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># unlock the wait</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clicked_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="make_experiment.swap_inds"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.swap_inds">[docs]</a>    <span class="k">def</span> <span class="nf">swap_inds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+<div class="viewcode-block" id="make_experiment_2AFC.swap_inds"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.swap_inds">[docs]</a>    <span class="k">def</span> <span class="nf">swap_inds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
         <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment_transforms</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">experiment_transforms</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment_transforms</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">experiment_transforms</span><span class="p">[</span><span class="n">i</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="make_experiment.get_single_transform_im"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.get_single_transform_im">[docs]</a>    <span class="k">def</span> <span class="nf">get_single_transform_im</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">single_trans_dict</span><span class="p">):</span>
+<div class="viewcode-block" id="make_experiment_2AFC.get_single_transform_im"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.get_single_transform_im">[docs]</a>    <span class="k">def</span> <span class="nf">get_single_transform_im</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">single_trans_dict</span><span class="p">):</span>
         <span class="n">trans_name</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">single_trans_dict</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">image_utils</span><span class="o">.</span><span class="n">get_transform_image</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_store</span><span class="p">,</span>
                                         <span class="p">{</span><span class="n">trans_name</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked_transformation_params</span><span class="p">[</span><span class="n">trans_name</span><span class="p">]},</span>
                                         <span class="n">single_trans_dict</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="make_experiment.change_experiment_images"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.change_experiment_images">[docs]</a>    <span class="k">def</span> <span class="nf">change_experiment_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A_trans</span><span class="p">,</span> <span class="n">B_trans</span><span class="p">):</span>
+<div class="viewcode-block" id="make_experiment_2AFC.change_experiment_images"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.change_experiment_images">[docs]</a>    <span class="k">def</span> <span class="nf">change_experiment_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A_trans</span><span class="p">,</span> <span class="n">B_trans</span><span class="p">):</span>
         <span class="n">A</span> <span class="o">=</span> <span class="n">A_trans</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span>
         <span class="n">B</span> <span class="o">=</span> <span class="n">B_trans</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span>
         
@@ -686,7 +725,7 @@
             <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">image_name</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">save_utils</span><span class="o">.</span><span class="n">make_name_for_trans</span><span class="p">(</span><span class="n">B_trans</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
 
     <span class="sd">&#39;&#39;&#39; UI &#39;&#39;&#39;</span>
-<div class="viewcode-block" id="make_experiment.init_style"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.make_experiment.init_style">[docs]</a>    <span class="k">def</span> <span class="nf">init_style</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;light&#39;</span><span class="p">,</span> <span class="n">css_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="make_experiment_2AFC.init_style"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.make_experiment_2AFC.init_style">[docs]</a>    <span class="k">def</span> <span class="nf">init_style</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;light&#39;</span><span class="p">,</span> <span class="n">css_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">css_file</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="nb">dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
             <span class="c1"># css_file = os.path.join(dir, &#39;style-light.css&#39;)</span>
@@ -698,7 +737,7 @@
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Cannot load css style sheet - file not found&#39;</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="reset_image_widget_to_black"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.reset_image_widget_to_black">[docs]</a><span class="k">class</span> <span class="nc">reset_image_widget_to_black</span><span class="p">(</span><span class="n">QObject</span><span class="p">):</span>
+<div class="viewcode-block" id="reset_image_widget_to_black"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.reset_image_widget_to_black">[docs]</a><span class="k">class</span> <span class="nc">reset_image_widget_to_black</span><span class="p">(</span><span class="n">QObject</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; change clicked image to black and pause &#39;&#39;&#39;</span>
     <span class="n">completed</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
@@ -709,7 +748,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">black_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
         <span class="c1"># self.black_array[:, :, 1] = 1 # blue</span>
 
-<div class="viewcode-block" id="reset_image_widget_to_black.change_to_solid"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.reset_image_widget_to_black.change_to_solid">[docs]</a>    <span class="nd">@pyqtSlot</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+<div class="viewcode-block" id="reset_image_widget_to_black.change_to_solid"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.reset_image_widget_to_black.change_to_solid">[docs]</a>    <span class="nd">@pyqtSlot</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">change_to_solid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="n">t_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="n">image_display_size</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;image_display_size&#39;</span><span class="p">]</span>
@@ -739,7 +778,7 @@
         <span class="c1"># all complete so send signal </span>
         <span class="bp">self</span><span class="o">.</span><span class="n">completed</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="reset_image_widget_to_black.stop"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.reset_image_widget_to_black.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="reset_image_widget_to_black.stop"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.reset_image_widget_to_black.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="kc">False</span></div>
 
     <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -747,7 +786,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="sort_list"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode.sort_list">[docs]</a><span class="k">def</span> <span class="nf">sort_list</span><span class="p">(</span><span class="n">list1</span><span class="p">,</span> <span class="n">list2</span><span class="p">):</span>
+<div class="viewcode-block" id="sort_list"><a class="viewcode-back" href="../../../IQM_Vis.UI.html#IQM_Vis.UI.experiment_mode_2AFC.sort_list">[docs]</a><span class="k">def</span> <span class="nf">sort_list</span><span class="p">(</span><span class="n">list1</span><span class="p">,</span> <span class="n">list2</span><span class="p">):</span>
     <span class="c1"># sort list1 based on list2</span>
     <span class="n">inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">list2</span><span class="p">)</span>
     <span class="n">sorted_list1</span> <span class="o">=</span> <span class="p">[]</span>

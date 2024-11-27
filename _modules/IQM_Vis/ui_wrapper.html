@@ -105,13 +105,15 @@
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">PyQt6.QtWidgets</span> <span class="kn">import</span> <span class="n">QApplication</span>
     <span class="kn">import</span> <span class="nn">IQM_Vis</span>
-    <span class="kn">from</span> <span class="nn">IQM_Vis.UI.main</span> <span class="kn">import</span> <span class="n">make_app</span>
     <span class="kn">from</span> <span class="nn">IQM_Vis.utils</span> <span class="kn">import</span> <span class="n">image_utils</span>
-    <span class="kn">from</span> <span class="nn">IQM_Vis.examples.images</span> <span class="kn">import</span> <span class="n">DEFAULT_IMAGES</span>
     <span class="kn">import</span> <span class="nn">matplotlib</span>
     <span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;Qt5Agg&quot;</span><span class="p">)</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Cannot load PyQt6 library - running IQM_Vis package in headless mode&#39;</span><span class="p">)</span>
+    
+<span class="kn">from</span> <span class="nn">IQM_Vis.UI.main</span> <span class="kn">import</span> <span class="n">make_app</span>
+<span class="kn">from</span> <span class="nn">IQM_Vis.examples.images</span> <span class="kn">import</span> <span class="n">DEFAULT_IMAGES</span>
+
 
 <div class="viewcode-block" id="make_UI"><a class="viewcode-back" href="../../IQM_Vis.html#IQM_Vis.ui_wrapper.make_UI">[docs]</a><span class="k">class</span> <span class="nc">make_UI</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
@@ -124,6 +126,7 @@
                  <span class="n">metrics_avg_graph</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                  <span class="n">metric_params</span><span class="p">:</span> <span class="nb">dict</span><span class="o">=</span><span class="p">{},</span>
                  <span class="n">default_save_dir</span><span class="o">=</span><span class="n">IQM_Vis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">save_utils</span><span class="o">.</span><span class="n">DEFAULT_SAVE_DIR</span><span class="p">,</span>
+                 <span class="n">default_dataset_name</span><span class="o">=</span><span class="s1">&#39;dataset1&#39;</span><span class="p">,</span>
                  <span class="n">restrict_options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">num_steps_range</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span>
                  <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
@@ -138,6 +141,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">metrics_avg_graph</span> <span class="o">=</span> <span class="n">metrics_avg_graph</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metric_params</span> <span class="o">=</span> <span class="n">metric_params</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span> <span class="o">=</span> <span class="n">default_save_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_dataset_name</span> <span class="o">=</span> <span class="n">default_dataset_name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">restrict_options</span> <span class="o">=</span> <span class="n">restrict_options</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_steps_range</span> <span class="o">=</span> <span class="n">num_steps_range</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">debug</span>
@@ -154,15 +158,16 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_check_inputs</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">make_app</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="p">,</span>
-                          <span class="bp">self</span><span class="o">.</span><span class="n">data_store</span><span class="p">,</span>
-                          <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span><span class="p">,</span>
-                          <span class="n">metrics_info_format</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics_info_format</span><span class="p">,</span>
-                          <span class="n">metrics_avg_graph</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics_avg_graph</span><span class="p">,</span>
-                          <span class="n">metric_params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_params</span><span class="p">,</span>
-                          <span class="n">default_save_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span><span class="p">,</span>
-                          <span class="n">restrict_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">restrict_options</span><span class="p">,</span>
-                          <span class="n">num_steps_range</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_steps_range</span><span class="p">,</span>
-                          <span class="n">test</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">test</span><span class="p">)</span>
+                               <span class="bp">self</span><span class="o">.</span><span class="n">data_store</span><span class="p">,</span>
+                               <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span><span class="p">,</span>
+                               <span class="n">metrics_info_format</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics_info_format</span><span class="p">,</span>
+                               <span class="n">metrics_avg_graph</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics_avg_graph</span><span class="p">,</span>
+                               <span class="n">metric_params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_params</span><span class="p">,</span>
+                               <span class="n">default_save_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">default_save_dir</span><span class="p">,</span>
+                               <span class="n">default_dataset_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">default_dataset_name</span><span class="p">,</span>
+                               <span class="n">restrict_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">restrict_options</span><span class="p">,</span>
+                               <span class="n">num_steps_range</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_steps_range</span><span class="p">,</span>
+                               <span class="n">test</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">test</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">test</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">())</span></div>
 

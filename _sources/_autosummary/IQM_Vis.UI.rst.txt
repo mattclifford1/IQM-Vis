@@ -1,4 +1,4 @@
-IQM\_Vis.UI
+﻿IQM\_Vis.UI
 ===========
 
 .. automodule:: IQM_Vis.UI
@@ -28,7 +28,8 @@ IQM\_Vis.UI
    :recursive:
 
    IQM_Vis.UI.custom_widgets
-   IQM_Vis.UI.experiment_mode
+   IQM_Vis.UI.experiment_mode_2AFC
+   IQM_Vis.UI.experiment_mode_JND
    IQM_Vis.UI.images
    IQM_Vis.UI.layout
    IQM_Vis.UI.main

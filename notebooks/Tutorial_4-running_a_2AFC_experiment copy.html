@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tutorial 4: Running an Experiment &mdash; IQM-Vis 0.2 documentation</title>
+  <title>Tutorial 4: Running a 2AFC Experiment &mdash; IQM-Vis 0.2 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
@@ -21,9 +21,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="IQM_Vis.transforms package" href="../IQM_Vis.transforms.html" />
-    <link rel="prev" title="Tutorial 3: Customisation Details" href="Tutorial_3-Advanced-Customisations.html" /> 
+    <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -58,23 +56,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../Tutorials.html">Tutorials</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="Tutorial_1-making_the_UI.html">Tutorial 1: Making the UI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Tutorial_2-Customisation.html">Tutorial 2: Simple Customisation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Tutorial_3-Advanced-Customisations.html">Tutorial 3: Customisation Details</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Tutorial 4: Running an Experiment</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#Experiment-Screen">Experiment Screen</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#Experiment-Info">Experiment Info</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#Experiment-Running">Experiment Running</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#Experiment-Finsihed">Experiment Finsihed</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#Visualising-the-experiment-results">Visualising the experiment results</a></li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials.html">Tutorials</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
 <ul>
@@ -96,10 +79,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="../Tutorials.html">Tutorials</a></li>
-      <li class="breadcrumb-item active">Tutorial 4: Running an Experiment</li>
+      <li class="breadcrumb-item active">Tutorial 4: Running a 2AFC Experiment</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/notebooks/Tutorial_4-running_an_experiment.ipynb.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/notebooks/Tutorial_4-running_a_2AFC_experiment copy.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -107,23 +89,25 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <p>View the whole notebook: <a class="reference external" href="https://github.com/mattclifford1/IQM-Vis/tree/main/dev_resources/docs/notebooks/Tutorial_4-running_an_experiment.ipynb">https://github.com/mattclifford1/IQM-Vis/tree/main/dev_resources/docs/notebooks/Tutorial_4-running_an_experiment.ipynb</a></p>
+  <p>View the whole notebook: <a class="reference external" href="https://github.com/mattclifford1/IQM-Vis/tree/main/dev_resources/docs/notebooks/Tutorial_4-running_a_2AFC_experiment">https://github.com/mattclifford1/IQM-Vis/tree/main/dev_resources/docs/notebooks/Tutorial_4-running_a_2AFC_experiment</a> copy.ipynb</p>
 <hr class="docutils" />
-<section id="Tutorial-4:-Running-an-Experiment">
-<h1>Tutorial 4: Running an Experiment<a class="headerlink" href="#Tutorial-4:-Running-an-Experiment" title="Permalink to this heading"></a></h1>
-<p>In this tutorial we will go through how to setup and run an experiment.</p>
+<section id="Tutorial-4:-Running-a-2AFC-Experiment">
+<h1>Tutorial 4: Running a 2AFC Experiment<a class="headerlink" href="#Tutorial-4:-Running-a-2AFC-Experiment" title="Permalink to this heading"></a></h1>
+<p>In this tutorial we will go through how to setup and run a 2 Alternate Forced Choice experiment.</p>
 <p>First you need to Launch the UI with your required customisations (see previous tutorials).</p>
-<p>Things to setup: - Load your own images</p>
+<p>Things to setup: - Load your own images and select the image which you want to test</p>
 <ul class="simple">
-<li><p>Make sure that the settings are corrects (Image Display Size, Luminance Calibration etc.)</p></li>
-<li><p>Only the required transforms are selected</p></li>
+<li><p>Make sure that the settings are correct in the ‘image settings’ tab (Image Display Size, Luminance Calibration etc.)</p></li>
+<li><p>Only the required transforms are selected in the ‘experiments’ tab with the correct range and number of steps</p></li>
+<li><p>Check that the Root Save Folder is correct</p></li>
 </ul>
-<p>Once you are ready, press the ‘Run Experiment’ button, this will launch the experiment:</p>
+<p>Once you are ready, press the ‘Run 2AFC Experiment’ button, this will launch the experiment:</p>
 <img alt="../_images/experiment_setup.png" src="../_images/experiment_setup.png" />
 <section id="Experiment-Screen">
 <h2>Experiment Screen<a class="headerlink" href="#Experiment-Screen" title="Permalink to this heading"></a></h2>
-<p>The first screen will show the settings and images used for the experiment</p>
+<p>The first screen will show the settings and images used for the experiment. Double checl the Save folder matches what the experiment type and image name, a unique experiment number will be generated based on any saved experiments that use the same image but use different transforms or processing etc.</p>
 <img alt="../_images/experiment_1.png" src="../_images/experiment_1.png" />
+<p>The Expected Number of Comparison shows how many clicks the user should expect to do.</p>
 <p>If everything is correct, click the ‘Setup’ button. This will take you to the experiment information screen for the participant to read.</p>
 <section id="Experiment-Info">
 <h3>Experiment Info<a class="headerlink" href="#Experiment-Info" title="Permalink to this heading"></a></h3>
@@ -133,10 +117,11 @@
 <section id="Experiment-Running">
 <h3>Experiment Running<a class="headerlink" href="#Experiment-Running" title="Permalink to this heading"></a></h3>
 <p>The experiment uses the quick sort algorithm with the user giving the pairwise most similar image until the images are sorted.</p>
+<p>The user needs to click on the image which they believe is most similar to the reference image.</p>
 <img alt="../_images/experiment_3.png" src="../_images/experiment_3.png" />
 </section>
-<section id="Experiment-Finsihed">
-<h3>Experiment Finsihed<a class="headerlink" href="#Experiment-Finsihed" title="Permalink to this heading"></a></h3>
+<section id="Experiment-Finished">
+<h3>Experiment Finished<a class="headerlink" href="#Experiment-Finished" title="Permalink to this heading"></a></h3>
 <p>Once the images are sorted you will be shown the sorting order and the folder when the experiments are saved.</p>
 <p>The save folder shown contains the experiment images and a csv file with all the experiment runs</p>
 <img alt="../_images/experiment_4.png" src="../_images/experiment_4.png" />
@@ -145,19 +130,19 @@
 </section>
 <section id="Visualising-the-experiment-results">
 <h1>Visualising the experiment results<a class="headerlink" href="#Visualising-the-experiment-results" title="Permalink to this heading"></a></h1>
-<p>To visualise the experiment correlation plots, return to the main UI and load the experiment using the menu option: File&gt;Load Human Scores.</p>
-<p>From here select the experiment image-results.csv. This will load the scores and the correlation plot against IQMs will be generated.</p>
-<p>On the plot you can click on points to view the corresponding transformation that might disagree with the correlation with a metric. N.B. make sure the UI has that transformation loaded and the metrics selected you want to compare against.</p>
+<p>The experiment results will be automatically loaded into the ‘Correlation’ tab in IQM-Vis</p>
+<p>On the plot you can click on points to view the corresponding transformation that might disagree with the correlation with a metric.</p>
+<p>Use the right and left buttons below the graph to scroll through the different selected metrics.</p>
+<p>The Spearmean’s and Pearson’s correlation will be shown in the figure title.</p>
 <img alt="../_images/correlation_plot.png" src="../_images/correlation_plot.png" />
+<p>N.B. make sure the UI has that transformation loaded and the metrics selected you want to compare against.</p>
+<p>To load previously saved experiments the experiment using the menu option: File&gt;Load Human Scores, or use the ‘Load Experiment’ button below the graph.</p>
 </section>
 
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="Tutorial_3-Advanced-Customisations.html" class="btn btn-neutral float-left" title="Tutorial 3: Customisation Details" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../IQM_Vis.transforms.html" class="btn btn-neutral float-right" title="IQM_Vis.transforms package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 

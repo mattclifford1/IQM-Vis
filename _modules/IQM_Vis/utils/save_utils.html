@@ -98,7 +98,9 @@
 <span class="kn">import</span> <span class="nn">pickle</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="n">DEFAULT_SAVE_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">),</span> <span class="s1">&#39;IQM-Vis-experiments&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">IQM_Vis.utils</span> <span class="kn">import</span> <span class="n">image_utils</span>
+
+<span class="n">DEFAULT_SAVE_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">),</span> <span class="s1">&#39;IQM-Vis&#39;</span><span class="p">)</span>
 
 <span class="sd">&#39;&#39;&#39; getters for experiment files from save dir &#39;&#39;&#39;</span>
 <div class="viewcode-block" id="get_human_scores_file"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.get_human_scores_file">[docs]</a><span class="k">def</span> <span class="nf">get_human_scores_file</span><span class="p">(</span><span class="nb">dir</span><span class="p">):</span>
@@ -154,6 +156,24 @@
     <span class="k">except</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span></div>
     
+<div class="viewcode-block" id="get_JND_image_names"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.get_JND_image_names">[docs]</a><span class="k">def</span> <span class="nf">get_JND_image_names</span><span class="p">(</span><span class="nb">dir</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; load the image names from a JND experiment &#39;&#39;&#39;</span>
+    <span class="n">images_dir</span> <span class="o">=</span> <span class="n">get_JND_ref_image_dir</span><span class="p">(</span><span class="nb">dir</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">images_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># get all file names in the directory</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">images_dir</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+    
+<div class="viewcode-block" id="get_JND_ref_image_dir"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.get_JND_ref_image_dir">[docs]</a><span class="k">def</span> <span class="nf">get_JND_ref_image_dir</span><span class="p">(</span><span class="nb">dir</span><span class="p">):</span>
+    <span class="k">return</span>  <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="s1">&#39;reference_images&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="get_JND_ref_image_unprocessed_dir"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.get_JND_ref_image_unprocessed_dir">[docs]</a><span class="k">def</span> <span class="nf">get_JND_ref_image_unprocessed_dir</span><span class="p">(</span><span class="nb">dir</span><span class="p">):</span>
+    <span class="k">return</span>  <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="s1">&#39;reference_images_unprocessed&#39;</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="save_df_as_csv"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.save_df_as_csv">[docs]</a><span class="k">def</span> <span class="nf">save_df_as_csv</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
         <span class="n">df_saved</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
@@ -170,8 +190,68 @@
         <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">index_name</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
+
+<div class="viewcode-block" id="save_and_merge_rm_duplicates_df_as_csv"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.save_and_merge_rm_duplicates_df_as_csv">[docs]</a><span class="k">def</span> <span class="nf">save_and_merge_rm_duplicates_df_as_csv</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;save only new IQM rows&#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+        <span class="n">df_saved</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="n">index_name</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span> <span class="n">df_saved</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">)</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">index_name</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># remove duplicates</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">)]</span>
+    <span class="c1"># sort columns for consistency</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">cols</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_JND_user_ID"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.get_JND_user_ID">[docs]</a><span class="k">def</span> <span class="nf">get_JND_user_ID</span><span class="p">(</span><span class="nb">dir</span><span class="p">):</span>
+    <span class="n">human_experiment_csv_file</span> <span class="o">=</span> <span class="n">get_human_scores_file</span><span class="p">(</span><span class="nb">dir</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">human_experiment_csv_file</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">human_experiment_csv_file</span><span class="p">)</span>
+    <span class="c1"># get the last user ID</span>
+    <span class="k">return</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;User ID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span></div>
+
+<div class="viewcode-block" id="save_JND_experiment_results"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.save_JND_experiment_results">[docs]</a><span class="k">def</span> <span class="nf">save_JND_experiment_results</span><span class="p">(</span><span class="n">experiment_results</span><span class="p">,</span>
+                                <span class="n">save_dir</span><span class="p">,</span>
+                                <span class="n">IQM_scores_df</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+    <span class="c1"># User ID</span>
+    <span class="n">ID</span> <span class="o">=</span> <span class="n">get_JND_user_ID</span><span class="p">(</span><span class="n">save_dir</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;ImageName&#39;</span><span class="p">:</span> <span class="p">[],</span>
+               <span class="s1">&#39;UserDecision&#39;</span><span class="p">:</span> <span class="p">[],</span>
+               <span class="s1">&#39;Transform&#39;</span><span class="p">:</span> <span class="p">[],</span>
+               <span class="s1">&#39;TimeTaken&#39;</span><span class="p">:</span> <span class="p">[],</span>
+               <span class="s1">&#39;User ID&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="k">for</span> <span class="n">image_data</span> <span class="ow">in</span> <span class="n">experiment_results</span><span class="p">:</span>
+        <span class="n">results</span><span class="p">[</span><span class="s1">&#39;ImageName&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">image_data</span><span class="p">[</span><span class="s1">&#39;ref_name&#39;</span><span class="p">])</span>
+        <span class="n">results</span><span class="p">[</span><span class="s1">&#39;UserDecision&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">image_data</span><span class="p">[</span><span class="s1">&#39;user_decision&#39;</span><span class="p">])</span>
+        <span class="n">results</span><span class="p">[</span><span class="s1">&#39;Transform&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">make_name_for_trans</span><span class="p">(</span><span class="n">image_data</span><span class="p">))</span>
+        <span class="n">results</span><span class="p">[</span><span class="s1">&#39;TimeTaken&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">image_data</span><span class="p">[</span><span class="s1">&#39;time_taken&#39;</span><span class="p">])</span>
+        <span class="n">results</span><span class="p">[</span><span class="s1">&#39;User ID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ID</span><span class="p">)</span>
+        <span class="c1"># results[make_name_for_trans(image_data)] = [image_data[&#39;user_decision&#39;]]</span>
+
+    <span class="c1"># make df</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+    <span class="c1"># save results</span>
+    <span class="n">human_experiment_csv_file</span> <span class="o">=</span> <span class="n">get_human_scores_file</span><span class="p">(</span><span class="n">save_dir</span><span class="p">)</span>
+    <span class="n">save_df_as_csv</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">human_experiment_csv_file</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># save IQM results</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">IQM_scores_df</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">IQM_scores_df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="n">IQM_file</span> <span class="o">=</span> <span class="n">get_IQM_file</span><span class="p">(</span><span class="n">save_dir</span><span class="p">)</span>
+        <span class="n">save_and_merge_rm_duplicates_df_as_csv</span><span class="p">(</span><span class="n">IQM_scores_df</span><span class="p">,</span> <span class="n">IQM_file</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">human_experiment_csv_file</span></div>
+
     
-<div class="viewcode-block" id="save_experiment_results"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.save_experiment_results">[docs]</a><span class="k">def</span> <span class="nf">save_experiment_results</span><span class="p">(</span><span class="n">trans_names</span><span class="p">,</span> <span class="n">results_order</span><span class="p">,</span> <span class="n">save_dir</span><span class="p">,</span> <span class="n">times_taken</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">IQM_scores_df</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="save_2AFC_experiment_results"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.save_2AFC_experiment_results">[docs]</a><span class="k">def</span> <span class="nf">save_2AFC_experiment_results</span><span class="p">(</span><span class="n">trans_names</span><span class="p">,</span> 
+                                <span class="n">results_order</span><span class="p">,</span> 
+                                <span class="n">save_dir</span><span class="p">,</span> 
+                                <span class="n">times_taken</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                                <span class="n">IQM_scores_df</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;save all the experiment reults as csvs&#39;&#39;&#39;</span>
     <span class="c1"># make HIQM scores from ordering : HIQM = pos/num_pos</span>
     <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
@@ -196,9 +276,10 @@
         <span class="n">save_df_as_csv</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">times_file</span><span class="p">)</span>
 
     <span class="c1"># save IQM results</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">IQM_scores_df</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">IQM_scores_df</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">IQM_scores_df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">IQM_scores_df</span><span class="p">)</span>
         <span class="n">IQM_file</span> <span class="o">=</span> <span class="n">get_IQM_file</span><span class="p">(</span><span class="n">save_dir</span><span class="p">)</span>
-        <span class="n">save_and_merge_df_as_csv</span><span class="p">(</span><span class="n">IQM_scores_df</span><span class="p">,</span> <span class="n">IQM_file</span><span class="p">)</span>
+        <span class="n">save_and_merge_rm_duplicates_df_as_csv</span><span class="p">(</span><span class="n">IQM_scores_df</span><span class="p">,</span> <span class="n">IQM_file</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">human_experiment_csv_file</span></div>
 
@@ -210,9 +291,9 @@
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span></div>
 
-
 <div class="viewcode-block" id="make_name_for_trans"><a class="viewcode-back" href="../../../IQM_Vis.utils.html#IQM_Vis.utils.save_utils.make_name_for_trans">[docs]</a><span class="k">def</span> <span class="nf">make_name_for_trans</span><span class="p">(</span><span class="n">trans</span><span class="p">):</span>
-    <span class="n">splitter</span> <span class="o">=</span> <span class="s1">&#39;-----&#39;</span>
+    <span class="c1"># splitter = &#39;-----&#39;</span>
+    <span class="n">splitter</span> <span class="o">=</span> <span class="s1">&#39;&lt;&gt;&#39;</span>
     <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">trans</span><span class="p">[</span><span class="s1">&#39;transform_name&#39;</span><span class="p">]</span><span class="si">}{</span><span class="n">splitter</span><span class="si">}{</span><span class="n">trans</span><span class="p">[</span><span class="s1">&#39;transform_value&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span></div>
 </pre></div>
 
