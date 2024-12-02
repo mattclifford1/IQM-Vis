@@ -35,7 +35,7 @@ genbadge tests --input-file tests/reports/junit/junit.xml --output-file tests/re
 To get the coverage badge use
 ```
 coverage xml -o tests/reports/coverage/coverage.xml 
-genbadge coverage --input-file tests/reports/coverage/coverage.xml--output-file tests/reports/coverage_badge.svg
+genbadge coverage --input-file tests/reports/coverage/coverage.xml --output-file tests/reports/coverage_badge.svg
 ```
 
 ## Linux (Ubuntu 22.04 and 24.04)
