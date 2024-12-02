@@ -502,6 +502,8 @@ class images:
     metric range plot (line plots of range of all sliders)
     '''
     def display_metric_range_plot(self):
+        if not hasattr(self, 'metric_over_range_results'):
+            return
         all_trans = list(self.checked_transformations.keys())
         if all_trans == [] or self.checked_metrics == []:
             for i, data_store in enumerate(self.data_stores):
