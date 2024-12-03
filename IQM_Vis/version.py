@@ -2,4 +2,4 @@
 # License: BSD 3-Clause License
 
 # Changing the version number will action GitHub to push to PyPi the new version
-__version__ = '0.2.5.95'
+__version__ = '0.3'

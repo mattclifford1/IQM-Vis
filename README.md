@@ -24,3 +24,40 @@ Head over to the [DOCUMENTATION](https://mattclifford1.github.io/IQM-Vis/) for t
 ![Alt text](https://github.com/mattclifford1/IQM-Vis/blob/main/dev_resources/pics/correlation.gif?raw=true "Dataset UI") 
 
 
+# Documentation
+Please refer to our [website](https://mattclifford1.github.io/IQM-Vis/) for a full guide on installing and using IQM-Vis. However, we provide some brief instruction below.
+
+### Installation
+It is important to run IQM-Vis in a fresh python virtual environment. This is so that there will be no dependancy clashes with the required libraries. Python version 3.9 is recommended, but newer versions should work as well.
+
+You can make a new environment by using anaconda (conda):
+```
+    conda create -n IQM_Vis python=3.9 -y
+    conda activate IQM_Vis
+```
+
+If you have a GPU and would like to use CUDA then at this point head over to the pytorch website and download the relevent packages e.g.
+
+If you don't have a GPU then you can skip this step.
+
+```
+    conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cuda=11.7 -c pytorch -c nvidia
+```
+
+Now we can install IQM-Vis from the PyPi index:
+
+```
+    pip install IQM-Vis
+```
+
+#### Testing the installation
+
+Run a demonstration example by running the python code:
+
+```
+    import IQM_Vis
+    IQM_Vis.make_UI()
+```
+
+### Tutorials
+Head over to our [tutorials page](https://mattclifford1.github.io/IQM-Vis/Tutorials.html) for details on how get started with using and customising IQM-Vis.
