@@ -10,7 +10,7 @@ from functools import lru_cache
 from collections import namedtuple
 import numpy as np
 import pandas as pd
-import imghdr
+import filetype
 import IQM_Vis
 from IQM_Vis.data_handlers import base_dataset_loader
 
@@ -113,7 +113,8 @@ class dataset_holder(base_dataset_loader):
         just_images = []
         for image_file in image_list:
             try:
-                image_format = imghdr.what(image_file)
+                image_guess = filetype.guess(image_file)
+                image_format = image_guess.extension if image_guess else None
             except FileNotFoundError:
                 image_format = None
             if image_format != None:

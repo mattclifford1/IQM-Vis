@@ -6,7 +6,7 @@ UI image functions
 
 import os
 from functools import partial
-import imghdr
+import filetype
 import glob
 import numpy as np
 import pandas as pd
@@ -181,7 +181,8 @@ class images:
             return
         
         if os.path.isfile(file):
-            image_format = imghdr.what(file)
+            image_guess = filetype.guess(file)
+            image_format = image_guess.extension if image_guess else None
             if image_format == None:
                 self.update_status_bar(f'Not an image file: {file}', 10000)
             else:
