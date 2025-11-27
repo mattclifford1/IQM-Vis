@@ -9,7 +9,12 @@ IQM-Vis is an image quality metric visualisation toolbox to facilitate visualisi
 View our demonstration `video <https://youtu.be/C6x_E0JvKqI>`_ which illustrates the features and how to use IQM-Vis.
 
 
-Read our `PAPER <https://github.com/mattclifford1/IQM-Vis/blob/main/dev_resources/docs/resources/Software_paper.pdf>`_ for in depth details of the software.
+Read our Jounral `PAPER <https://doi.org/10.1016/j.softx.2025.102225>`_ published in the September 2025 issue of SoftwareX for in depth details of the software.
+
+
+Visit our GitHub repository `here <https://github.com/mattclifford1/IQM-Vis>`_ to view the source code, report issues or contribute to the project.
+
+
 
 Quantitive Analysis
 ===================
