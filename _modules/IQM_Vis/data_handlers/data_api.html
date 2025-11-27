@@ -96,7 +96,7 @@
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">imghdr</span>
+<span class="kn">import</span> <span class="nn">filetype</span>
 <span class="kn">import</span> <span class="nn">IQM_Vis</span>
 <span class="kn">from</span> <span class="nn">IQM_Vis.data_handlers</span> <span class="kn">import</span> <span class="n">base_dataset_loader</span>
 
@@ -199,7 +199,8 @@
         <span class="n">just_images</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">image_file</span> <span class="ow">in</span> <span class="n">image_list</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">image_format</span> <span class="o">=</span> <span class="n">imghdr</span><span class="o">.</span><span class="n">what</span><span class="p">(</span><span class="n">image_file</span><span class="p">)</span>
+                <span class="n">image_guess</span> <span class="o">=</span> <span class="n">filetype</span><span class="o">.</span><span class="n">guess</span><span class="p">(</span><span class="n">image_file</span><span class="p">)</span>
+                <span class="n">image_format</span> <span class="o">=</span> <span class="n">image_guess</span><span class="o">.</span><span class="n">extension</span> <span class="k">if</span> <span class="n">image_guess</span> <span class="k">else</span> <span class="kc">None</span>
             <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
                 <span class="n">image_format</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">if</span> <span class="n">image_format</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
