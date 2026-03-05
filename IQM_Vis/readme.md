@@ -87,7 +87,7 @@ To use a stripped down version of the application, feel free to first use our [w
 See the [installation](https://github.com/mattclifford1/IQM-Vis#installation) section if you are just using IQM-Vis.
 
 ### Python Environment
-First create a new python venv, eg. using conda
+First create a new python venv, eg. using conda (Python 3.9+ supported, including 3.13)
 ```
 conda create -n IQM_Vis python=3.9
 ```
@@ -101,15 +101,17 @@ conda activate IQM_Vis
 git clone git@github.com:mattclifford1/IQM-Vis.git
 cd IQM-Vis
 ```
-### Install requirements
+### Install requirements and IQM-Vis in editable mode
 ```
-pip install -r requirements-dev.txt
-```
-### Install IQM-Vis in editable mode
-```
-pip install -e .
+pip install pdm
+pdm install -G :all
 ```
 ### Run MWEs
+```python
+import IQM_Vis
+IQM_Vis.make_UI()
+```
+Or run an example script directly:
 ```
 python IQM_Vis/examples/dataset.py
 ```

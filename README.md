@@ -29,7 +29,7 @@ Head over to the [DOCUMENTATION](https://mattclifford1.github.io/IQM-Vis/) for t
 Please refer to our [website](https://mattclifford1.github.io/IQM-Vis/) for a full guide on installing and using IQM-Vis. However, we provide some brief instruction below.
 
 ### Installation
-It is important to run IQM-Vis in a fresh python virtual environment. This is so that there will be no dependancy clashes with the required libraries. Python version 3.9 is recommended, but newer versions should work as well.
+It is important to run IQM-Vis in a fresh python virtual environment. This is so that there will be no dependancy clashes with the required libraries. Python 3.9+ is supported, including 3.13.
 
 You can make a new environment by using anaconda (conda):
 ```
@@ -44,6 +44,7 @@ If you don't have a GPU then you can skip this step.
 ```
     conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cuda=11.7 -c pytorch -c nvidia
 ```
+> **Note:** The above is an example command. Check [pytorch.org](https://pytorch.org) for the current recommended install command for your CUDA version.
 
 Now we can install IQM-Vis from the PyPi index:
 

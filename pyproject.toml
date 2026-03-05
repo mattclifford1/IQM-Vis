@@ -1,0 +1,79 @@
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[project]
+name = "IQM-Vis"
+dynamic = ["version"]
+description = "Extendable user interface for the assessment of transformations on image metrics."
+readme = "README.md"
+license = {text = "BSD 3-Clause"}
+authors = [
+    {name = "Matt Clifford", email = "matt.clifford@bristol.ac.uk"}
+]
+requires-python = ">=3.9"
+dependencies = [
+    "numpy>=1.23.4",
+    "PyQt6>=6.5.3",
+    "PyQt6-Qt6>=6.5.3",
+    "PyQt6-sip>=13.6",
+    "opencv-python-headless>=4.6.0.66",
+    "Pillow>=9.2.0",
+    "scikit-image>=0.19.3",
+    "matplotlib>=3.6.1",
+    "torch>=1.13.1",
+    "torchmetrics>=1.2.0",
+    "lpips>=0.1.4",
+    "DISTS-pytorch>=0.1",
+    "torchvision>=0.14.1",
+    "pandas>=2.0.0",
+    "scipy>=1.9.3",
+    "filetype",
+]
+
+[project.urls]
+Homepage = "https://mattclifford1.github.io/IQM-Vis/"
+Repository = "https://github.com/mattclifford1/IQM-Vis"
+Paper = "https://doi.org/10.1016/j.softx.2025.102225"
+
+[tool.pdm.version]
+source = "file"
+path = "IQM_Vis/version.py"
+
+[tool.pdm.build]
+includes = ["IQM_Vis/"]
+
+[tool.pdm.dev-dependencies]
+test = [
+    "pytest",
+    "pytest-qt==4.4.0",
+    "pytest-xdist",
+    "pytest-forked",
+    "pytest-cov",
+    "genbadge[all]",
+    "packaging",
+]
+docs = [
+    "sphinx",
+    "nbsphinx",
+    "sphinx_gallery",
+    "sphinx_rtd_theme",
+    "Pallets-Sphinx-Themes",
+    "renku-sphinx-theme",
+    "pydata-sphinx-theme",
+    "sphinx-book-theme",
+    "cloud-sptheme",
+    "Jinja2>=3.0",
+    "notebook",
+]
+build = [
+    "twine",
+    "build",
+]
+
+[tool.pytest.ini_options]
+qt_api = "pyqt6"
+addopts = "--forked --cov=IQM_Vis --junitxml=tests/reports/junit/junit.xml"
+
+[tool.coverage.run]
+omit = ["IQM_Vis/examples/*"]

@@ -24,23 +24,15 @@ jobs:
         echo "code_version=$(./dev_resources/scripts/get_local_version.py)" >> $GITHUB_ENV
         echo "pypi_version=$(./dev_resources/scripts/get_latest_pypi_version.py)" >> $GITHUB_ENV
 
-    - name: Set up Python
+    - name: Install PDM
       if: env.code_version != env.pypi_version
-      uses: actions/setup-python@v3
+      uses: pdm-project/setup-pdm@v4
       with:
         python-version: '3.9'
 
-    - name: Install base python deps
-      if: env.code_version != env.pypi_version
-      run: |
-        python -m pip install --upgrade pip
-        pip install packaging
-
     - name: Build package
       if: env.code_version != env.pypi_version
-      run: |
-        pip install build
-        python -m build
+      run: pdm build
 
     - name: Publish package
       if: env.code_version != env.pypi_version
