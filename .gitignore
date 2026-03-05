@@ -8,6 +8,8 @@ pytests/models
 
 dev
 
+.pdm-python
+
 # bc4 files
 /server/outputs
 
@@ -140,3 +142,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+.pdm-python
