@@ -73,6 +73,7 @@ build = [
 
 [tool.pytest.ini_options]
 qt_api = "pyqt6"
+testpaths = ["tests"]
 addopts = "--forked --cov=IQM_Vis --junitxml=tests/reports/junit/junit.xml"
 
 [tool.coverage.run]

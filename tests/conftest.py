@@ -1,22 +1,24 @@
 # tests/conftest.py
 
+import os
+os.environ.setdefault('OMP_NUM_THREADS', '1')
+os.environ.setdefault('MKL_NUM_THREADS', '1')
+os.environ.setdefault('OPENBLAS_NUM_THREADS', '1')
+os.environ.setdefault('VECLIB_MAXIMUM_THREADS', '1')
+os.environ.setdefault('OBJC_DISABLE_INITIALIZE_FORK_SAFETY', 'YES')
+
 import pytest
-from PyQt6.QtWidgets import QApplication
-# import matplotlib
-
-# # Use a different backend to avoid conflicts
-# matplotlib.use('Agg')
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="session")
 def qapp():
     """
     Ensure there's a QApplication instance running.
-    This fixture is automatically used for each test session.
+    Only used by tests that explicitly request this fixture.
     """
+    from PyQt6.QtWidgets import QApplication
     app = QApplication.instance()
     if app is None:
         app = QApplication([])
     yield app
-    # Properly quit the application after the tests
     app.quit()

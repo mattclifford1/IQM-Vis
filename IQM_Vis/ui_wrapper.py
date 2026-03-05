@@ -165,7 +165,7 @@ class make_UI:
     def _check_inputs(self) -> None:
         '''Validate all UI inputs, raising :exc:`TypeError` on type mismatches.'''
         for item in self.data_store:
-            test_datastore_attributes(item)
+            validate_datastore_attributes(item)
         '''input items that should be dictionaries'''
         should_be_dict = [self.transformations, self.metric_params]
         for item in should_be_dict:
@@ -185,7 +185,7 @@ class make_UI:
             raise TypeError('make_UI input: '+var_name+' should be a bool not '+str(type(self.metrics_info_format)))
 
 
-def test_datastore_attributes(data_store: Any) -> None:
+def validate_datastore_attributes(data_store: Any) -> None:
     '''Validate that a data-store object exposes the required IQM-Vis API.
 
     Checks that all mandatory attributes and methods are present with the

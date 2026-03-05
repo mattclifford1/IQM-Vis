@@ -41,7 +41,7 @@ def test_all_metrics_process_image():
         if isinstance(val, np.ndarray):
             assert val.size == 1
         else:
-            assert isinstance(val, float) or isinstance(val, int)
+            assert isinstance(val, (float, int, np.floating, np.integer))
 
 
 def test_all_metric_images_process_image():
