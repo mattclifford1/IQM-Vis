@@ -73,5 +73,33 @@ def test_all_transforms_max_change_image():
         assert not np.allclose(transform['function'](image, transform['max']), image, rtol=tol)
 
 
+from IQM_Vis.transforms.additive_noise import Gaussian_noise
+
+
+def test_gaussian_noise_reject_low_noise_returns_array():
+    """reject_low_noise=True must not crash and must return a valid array."""
+    img = _get_test_image()
+    noiser = Gaussian_noise(reject_low_noise=True)
+    result = noiser(img, 0.1)
+    assert isinstance(result, np.ndarray)
+    assert result.shape == img.shape
+
+
+def test_additive_noise_best_fallback_no_unbound_error():
+    """Bug 4 regression: when every iteration returns img unchanged, the
+    best-is-None fallback must prevent UnboundLocalError."""
+
+    class _AlwaysAbsorbedNoise(Gaussian_noise):
+        def _make_noisey_image(self, img: np.ndarray):
+            # non-zero expected_noise but no actual change after clipping
+            return img.copy(), np.ones_like(img)
+
+    img = _get_test_image()
+    noiser = _AlwaysAbsorbedNoise(reject_low_noise=True, max_iter=3, acceptable_percent=0.9)
+    result = noiser(img, 0.1)
+    assert isinstance(result, np.ndarray)
+    assert np.allclose(result, img)
+
+
 if __name__ == '__main__':
     test_all_transforms_max_change_image()
