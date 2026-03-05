@@ -4,11 +4,12 @@ TODO: write dev_resources/docs on example usage/ what inputs etc. and what attri
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
+from __future__ import annotations
 
 import subprocess
 import platform
 import sys
-from typing import Any
+from typing import Any, Callable
 import warnings
 import types
 import numpy as np
@@ -27,22 +28,56 @@ from IQM_Vis.examples.images import DEFAULT_IMAGES
 
 
 class make_UI:
-    def __init__(self, 
-                 data_store=None,
-                 transformations=None,
-                 image_list: list=DEFAULT_IMAGES,
-                 metrics: dict={},
-                 metric_images: dict={},
-                 metrics_info_format: str='graph',
-                 metrics_avg_graph: bool=True,
-                 metric_params: dict={},
-                 default_save_dir=IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR,
-                 default_dataset_name='dataset1',
-                 restrict_options=None,
-                 num_steps_range=11,
-                 debug=False, 
-                 test=False):
-        if data_store == None:
+    def __init__(self,
+                 data_store: dataset_holder | list | None = None,
+                 transformations: dict | None = None,
+                 image_list: list = DEFAULT_IMAGES,
+                 metrics: dict = {},
+                 metric_images: dict = {},
+                 metrics_info_format: str = 'graph',
+                 metrics_avg_graph: bool = True,
+                 metric_params: dict = {},
+                 default_save_dir: str = IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR,
+                 default_dataset_name: str = 'dataset1',
+                 restrict_options: dict | int | None = None,
+                 num_steps_range: int = 11,
+                 debug: bool = False,
+                 test: bool = False) -> None:
+        '''Launch the IQM-Vis PyQt6 UI.
+
+        Args:
+            data_store: A :class:`dataset_holder` instance, a list of
+                :class:`dataset_holder` instances, or ``None`` (in which case
+                the default images and all built-in metrics are used).
+            transformations: Dict mapping transform names to dicts with keys
+                ``function``, ``min``, ``max``, and optionally ``init_value``
+                and ``normalise``. Defaults to all built-in transforms when
+                ``None``.
+            image_list: List of image file paths used when *data_store* is
+                ``None``.
+            metrics: Dict of metric name to callable, used when *data_store*
+                is ``None``.
+            metric_images: Dict of metric-image name to callable, used when
+                *data_store* is ``None``.
+            metrics_info_format: Display format for metric results. One of
+                ``'graph'``, ``'radar'``, or ``'text'``.
+            metrics_avg_graph: Whether to display the average metrics graph.
+            metric_params: Dict of parameter-slider definitions shared by
+                metrics (e.g. SSIM kernel parameters).
+            default_save_dir: Directory for saving experiment results.
+            default_dataset_name: Name prefix for the saved dataset.
+            restrict_options: Maximum number of transforms/metrics/metric
+                images to show in the UI. Provide an ``int`` to apply the same
+                limit to all three, or a ``dict`` with keys ``'transforms'``,
+                ``'metrics'``, and ``'metric_images'``.
+            num_steps_range: Number of steps used for the average-metrics
+                range plot.
+            debug: If ``True``, run extra input validation before launching
+                the UI.
+            test: If ``True``, do not enter the Qt event loop (used in
+                automated tests).
+        '''
+        if data_store is None:
             data_store = IQM_Vis.dataset_holder(image_list,
                                    metrics,
                                    metric_images)
@@ -61,7 +96,9 @@ class make_UI:
         self.show()
         self.showing = True
 
-    def show(self):
+    def show(self) -> None:
+        '''Build and display the UI window, entering the Qt event loop unless
+        ``test=True`` was passed to :meth:`__init__`.'''
         self._check_restrict_options()
         self._check_data_store()
         self._check_trans()
@@ -79,18 +116,19 @@ class make_UI:
                                restrict_options=self.restrict_options,
                                num_steps_range=self.num_steps_range,
                                test=self.test)
-        if self.test == False:
+        if self.test is False:
             sys.exit(self.app.exec())
 
-    def _check_restrict_options(self):
-        if self.restrict_options == None:
-            trans = len(self.transformations) if self.transformations != None else 0
+    def _check_restrict_options(self) -> None:
+        '''Normalise ``restrict_options`` to a dict keyed by component name.'''
+        if self.restrict_options is None:
+            trans = len(self.transformations) if self.transformations is not None else 0
             if isinstance(self.data_store, list):
                 metrics = len(self.data_store[0].metrics)
                 metric_images = len(self.data_store[0].metric_images)
             else:
-                metrics = len(self.data_store.metrics) if self.data_store != None else 0
-                metric_images = len(self.data_store.metric_images) if self.data_store != None else 0
+                metrics = len(self.data_store.metrics) if self.data_store is not None else 0
+                metric_images = len(self.data_store.metric_images) if self.data_store is not None else 0
 
             self.restrict_options = {'transforms': trans,
                                      'metrics': metrics,
@@ -102,9 +140,10 @@ class make_UI:
 
 
 
-    def _check_data_store(self):
-        '''data store checking'''
-        if self.data_store == None:
+    def _check_data_store(self) -> None:
+        '''Ensure ``self.data_store`` is a non-empty list of data-store objects,
+        falling back to the default dataset when none was supplied.'''
+        if self.data_store is None:
             self.data_store = IQM_Vis.dataset_holder(IQM_Vis.examples.images.DEFAULT_IMAGES,
                 IQM_Vis.metrics.get_all_metrics(),
                 IQM_Vis.metrics.get_all_metric_images()
@@ -114,14 +153,17 @@ class make_UI:
         if not isinstance(self.data_store, list):
             self.data_store = [self.data_store]
 
-    def _check_trans(self):
-        if self.transformations == None:
+    def _check_trans(self) -> None:
+        '''Ensure ``self.transformations`` is set and all transform functions are
+        wrapped with :class:`transform_wrapper` to clip outputs to [0, 1].'''
+        if self.transformations is None:
             self.transformations = IQM_Vis.transforms.get_all_transforms()
         # make sure to wrap all transforms in clip so they don't go beyond data limits
         for trans, data in self.transformations.items():
             self.transformations[trans]['function'] = transform_wrapper(data['function'])
 
-    def _check_inputs(self):
+    def _check_inputs(self) -> None:
+        '''Validate all UI inputs, raising :exc:`TypeError` on type mismatches.'''
         for item in self.data_store:
             test_datastore_attributes(item)
         '''input items that should be dictionaries'''
@@ -143,8 +185,21 @@ class make_UI:
             raise TypeError('make_UI input: '+var_name+' should be a bool not '+str(type(self.metrics_info_format)))
 
 
-def test_datastore_attributes(data_store):
-    '''get the data handler class to make sure its properties are correct'''
+def test_datastore_attributes(data_store: Any) -> None:
+    '''Validate that a data-store object exposes the required IQM-Vis API.
+
+    Checks that all mandatory attributes and methods are present with the
+    correct types, and that the return types of key methods are correct.
+
+    Args:
+        data_store: Any object intended to be used as a data store with the
+            IQM-Vis UI.
+
+    Raises:
+        AttributeError: If a required attribute is missing.
+        TypeError: If an attribute has the wrong type or a method returns the
+            wrong type.
+    '''
     obj_name = data_store.__class__.__name__
     attributes = [
     ('get_reference_image', 'gets the input reference image', types.MethodType),
@@ -168,7 +223,7 @@ def test_datastore_attributes(data_store):
     method_return_types = [
     ('get_reference_image', np.ndarray),
     ('get_reference_image_name', str),
-    ('get_reference_image', np.ndarray),
+    ('get_image_to_transform', np.ndarray),
     ('get_image_to_transform_name', str),
     ('get_metrics', dict, image_utils.get_transform_image(data_store, {}, {})),
     ('get_metric_images', dict, image_utils.get_transform_image(data_store, {}, {})),
@@ -180,19 +235,25 @@ def test_datastore_attributes(data_store):
         elif len(meth) == 3:
             ret = method(meth[2])
         if type(ret) != meth[1]:
-            raise TypeError(f"{obj_name} method '{meth[0]}' needs to return type '{att[2]}' instead of {type(attr)}")
+            raise TypeError(f"{obj_name} method '{meth[0]}' needs to return type '{meth[1]}' instead of {type(ret)}")
 
 
 class transform_wrapper:
-    ''' wrap transforms to make sure they return an image between [0, 1] '''
-    def __init__(self, function):
+    '''Wrap a transform function so its output is always clipped to [0, 1].'''
+
+    def __init__(self, function: Callable) -> None:
+        '''Args:
+            function: The transform callable to wrap.
+        '''
         self.function = function
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args, **kwargs) -> np.ndarray:
+        '''Call the wrapped transform and clip the result to [0, 1].'''
         called = self.function(*args, **kwargs)
         return np.clip(called, 0, 1)
-    
-    def __eq__(self, other):
+
+    def __eq__(self, other: object) -> bool:
+        '''Compare equality against another wrapper or a raw callable.'''
         if isinstance(other, transform_wrapper):
             return self.function == other.function
         else:
@@ -200,9 +261,17 @@ class transform_wrapper:
             return self.function == other
 
 
-def check_pyqt_install_deps():
-    ''' PyQt6 on linux doesn't always ship with all the required libraries
-        so here we will warn the user if they need to install them, avoiding a crash '''
+def check_pyqt_install_deps() -> bool:
+    '''Check that required system libraries for PyQt6 are installed (Linux only).
+
+    On Debian-based Linux systems, PyQt6 may require ``libxcb-cursor0``. This
+    function checks whether the package is present and prints a warning if not,
+    to give a helpful message before a potential crash.
+
+    Returns:
+        ``True`` if the platform is not Linux or the package is present,
+        ``False`` if the required package is missing.
+    '''
     system_info = platform.system()
     if not system_info == "Linux":
         return True

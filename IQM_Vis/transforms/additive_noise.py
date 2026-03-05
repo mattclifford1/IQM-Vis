@@ -3,8 +3,10 @@ noise transformations
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
+from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from typing import Optional, Tuple
 import numpy as np
 import warnings
 
@@ -14,23 +16,24 @@ warnings.filterwarnings("ignore", category=DeprecationWarning,
 
 
 class _base_noise(ABC):
-    def __init__(self, acceptable_percent=0.9, max_iter=50, reject_low_noise=False, **kwargs):
+    def __init__(self, acceptable_percent: float = 0.9, max_iter: int = 50,
+                 reject_low_noise: bool = False, **kwargs) -> None:
         self._setup_args(**kwargs)
         self.acceptable_percent = acceptable_percent
         self.max_iter = max_iter
         self.reject_low_noise = reject_low_noise
         self.num_rejected = 0
 
-    def _setup_args(self, **kwargs):
+    def _setup_args(self, **kwargs) -> None:
         pass
 
     @abstractmethod
-    def _make_noisey_image(self, img, np=np):
+    def _make_noisey_image(self, img: np.ndarray, np=np) -> Tuple[np.ndarray, np.ndarray | float]:
         # uses any args on self for parameters
         # must return x_noisey, additive_noise
         pass
 
-    def __call__(self, img, param=0):
+    def __call__(self, img: np.ndarray, param: float = 0) -> np.ndarray:
         '''
         will return a noisy image with noise level according to 'param'
         highest noise will be returned if noise level is too low acccording to acceptable_percent
@@ -41,11 +44,12 @@ class _base_noise(ABC):
             self.param = param
         return self._call_single(img)
 
-    def _call_single(self, img, np=np):
+    def _call_single(self, img: np.ndarray, np=np) -> np.ndarray:
         '''
         make noisy image until either acceptable percent is reached or max_iter is reached
         will return the highest noise level if noise level is too low acccording to acceptable_percent
         '''
+        best = None
         for _ in range(self.max_iter):
             x_noisey, additive_noise = self._make_noisey_image(img)
             # check noise level and actual noise level reduced after clipping
@@ -63,6 +67,8 @@ class _base_noise(ABC):
                     best = x_noisey
                 else:
                     self.num_rejected += 1
+        if best is None:
+            best = x_noisey  # fallback: return last attempt
         return best
 
 
@@ -77,11 +83,11 @@ class noise_hypersphere(_base_noise):
     Returns:
         image (np.array): adjusted image
     '''
-    def _setup_args(self, epsilon=1, seed=True):
+    def _setup_args(self, epsilon: float = 1, seed: bool = True) -> None:
         self.param = epsilon
         self.seed = seed
 
-    def _make_noisey_image(self, img):
+    def _make_noisey_image(self, img: np.ndarray) -> Tuple[np.ndarray, np.ndarray | float]:
         if self.param <= 0:
             return img, 0.0
         if self.seed:
@@ -105,11 +111,11 @@ class Gaussian_noise(_base_noise):
     Returns:
         image (np.array): adjusted image
     '''
-    def _setup_args(self, std=0, seed=True):
+    def _setup_args(self, std: float = 0, seed: bool = True) -> None:
         self.param = std
         self.seed = seed
 
-    def _make_noisey_image(self, img):
+    def _make_noisey_image(self, img: np.ndarray) -> Tuple[np.ndarray, np.ndarray | float]:
         if self.param <= 0:
             return img, 0.0
         if self.seed:
@@ -121,7 +127,7 @@ class Gaussian_noise(_base_noise):
         return x_noisey, additive_noise
     
 
-def salt_and_pepper_noise(image, prob=0):
+def salt_and_pepper_noise(image: np.ndarray, prob: float = 0) -> np.ndarray:
     '''
     Add salt and pepper noise to image
 

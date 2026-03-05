@@ -3,11 +3,13 @@ affine (geometric) transformations
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
+from __future__ import annotations
+
 import numpy as np
 from skimage.transform import resize, rotate
 
 
-def rotation(image, angle=0):
+def rotation(image: np.ndarray, angle: float = 0) -> np.ndarray:
     '''Rotate an image around its centre. Uses skimage.transform.rotate. Areas
     that are rotated beyond the image are filled in with black pixel values
 
@@ -23,7 +25,7 @@ def rotation(image, angle=0):
     return np.clip(rotate(image, angle, order=3), 0, 1)
 
 
-def x_shift(image, x_shift=0):
+def x_shift(image: np.ndarray, x_shift: float = 0) -> np.ndarray:
     '''Translate image horizontally
 
     Args:
@@ -39,7 +41,7 @@ def x_shift(image, x_shift=0):
     return _translate_image(image, x_shift, 0)
 
 
-def y_shift(image, y_shift=0):
+def y_shift(image: np.ndarray, y_shift: float = 0) -> np.ndarray:
     '''Translate image vertically
 
     Args:
@@ -55,7 +57,7 @@ def y_shift(image, y_shift=0):
     return _translate_image(image, 0, y_shift)
 
 
-def _translate_image(image, x_shift=0, y_shift=0):
+def _translate_image(image: np.ndarray, x_shift: float = 0, y_shift: float = 0) -> np.ndarray:
     '''Translate image vertically
 
     Args:
@@ -92,7 +94,7 @@ def _translate_image(image, x_shift=0, y_shift=0):
     return np.clip(canvas, 0, 1)
 
 
-def zoom_image(image, scale_factor=1):
+def zoom_image(image: np.ndarray, scale_factor: float = 1) -> np.ndarray:
     '''digital zoom of image
 
     Args:

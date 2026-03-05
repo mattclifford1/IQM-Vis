@@ -3,6 +3,7 @@ create experiment window JND
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
+from __future__ import annotations
 
 import os
 import random
@@ -33,23 +34,27 @@ from IQM_Vis.utils import gui_utils, plot_utils, image_utils, save_utils
 
 
 class make_experiment_JND(QMainWindow):
-    '''https://www.verywellmind.com/what-is-the-just-noticeable-difference-2795306'''
+    '''Window for running a Just Noticeable Difference (JND) perceptual experiment.
+
+    Reference: https://www.verywellmind.com/what-is-the-just-noticeable-difference-2795306
+    '''
+
     saved_experiment = pyqtSignal(str)
     reset_clicked_image = pyqtSignal(dict)
 
-    def __init__(self, 
-                 checked_transformation_params, 
-                 data_store, 
-                 image_display_size,
-                 rgb_brightness,
-                 display_brightness,
-                 default_save_dir=save_utils.DEFAULT_SAVE_DIR,
-                 dataset_name='dataset1',
-                 image_preprocessing='None',
-                 image_postprocessing='None',
-                 lower_im_num=1,
-                 upper_im_num=1,
-                 checked_metrics={}):
+    def __init__(self,
+                 checked_transformation_params: dict,
+                 data_store,
+                 image_display_size: int,
+                 rgb_brightness: float,
+                 display_brightness: float,
+                 default_save_dir: str = save_utils.DEFAULT_SAVE_DIR,
+                 dataset_name: str = 'dataset1',
+                 image_preprocessing: str = 'None',
+                 image_postprocessing: str = 'None',
+                 lower_im_num: int = 1,
+                 upper_im_num: int = 1,
+                 checked_metrics: dict = {}) -> None:
         super().__init__()
         self.checked_transformation_params = checked_transformation_params
         if self.checked_transformation_params == {}:
@@ -106,13 +111,14 @@ class make_experiment_JND(QMainWindow):
         self.show_all_images()
         self.get_metric_scores()
 
-    def closeEvent(self, event):
+    def closeEvent(self, event) -> None:
+        '''Prompt for confirmation before closing; stop background threads if confirmed.'''
         # Ask for confirmation if not saved
         if not self.saved:
             answer = QMessageBox.question(self,
             "Confirm Exit...",
             "Are you sure you want to exit?\nAll unsaved data will be lost.",
-            QMessageBox.StandardButton.No | QMessageBox.StandardButton.Yes, 
+            QMessageBox.StandardButton.No | QMessageBox.StandardButton.Yes,
                                           QMessageBox.StandardButton.Yes)
         else:
             answer = QMessageBox.StandardButton.Yes
@@ -131,10 +137,12 @@ class make_experiment_JND(QMainWindow):
             # self.clicked_event.set()
             event.accept()
 
-    def quit(self):
+    def quit(self) -> None:
+        '''Close the experiment window.'''
         self.close()
 
-    def show_all_images(self, tab='setup'):
+    def show_all_images(self, tab: str = 'setup') -> None:
+        '''Display a grid of experiment images and update the info text for *tab*.'''
         self.widget_experiments['setup']['text'].setText(f'''
         JND Experiment to be setup with the above images using the settings:
             Save folder: {self.default_save_dir}
@@ -170,8 +178,8 @@ class make_experiment_JND(QMainWindow):
         # time.sleep(5)
         # QApplication.processEvents()
             
-    def get_all_images(self):
-        
+    def get_all_images(self) -> None:
+        '''Load all reference and transformed images for every dataset entry in range.'''
         # get all the transform values
         self.experiment_trans_params = plot_utils.get_all_single_transform_params(
             self.checked_transformation_params, num_steps='from_dict')
@@ -226,8 +234,8 @@ class make_experiment_JND(QMainWindow):
         # shuffle the images list
         random.shuffle(self.experiment_transforms)
 
-    def get_metric_scores(self, calc=False):
-        '''get IQM scores to save alongside the experiment for plotting/analysis purposes'''
+    def get_metric_scores(self, calc: bool = False) -> None:
+        '''Optionally compute IQM scores for every experiment image and store as a DataFrame.'''
         self.IQM_scores_df = None
         if len(self.checked_metrics) == 0:
             return
@@ -247,7 +255,8 @@ class make_experiment_JND(QMainWindow):
             self.IQM_scores_df = pd.DataFrame.from_dict(IQM_scores)
             self.IQM_scores_df.set_index('IQM', inplace=True)
 
-    def _init_experiment_window_widgets(self):
+    def _init_experiment_window_widgets(self) -> None:
+        '''Create all Qt widgets used across the setup, preamble, run, and finish tabs.'''
         self.widget_experiments = {'exp': {}, 'preamble': {}, 'setup': {}, 'final':{}}
         ''' setup tab '''
         self.widget_experiments['setup']['start_button'] = QPushButton(
@@ -319,7 +328,8 @@ class make_experiment_JND(QMainWindow):
                 self.widget_experiments['final']['quit_button'], self.quit)
         self.widget_experiments['final']['save_label'] = QLabel('Not saved yet', self)
 
-    def experiment_layout(self):
+    def experiment_layout(self) -> None:
+        '''Assemble and populate the tabbed experiment layout.'''
         ''' setup '''
         experiment_text = QVBoxLayout()
         experiment_text.addWidget(self.widget_experiments['setup']['text'])
@@ -403,13 +413,15 @@ class make_experiment_JND(QMainWindow):
         # return experiment_mode_layout
 
     ''' experiment running functions'''
-    def setup_experiment(self):
+    def setup_experiment(self) -> None:
+        '''Switch to the preamble tab and lock the setup/run tabs.'''
         self.experiments_tab.setCurrentIndex(1)
         self.experiments_tab.setTabEnabled(0, False)
         self.experiments_tab.setTabEnabled(2, False)
         self.experiments_tab.setTabEnabled(3, False)
 
-    def toggle_experiment(self):
+    def toggle_experiment(self) -> None:
+        '''Start or reset the experiment depending on the current running state.'''
         if self.running_experiment:
             self.reset_experiment()
             self.experiments_tab.setTabEnabled(0, True)
@@ -425,11 +437,13 @@ class make_experiment_JND(QMainWindow):
             # self.widget_experiments['preamble']['start_button'].setText('Reset')
             self.running_experiment = True
 
-    def reset_experiment(self):
+    def reset_experiment(self) -> None:
+        '''Return to the preamble tab and restore the light style.'''
         self.experiments_tab.setCurrentIndex(1)
         self.init_style('light')
 
-    def start_experiment(self):
+    def start_experiment(self) -> None:
+        '''Begin the JND experiment: show the run tab and display the first image pair.'''
         self.init_style('dark')
         self.experiments_tab.setCurrentIndex(2)
 
@@ -450,7 +464,8 @@ class make_experiment_JND(QMainWindow):
                             rgb_brightness=self.rgb_brightness, 
                             display_brightness=self.display_brightness)
 
-    def finish_experiment(self):
+    def finish_experiment(self) -> None:
+        '''Switch to the finish tab, save results, and display the final summary.'''
         self.experiments_tab.setTabEnabled(3, True)
         self.show_all_images(tab='final')
         self.init_style('light')
@@ -464,16 +479,17 @@ class make_experiment_JND(QMainWindow):
         else:
             self.widget_experiments['final']['save_label'].setText(f'Save failed to {self.default_save_dir}')
 
-    def get_trans_funcs(self):
+    def get_trans_funcs(self) -> dict:
+        '''Return a dict mapping transform names to their callable functions.'''
         # get the current transform functions
         trans_funcs = {}
         for single_trans in self.experiment_trans_params:
             trans_name = list(single_trans.keys())[0]
             trans_funcs[trans_name] = self.checked_transformation_params[trans_name]['function']
         return trans_funcs
-    
-    def get_unique_save_dir(self):
-        '''get directory that is unique based on if it's the same experiment or not'''
+
+    def get_unique_save_dir(self) -> bool:
+        '''Locate or create a unique experiment directory; return ``True`` if new.'''
         trans_funcs = self.get_trans_funcs()
 
         # get a unique directory (same image with diff trans need a new dir)
@@ -522,10 +538,11 @@ class make_experiment_JND(QMainWindow):
 
         return new_dir
 
-    def save_experiment(self):
+    def save_experiment(self) -> None:
+        '''Save all experiment images, transform metadata, and human scores to disk.'''
         # get the current transform functions
         trans_funcs = self.get_trans_funcs()
-        
+
         # make all the dirs and subdirs
         os.makedirs(self.default_save_dir, exist_ok=True)
         os.makedirs(os.path.join(save_utils.get_JND_ref_image_dir(self.default_save_dir)), exist_ok=True)
@@ -569,7 +586,8 @@ class make_experiment_JND(QMainWindow):
         self.saved = True
         self.saved_experiment.emit(csv_file)
 
-    def user_decision(self, decision):
+    def user_decision(self, decision: str) -> None:
+        '''Record the user's ``'same'`` or ``'diff'`` decision and advance to the next image.'''
         if decision not in ['same', 'diff']:
             raise ValueError(f'user decision for JND experiment needs to be same or diff')
         # make sure we don't go beyond the data set with acciental key presses
@@ -604,17 +622,23 @@ class make_experiment_JND(QMainWindow):
         # reset time
         self.time0 = time.time()
 
-    def get_single_transform_im(self, single_trans_dict):
+    def get_single_transform_im(self, single_trans_dict: dict):
+        '''Apply a single transform and return the resulting image array.'''
         trans_name = list(single_trans_dict)[0]
         return image_utils.get_transform_image(self.data_store,
                                         {trans_name: self.checked_transformation_params[trans_name]},
                                         single_trans_dict)
 
     ''' UI '''
-    def init_style(self, style='light', css_file=None):
+    def init_style(self, style: str = 'light', css_file: str | None = None) -> None:
+        '''Apply a CSS stylesheet to this window.
+
+        Args:
+            style: Style name (``'light'`` or ``'dark'``). Defaults to ``'light'``.
+            css_file: Explicit path to a CSS file; overrides *style* if provided.
+        '''
         if css_file == None:
             dir = os.path.dirname(os.path.abspath(__file__))
-            # css_file = os.path.join(dir, 'style-light.css')
             css_file = os.path.join(dir, f'style-{style}.css')
         if os.path.isfile(css_file):
             with open(css_file, 'r') as file:
@@ -624,10 +648,11 @@ class make_experiment_JND(QMainWindow):
 
 
 class reset_image_widget_to_black(QObject):
-    ''' change clicked image to black and pause '''
+    '''Flash a clicked image to black briefly then re-enable clicks.'''
+
     completed = pyqtSignal(float)
 
-    def __init__(self, time=0.1):
+    def __init__(self, time: float = 0.1) -> None:
         super().__init__()
         self.running = True
         self.time = time
@@ -635,7 +660,8 @@ class reset_image_widget_to_black(QObject):
         # self.black_array[:, :, 1] = 1 # blue
 
     @pyqtSlot(dict)
-    def change_to_solid(self, data):
+    def change_to_solid(self, data: dict) -> None:
+        '''Set the clicked image widget to black, wait, then signal completion.'''
         t_start = time.time()
         image_display_size = data['image_display_size']
         widget = data['widget']
@@ -664,9 +690,10 @@ class reset_image_widget_to_black(QObject):
         # all complete so send signal 
         self.completed.emit(1.0)
 
-    def stop(self):
+    def stop(self) -> None:
+        '''Stop the worker loop.'''
         self.running = False
 
-    def __del__(self):
+    def __del__(self) -> None:
         # close app upon garbage collection
         self.stop()

@@ -3,6 +3,7 @@ main entry point to initialise the UI
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
+from __future__ import annotations
 
 import os
 import time
@@ -13,23 +14,24 @@ import IQM_Vis
 from IQM_Vis.UI import layout, widgets, images, ProgressBar
 
 class make_app(widgets, layout, images):
-    def __init__(self, 
+    '''Main application window — composes widgets, layout, and image logic.'''
+
+    def __init__(self,
                  app,
                  data_stores: list,
                  transformations: dict,
-                 metrics_info_format='graph', # graph or text
-                 metrics_avg_graph=False,
-                 metric_range_graph=True,
-                 metric_params: dict={},
-                 image_display_size=300,
-                 default_save_dir=IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR,
-                 default_dataset_name='dataset1',
+                 metrics_info_format: str = 'graph',
+                 metrics_avg_graph: bool = False,
+                 metric_range_graph: bool = True,
+                 metric_params: dict = {},
+                 image_display_size: int = 300,
+                 default_save_dir: str = IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR,
+                 default_dataset_name: str = 'dataset1',
                  restrict_options=None,
-                 num_steps_range=11,
-                 num_step_experiment=6,
-                 num_images_scroll_show=7,
-                 test=False
-                 ):
+                 num_steps_range: int = 11,
+                 num_step_experiment: int = 6,
+                 num_images_scroll_show: int = 7,
+                 test: bool = False) -> None:
         super().__init__()
         self.app = app
         self.data_stores = data_stores
@@ -66,7 +68,8 @@ class make_app(widgets, layout, images):
         self.human_experiment_cache = {}
         self.construct_UI()
 
-    def make_menu(self):
+    def make_menu(self) -> None:
+        '''Build the application menu bar with all actions and sub-menus.'''
         self.menu_bar = self.menuBar()
 
         # make file menu
@@ -119,7 +122,8 @@ class make_app(widgets, layout, images):
         clear_all_cache.triggered.connect(self.clear_all_cache_data)
 
 
-    def load_all_transforms(self):
+    def load_all_transforms(self) -> None:
+        '''Add all built-in IQM-Vis transforms to the current transform set.'''
         all_trans_iqm_vis = IQM_Vis.transforms.get_all_transforms()
         for trans, data in all_trans_iqm_vis.items():
             if trans not in self.transformations:
@@ -127,7 +131,8 @@ class make_app(widgets, layout, images):
         self._remake_menu()
         self.construct_UI()
 
-    def load_all_metrics(self):
+    def load_all_metrics(self) -> None:
+        '''Add all built-in IQM-Vis metrics to the first data store.'''
         if not hasattr(self.data_stores[0], 'add_metric'):
             return
         all_metrics_iqm_vis = IQM_Vis.metrics.get_all_metrics()
@@ -136,7 +141,8 @@ class make_app(widgets, layout, images):
         self._remake_menu()
         self.construct_UI()
 
-    def load_all_metric_images(self):
+    def load_all_metric_images(self) -> None:
+        '''Add all built-in IQM-Vis metric images to the first data store.'''
         if not hasattr(self.data_stores[0], 'add_metric_image'):
             return
         all_metric_images_iqm_vis = IQM_Vis.metrics.get_all_metric_images()
@@ -145,21 +151,24 @@ class make_app(widgets, layout, images):
         self._remake_menu()
         self.construct_UI()
 
-    def clear_all_cache_data(self):
+    def clear_all_cache_data(self) -> None:
+        '''Clear cached metric results for all data stores.'''
         for data_store in self.data_stores:
             if hasattr(data_store, 'clear_all_cache'):
                 data_store.clear_all_cache()
         self.status_bar.showMessage('Cleared all cache data', 8000)
 
-    def quit(self):
+    def quit(self) -> None:
+        '''Quit the Qt application.'''
         # QApplication.instance().quit()
         self.app.quit()
 
-    def __del__(self):
+    def __del__(self) -> None:
         # garbage collection
         self.range_worker.stop()
 
-    def closeEvent(self, event):
+    def closeEvent(self, event) -> None:
+        '''Prompt for confirmation before closing the window.'''
         # self.close_answer = None
         # if self.test == False:
 
@@ -184,7 +193,7 @@ class make_app(widgets, layout, images):
             event.accept()
             # QCoreApplication.quit()
 
-    def get_menu_checkboxes(self):
+    def get_menu_checkboxes(self) -> None:
         ''' list all trans/metrics in the menu drop downs '''
         self.menu_options = {'transforms': {},
                              'metrics': {},
@@ -215,12 +224,14 @@ class make_app(widgets, layout, images):
                                        self.construct_UI,
                                        restrict_options['metrics'])
     
-    def _remake_menu(self):
+    def _remake_menu(self) -> None:
+        '''Save current menu state, clear the menu bar, and rebuild it.'''
         self._save_checked_menu_items()
         self.menu_bar.clear()
         self.make_menu()
 
-    def _save_checked_menu_items(self):
+    def _save_checked_menu_items(self) -> None:
+        '''Persist the checked/unchecked state of all menu checkboxes.'''
         self.restore_checked_menu_items = {}
         for menu in ['transforms', 'metric_images', 'metrics']:
             self.restore_checked_menu_items[menu] = {}
@@ -228,14 +239,16 @@ class make_app(widgets, layout, images):
                 self.restore_checked_menu_items[menu][item] = self.menu_options[menu][item].isChecked()
 
 
-    def make_status_bar(self):
+    def make_status_bar(self) -> None:
+        '''Create the status bar and attach an embedded progress bar.'''
         self.status_bar = self.statusBar()
         self.pbar = ProgressBar(self, minimum=0, maximum=100, textVisible=False,
                         objectName="GreenProgressBar")
         self.pbar.setValue(0)
         self.status_bar.addPermanentWidget(self.pbar)
 
-    def construct_UI(self):
+    def construct_UI(self) -> None:
+        '''(Re)build all UI widgets and layouts from the current state.'''
         if hasattr(self, 'range_worker'):
             self.range_worker.stop() # stop any calculations on the old UI
         # if hasattr(self, 'wait_until_safe_to_change_image'):
@@ -286,13 +299,19 @@ class make_app(widgets, layout, images):
         # self.setMinimumSize(self.main_widget.sizeHint())
         self.resize(self.main_widget.sizeHint())
 
-    def reset_correlation_data(self):
+    def reset_correlation_data(self) -> None:
+        '''Clear cached correlation data for all data stores.'''
         self.correlation_data = {}
         for i, _ in enumerate(self.data_stores):
             self.correlation_data[i] = {}
 
-    def _single_image_or_dataset(self):
-        '''set whether dataset or single image used for data_store'''
+    def _single_image_or_dataset(self) -> bool:
+        '''Determine whether a dataset or a single image is being used.
+
+        Returns:
+            ``True`` if the data stores support indexing (dataset), ``False``
+            otherwise (single image).
+        '''
         for data_store in self.data_stores:
             try:
                 data_store[1]
@@ -315,7 +334,7 @@ class make_app(widgets, layout, images):
         self.max_data_ind = max_length - 1
         return dataset_found
     
-    def change_save_folder(self):
+    def change_save_folder(self) -> None:
         ''' change the save folder we are using '''
         # get the file opener for the user
         if os.path.exists(self.default_save_dir):
@@ -337,7 +356,20 @@ class make_app(widgets, layout, images):
         self.widget_controls['label']['exp_change_save'].setText(f'Save Folder: {self.default_save_dir}')
         self.widget_controls['label']['export_change_save'].setText(f'Save Folder: {self.default_save_dir}')
 
-def set_checked_menu_from_iterable(main_menu, iterable, name, action_store, connect_func, restrict_options=None):
+def set_checked_menu_from_iterable(main_menu, iterable, name: str, action_store: dict,
+                                   connect_func, restrict_options=None) -> None:
+    '''Add a checkable sub-menu to *main_menu* for each item in *iterable*.
+
+    Args:
+        main_menu: The parent ``QMenuBar`` to add the sub-menu to.
+        iterable: Keys of the items to list as checkable actions.
+        name: Display name of the sub-menu.
+        action_store: Dict in which the created ``QAction`` objects are stored.
+        connect_func: Slot called when any action in the sub-menu is triggered.
+        restrict_options: Controls initial checked state — an ``int`` checks the
+            first *n* items, a ``dict`` maps item names to ``bool``, and
+            ``None`` checks everything.
+    '''
     _menu = main_menu.addMenu(name)
     _menu.triggered.connect(connect_func)
     for i, trans in enumerate(iterable):

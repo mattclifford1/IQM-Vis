@@ -1,7 +1,10 @@
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
+from __future__ import annotations
+
 import warnings
-import torch 
+import numpy as np
+import torch
 
 from torchmetrics import StructuralSimilarityIndexMeasure as ssim_torch
 from IQM_Vis.metrics.SSIM.ssim import ms_ssim
@@ -18,14 +21,16 @@ class SSIM:
                              will return a scalar value)
     '''
 
-    def __init__(self, return_image=False):
+    def __init__(self, return_image: bool = False) -> None:
         self.return_image = return_image
         self.metric = ssim_torch
         self.device = torch.device(
             "cuda" if torch.cuda.is_available() else "cpu")
         self.preproccess_function = _numpy_to_torch_image
 
-    def __call__(self, im_ref, im_comp, sigma=1.5, k1=0.01, k2=0.03, ssim_kernel_size=11, **kwargs):
+    def __call__(self, im_ref: np.ndarray, im_comp: np.ndarray,
+                 sigma: float = 1.5, k1: float = 0.01, k2: float = 0.03,
+                 ssim_kernel_size: int = 11, **kwargs) -> np.ndarray | float:
         '''When an instance is called
 
         Args:
@@ -78,14 +83,16 @@ class MS_SSIM:
                              will return a scalar value)
     '''
 
-    def __init__(self, return_image=False):
+    def __init__(self, return_image: bool = False) -> None:
         self.return_image = return_image
         # self.metric = Mssim_torch
         self.device = torch.device(
             "cuda" if torch.cuda.is_available() else "cpu")
         self.preproccess_function = _numpy_to_torch_image
 
-    def __call__(self, im_ref, im_comp, sigma=1.5, k1=0.01, k2=0.03, mssim_kernel_size=11, ** kwargs):
+    def __call__(self, im_ref: np.ndarray, im_comp: np.ndarray,
+                 sigma: float = 1.5, k1: float = 0.01, k2: float = 0.03,
+                 mssim_kernel_size: int = 11, **kwargs) -> np.ndarray | float:
         '''When an instance is called
 
         Args:
@@ -154,7 +161,7 @@ class MS_SSIM:
                 f'WARNING: Image size {im_ref.shape} too small to use with MS_SSIM, returning 0')
         return _score
 
-    def _make_metric(self, **kwargs):
+    def _make_metric(self, **kwargs) -> object:
         # set up metric
         with warnings.catch_warnings():    # we don't care about the warnings these give
             warnings.simplefilter("ignore")
@@ -176,14 +183,15 @@ class NLPD:
 
     '''
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.initialised = False   # initialse fully on first __call__ to save load up time
         self.device = torch.device(
             "cuda" if torch.cuda.is_available() else "cpu")
         self.preproccess_function = _numpy_to_torch_image
         self.nlpd_k = 1
 
-    def __call__(self, im_ref, im_comp, nlpd_k=1, **kwargs):
+    def __call__(self, im_ref: np.ndarray, im_comp: np.ndarray,
+                 nlpd_k: int = 1, **kwargs) -> np.ndarray:
         '''When an instance is called
 
         Args:
@@ -216,7 +224,8 @@ class NLPD:
         return score
 
 
-def _make_kernel_odd(value):
+def _make_kernel_odd(value: int | float) -> int:
+    '''Convert *value* to the nearest odd integer >= 1.'''
     value = int(value)
     if value % 2 == 0:
         value -= 1

@@ -13,7 +13,7 @@ from IQM_Vis.transforms.effects import (
 from IQM_Vis.transforms.affine import (rotation, x_shift, y_shift, zoom_image)
 from IQM_Vis.transforms.additive_noise import (salt_and_pepper_noise, Gaussian_noise, noise_hypersphere)
 
-def get_all_transforms():
+def get_all_transforms() -> dict:
     '''
     Get all the available transformation/distortions alongside their recommended parameter ranges
 

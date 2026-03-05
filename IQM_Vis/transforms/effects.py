@@ -3,6 +3,7 @@ Sample image transformations to get the user started with
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
+from __future__ import annotations
 
 from skimage.transform import resize
 from skimage.util import img_as_ubyte
@@ -10,7 +11,7 @@ import cv2
 import numpy as np
 
 
-def brightness(image, value=0):
+def brightness(image: np.ndarray, value: float = 0) -> np.ndarray:
     '''Adjust image brightness. Image is clipped to the range (0, 1)
 
     Args:
@@ -26,7 +27,7 @@ def brightness(image, value=0):
     return np.clip(image + value, 0, 1)
 
 
-def binary_threshold(image, threshold=100):
+def binary_threshold(image: np.ndarray, threshold: int = 100) -> np.ndarray:
     '''conver image to binary at a given threshold
 
     Args:
@@ -47,7 +48,7 @@ def binary_threshold(image, threshold=100):
     return np.clip(image.astype(np.float32) / 255.0, 0, 1)
 
 
-def jpeg_compression(image, compression=101):
+def jpeg_compression(image: np.ndarray, compression: int = 101) -> np.ndarray:
     '''encode image using jpeg then decode
 
     Args:
@@ -66,7 +67,7 @@ def jpeg_compression(image, compression=101):
     return _encode_compression(image, encoder, encode_param)
 
 
-def _encode_compression(image, encoder, encode_param, uint=True):
+def _encode_compression(image: np.ndarray, encoder: str, encode_param: list, uint: bool = True) -> np.ndarray:
     '''
         generic image encoder for jpeg, png etc
         using https://dev_resources/docs.opencv.org/3.4/d4/da8/group__imgcodecs.html to encode/decode
@@ -89,7 +90,7 @@ def _encode_compression(image, encoder, encode_param, uint=True):
     return np.clip(image, 0, 1)
 
 
-def contrast(image, contrast=1.0):
+def contrast(image: np.ndarray, contrast: float = 1.0) -> np.ndarray:
     """adjust the contrast of an image
 
     Args:
@@ -111,7 +112,7 @@ def contrast(image, contrast=1.0):
     return np.clip(image/255, 0, 1)
 
 
-def hue(image, h=0):
+def hue(image: np.ndarray, h: float = 0) -> np.ndarray:
     """adjust the hue of an image
 
     Args:
@@ -125,7 +126,7 @@ def hue(image, h=0):
     return _adjust_HSV(image, h, channel=0)
 
 
-def saturation(image, sat=0):
+def saturation(image: np.ndarray, sat: float = 0) -> np.ndarray:
     """adjust the saturation of an image
 
     Args:
@@ -139,7 +140,7 @@ def saturation(image, sat=0):
     return _adjust_HSV(image, sat, channel=1)
 
 
-def brightness_hsv(image, b=0):
+def brightness_hsv(image: np.ndarray, b: float = 0) -> np.ndarray:
     """adjust the brightness of an image
 
     Args:
@@ -153,7 +154,7 @@ def brightness_hsv(image, b=0):
     return _adjust_HSV(image, b, channel=2)
 
 
-def _adjust_HSV(image, value, channel):
+def _adjust_HSV(image: np.ndarray, value: float, channel: int) -> np.ndarray:
     '''
     adjust hue, saturation or brightness of an image,
     image is float between 0, 1 and value is between -1 and 1
@@ -186,7 +187,7 @@ def _adjust_HSV(image, value, channel):
     return np.clip(cv2.cvtColor(hsv, cv2.COLOR_HSV2RGB)/255, 0, 1)
 
 
-def blur(image, kernel_size=1):
+def blur(image: np.ndarray, kernel_size: int = 1) -> np.ndarray:
     '''Gaussian Blur on an image
 
     Args:

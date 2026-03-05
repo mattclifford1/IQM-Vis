@@ -1,6 +1,9 @@
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
+from __future__ import annotations
+
 import warnings
+import numpy as np
 import torch
 
 from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity as lpips_torch
@@ -20,7 +23,7 @@ class LPIPS:
 
     '''
 
-    def __init__(self, network='alex', reduction='mean'):
+    def __init__(self, network: str = 'alex', reduction: str = 'mean') -> None:
         self.initialised = False   # initialse fully on first __call__ to save load up time
         self.network = network
         self.reduction = reduction
@@ -29,7 +32,7 @@ class LPIPS:
             "cuda" if torch.cuda.is_available() else "cpu")
         self.preproccess_function = _numpy_to_torch_image
 
-    def __call__(self, im_ref, im_comp, **kwargs):
+    def __call__(self, im_ref: np.ndarray, im_comp: np.ndarray, **kwargs) -> np.ndarray:
         '''When an instance is called
 
         Args:
@@ -70,13 +73,13 @@ class DISTS:
 
     '''
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.initialised = False   # initialse fully on first __call__ to save load up time
         self.device = torch.device(
             "cuda" if torch.cuda.is_available() else "cpu")
         self.preproccess_function = _numpy_to_torch_image
 
-    def __call__(self, im_ref, im_comp, **kwargs):
+    def __call__(self, im_ref: np.ndarray, im_comp: np.ndarray, **kwargs) -> np.ndarray:
         '''When an instance is called
 
         Args:

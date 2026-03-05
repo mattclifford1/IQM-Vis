@@ -5,7 +5,8 @@
 import IQM_Vis
 from IQM_Vis.examples.KODAK_dataset import KODAK_IMAGES
 
-def run():
+def run() -> None:
+    '''Launch the IQM-Vis UI with the KODAK dataset and all built-in transforms.'''
     metrs = IQM_Vis.metrics.get_all_metrics()
     if '1-MS_SSIM' in metrs:
       metrs.pop('1-MS_SSIM')

@@ -3,6 +3,7 @@ Utils for PyQt6 image, text and graph widgets
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
+from __future__ import annotations
 
 try:
     from PyQt6.QtGui import QPixmap, QImage
@@ -31,9 +32,19 @@ image helper functions
 #     return img_as_ubyte(down_im)
 
 
-def change_im(widget, im, resize=False, rgb_brightness=250, display_brightness=250, border=False):
-    '''
-    given a numpy image, changes the given widget Frame
+def change_im(widget, im: np.ndarray, resize: int | bool = False,
+              rgb_brightness: float = 250, display_brightness: float = 250,
+              border: bool = False) -> None:
+    '''Update a Qt label widget to display a numpy image.
+
+    Args:
+        widget: A Qt widget that exposes ``setPixmap``.
+        im: Float image array with values in [0, 1].
+        resize: If an ``int``, resize the longest side to this number of
+            pixels before display. ``False`` means no resize.
+        rgb_brightness: Source brightness for calibration (cd/m²).
+        display_brightness: Target display brightness for calibration (cd/m²).
+        border: If ``True``, add a 5-pixel black border around the image.
     '''
     # clip image to safe bounds
     im = np.clip(im, 0, 1)
@@ -64,7 +75,18 @@ def change_im(widget, im, resize=False, rgb_brightness=250, display_brightness=2
 text utils
 '''
 
-def str_to_len(string, length=5, append_char='0', plus=False):
+def str_to_len(string: str, length: int = 5, append_char: str = '0', plus: bool = False) -> str:
+    '''Pad or truncate *string* to exactly *length* characters.
+
+    Args:
+        string: Input string.
+        length: Target length. Defaults to 5.
+        append_char: Character used for padding. Defaults to ``'0'``.
+        plus: If ``True``, prepend ``'+'`` to positive numbers.
+
+    Returns:
+        The formatted string of length *length*.
+    '''
     # cut string to length, or append character to make to length
     if string[0] !=  '-' and plus == True:
         string = '+' + string
@@ -74,10 +96,11 @@ def str_to_len(string, length=5, append_char='0', plus=False):
         string = string + append_char*(length-len(string))
     return string
 
-def get_metric_image_name(metric, data_store):
+def get_metric_image_name(metric: str, data_store) -> str:
+    '''Return a unique display name for a metric-image (metric + image pair).'''
     return metric+get_image_pair_name(data_store)
 
-def get_trans_dict_from_str(trans_str, return_dict=False):
+def get_trans_dict_from_str(trans_str: str, return_dict: bool = False) -> tuple | dict:
     # determine which experiment formatting we are using
     if len(trans_str.split('-----')) != 1:
         splitter = '-----'   # legacy code experiment format - illegible with negative numbers
@@ -104,13 +127,15 @@ def get_trans_dict_from_str(trans_str, return_dict=False):
     else:
         return trans, trans_value
 
-def get_transformed_image_name(data_store):
+def get_transformed_image_name(data_store) -> str:
+    '''Return the display name for the transformed image, e.g. ``T(image)``'''
     return 'T('+data_store.get_image_to_transform_name()+')'
 
-def get_image_pair_name(data_store):
+def get_image_pair_name(data_store) -> str:
+    '''Return a string representation of the (reference, transformed) image pair.'''
     return str((data_store.get_reference_image_name(), get_transformed_image_name(data_store)))
 
-def get_resolutions(data_store):
+def get_resolutions(data_store) -> dict:
     ref = data_store.get_reference_image().shape
     if hasattr(data_store, 'image_post_processing'):
         trans_im = data_store.get_image_to_transform()
@@ -127,7 +152,15 @@ matplotlib widget utils
 if not HEADLESS:
     # Get a matplotlib canvas as a Qt Widget
     class MplCanvas(FigureCanvasQTAgg):
-        def __init__(self, size=(3.5, 3.5), dpi=100, polar=False):
+        def __init__(self, size: tuple = (3.5, 3.5), dpi: int = 100, polar: bool = False) -> None:
+            '''Create a matplotlib figure embedded in a Qt widget.
+
+            Args:
+                size: Figure size in inches ``(width, height)``. Defaults to
+                    ``(3.5, 3.5)``.
+                dpi: Dots per inch for the figure. Defaults to 100.
+                polar: If ``True``, create a polar (radar) axes subplot.
+            '''
             self.figure = Figure(figsize=size)  # , dpi=dpi)
             self.axes = self.figure.add_subplot(111, polar=polar)
             super(MplCanvas, self).__init__(self.figure)

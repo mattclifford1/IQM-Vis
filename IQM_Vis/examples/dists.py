@@ -13,7 +13,7 @@ from PIL.TiffTags import TAGS
 
 
 '''Textures calibrated image loader'''
-def load_and_calibrate_image(file, max_luminance=200, size=512):
+def load_and_calibrate_image(file: str, max_luminance: float = 200, size: int = 512):
     # Calculate max luminance value in the whole dataset
     img = Image.open(file)
     meta_dict = {TAGS[key] : img.tag[key] for key in img.tag_v2}
@@ -78,7 +78,8 @@ def correct(img, meta_dict, greycale=True):
     II = np.reshape(np.reshape(II, (np.prod(II.shape[0:2]), 3), order='F')@T.T, (II.shape), order='F')
     return II
 
-def run():
+def run() -> None:
+    '''Launch the IQM-Vis UI with the Textures dataset using calibrated image loading.'''
     # metrics functions must return a single value
     metric = {'DISTS': IQM_Vis.metrics.DISTS(),
               'LPIPS': IQM_Vis.metrics.LPIPS(),

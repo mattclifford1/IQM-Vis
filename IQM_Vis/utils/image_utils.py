@@ -3,8 +3,10 @@ image helper functions
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
+from __future__ import annotations
 
 import os
+from typing import Any
 import PIL
 import cv2
 import numpy as np
@@ -12,7 +14,8 @@ from skimage.transform import resize
 from skimage.color import rgb2lab, lab2rgb
 from skimage.util import img_as_ubyte
 
-def get_transform_image(data_store, transform_functions, transform_params):
+
+def get_transform_image(data_store: Any, transform_functions: dict, transform_params: dict) -> np.ndarray:
     '''transform image with image post processing
 
     Args:
@@ -32,9 +35,17 @@ def get_transform_image(data_store, transform_functions, transform_params):
             image = data_store.image_post_processing(image)
     return image
 
-def load_image(image_path):
-    '''
-    load image as RGB float
+def load_image(image_path: str) -> np.ndarray:
+    '''Load an image from disk as an RGB float32 array with values in [0, 1].
+
+    Args:
+        image_path: Path to the image file.
+
+    Returns:
+        The image as a (H, W, 3) float64 numpy array.
+
+    Raises:
+        ValueError: If *image_path* does not exist.
     '''
     if not os.path.isfile(image_path):
         raise ValueError(f'Image file: {image_path} does not exist')
@@ -46,14 +57,25 @@ def load_image(image_path):
         img = img[:, :, :3]
     return img
 
-def save_image(img, path):
-    ''' save image as ubyte '''
+def save_image(img: np.ndarray, path: str) -> None:
+    '''Save a float image as a ubyte PNG/JPEG (determined by *path* extension).
+
+    Args:
+        img: Float image array with values in [0, 1].
+        path: Destination file path.
+    '''
     img = PIL.Image.fromarray(img_as_ubyte(img))
     img.save(path)
 
-def resize_to_longest_side(im, side=128):
-    '''
-    resize image to longest side
+def resize_to_longest_side(im: np.ndarray, side: int = 128) -> np.ndarray:
+    '''Resize *im* so its longest dimension equals *side*, preserving aspect ratio.
+
+    Args:
+        im: Input image array.
+        side: Target size for the longest dimension. Defaults to 128.
+
+    Returns:
+        Resized image array.
     '''
     shape = im.shape
     if shape[0] > shape[1]:
@@ -65,9 +87,16 @@ def resize_to_longest_side(im, side=128):
     im = resize_image(im, size)
     return im
 
-def resize_image(img, size=128):
-    '''
-    resize image to square or specified size
+def resize_image(img: np.ndarray, size: int | tuple = 128) -> np.ndarray:
+    '''Resize *img* to a square or to an explicit (height, width) size.
+
+    Args:
+        img: Input image array.
+        size: Target size. An ``int`` produces a square; a ``(H, W)`` tuple
+            specifies exact dimensions. Defaults to 128.
+
+    Returns:
+        Resized image array.
     '''
     if isinstance(size, int):
         size = (size, size)
@@ -120,7 +149,23 @@ def crop_centre(image, scale_factor=2, keep_size=True):
 
     return image
 
-def calibrate_brightness(im, rgb_brightness, display_brightness, ubyte=True):
+def calibrate_brightness(im: np.ndarray, rgb_brightness: float,
+                         display_brightness: float, ubyte: bool = True) -> np.ndarray:
+    '''Adjust image brightness to account for display calibration.
+
+    Scales the L* channel in LAB colour space so that the perceived luminance
+    matches the target display brightness.
+
+    Args:
+        im: Input image. Either uint8 or float depending on *ubyte*.
+        rgb_brightness: Brightness of the source (e.g. 250 cd/m²).
+        display_brightness: Target display brightness.
+        ubyte: If ``True``, treat *im* as uint8 and return uint8.
+            If ``False``, treat as float.
+
+    Returns:
+        Brightness-calibrated image in the same dtype as specified by *ubyte*.
+    '''
     if rgb_brightness == display_brightness:
         return im
     if ubyte == True:

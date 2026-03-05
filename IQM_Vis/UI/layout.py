@@ -3,6 +3,7 @@ UI create layout
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
+from __future__ import annotations
 
 import os
 import warnings
@@ -18,10 +19,17 @@ from IQM_Vis.UI import utils
 # uses widgets from IQM_Vis.widgets.app_widgets
 # class layout(QMainWindow):
 class layout(QMainWindow):
-    def __init__(self, **kwargs):
+    '''Mixin that builds the full Qt window layout for the main IQM-Vis UI.'''
+
+    def __init__(self, **kwargs) -> None:
         super().__init__()
 
-    def init_layout(self):
+    def init_layout(self) -> layout:
+        '''Construct and display the main window layout.
+
+        Returns:
+            ``self`` for chaining.
+        '''
         self.tabs = {}
         self._init_generic_layout()
         self.main_widget = QWidget()
@@ -30,10 +38,8 @@ class layout(QMainWindow):
         self.show()
         return self
 
-    def _init_generic_layout(self):
-        '''
-        place all the widgets in the window
-        '''
+    def _init_generic_layout(self) -> None:
+        '''Place all widgets into the window layout.'''
         # sizes
         im_width = 10
         im_height = 4
@@ -297,7 +303,13 @@ class layout(QMainWindow):
         # self.main_layout.setSpacing(0)
         # self.main_layout.setContentsMargins(0, 0, 0, 0)
 
-    def init_style(self, style='light', css_file=None):
+    def init_style(self, style: str = 'light', css_file: str | None = None) -> None:
+        '''Apply a CSS stylesheet to the application.
+
+        Args:
+            style: Style name (``'light'`` or ``'dark'``). Defaults to ``'light'``.
+            css_file: Explicit path to a CSS file; overrides *style* if provided.
+        '''
         if css_file == None:
             dir = os.path.dirname(os.path.abspath(__file__))
             # css_file = os.path.join(dir, 'style-light.css')

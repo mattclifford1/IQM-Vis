@@ -3,6 +3,7 @@ create experiment window
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
+from __future__ import annotations
 
 import os
 import random
@@ -31,19 +32,21 @@ from IQM_Vis.utils import gui_utils, plot_utils, image_utils, save_utils
 
 
 class make_experiment_2AFC(QMainWindow):
+    '''Window for running a 2-Alternative Forced Choice (2AFC) perceptual experiment.'''
+
     saved_experiment = pyqtSignal(str)
     reset_clicked_image = pyqtSignal(dict)
 
-    def __init__(self, 
-                 checked_transformation_params, 
-                 data_store, 
-                 image_display_size,
-                 rgb_brightness,
-                 display_brightness,
-                 default_save_dir=save_utils.DEFAULT_SAVE_DIR,
-                 image_preprocessing='None',
-                 image_postprocessing='None',
-                 checked_metrics={}):
+    def __init__(self,
+                 checked_transformation_params: dict,
+                 data_store,
+                 image_display_size: int,
+                 rgb_brightness: float,
+                 display_brightness: float,
+                 default_save_dir: str = save_utils.DEFAULT_SAVE_DIR,
+                 image_preprocessing: str = 'None',
+                 image_postprocessing: str = 'None',
+                 checked_metrics: dict = {}) -> None:
         super().__init__()
         self.checked_transformation_params = checked_transformation_params
         if self.checked_transformation_params == {}:
@@ -93,13 +96,14 @@ class make_experiment_2AFC(QMainWindow):
         self.move(qr.topLeft())
         self.show_all_images()
 
-    def closeEvent(self, event):
+    def closeEvent(self, event) -> None:
+        '''Prompt for confirmation before closing; stop background threads if confirmed.'''
         # Ask for confirmation if not saved
         if not self.saved:
             answer = QMessageBox.question(self,
             "Confirm Exit...",
             "Are you sure you want to exit?\nAll unsaved data will be lost.",
-            QMessageBox.StandardButton.No | QMessageBox.StandardButton.Yes, 
+            QMessageBox.StandardButton.No | QMessageBox.StandardButton.Yes,
                                           QMessageBox.StandardButton.Yes)
         else:
             answer = QMessageBox.StandardButton.Yes
@@ -118,10 +122,12 @@ class make_experiment_2AFC(QMainWindow):
             self.clicked_event.set()
             event.accept()
 
-    def quit(self):
+    def quit(self) -> None:
+        '''Close the experiment window.'''
         self.close()
 
-    def show_all_images(self, tab='setup'):
+    def show_all_images(self, tab: str = 'setup') -> None:
+        '''Display a grid of all experiment images on the given *tab*.'''
         self.widget_experiments[tab]['images'].axes.axis('off')
         rows = int(len(self.experiment_transforms)**0.5)
         cols = int(np.ceil(len(self.experiment_transforms)/rows))
@@ -137,8 +143,8 @@ class make_experiment_2AFC(QMainWindow):
         # time.sleep(5)
         # QApplication.processEvents()
             
-    def get_all_images(self):
-        ''' save image name '''
+    def get_all_images(self) -> None:
+        '''Load and sort all transformed images for the experiment.'''
         self.image_name = self.data_store.get_reference_image_name()
         ''' load all transformed images and sort them via MSE '''
         # get all the transform values
@@ -189,14 +195,15 @@ class make_experiment_2AFC(QMainWindow):
             self.experiment_transforms.append(data)
         self.calc_max_comparisons(num_images=len(self.experiment_transforms))
     
-    def calc_max_comparisons(self, num_images):
-        # calc expected number of comparisons - 
+    def calc_max_comparisons(self, num_images: int) -> None:
+        '''Estimate the min/max expected number of comparisons for quicksort on *num_images*.'''
+        # calc expected number of comparisons -
         # http://homepages.math.uic.edu/~leon/cs-mcs401-r07/handouts/quicksort-continued.pdf
         self.min_expected_comps = num_images * np.log(num_images)
         self.max_expected_comps = 1.39 * num_images * np.log(num_images)
     
-    def get_metric_scores(self):
-        '''get IQM scores to save alongside the experiment for plotting/analysis purposes'''
+    def get_metric_scores(self) -> None:
+        '''Compute IQM scores for every experiment image and store as a DataFrame.'''
         IQM_scores = {}
         for data in self.experiment_transforms:
             score_dict = self.data_store.get_metrics(transformed_image=data['image'],
@@ -211,7 +218,8 @@ class make_experiment_2AFC(QMainWindow):
         self.IQM_scores_df = pd.DataFrame.from_dict(IQM_scores)
         self.IQM_scores_df.set_index('IQM', inplace=True)
 
-    def _init_experiment_window_widgets(self):
+    def _init_experiment_window_widgets(self) -> None:
+        '''Create all Qt widgets used across the setup, preamble, run, and finish tabs.'''
         self.widget_experiments = {'exp': {}, 'preamble': {}, 'setup': {}, 'final':{}}
         ''' setup tab '''
         self.widget_experiments['setup']['start_button'] = QPushButton(
@@ -295,7 +303,8 @@ class make_experiment_2AFC(QMainWindow):
                 self.widget_experiments['final']['quit_button'], self.quit)
         self.widget_experiments['final']['save_label'] = QLabel('Not saved yet', self)
 
-    def experiment_layout(self):
+    def experiment_layout(self) -> None:
+        '''Assemble and populate the tabbed experiment layout.'''
         ''' setup '''
         experiment_text = QVBoxLayout()
         experiment_text.addWidget(self.widget_experiments['setup']['text'])
@@ -373,7 +382,8 @@ class make_experiment_2AFC(QMainWindow):
         # return experiment_mode_layout
 
     ''' experiment running functions'''
-    def setup_experiment(self):
+    def setup_experiment(self) -> None:
+        '''Switch to the preamble tab and lock the setup/run tabs.'''
         self.click_counter = 0
         self.max_text = f'{int(self.min_expected_comps)}-{int(self.max_expected_comps)}'
         self.widget_experiments['exp']['info'].setText(
@@ -383,7 +393,8 @@ class make_experiment_2AFC(QMainWindow):
         self.experiments_tab.setTabEnabled(2, False)
         self.experiments_tab.setTabEnabled(3, False)
 
-    def toggle_experiment(self):
+    def toggle_experiment(self) -> None:
+        '''Start or reset the experiment depending on the current running state.'''
         if self.running_experiment:
             self.reset_experiment()
             self.experiments_tab.setTabEnabled(0, True)
@@ -399,11 +410,13 @@ class make_experiment_2AFC(QMainWindow):
             # self.widget_experiments['preamble']['start_button'].setText('Reset')
             self.running_experiment = True
 
-    def reset_experiment(self):
+    def reset_experiment(self) -> None:
+        '''Return to the preamble tab and restore the light style.'''
         self.experiments_tab.setCurrentIndex(1)
         self.init_style('light')
 
-    def start_experiment(self):
+    def start_experiment(self) -> None:
+        '''Begin the sorting experiment: show the run tab and start the quicksort thread.'''
         self.running_experiment = True
         self.init_style('dark')
         self.experiments_tab.setCurrentIndex(2)
@@ -417,7 +430,8 @@ class make_experiment_2AFC(QMainWindow):
         self.sorting_thread.start()
         # self.quick_sort(0, len(self.experiment_transforms)-1)
 
-    def finish_experiment(self):
+    def finish_experiment(self) -> None:
+        '''Switch to the finish tab, save results, and display the final image order.'''
         self.running_experiment = False
         self.experiments_tab.setTabEnabled(3, True)
         self.show_all_images(tab='final')
@@ -430,15 +444,17 @@ class make_experiment_2AFC(QMainWindow):
         else:
             self.widget_experiments['final']['save_label'].setText(f'Save failed to {self.default_save_dir}')
 
-    def get_trans_funcs(self):
+    def get_trans_funcs(self) -> dict:
+        '''Return a dict mapping transform names to their callable functions.'''
         # get the current transform functions
         trans_funcs = {}
         for single_trans in self.experiment_trans_params:
             trans_name = list(single_trans.keys())[0]
             trans_funcs[trans_name] = self.checked_transformation_params[trans_name]['function']
         return trans_funcs
-    
-    def get_unique_save_dir(self):
+
+    def get_unique_save_dir(self) -> bool:
+        '''Locate or create a unique experiment directory; return ``True`` if new.'''
         # get the current transform functions
         trans_funcs = self.get_trans_funcs()
 
@@ -479,7 +495,8 @@ class make_experiment_2AFC(QMainWindow):
                 unique_dir_found = True
         return new_dir
     
-    def save_experiment(self):
+    def save_experiment(self) -> None:
+        '''Save all experiment images, transform metadata, and human scores to disk.'''
         # get the current transform functions
         trans_funcs = self.get_trans_funcs()
 
@@ -526,7 +543,8 @@ class make_experiment_2AFC(QMainWindow):
         self.saved_experiment.emit(csv_file)
 
     ''' sorting algorithm resource: https://www.geeksforgeeks.org/quick-sort/'''
-    def quick_sort(self):
+    def quick_sort(self) -> None:
+        '''Run the full quicksort, collecting click times, then finish the experiment.'''
         self.times_taken = []
         self._quick_sort(0, len(self.experiment_transforms)-1)
         if self.quit_experiment != True:
@@ -534,7 +552,8 @@ class make_experiment_2AFC(QMainWindow):
             # for trans in self.experiment_transforms:
             #     print(trans['transform_name'], trans['transform_value'])
 
-    def _quick_sort(self, low, high):
+    def _quick_sort(self, low: int, high: int) -> None:
+        '''Recursive quicksort step between indices *low* and *high*.'''
         if low < high:
             # Find pivot elements such that element smaller than pivot are on the
             # left and elements greater than pivot are on the right
@@ -546,9 +565,15 @@ class make_experiment_2AFC(QMainWindow):
             # Recursive call on the right of pivot
             self._quick_sort(pi + 1, high)
 
-    def partition(self, low, high):
-        ''' given an unsorted partition of the array between low and high, order
-            elements lower than a given pivot point to the left and higher to the right'''
+    def partition(self, low: int, high: int) -> int:
+        '''Partition the experiment list around a pivot chosen by user clicks.
+
+        Elements judged less similar to the reference than the pivot are moved
+        left; those judged more similar are moved right.
+
+        Returns:
+            Final index of the pivot element.
+        '''
         # Choose the end element as pivot
         self.high = high
         self.low = low
@@ -587,7 +612,8 @@ class make_experiment_2AFC(QMainWindow):
         # Return the position from where partition is done
         return self.comp_pointer + 1
 
-    def clicked_image(self, image_name, widget_name):
+    def clicked_image(self, image_name: str, widget_name: str) -> None:
+        '''Handle a click on image A or B during the experiment.'''
         if self.able_to_click == False:
             return
         if self.running_experiment == False:
@@ -609,20 +635,24 @@ class make_experiment_2AFC(QMainWindow):
                 'widget': self.widget_experiments['exp'][widget_name]['data']}
         self.reset_clicked_image.emit(data)  # change to black image, after x amount of time will change to experimetn image
         
-    def click_completed(self):
+    def click_completed(self) -> None:
+        '''Signal that the clicked-image flash is done and the experiment can proceed.'''
         # unlock the wait
         self.clicked_event.set()
 
-    def swap_inds(self, i, j):
+    def swap_inds(self, i: int, j: int) -> None:
+        '''Swap experiment transforms at indices *i* and *j*.'''
         (self.experiment_transforms[i], self.experiment_transforms[j]) = (self.experiment_transforms[j], self.experiment_transforms[i])
 
-    def get_single_transform_im(self, single_trans_dict):
+    def get_single_transform_im(self, single_trans_dict: dict):
+        '''Apply a single transform and return the resulting image array.'''
         trans_name = list(single_trans_dict)[0]
         return image_utils.get_transform_image(self.data_store,
                                         {trans_name: self.checked_transformation_params[trans_name]},
                                         single_trans_dict)
 
-    def change_experiment_images(self, A_trans, B_trans):
+    def change_experiment_images(self, A_trans: dict, B_trans: dict) -> None:
+        '''Update image-A and image-B widgets for the current comparison pair.'''
         A = A_trans['image']
         B = B_trans['image']
         
@@ -636,10 +666,15 @@ class make_experiment_2AFC(QMainWindow):
             f'{self.image_name}-{save_utils.make_name_for_trans(B_trans)}')
 
     ''' UI '''
-    def init_style(self, style='light', css_file=None):
+    def init_style(self, style: str = 'light', css_file: str | None = None) -> None:
+        '''Apply a CSS stylesheet to this window.
+
+        Args:
+            style: Style name (``'light'`` or ``'dark'``). Defaults to ``'light'``.
+            css_file: Explicit path to a CSS file; overrides *style* if provided.
+        '''
         if css_file == None:
             dir = os.path.dirname(os.path.abspath(__file__))
-            # css_file = os.path.join(dir, 'style-light.css')
             css_file = os.path.join(dir, f'style-{style}.css')
         if os.path.isfile(css_file):
             with open(css_file, 'r') as file:
@@ -649,10 +684,11 @@ class make_experiment_2AFC(QMainWindow):
 
 
 class reset_image_widget_to_black(QObject):
-    ''' change clicked image to black and pause '''
+    '''Flash a clicked image to black briefly then re-enable clicks.'''
+
     completed = pyqtSignal(float)
 
-    def __init__(self, time=0.1):
+    def __init__(self, time: float = 0.1) -> None:
         super().__init__()
         self.running = True
         self.time = time
@@ -660,7 +696,8 @@ class reset_image_widget_to_black(QObject):
         # self.black_array[:, :, 1] = 1 # blue
 
     @pyqtSlot(dict)
-    def change_to_solid(self, data):
+    def change_to_solid(self, data: dict) -> None:
+        '''Set the clicked image widget to black, wait, then signal completion.'''
         t_start = time.time()
         image_display_size = data['image_display_size']
         widget = data['widget']
@@ -689,15 +726,17 @@ class reset_image_widget_to_black(QObject):
         # all complete so send signal 
         self.completed.emit(1.0)
 
-    def stop(self):
+    def stop(self) -> None:
+        '''Stop the worker loop.'''
         self.running = False
 
-    def __del__(self):
+    def __del__(self) -> None:
         # close app upon garbage collection
         self.stop()
 
 
-def sort_list(list1, list2):
+def sort_list(list1: list, list2: list) -> list:
+    '''Return *list1* sorted by the ascending order of *list2*.'''
     # sort list1 based on list2
     inds = np.argsort(list2)
     sorted_list1 = []

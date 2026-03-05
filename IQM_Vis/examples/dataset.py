@@ -6,7 +6,8 @@ import numpy as np
 import IQM_Vis
 
 
-def run():
+def run() -> None:
+    '''Launch the IQM-Vis UI with the example dataset, common metrics, and SSIM parameters.'''
     # metrics functions must return a single value
     metric = {'MAE': IQM_Vis.metrics.MAE(),
               'MSE': IQM_Vis.metrics.MSE(),

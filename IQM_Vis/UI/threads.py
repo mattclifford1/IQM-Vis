@@ -2,6 +2,7 @@
     useful info about PyQt6 threads: https://www.pythontutorial.net/pyqt/pyqt-qthread/'''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
+from __future__ import annotations
 
 from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot
 from IQM_Vis.utils import plot_utils
@@ -10,13 +11,21 @@ import time
 
 
 class get_range_results_worker(QObject):
+    '''Worker object for computing metric-over-range results in a background thread.'''
+
     progress = pyqtSignal(int)
     current_image = pyqtSignal(str)
     completed = pyqtSignal(dict)
     stopped = pyqtSignal(bool)
 
     @pyqtSlot(dict)
-    def do_work(self, data):
+    def do_work(self, data: dict) -> None:
+        '''Compute metrics over all transforms and emit results when finished.
+
+        Args:
+            data: Dict containing ``data_stores``, ``trans``, ``metric_params``,
+                ``metrics_to_use``, and ``num_steps``.
+        '''
         # t0 = time.time()
 
         metric_over_range_results = []
@@ -47,11 +56,12 @@ class get_range_results_worker(QObject):
         # t1 = time.time()
         # print(f'time: {t1-t0}')
 
-    def stop(self):
+    def stop(self) -> None:
+        '''Signal the worker to stop after the current iteration.'''
         if hasattr(self, 'stop_flag'):
             # use a mutable data type (list) as can pass as a reference (ish) then
             self.stop_flag[0] = True
 
-    def __del__(self):
+    def __del__(self) -> None:
         # close app upon garbage collection
         self.stop()

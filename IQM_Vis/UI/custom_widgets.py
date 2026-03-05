@@ -1,6 +1,7 @@
 ''' Custom SubClasses of PyQt6 widget to extent to the required functionality '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
+from __future__ import annotations
 
 from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtWidgets import QProgressBar, QLabel
@@ -10,11 +11,12 @@ class ClickLabel(QLabel):
     ''' add a click mousePressEvent event to label (so can click on images) '''
     clicked = pyqtSignal(str, str)
 
-    def __init__(self, name='clickable label'):
+    def __init__(self, name: str = 'clickable label') -> None:
         super().__init__()
         self.name = name
 
-    def mousePressEvent(self, event=None):
+    def mousePressEvent(self, event=None) -> None:
+        '''Emit the clicked signal with the object name and label name.'''
         self.clicked.emit(self.objectName(), self.name)
 
 
@@ -48,7 +50,9 @@ StyleSheet = '''
 
 
 class ProgressBar(QProgressBar):
-    def __init__(self, *args, **kwargs):
+    '''Styled progress bar with a rounded green chunk.'''
+
+    def __init__(self, *args, **kwargs) -> None:
         super(ProgressBar, self).__init__(*args, **kwargs)
         self.setValue(0)
         self.setGeometry(100, 50, 200, 30)

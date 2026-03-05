@@ -4,10 +4,12 @@ both use the same image for reference and transformed
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
+from __future__ import annotations
 
 import os
 from functools import lru_cache
 from collections import namedtuple
+from typing import Callable, Optional
 import numpy as np
 import pandas as pd
 import filetype
@@ -17,23 +19,44 @@ from IQM_Vis.data_handlers import base_dataset_loader
 
 # keep a track of all the cached functions so we can clear them easily
 CACHED_FUNCTIONS = []
-# custom decorator to cache functions and store which are cached
-def cache_tracked(func):
+
+
+def cache_tracked(func: Callable) -> Callable:
+    '''Decorator: wrap *func* with :func:`functools.lru_cache` and register it
+    in ``CACHED_FUNCTIONS`` so the cache can be cleared later.'''
     cached_func = lru_cache(maxsize=None)(func)
     CACHED_FUNCTIONS.append(cached_func)
     return cached_func
 
 
 class cache_metric_call:
-    ''' cache metric fucntions that have been calculated already
-     to do this we need to convert numpy arrays to a hashable object (since arrs are mutable) 
-     to achieve this we convert to a bytes array (input to __call__) then load this from buffer
-     '''
-    def __init__(self, metric):
+    '''Cache metric function calls keyed on hashable byte-array representations
+    of numpy arrays.
+
+    Standard :func:`functools.lru_cache` cannot hash mutable numpy arrays.
+    This class converts arrays to an immutable ``namedtuple`` of their raw
+    bytes, dtype and shape before forwarding the call to the underlying metric.
+    '''
+
+    def __init__(self, metric: Callable) -> None:
+        '''Args:
+            metric: The metric callable to wrap and cache.
+        '''
         self.metric = metric
-    
+
     @cache_tracked
-    def __call__(self, ref, trans, **kwargs):
+    def __call__(self, ref, trans, **kwargs) -> float:
+        '''Call the metric, reconstructing numpy arrays from their byte representations.
+
+        Args:
+            ref: Hashable named-tuple with fields ``bytes``, ``dtype``, ``shape``
+                representing the reference image.
+            trans: Hashable named-tuple with the same fields for the transformed image.
+            **kwargs: Extra keyword arguments forwarded to the metric.
+
+        Returns:
+            The metric score.
+        '''
         # expect a hashable bytes array tuple as input with the data type and shape
         #  N.B. we need to copy the array since from buffer gives a read only array since
         #       it is a view of a bytes array (immutable)
@@ -63,15 +86,14 @@ class dataset_holder(base_dataset_loader):
                                 images. If None then will use the same image as
                                 the reference image. (Defaults to None)
     '''
-    def __init__(self, image_list: list, # list of image file names
-                       metrics: dict={},
-                       metric_images: dict={},
-                       image_loader=IQM_Vis.utils.load_image,     # function to load image files
-                       image_pre_processing=None,  # apply a function to the image before transformations (e.g. resize to smaller)
-                       image_post_processing=None,  # apply a function to the image after transformations (e.g. zoom to help with black boarders on rotation)
-                       image_list_to_transform=None, # if you want to use a different image to transform than reference
-                       human_exp_csv=None    # csv for where the human experiments file is
-                       ):
+    def __init__(self, image_list: list,
+                       metrics: dict = {},
+                       metric_images: dict = {},
+                       image_loader: Callable = IQM_Vis.utils.load_image,
+                       image_pre_processing: Optional[Callable] = None,
+                       image_post_processing: Optional[Callable] = None,
+                       image_list_to_transform: Optional[list] = None,
+                       human_exp_csv: Optional[str] = None) -> None:
         self.image_storer = namedtuple('image', ['name', 'data'])
         self.bytes_arrays = namedtuple('arr', ['bytes', 'dtype', 'shape'])
         self.image_loader = image_loader
@@ -91,19 +113,31 @@ class dataset_holder(base_dataset_loader):
 
         self._check_inputs()
 
-    def add_metric(self, key, value):
+    def add_metric(self, key: str, value: Callable) -> None:
+        '''Add or replace a metric, wrapping it in :class:`cache_metric_call` if needed.
+
+        Args:
+            key: Name for the metric.
+            value: Metric callable.
+        '''
         if not isinstance(value, cache_metric_call):
             value = cache_metric_call(value)
         self.metrics[key] = value
 
-    def add_metric_image(self, key, value):
+    def add_metric_image(self, key: str, value: Callable) -> None:
+        '''Add or replace a metric-image function.
+
+        Args:
+            key: Name for the metric image.
+            value: Callable returning an image array.
+        '''
         self.metric_images[key] = value
 
-    def get_image_dataset_list(self):
-        # get image file list
+    def get_image_dataset_list(self) -> list:
+        '''Return the list of image file paths in the dataset.'''
         return self.image_list
 
-    def load_image_list(self, image_list):
+    def load_image_list(self, image_list: list) -> None:
         if len(image_list) == 0:
             if not hasattr(self, 'image_list'):
                 raise ValueError(f'image_list is empty')
@@ -125,7 +159,7 @@ class dataset_holder(base_dataset_loader):
         self._load_image_data(0)
 
 
-    def _load_image_data(self, i):
+    def _load_image_data(self, i: int) -> None:
         # reference image
         self.image_post_processing_hash = None
         self.current_file = self.image_list[i]
@@ -147,7 +181,7 @@ class dataset_holder(base_dataset_loader):
                 self.image_list_to_transform[i])
             if self.image_pre_processing is not None:
                 image_data_trans = self.image_pre_processing(image_data_trans)
-            self.image_reference = self.image_storer(image_name_trans, image_data_trans)
+            self.image_to_transform = self.image_storer(image_name_trans, image_data_trans)
 
         # Human experiments
         if hasattr(self, 'human_scores'):
@@ -156,30 +190,43 @@ class dataset_holder(base_dataset_loader):
             if image_name_ref in self.human_exp_df.index:
                 self.human_scores = {'mean': self.human_exp_df.loc[image_name_ref].to_dict()}
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.image_list)
 
-    def __getitem__(self, i):
+    def __getitem__(self, i: int) -> None:
         self._load_image_data(i)
 
     @cache_tracked
-    def _cached_image_loader(self, file_name):
+    def _cached_image_loader(self, file_name: str) -> np.ndarray:
         return self.image_loader(file_name)
 
-    def get_reference_image_by_index(self, index):
+    def get_reference_image_by_index(self, index: int) -> np.ndarray:
+        '''Return the reference image at the given dataset index.
+
+        Args:
+            index: Zero-based position in the image list.
+
+        Returns:
+            The loaded image as a float32 numpy array.
+
+        Raises:
+            IndexError: If *index* is out of range.
+        '''
         if index >= len(self.image_list):
             raise IndexError('Index out of range of the length of the image list')
         file_name = self.image_list[index]
         image_data = self._cached_image_loader(file_name)
         return image_data
 
-    def get_reference_image_name(self):
+    def get_reference_image_name(self) -> str:
+        '''Return the filename stem of the current reference image.'''
         return self.image_reference.name
-    
-    def get_reference_unprocessed(self):
+
+    def get_reference_unprocessed(self) -> np.ndarray:
+        '''Return the reference image before any pre-processing is applied.'''
         return self.reference_unprocessed
 
-    def get_reference_image(self):
+    def get_reference_image(self) -> np.ndarray:
         if hash(self.image_post_processing) != self.image_post_processing_hash:
             # need to post process ref image as either first call or post processing has changed
             self.image_reference_post_processed = self.image_reference.data.copy()
@@ -195,13 +242,15 @@ class dataset_holder(base_dataset_loader):
                 self.image_reference_post_processed.shape)
         return self.image_reference_post_processed
 
-    def get_image_to_transform_name(self):
+    def get_image_to_transform_name(self) -> str:
+        '''Return the filename stem of the current image-to-transform.'''
         return self.image_to_transform.name
 
-    def get_image_to_transform(self):
+    def get_image_to_transform(self) -> np.ndarray:
+        '''Return the current image-to-transform as a float32 numpy array.'''
         return self.image_to_transform.data
 
-    def get_metrics(self, transformed_image, metrics_to_use='all', **kwargs):
+    def get_metrics(self, transformed_image: np.ndarray, metrics_to_use: str | list = 'all', **kwargs) -> dict:
         # convert array to hashable so we can cache already calculated
         trans_bytes = self.bytes_arrays(
             transformed_image.tobytes(), transformed_image.dtype, transformed_image.shape)
@@ -218,14 +267,14 @@ class dataset_holder(base_dataset_loader):
                         self.ref_bytes, trans_bytes, **kwargs)
         return results
 
-    def get_metric_images(self, transformed_image, metrics_to_use='all', **kwargs):
+    def get_metric_images(self, transformed_image: np.ndarray, metrics_to_use: str | list = 'all', **kwargs) -> dict:
         results = {}
         for metric in self.metric_images:
             if metric in metrics_to_use or metrics_to_use == 'all':
                 results[metric] = self.metric_images[metric](self.get_reference_image(), transformed_image, **kwargs)
         return results
 
-    def _check_inputs(self):
+    def _check_inputs(self) -> None:
         input_types = [(self.image_reference.name, str),
                        (self.image_reference.data, np.ndarray),
                        (self.metrics, dict),
@@ -235,11 +284,19 @@ class dataset_holder(base_dataset_loader):
                 var_name = f'{item[0]=}'.split('=')[0]
                 raise TypeError(f'holder input: {var_name} should be a {item[1]} not {type(item[0])}')
             
-    def clear_all_cache(self):
+    def clear_all_cache(self) -> None:
+        '''Clear all LRU caches tracked by :func:`cache_tracked`.'''
         for cached_func in CACHED_FUNCTIONS:
             cached_func.cache_clear()
 
 
-def get_image_name(file_path):
-    # get name of image from filepath
+def get_image_name(file_path: str) -> str:
+    '''Return the filename stem (no directory, no extension) for an image path.
+
+    Args:
+        file_path: Path to the image file.
+
+    Returns:
+        The base filename without its extension.
+    '''
     return os.path.splitext(os.path.basename(file_path))[0]

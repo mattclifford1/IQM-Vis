@@ -3,6 +3,7 @@ UI create widgets
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
+from __future__ import annotations
 
 import re
 import os
@@ -20,18 +21,16 @@ from IQM_Vis.utils import gui_utils, plot_utils, image_utils, save_utils
 
 # sub class used by IQM_Vis.main.make_app to initialise widgets and general UI functions for widgets
 class widgets():
-    def init_widgets(self, **kwargs):
-        '''
-        create all the widgets we need and init params
-        '''
+    '''Mixin providing widget initialisation and UI interaction handlers.'''
+
+    def init_widgets(self, **kwargs) -> None:
+        '''Create all widgets, set image name labels and initialise image settings.'''
         self._init_widgets()
         self.set_image_name_text()
         self._init_image_settings()
 
-    def _init_widgets(self):
-        '''
-        create all the widgets we need and init params
-        '''
+    def _init_widgets(self) -> None:
+        '''Instantiate every Qt widget needed by the UI and wire up their signals.'''
         self.export_in_progress = False
         self.last_export = None
         self.tool_tip_style = """QToolTip {background-color: black; color: white; border: black solid 1px}"""
@@ -317,11 +316,17 @@ class widgets():
     '''
     setup/helper functions
     '''
-    def _init_sliders(self, sliders_dict, info_dict, param_group):
-        '''
-        generic initialiser of sliders (will change the dicts input rather than returning - like C++ pointers &)
-            sliders_dict: holds the slider widgets
-            info_dict: info to initialise the sliders
+    def _init_sliders(self, sliders_dict: dict, info_dict: dict, param_group: str) -> None:
+        '''Initialise slider widgets for a parameter group.
+
+        Modifies *sliders_dict* in place.
+
+        Args:
+            sliders_dict: Dict to store the created slider widgets.
+            info_dict: Parameter specification dict (keys: ``min``, ``max``,
+                ``function``, optionally ``values``, ``num_values``).
+            param_group: Name of the parameter group (``'transforms'`` or
+                ``'metric_params'``).
         '''
         for key, info_item in info_dict.items():
             sliders_dict[key] = {}
@@ -364,7 +369,9 @@ class widgets():
             sliders_dict[key]['max_edit'].editingFinished.connect(partial(self.generic_value_change, key, param_group))
             sliders_dict[key]['max_edit'].editingFinished.connect(self.display_images)
     
-    def make_slider_range(self, sliders_dict, key, _min, _max, num_steps=None):
+    def make_slider_range(self, sliders_dict: dict, key: str, _min: float,
+                          _max: float, num_steps: int | None = None) -> None:
+        '''Update the value array for slider *key* in *sliders_dict*.'''
         if num_steps == None:
             num_steps = sliders_dict[key]['default_num_steps']
         sliders_dict[key]['values'] = np.linspace(_min, _max, num_steps)
@@ -376,7 +383,8 @@ class widgets():
         # get ind of the initial value to set the slider at
         sliders_dict[key]['init_ind'] = np.searchsorted(sliders_dict[key]['values'], sliders_dict[key]['init_value_store'], side='left')
 
-    def _init_image_settings(self):
+    def _init_image_settings(self) -> None:
+        '''Build the image-settings widgets (pre/post processing, display size, etc.).'''
         self.widget_settings = {}
 
         # pre processing
@@ -480,32 +488,38 @@ class widgets():
     ==================== functions to bind to sliders/widgets ====================
     '''
     # line edit colour based on if valid
-    def colour_lineedit(self, widget, txt):
+    def colour_lineedit(self, widget, txt: str) -> None:
+        '''Set the line-edit text colour red if *txt* is not a valid float.'''
         if not is_float(txt):
             widget.setStyleSheet("color: red;")
         else:
             widget.setStyleSheet("color: black;")
 
     # sliders value changes
-    def generic_value_change(self, key, param_group):
+    def generic_value_change(self, key: str, param_group: str) -> None:
+        '''Read the current slider position and store the corresponding parameter value.'''
         index = self.widget_controls['slider'][key]['data'].value()
         self.params_from_sliders[param_group][key] = self.sliders[param_group][key]['values'][index]
         self.display_slider_num(key, param_group) # display the new value ont UI
 
-    def edit_slider_vals(self, sliders_dict, key, info_item):
+    def edit_slider_vals(self, sliders_dict: dict, key: str, info_item: dict) -> None:
+        '''Update the slider range from the min/max line-edit widgets.'''
         _min = make_float_from_text(sliders_dict[key]['min_edit'].text())
         _max = make_float_from_text(sliders_dict[key]['max_edit'].text())
         self.make_slider_range(sliders_dict, key, _min, _max)
         info_item['min'] = _min
         info_item['max'] = _max
 
-    def display_slider_num(self, key, param_group, disp_len=5):
+    def display_slider_num(self, key: str, param_group: str, disp_len: int = 5) -> None:
+        '''Update the slider value label widget with the current parameter value.'''
         # display the updated value
         value_str = str(self.params_from_sliders[param_group][key])
         value_str = gui_utils.str_to_len(value_str, disp_len, '0', plus=True)
         self.widget_controls['slider'][key]['value'].setText(value_str)
 
-    def reset_slider_group(self, param_group, redo_plots=False, display_images=True):
+    def reset_slider_group(self, param_group: str, redo_plots: bool = False,
+                           display_images: bool = True) -> None:
+        '''Reset all sliders in *param_group* to their initial values.'''
         for key, item_sliders in self.sliders[param_group].items():
             self.widget_controls['slider'][key]['data'].setValue(item_sliders['init_ind'])
         if display_images == True:
@@ -513,7 +527,8 @@ class widgets():
         if redo_plots == True:
             self.redo_plots(calc_range=False)
 
-    def reset_sliders(self):
+    def reset_sliders(self) -> None:
+        '''Reset every slider group to its initial value without intermediate redraws.'''
         self.update_images = False   # dont calc any images/metrics when updating sliders now is slow
         for param_group in self.sliders:
             self.reset_slider_group(param_group, False, False)
@@ -521,7 +536,8 @@ class widgets():
         self.display_images()
         self.redo_plots(calc_range=False)
 
-    def set_image_name_text(self):
+    def set_image_name_text(self) -> None:
+        '''Update image-name labels with the current reference/transform image names.'''
         for i, data_store in enumerate(self.data_stores):
             res = gui_utils.get_resolutions(data_store)
             self.widget_row[i]['images']['original']['label'].setText(f"{data_store.get_reference_image_name()}\n{res['reference']}")
@@ -533,7 +549,8 @@ class widgets():
                         metric_name = metric_image
                     self.widget_row[i]['metric_images'][metric_image]['label'].setText(metric_name)
 
-    def change_plot_lims(self, state):
+    def change_plot_lims(self, state: int) -> None:
+        '''Toggle plot axis limits between fixed (1) and data-driven range.'''
         if state == 2:  # 2 is the checked value
             self.plot_data_lim = self.data_lims['range_data']
         else:
@@ -541,12 +558,12 @@ class widgets():
         self.redo_plots(calc_range=False)
 
 
-    def change_dataset_name(self, txt):
-            ''' change the dataset_name we are using '''
-            self.default_dataset_name = txt
+    def change_dataset_name(self, txt: str) -> None:
+        '''Update the experiment dataset name to *txt*.'''
+        self.default_dataset_name = txt
 
-    def JND_dataset_range_lower(self, txt):
-        ''' change the dataset_name we are using '''
+    def JND_dataset_range_lower(self, txt: str) -> None:
+        '''Set the lower image-index bound for the JND experiment from *txt*.'''
         try:
             self.exp_range_lower = int(txt)
         except:
@@ -558,8 +575,8 @@ class widgets():
         self.widget_controls['label']['range_edit_lower'].setText(
             f"{self.exp_range_lower}")
 
-    def JND_dataset_range_upper(self, txt):
-        ''' change the dataset_name we are using '''
+    def JND_dataset_range_upper(self, txt: str) -> None:
+        '''Set the upper image-index bound for the JND experiment from *txt*.'''
         try:
             self.exp_range_upper = int(txt)
         except:
@@ -573,19 +590,21 @@ class widgets():
     '''
     images settings apply
     '''
-    def enable_settings_button(self):
+    def enable_settings_button(self) -> None:
+        '''Enable the "Apply Settings" button and restore its default text colour.'''
         self.widget_settings['update_button'].setEnabled(True)
         if hasattr(self, 'settings_text_colour_original'):
             self.widget_settings['update_button'].setStyleSheet(
                 f"QPushButton {{color: {self.settings_text_colour_original};}}")
 
-    def disable_settings_button(self):
+    def disable_settings_button(self) -> None:
+        '''Disable the "Apply Settings" button and grey out its text.'''
         self.widget_settings['update_button'].setEnabled(False)
         self.widget_settings['update_button'].setStyleSheet(f"QPushButton {{color: gray;}}")
 
     
-    def update_image_settings(self):
-        ''' button to apply new image settings '''
+    def update_image_settings(self) -> None:
+        '''Apply all pending image settings and refresh the display.'''
         if hasattr(self, 'range_worker'):
             self.range_worker.stop()
         # apply changes to settings
@@ -614,7 +633,8 @@ class widgets():
     image settings setters
     '''
 
-    def change_pre_processing(self, *args):
+    def change_pre_processing(self, *args) -> None:
+        '''Apply the currently selected pre-processing function to all data stores.'''
         self.pre_processing_option = self.widget_settings['image_pre_processing']['widget'].currentText(
         )
         for data_store in self.data_stores:
@@ -624,7 +644,8 @@ class widgets():
                         self.pre_processing_option]
                     self.image_settings_update_plots = True
 
-    def change_post_processing(self, *args):
+    def change_post_processing(self, *args) -> None:
+        '''Apply the currently selected post-processing function to all data stores.'''
         self.post_processing_option = self.widget_settings['image_post_processing']['widget'].currentText(
         )
         for data_store in self.data_stores:
@@ -636,7 +657,8 @@ class widgets():
         # self.display_images()
         # self.redo_plots(calc_range=False)
 
-    def change_display_im_size(self):
+    def change_display_im_size(self) -> None:
+        '''Read the image display size setting and flag the UI for rebuild if changed.'''
         txt = self.widget_settings['image_display_size']['widget'].text()
         if txt == '':
             txt = 1
@@ -651,7 +673,8 @@ class widgets():
         # if old_size < self.image_display_size:
         #     self.setMinimumSize(self.main_widget.sizeHint())
 
-    def change_graph_size(self):
+    def change_graph_size(self) -> None:
+        '''Read the graph display size setting and flag the UI for rebuild if changed.'''
         txt = self.widget_settings['graph_display_size']['widget'].text()
         if txt == '':
             txt = 1
@@ -660,7 +683,8 @@ class widgets():
             self.graph_size = new_size
             self.update_UI = True
 
-    def change_num_steps(self):
+    def change_num_steps(self) -> None:
+        '''Read the range step-count setting and flag the UI for rebuild if changed.'''
         txt = self.widget_settings['graph_num_steps']['widget'].text()
         if txt == '':
             txt = 1
@@ -669,13 +693,15 @@ class widgets():
             self.num_steps_range = new_steps
             self.update_UI = True
     
-    def change_display_im_rgb_brightness(self):
+    def change_display_im_rgb_brightness(self) -> None:
+        '''Update ``rgb_brightness`` from the settings widget.'''
         txt = self.widget_settings['image_display_rgb_brightness']['widget'].text()
         if txt == '':
             txt = 1
         self.rgb_brightness = max(1, int(txt))
     
-    def change_display_im_display_brightness(self):
+    def change_display_im_display_brightness(self) -> None:
+        '''Update ``display_brightness`` from the settings widget.'''
         txt = self.widget_settings['image_display_display_brightness']['widget'].text()
         if txt == '':
             txt = 1
@@ -684,12 +710,14 @@ class widgets():
     '''
     status bar
     '''
-    def update_progress(self, v):
+    def update_progress(self, v: int) -> None:
+        '''Set the progress bar value to *v* and show "Done" when complete.'''
         self.pbar.setValue(v)
         if v == 0:
             self.status_bar.showMessage('Done', 3000)
 
-    def update_status_bar(self, v, time=None):
+    def update_status_bar(self, v: str, time: int | None = None) -> None:
+        '''Show message *v* in the status bar, optionally for *time* ms.'''
         if time == None:
             self.status_bar.showMessage(v)
         elif isinstance(time, int):
@@ -698,8 +726,8 @@ class widgets():
     '''
     export controls
     '''
-    def change_text_export_trans(self, trans):
-        ''' change colour of text when checkbox is pressed '''
+    def change_text_export_trans(self, trans: str) -> None:
+        '''Enable/disable export widgets for *trans* based on its checkbox state.'''
         checked = self.widget_export[trans]['check_box'].isChecked()
         for widget in self.widget_export[trans]:
             if widget == 'check_box':
@@ -711,7 +739,8 @@ class widgets():
                 else:
                     self.widget_export[trans][widget].setStyleSheet(f"QLineEdit {{color: gray;}}\nQLabel {{color: gray;}}")
 
-    def export_trans_images(self):
+    def export_trans_images(self) -> None:
+        '''Export transformed images for all checked export transforms to disk.'''
         self.export_in_progress = True
         # make save folder
         dir_folder = self.get_export_dir(0)
@@ -759,15 +788,16 @@ class widgets():
 
 
 
-    def open_mlp_new(self, mpl_canvas):
+    def open_mlp_new(self, mpl_canvas) -> None:
+        '''Open *mpl_canvas* in a new standalone matplotlib window.'''
         fig = gui_utils.break_out_mlp(mpl_canvas)
         fig.show()
 
     '''
     experiments
     '''
-    def change_text_exp_trans(self, trans):
-        ''' change colour of text when checkbox is pressed '''
+    def change_text_exp_trans(self, trans: str) -> None:
+        '''Enable/disable experiment widgets for *trans* based on its checkbox state.'''
         checked = self.widget_experiment_params[trans]['check_box'].isChecked()
         for widget in self.widget_experiment_params[trans]:
             if widget == 'check_box':
@@ -779,8 +809,8 @@ class widgets():
                 else:
                     self.widget_experiment_params[trans][widget].setStyleSheet(f"QLineEdit {{color: gray;}}\nQLabel {{color: gray;}}")
 
-    def launch_experiment_JND(self):
-        '''launch the Just Noticable difference experiment'''
+    def launch_experiment_JND(self) -> None:
+        '''Launch the Just Noticeable Difference (JND) experiment window.'''
         # first get all the checked transforms and their parameters
         checked_transformation_params = {}
         for trans in self.widget_experiment_params:
@@ -817,8 +847,8 @@ class widgets():
             self.experiment_JND.showFullScreen()
             
 
-    def launch_experiment_2AFC(self):
-        '''Launch the 2 alternate forced choice experiment'''
+    def launch_experiment_2AFC(self) -> None:
+        '''Launch the 2-Alternative Forced Choice (2AFC) experiment window.'''
         # first get all the checked transforms and their parameters
         checked_transformation_params = {}
         for trans in self.widget_experiment_params:
@@ -847,11 +877,13 @@ class widgets():
             self.status_bar.showMessage('Cannot run experiment without transforms', 5000)
 
     @pyqtSlot(str)
-    def change_human_scores_after_exp_2AFC(self, path):
+    def change_human_scores_after_exp_2AFC(self, path: str) -> None:
+        '''Slot: reload 2AFC human scores from *path* after an experiment completes.'''
         self._change_human_exp_2AFC(path)
 
     @pyqtSlot(str)
-    def change_human_scores_after_exp_JND(self, path):
+    def change_human_scores_after_exp_JND(self, path: str) -> None:
+        '''Slot: reload JND human scores from *path* after an experiment completes.'''
         self._change_human_exp_JND(path)
 
 
@@ -859,49 +891,42 @@ class widgets():
 float checking functionality for checkign line edit
 '''
 
-def get_float_validator():
+def get_float_validator() -> custom_float_validator:
+    '''Return a ``QValidator`` that accepts floating-point input.'''
     # float_validator = QDoubleValidator()
     # float_validator.setLocale(QLocale('en_US'))  # so comma cannot be used a decimal place for spanish users
     # float_validator.setNotation(QDoubleValidator.Notation(0)) # StandardNotation
     # return float_validator
     return custom_float_validator()
 
-def is_float(input_string):
-    # if input_string == '-' or input_string == '+' or input_string == '':
-    #     return False
-    # pattern = r'^[-+]?[0-9]*\.?[0-9]*$'
-    # match = re.match(pattern, input_string)
-    # if match:
-    #     return True
-    # return False
-    try: 
+def is_float(input_string: str) -> bool:
+    '''Return ``True`` if *input_string* can be parsed as a float.'''
+    try:
         float(input_string)
         return True
     except ValueError:
         return False
 
-def is_almost_float(input_string):
-    # if input_string == '-' or input_string == '+' or input_string == '':
-    #     return True
-    # pattern = r'^[-+]?[0-9]*.*[0-9]$'
-    # match = re.match(pattern, input_string)
-    # if match:
-    #     return True
-    # return False
+def is_almost_float(input_string: str) -> bool:
+    '''Return ``True`` if *input_string* is an intermediate (partial) float entry.'''
     return True
 
 class custom_float_validator(QValidator):
-    def __init__(self, parent=None):
+    '''QValidator subclass that accepts float strings in text fields.'''
+
+    def __init__(self, parent=None) -> None:
         super(custom_float_validator, self).__init__(parent)
 
-    def validate(self, string, pos):
+    def validate(self, string: str, pos: int):
+        '''Validate *string* as a float; return Acceptable, Intermediate, or Invalid.'''
         if is_float(string):
             return QValidator.State(2), string, pos # Acceptable
         if is_almost_float(string):
             return QValidator.State(1), string, pos # Intermediate
         return QValidator.State(0), string, pos # Invalid
 
-def make_float_from_text(txt):
+def make_float_from_text(txt: str) -> float:
+    '''Convert *txt* to a float, stripping any commas first.'''
     # get rid of pesky commas
     no_commas = txt.replace(',', '')
     return float(no_commas)

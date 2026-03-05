@@ -1,5 +1,7 @@
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
+from __future__ import annotations
+
 import numpy as np
 
 # from torchmetrics import PeakSignalNoiseRatio as PSNRs
@@ -14,10 +16,10 @@ class MAE:
                              will return a scalar value)
     '''
 
-    def __init__(self, return_image=False):
+    def __init__(self, return_image: bool = False) -> None:
         self.return_image = return_image
 
-    def __call__(self, im_ref, im_comp, **kwargs):
+    def __call__(self, im_ref: np.ndarray, im_comp: np.ndarray, **kwargs) -> np.ndarray | float:
         '''When an instance is called
 
         Args:
@@ -46,10 +48,10 @@ class MSE:
                              will return a scalar value)
     '''
 
-    def __init__(self, return_image=False):
+    def __init__(self, return_image: bool = False) -> None:
         self.return_image = return_image
 
-    def __call__(self, im_ref, im_comp, **kwargs):
+    def __call__(self, im_ref: np.ndarray, im_comp: np.ndarray, **kwargs) -> np.ndarray | float:
         '''When an instance is called
 
         Args:
@@ -78,10 +80,10 @@ class RMSE:
                              will return a scalar value)
     '''
 
-    def __init__(self, return_image=False):
+    def __init__(self, return_image: bool = False) -> None:
         self.return_image = return_image
 
-    def __call__(self, im_ref, im_comp, **kwargs):
+    def __call__(self, im_ref: np.ndarray, im_comp: np.ndarray, **kwargs) -> np.ndarray | float:
         '''When an instance is called
 
         Args:
@@ -110,14 +112,14 @@ class one_over_PSNR:
                              will return a scalar value)
     '''
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.initialised = False
         # self.metric = PSNRs
         # self.device = torch.device(
         #     "cuda" if torch.cuda.is_available() else "cpu")
         # self.preproccess_function = _numpy_to_torch_image
 
-    def __call__(self, im_ref, im_comp, **kwargs):
+    def __call__(self, im_ref: np.ndarray, im_comp: np.ndarray, **kwargs) -> float:
         '''When an instance is called
 
         Args:

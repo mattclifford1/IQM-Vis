@@ -4,7 +4,9 @@
 
 import IQM_Vis
 
-def run():
+
+def run() -> None:
+    '''Launch the IQM-Vis UI with all available metrics and transforms.'''
     # data = IQM_Vis.dataset_holder(IQM_Vis.examples.images.DEFAULT_IMAGES,
     #                               IQM_Vis.metrics.get_all_metrics(),
     #                               IQM_Vis.metrics.get_all_metric_images()

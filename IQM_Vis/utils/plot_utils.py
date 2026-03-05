@@ -4,9 +4,11 @@ TODO: write dev_resources/docs how to use these (currently just have to look at 
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
+from __future__ import annotations
 
 from functools import partial
 import math
+from typing import Any, Optional
 
 import numpy as np
 import scipy.stats
@@ -18,143 +20,176 @@ from IQM_Vis.utils import image_utils, gui_utils
 plot bar chart on matplotlib qt qidget
 '''
 class bar_plotter:
-    def __init__(self, bar_names, var_names, ax, lim):
-            self.bar_names = bar_names
-            self.var_names = var_names
-            self.ax = ax
-            self.lim =lim
-            self.ax.axes.clear()
-            self.num_bars = len(self.bar_names)
-            self.num_vars = len(self.var_names)
-            self.bar_width = 1/(self.num_bars+1)
-            self.bars = [np.arange(self.num_vars)]
-            for i in range(1, self.num_bars):
-                self.bars.append([x + self.bar_width for x in self.bars[i-1]])
+    '''Grouped bar chart rendered on a matplotlib Qt canvas.'''
 
-    def plot(self, bar_name, var_values):
+    def __init__(self, bar_names: list, var_names: list, ax: Any, lim: float) -> None:
+        '''Args:
+            bar_names: Names of the bar groups (e.g. metric names).
+            var_names: Names of the x-axis variables (e.g. transform names).
+            ax: A :class:`~IQM_Vis.utils.gui_utils.MplCanvas` instance.
+            lim: Minimum upper y-axis limit.
+        '''
+        self.bar_names = bar_names
+        self.var_names = var_names
+        self.ax = ax
+        self.lim = lim
+        self.ax.axes.clear()
+        self.num_bars = len(self.bar_names)
+        self.num_vars = len(self.var_names)
+        self.bar_width = 1/(self.num_bars+1)
+        self.bars = [np.arange(self.num_vars)]
+        for i in range(1, self.num_bars):
+            self.bars.append([x + self.bar_width for x in self.bars[i-1]])
+
+    def plot(self, bar_name: str, var_values: list) -> None:
         if len(self.bar_names) > 1:
             i = self.bar_names.index(bar_name)
             self.ax.axes.bar(self.bars[i], var_values, width=self.bar_width, label=bar_name)
         else:
             self.ax.axes.bar(self.var_names, var_values)
 
-    def show(self):
+    def show(self) -> None:
         self.set_style()
         self.ax.draw()
 
-    def set_style(self):
+    def set_style(self) -> None:
         if len(self.bar_names) > 1:
             self.ax.axes.legend()
             self.ax.axes.set_xticks([r + self.bar_width for r in range(self.num_vars)], self.var_names)
         self.set_plot_lims()
         self.ax.figure.tight_layout()
 
-    def set_plot_lims(self):
+    def set_plot_lims(self) -> None:
         y_lims = self.ax.axes.get_ylim()
         # self.ax.axes.set_ylim(min(0, y_lims[0], max(1, y_lims[1])))
-        self.ax.axes.set_ylim(top= max(self.lim, y_lims[1]))
+        self.ax.axes.set_ylim(top=max(self.lim, y_lims[1]))
 
 '''
 line plot of matplotlib qt widget
 '''
 class line_plotter:
-    def __init__(self, ax, x_label='', y_label='', lim=1):
+    '''Line plot rendered on a matplotlib Qt canvas.'''
+
+    def __init__(self, ax: Any, x_label: str = '', y_label: str = '', lim: float = 1) -> None:
+        '''Args:
+            ax: A :class:`~IQM_Vis.utils.gui_utils.MplCanvas` instance.
+            x_label: Label for the x-axis.
+            y_label: Label for the y-axis.
+            lim: Minimum upper y-axis limit.
+        '''
         self.ax = ax
         self.ax.axes.clear()
         self.x_label = x_label
         self.y_label = y_label
         self.lim = lim
 
-    def plot(self, x, y, label):
+    def plot(self, x: list, y: list, label: str) -> None:
         self.ax.axes.plot(x, y, label=label)
 
-    def show(self):
+    def show(self) -> None:
         self.set_style()
         self.ax.draw()
 
-    def set_style(self):
+    def set_style(self) -> None:
         self.ax.axes.legend()
         self.ax.axes.set_xlabel(self.x_label)
         self.set_plot_lims()
         self.ax.figure.tight_layout()
 
-    def set_plot_lims(self):
+    def set_plot_lims(self) -> None:
         y_lims = self.ax.axes.get_ylim()
         # self.ax.axes.set_ylim(min(0, y_lims[0], max(1, y_lims[1])))
-        self.ax.axes.set_ylim(top= max(self.lim, y_lims[1]))
+        self.ax.axes.set_ylim(top=max(self.lim, y_lims[1]))
 
 '''
 plot radar chart on matplotlib qt widget
 '''
 class radar_plotter:
-    def __init__(self, radar_names, var_names, ax, lim=1):
-            self.radar_names = radar_names
-            self.var_names = var_names
-            self.ax = ax
-            self.lim = lim
-            self.ax.axes.clear()
-            self.num_radars = len(self.radar_names)
-            self.num_vars = len(self.var_names)
-            self.radar_angles = [n/float(self.num_vars)*2*np.pi for n in range(self.num_vars)]
-            self.radar_angles += self.radar_angles[:1]   # circular plot closure
+    '''Radar / spider chart rendered on a polar matplotlib Qt canvas.'''
 
-    def plot(self, radar_name, var_values):
+    def __init__(self, radar_names: list, var_names: list, ax: Any, lim: float = 1) -> None:
+        '''Args:
+            radar_names: Names of the data series (e.g. metric names).
+            var_names: Names of the polygon vertices (e.g. transform names).
+            ax: A polar :class:`~IQM_Vis.utils.gui_utils.MplCanvas` instance.
+            lim: Minimum upper radial limit.
+        '''
+        self.radar_names = radar_names
+        self.var_names = var_names
+        self.ax = ax
+        self.lim = lim
+        self.ax.axes.clear()
+        self.num_radars = len(self.radar_names)
+        self.num_vars = len(self.var_names)
+        self.radar_angles = [n/float(self.num_vars)*2*np.pi for n in range(self.num_vars)]
+        self.radar_angles += self.radar_angles[:1]   # circular plot closure
+
+    def plot(self, radar_name: str, var_values: list) -> None:
         var_values.append(var_values[0])   # add start to end to close the circular plot
         p = self.ax.axes.plot(self.radar_angles, var_values, linewidth=1, linestyle='solid', label=radar_name)
         self.ax.axes.fill(self.radar_angles, var_values, color=p[0].get_color(), alpha=0.1)
 
-    def show(self):
+    def show(self) -> None:
         self.set_style()
         self.ax.draw()
 
-    def set_style(self):
+    def set_style(self) -> None:
         # self.ax.axes.legend(loc='upper right', bbox_to_anchor=(0.1, 0.1))
         self.ax.axes.legend(fontsize='x-small', loc='upper left')
         self.ax.axes.set_xticks(self.radar_angles[:-1], self.var_names)
         self.set_plot_lims()
         # self.ax.fig.tight_layout()
 
-    def set_plot_lims(self):
+    def set_plot_lims(self) -> None:
         y_lims = self.ax.axes.get_ylim()
         # self.ax.axes.set_ylim(min(0, y_lims[0], max(1, y_lims[1])))
-        self.ax.axes.set_ylim(top= max(self.lim, y_lims[1]))
+        self.ax.axes.set_ylim(top=max(self.lim, y_lims[1]))
 
 '''
 scatter plotter on matplotlib qt widget
 '''
 class scatter_plotter:
-    def __init__(self, ax, x_label='', y_label='', lim=1):
+    '''Interactive scatter plot rendered on a matplotlib Qt canvas.'''
+
+    def __init__(self, ax: Any, x_label: str = '', y_label: str = '', lim: float = 1) -> None:
+        '''Args:
+            ax: A :class:`~IQM_Vis.utils.gui_utils.MplCanvas` instance.
+            x_label: Label for the x-axis.
+            y_label: Label for the y-axis.
+            lim: Minimum upper y-axis limit.
+        '''
         self.ax = ax
         self.ax.axes.clear()
         self.x_label = x_label
         self.y_label = y_label
         self.lim = lim
 
-    def plot(self, x, y, annotations=None, error=None):
+    def plot(self, x: list, y: list, annotations: Optional[list] = None,
+             error: Optional[list] = None) -> None:
         self.sc = self.ax.axes.scatter(x, y, picker=True, color='blue')
         if annotations != None:
             self.annotations = annotations
         if error != None or error != []:
             self.ax.axes.errorbar(x, y, yerr=error, fmt="o", capsize=3, color='black')
 
-    def show(self):
+    def show(self) -> None:
         self.set_style()
         self.ax.draw()
 
-    def set_style(self):
+    def set_style(self) -> None:
         self.ax.axes.set_xlabel(self.x_label)
         self.ax.axes.set_ylabel(self.y_label)
         # self.set_plot_lims()
         self.ax.figure.tight_layout()
 
-    def set_plot_lims(self):
+    def set_plot_lims(self) -> None:
         y_lims = self.ax.axes.get_ylim()
         self.ax.axes.set_ylim(top=max(self.lim, y_lims[1]))
 
 '''
 metric averaging functions to get metric values over a range of transformation
 '''
-def get_all_slider_values(transforms, num_steps=11):
+def get_all_slider_values(transforms: dict, num_steps: int = 11) -> list:
     if num_steps == 1:
         raise ValueError(f'number of steps cannot be 1')
     if num_steps == 2:
@@ -176,7 +211,7 @@ def get_all_slider_values(transforms, num_steps=11):
         values.append(transforms['max'])
     return values
 
-def get_all_single_transform_params(transforms, num_steps=11):
+def get_all_single_transform_params(transforms: dict, num_steps: int = 11) -> list:
     ''' get a list of all the individual transforms with a single parameter value
         useful when doing experiments to make a dataset '''
     list_of_single_trans = []
@@ -190,7 +225,8 @@ def get_all_single_transform_params(transforms, num_steps=11):
 
     return list_of_single_trans
 
-def compute_metric_for_human_correlation(data_store, transforms, metric_params, trans_str_values, metric):
+def compute_metric_for_human_correlation(data_store: Any, transforms: dict, metric_params: dict,
+                                          trans_str_values: list, metric: str) -> dict:
     scores = {}
     for trans_str in trans_str_values:
         trans, trans_value = gui_utils.get_trans_dict_from_str(trans_str)
@@ -208,7 +244,10 @@ def compute_metric_for_human_correlation(data_store, transforms, metric_params, 
         scores[trans_str] = metric_scores[metric]
     return scores
 
-def compute_metrics_over_range_single_trans(data_store, transforms, metric_params, metrics_to_use, pbar_signal=None, stop_flag=None, num_steps=11):
+def compute_metrics_over_range_single_trans(data_store: Any, transforms: dict, metric_params: dict,
+                                              metrics_to_use: list, pbar_signal=None,
+                                              stop_flag: Optional[list] = None,
+                                              num_steps: int = 11) -> Optional[dict]:
     ''' compute metrics over a range of trans
 
     Args:
@@ -266,7 +305,10 @@ def compute_metrics_over_range_single_trans(data_store, transforms, metric_param
                     pbar_signal.emit(int(((pbar_counter)/len_loop)*100))
     return results
 
-def compute_metrics_over_range(data_store, transforms, transform_values, metric_params, metrics_to_use, pbar_signal=None, stop_flag=None, num_steps=11):
+def compute_metrics_over_range(data_store: Any, transforms: dict, transform_values: dict,
+                                metric_params: dict, metrics_to_use: list, pbar_signal=None,
+                                stop_flag: Optional[list] = None,
+                                num_steps: int = 11) -> Optional[dict]:
     '''
     compute metrics over a range of trans (when using non initial values for other transforms)
     currently this method is not being used and instead using the simpler compute_metrics_over_range_single_trans
@@ -326,7 +368,9 @@ def compute_metrics_over_range(data_store, transforms, transform_values, metric_
                     pbar_signal.emit(int(((pbar_counter)/len_loop)*100))
     return results
 
-def get_radar_plots_avg_plots(results, metrics_names, transformation_names, axes, lim=1):
+def get_radar_plots_avg_plots(results: dict, metrics_names: list,
+                               transformation_names: list, axes: Any,
+                               lim: float = 1) -> radar_plotter:
     '''
     plot results on a polar axes -> radar/spider plot
     '''
@@ -348,7 +392,8 @@ def get_radar_plots_avg_plots(results, metrics_names, transformation_names, axes
     radar_plt.set_style()
     return radar_plt
 
-def get_transform_range_plots(results, transform, axes, lim=1):
+def get_transform_range_plots(results: dict, transform: str, axes: Any,
+                               lim: float = 1) -> line_plotter:
     '''
     plot a single transform range graph of all metrics
     '''
@@ -357,7 +402,8 @@ def get_transform_range_plots(results, transform, axes, lim=1):
         plot.plot(results[metric][transform]['param_values'], results[metric][transform]['scores'], metric)
     return plot
 
-def get_correlation_plot(human_scores, metric_scores, axes, metric, change_trans_value_signal):
+def get_correlation_plot(human_scores: dict, metric_scores: dict, axes: Any,
+                          metric: str, change_trans_value_signal) -> scatter_plotter:
     '''
     scatter plot for correlations
     '''
@@ -398,11 +444,11 @@ def get_correlation_plot(human_scores, metric_scores, axes, metric, change_trans
         f"Spearman's: {spear.correlation:.4f}\n  Pearson's: {pear.statistic:.4f}")
     return sp
 
-def click_scatter(_plot, change_trans_value_signal, event):
+def click_scatter(_plot: scatter_plotter, change_trans_value_signal, event) -> None:
     ''' send signal of which data point was clicked '''
     change_trans_value_signal.emit(_plot.annotations[event.ind[0]])
 
-def hover_scatter(_plot, annot, event):
+def hover_scatter(_plot: scatter_plotter, annot, event) -> None:
     vis = annot.get_visible()
     # if event.inaxes == _plot.ax.axes:
     cont, ind = _plot.sc.contains(event)
@@ -415,7 +461,7 @@ def hover_scatter(_plot, annot, event):
             annot.set_visible(False)
             _plot.ax.figure.canvas.draw_idle()
 
-def update_annot(ind, _plot, annot):
+def update_annot(ind: dict, _plot: scatter_plotter, annot) -> None:
     pos = _plot.sc.get_offsets()[ind["ind"][0]].copy()
     xlims = _plot.ax.axes.get_xlim()
     x_range = xlims[1] - xlims[0]

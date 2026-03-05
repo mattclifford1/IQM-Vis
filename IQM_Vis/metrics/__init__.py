@@ -5,10 +5,10 @@ from IQM_Vis.metrics.non_perceptual import MAE, MSE, RMSE, one_over_PSNR
 from IQM_Vis.metrics.perceptual_trad import SSIM, MS_SSIM, NLPD
 from IQM_Vis.metrics.perceptual_DL import LPIPS, DISTS
 
-def get_all_metrics():
-    ''' 
-    Get all available IQMs provided by IQM_Vis 
-    
+def get_all_metrics() -> dict:
+    '''
+    Get all available IQMs provided by IQM_Vis
+
     Return:
         - all_metrics (dict)
         '''
@@ -25,10 +25,10 @@ def get_all_metrics():
     }
     return all_metrics
 
-def get_all_metric_images():
-    ''' 
-    Get all available IQMs provided by IQM_Vis that return an image 
-    
+def get_all_metric_images() -> dict:
+    '''
+    Get all available IQMs provided by IQM_Vis that return an image
+
     Return:
         - all_metrics (dict)
     '''
@@ -41,10 +41,10 @@ def get_all_metric_images():
     }
     return all_metrics
 
-def get_all_IQM_params():
-    ''' 
+def get_all_IQM_params() -> dict:
+    '''
     Get all available IQMs parameters
-    
+
     Return:
         - all_params (dict)
     '''

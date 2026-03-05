@@ -3,8 +3,10 @@ blueprint for data loader API
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
+from __future__ import annotations
 
 from abc import ABC, abstractmethod
+import numpy as np
 
 class base_dataloader(ABC):
     @property
@@ -24,39 +26,39 @@ class base_dataloader(ABC):
         self._metric_images = metric_images_dict
 
     @abstractmethod
-    def get_reference_image_name(self):
+    def get_reference_image_name(self) -> str:
         pass
 
     @abstractmethod
-    def get_reference_image(self):
+    def get_reference_image(self) -> np.ndarray:
         pass
 
     @abstractmethod
-    def get_image_to_transform_name(self):
+    def get_image_to_transform_name(self) -> str:
         pass
 
     @abstractmethod
-    def get_image_to_transform(self):
+    def get_image_to_transform(self) -> np.ndarray:
         pass
 
     @abstractmethod
-    def get_metrics(self):
+    def get_metrics(self, transformed_image: np.ndarray, **kwargs) -> dict:
         pass
 
     @abstractmethod
-    def get_metric_images(self):
+    def get_metric_images(self, transformed_image: np.ndarray, **kwargs) -> dict:
         pass
 
 
 class base_dataset_loader(base_dataloader):
     @abstractmethod
-    def __len__(self):
+    def __len__(self) -> int:
         pass
 
     @abstractmethod
-    def __getitem__(self):
+    def __getitem__(self, i: int) -> None:
         pass
 
     @abstractmethod
-    def get_reference_image_by_index(self, index):
+    def get_reference_image_by_index(self, index: int) -> np.ndarray:
         pass

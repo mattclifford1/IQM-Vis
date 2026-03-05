@@ -3,6 +3,7 @@ UI image functions
 '''
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
+from __future__ import annotations
 
 import os
 from functools import partial
@@ -17,15 +18,17 @@ from IQM_Vis.utils import gui_utils, plot_utils, image_utils, save_utils
 
 # sub class used by IQM_Vis.main.make_app to control all of the image widgets
 class images:
+    '''Mixin providing image display, dataset navigation, and metric graph logic.'''
+
     request_range_work = pyqtSignal(dict)
     view_correlation_instance = pyqtSignal(str)
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         self.update_images = True
         self.init_worker_thread()
         self.view_correlation_instance.connect(self.change_to_specific_trans)
 
-    def init_worker_thread(self):
+    def init_worker_thread(self) -> None:
         ''' set up thread for smoother range plot calculation '''
         self.range_worker = IQM_Vis.UI.threads.get_range_results_worker()
         self.range_worker_thread = QThread()
@@ -48,7 +51,8 @@ class images:
     #         image = self.sliders['transforms'][key]['function'](image, self.params_from_sliders['transforms'][key])
     #     return image
 
-    def display_images(self):
+    def display_images(self) -> None:
+        '''Refresh reference, transformed, metric and metric-image widgets.'''
         if self.update_images == True:
             for i, data_store in enumerate(self.data_stores):
                 # reference image
@@ -69,7 +73,12 @@ class images:
     '''
     metric graph updaters
     '''
-    def redo_plots(self, calc_range=False):
+    def redo_plots(self, calc_range: bool = False) -> None:
+        '''Recompute and redraw metric graphs.
+
+        Args:
+            calc_range: If ``True``, also recalculate range/averaging plots.
+        '''
         if calc_range == True:  # add an or metrics_range val not been calculated
             if self.metrics_avg_graph or self.metric_range_graph:
                 self.get_metrics_over_all_trans_with_init_values()
@@ -77,7 +86,8 @@ class images:
     '''
     change image in dataset
     '''
-    def change_preview_images(self, ival):
+    def change_preview_images(self, ival: int) -> None:
+        '''Scroll the dataset preview strip by *ival* images.'''
         # have roll around scrolling
         if self.preview_num + ival < 0:
             self.preview_num = self.max_data_ind - self.num_images_scroll_show + 1
@@ -89,7 +99,8 @@ class images:
             self.preview_num += ival
         self.set_preview_images(self.preview_num)
         
-    def set_preview_images(self, preview_num):
+    def set_preview_images(self, preview_num: int) -> None:
+        '''Populate the preview strip starting from dataset index *preview_num*.'''
         for data_store in self.data_stores:
             for i in range(min(self.num_images_scroll_show, self.max_data_ind+1)):
                 im_preview_ind = preview_num + i
@@ -113,11 +124,13 @@ class images:
             self.widget_controls['label']['data_num'].setText(
                 f'({preview_num+1}-{im_preview_ind+1}/{self.max_data_ind+1})')
 
-    def change_data_click_im(self, widget_ind, *args): # args sent are position of mouse click on the image widget
+    def change_data_click_im(self, widget_ind: int, *args) -> None:
+        '''Switch to the dataset image corresponding to the clicked preview widget.'''
         self.change_to_data_num(self.widget_im_num_hash[widget_ind])
         self.set_preview_images(self.preview_num) # refresh boarder on image
 
-    def change_to_data_num(self, ind):  # change to an exact ind in the data list
+    def change_to_data_num(self, ind: int) -> None:
+        '''Switch the displayed image to dataset index *ind* if in range.'''
         # check the num is within the data limits
         if ind < 0:
             return
@@ -127,7 +140,8 @@ class images:
             self.data_num = ind
             self.change_data(0) # 0 means dont increment data_num
 
-    def change_data(self, ival, _redo_plots=True):
+    def change_data(self, ival: int, _redo_plots: bool = True) -> None:
+        '''Increment the current dataset index by *ival* and refresh the UI.'''
         # reset any range/correlation data stored
         if hasattr(self, 'correlation_data'):
             self.correlation_data = {}
@@ -166,7 +180,7 @@ class images:
             elif hasattr(data_store, 'human_scores'):
                 self.human_experiment_scores[i] = data_store.human_scores
 
-    def load_new_single_image(self):
+    def load_new_single_image(self) -> None:
         ''' change the image we are using '''
         # get the file opener for the user
         try:
@@ -191,12 +205,12 @@ class images:
             self.update_status_bar(f'Cannot find file: {file}', 10000)
 
 
-    def load_new_images_folder(self):
+    def load_new_images_folder(self) -> None:
         ''' change the image dataset we are using '''
         # get the file opener for the user
         try:
             start_dir = os.path.expanduser("~")
-            dir = QFileDialog.getExistingDirectory(self, 
+            dir = QFileDialog.getExistingDirectory(self,
                                                    'Choose Image folder',
                                                    start_dir)
         except:
@@ -212,7 +226,8 @@ class images:
 
         self.update_datastore_image_list(image_list)
 
-    def update_datastore_image_list(self, image_list, append_dataset=False): # onyl changes the first datastore
+    def update_datastore_image_list(self, image_list: list, append_dataset: bool = False) -> None:
+        '''Load *image_list* into the first data store, optionally appending to the current dataset.'''
         # make sure that we have some images
         if image_list == []:
             self.update_status_bar('No images found', 10000)
@@ -232,8 +247,8 @@ class images:
         else:
             self.update_status_bar('Failed to update images', 10000)
 
-    def load_human_experiment(self):
-        ''' change the image dataset we are using '''
+    def load_human_experiment(self) -> None:
+        '''Open a file dialog to load a human-experiment CSV file.'''
         # get the file opener for the user
         if os.path.exists(self.default_save_dir):
             start_dir = self.default_save_dir
@@ -249,7 +264,8 @@ class images:
             return
         self._change_human_exp_2AFC(file)
         
-    def _change_human_exp_2AFC(self, file, change_image=True):
+    def _change_human_exp_2AFC(self, file: str, change_image: bool = True) -> None:
+        '''Load a 2AFC human-scores CSV and update the correlation plot.'''
         # load image
         if change_image == True:
             self._load_experiment_image(os.path.dirname(file))
@@ -269,7 +285,8 @@ class images:
         self._load_experiment_extras(os.path.dirname(file))
         self.update_status_bar(f'Loaded experiment file: {file}', 10000)
 
-    def _change_human_exp_JND(self, file):
+    def _change_human_exp_JND(self, file: str) -> None:
+        '''Load a JND human-scores CSV and update the JND plot.'''
         # load the csv human scores file and take mean of all experiments
         self.update_status_bar(f'Loading experiment file: {file}', 10000)
         if os.path.exists(file):
@@ -327,15 +344,18 @@ class images:
         self._load_experiment_extras_JND(os.path.dirname(file))
         self.update_status_bar(f'Loaded experiment file: {file}', 10000)
 
-    def _load_experiment(self, dir, change_image=True):
+    def _load_experiment(self, dir: str, change_image: bool = True) -> None:
+        '''Load a 2AFC experiment from directory *dir*.'''
         file = IQM_Vis.utils.save_utils.get_human_scores_file(dir)
         self._change_human_exp_2AFC(file, change_image=change_image)
 
-    def _load_experiment_JND(self, dir):
+    def _load_experiment_JND(self, dir: str) -> None:
+        '''Load a JND experiment from directory *dir*.'''
         file = IQM_Vis.utils.save_utils.get_human_scores_file(dir)
         self._change_human_exp_JND(file)
 
-    def load_experiment_from_dir(self):
+    def load_experiment_from_dir(self) -> None:
+        '''Open a folder dialog to load a 2AFC experiment directory.'''
         # get the file opener for the user
         try:
             start_dir = IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR
@@ -349,7 +369,8 @@ class images:
             return   
         self._load_experiment(dir)
 
-    def load_experiment_from_dir_JND(self):
+    def load_experiment_from_dir_JND(self) -> None:
+        '''Open a folder dialog to load a JND experiment directory.'''
         # get the file opener for the user
         try:
             start_dir = IQM_Vis.utils.save_utils.DEFAULT_SAVE_DIR
@@ -363,7 +384,8 @@ class images:
             return   
         self._load_experiment_JND(dir)
 
-    def _load_experiment_image(self, dir):
+    def _load_experiment_image(self, dir: str) -> None:
+        '''Load the reference image for an experiment stored in *dir*.'''
         # load image if available already
         exp_image_name = IQM_Vis.utils.save_utils.get_image_name_from_human_scores(dir)
         exp_saved_image = IQM_Vis.utils.save_utils.get_original_unprocessed_image_file(dir)
@@ -380,7 +402,8 @@ class images:
         else:
             self.update_status_bar(f'No {exp_image_name} in dataset or file {exp_saved_image}', 10000)
         
-    def _load_experiment_extras(self, dir):
+    def _load_experiment_extras(self, dir: str) -> None:
+        '''Load image processing settings and refresh correlation plot for a 2AFC experiment.'''
         # load the image processing if available
         processing_file = IQM_Vis.utils.save_utils.get_image_processing_file(dir)
         if os.path.exists(processing_file):
@@ -409,7 +432,8 @@ class images:
         self.display_metric_correlation_plot()
         self.tabs['graph'].setCurrentIndex(3)
 
-    def _load_experiment_extras_JND(self, dir):
+    def _load_experiment_extras_JND(self, dir: str) -> None:
+        '''Load image processing settings and refresh the JND plot for a JND experiment.'''
         # load the image processing if available
         processing_file = IQM_Vis.utils.save_utils.get_image_processing_file(dir)
         if os.path.exists(processing_file):
@@ -439,13 +463,15 @@ class images:
     '''
     metric updaters
     '''
-    def display_metrics(self, metrics, i):
+    def display_metrics(self, metrics: dict, i: int) -> None:
+        '''Update the metric display widget for data store *i* (graph or text).'''
         if self.metrics_info_format == 'graph':
             self.display_metrics_graph(metrics, i)
         else:
             self.display_metrics_text(metrics, i)
 
-    def display_metrics_graph(self, metrics, i):
+    def display_metrics_graph(self, metrics: dict, i: int) -> None:
+        '''Render metrics as a bar chart for data store *i*.'''
         bar_plt = plot_utils.bar_plotter(bar_names=[''],
                                         var_names=list(metrics.keys()),
                                         ax=self.widget_row[i]['metrics']['info']['data'],
@@ -453,7 +479,8 @@ class images:
         bar_plt.plot('', list(metrics.values()))
         bar_plt.show()
 
-    def display_metrics_text(self, metrics, i, disp_len=5):
+    def display_metrics_text(self, metrics: dict, i: int, disp_len: int = 5) -> None:
+        '''Render metrics as formatted text for data store *i*.'''
         text = ''
         for key in metrics:
             metric = gui_utils.str_to_len(str(metrics[key]), disp_len, '0')
@@ -463,7 +490,8 @@ class images:
     '''
     get metric values when adjusting a single transformation value over its range
     '''
-    def get_metrics_over_all_trans_with_init_values(self):
+    def get_metrics_over_all_trans_with_init_values(self) -> None:
+        '''Kick off the background worker to compute metrics over all transform ranges.'''
         # use the initiased/default values for all sliders
         # bundle up data needed to send to the worker
         data = {'trans': self.checked_transformations,
@@ -476,8 +504,8 @@ class images:
         self.worker_working = True
         self.request_range_work.emit(data)
 
-    def completed_range_results(self, results):
-        ''' data results sent from signal from thread worker '''
+    def completed_range_results(self, results: dict) -> None:
+        '''Handle results emitted by the background range-computation worker.'''
         self.update_status_bar('Completed Range Results', 3000)
         self.stopped_range_worker()
         # first check if we have empty results (means we cannot plot) - have changed to accept empty
@@ -502,7 +530,8 @@ class images:
     '''
     metric range plot (line plots of range of all sliders)
     '''
-    def display_metric_range_plot(self):
+    def display_metric_range_plot(self) -> None:
+        '''Render the currently selected metric-range line plot.'''
         if not hasattr(self, 'metric_over_range_results'):
             return
         all_trans = list(self.checked_transformations.keys())
@@ -518,7 +547,8 @@ class images:
                 plot = plot_utils.get_transform_range_plots(self.metric_over_range_results[i], trans_to_plot, axes, self.plot_data_lim)
                 plot.show()
     
-    def plot_metric_range_mlp(self, i):
+    def plot_metric_range_mlp(self, i: int) -> None:
+        '''Open a standalone matplotlib window with the range plot for data store *i*.'''
         # TODO: reduce copy of code from above function
         # make sure we have somethign to plot
         if not hasattr(self, 'metric_over_range_results'):
@@ -540,7 +570,8 @@ class images:
         # show fig in new window
         gui_utils.matplotlib.pyplot.show()
 
-    def change_metric_range_graph(self, add=1):
+    def change_metric_range_graph(self, add: int = 1) -> None:
+        '''Cycle through transform range graphs by *add* steps.'''
         max_graph_num = len(list(self.checked_transformations.keys()))
         self.metric_range_graph_num += add
         if self.metric_range_graph_num >= max_graph_num:
@@ -552,7 +583,8 @@ class images:
     '''
     metric averaging plots (radar plot)
     '''
-    def display_radar_plots(self):
+    def display_radar_plots(self) -> None:
+        '''Render the radar (averaging) plot for every data store.'''
         for i, data_store in enumerate(self.data_stores):
             self.plot_radar_graph(self.metric_over_range_results[i], i)
             # uncomment below if you want to calc over the current trans values instead of init
@@ -562,7 +594,8 @@ class images:
             #                                                 self.params_from_sliders['metric_params'],
             #                                                 pbar=self.pbar)
 
-    def plot_radar_graph(self, results, i):
+    def plot_radar_graph(self, results: dict, i: int) -> None:
+        '''Render the radar plot widget for data store *i*.'''
         all_trans = list(self.checked_transformations.keys())
         if all_trans == [] or self.checked_metrics == []:
             for i, data_store in enumerate(self.data_stores):
@@ -584,7 +617,8 @@ class images:
             radar_plotter = plot_utils.get_radar_plots_avg_plots(results, metrics_names, transformation_names, axes, self.plot_data_lim)
             radar_plotter.show()
     
-    def plot_radar_mlp(self, i):
+    def plot_radar_mlp(self, i: int) -> None:
+        '''Open a standalone matplotlib window with the radar plot for data store *i*.'''
         # TODO: reduce copy of code from above function
         # make sure we have somethign to plot
         if not hasattr(self, 'metric_over_range_results'):
@@ -617,12 +651,14 @@ class images:
         # show fig in new window
         gui_utils.matplotlib.pyplot.show()
 
-    def get_export_dir(self, i):
+    def get_export_dir(self, i: int) -> str:
+        '''Return the export directory path for data store *i*.'''
         image_name = f"{self.data_stores[i].get_reference_image_name()}"
         save_path = os.path.join(self.default_save_dir, 'exports', image_name)
         return save_path
 
-    def set_save_dir_mpl(self, i=0):
+    def set_save_dir_mpl(self, i: int = 0) -> None:
+        '''Set the matplotlib default save directory to the export folder for data store *i*.'''
         # set the default save path
         save_path = self.get_export_dir(i)
         if not os.path.exists(save_path):
@@ -632,7 +668,8 @@ class images:
     '''
     metric correlation plots
     '''
-    def display_metric_JND_plot(self):
+    def display_metric_JND_plot(self) -> None:
+        '''Render the JND scatter plot for each data store.'''
         for i, data_store in enumerate(self.data_stores):
             axes = self.widget_row[i]['metrics']['JND']['data']
             all = {} # to calucalte std of each 
@@ -683,7 +720,8 @@ class images:
             # # ax.set_title(f'{self.current_JND_transform} vs User Decision')
             # plot.show()
 
-    def display_metric_correlation_plot(self):
+    def display_metric_correlation_plot(self) -> None:
+        '''Render the human-IQM correlation scatter plot for the current metric.'''
         if self.checked_metrics == []:
             for i, data_store in enumerate(self.data_stores):
                 axes = self.widget_row[i]['metrics']['correlation']['data']
@@ -717,7 +755,8 @@ class images:
                 message_on_plot(axes, 'Use Load Experiment Button below\nor File->Load Human Scores for a .csv')
                 
 
-    def change_metric_correlations_graph(self, add=1):
+    def change_metric_correlations_graph(self, add: int = 1) -> None:
+        '''Cycle through available correlation metrics by *add* steps.'''
         max_graph_num = len(self.checked_metrics)
         self.metric_correlation_graph_num += add
         if self.metric_correlation_graph_num >= max_graph_num:
@@ -726,7 +765,8 @@ class images:
             self.metric_correlation_graph_num = 0
         self.display_metric_correlation_plot()
 
-    def change_to_specific_trans(self, trans_str):
+    def change_to_specific_trans(self, trans_str: str) -> None:
+        '''Navigate to the transform and value encoded in *trans_str*.'''
         trans, trans_value = gui_utils.get_trans_dict_from_str(trans_str)
         # load transform if not already on the UI
         trans_found = False
@@ -762,7 +802,8 @@ class images:
     '''
     metric image updaters
     '''
-    def display_metric_images(self, metric_images, i):
+    def display_metric_images(self, metric_images: dict, i: int) -> None:
+        '''Update each metric-image widget for data store *i*.'''
         for key in metric_images:
             widget = self.widget_row[i]['metric_images'][key]['data']
             gui_utils.change_im(widget, metric_images[key], resize=self.image_display_size)
@@ -770,10 +811,12 @@ class images:
     '''
     thread manegment
     '''
-    def stopped_range_worker(self, signal=False):
+    def stopped_range_worker(self, signal: bool = False) -> None:
+        '''Mark the range worker as idle.'''
         self.worker_working = False
 
-def message_on_plot(widget_axes, message):
+def message_on_plot(widget_axes, message: str) -> None:
+    '''Display a centred *message* on a matplotlib canvas widget.'''
     try:
         widget_axes.axes.clear()
     except AttributeError:
