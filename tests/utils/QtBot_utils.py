@@ -29,6 +29,18 @@ class BotTester:
         # Clean up
         QtTest.QTest.qWait(1000)
 
+        # Break matplotlib TransformNode parent references before the window
+        # closes.  MplCanvas stores self.axes keeping polar axes alive; their
+        # transform tree forms cycles (ax → PolarTransform → ax) that crash
+        # inside the C extension when Python's cyclic GC collects them.
+        # Clearing _parents on every live TransformNode prevents __del__ from
+        # walking already-freed objects.
+        import gc
+        from matplotlib.transforms import TransformNode
+        for obj in gc.get_objects():
+            if isinstance(obj, TransformNode):
+                obj._parents.clear()
+
         # need to handle the closing dialog
         def handle_dialog():
             messagebox = QtWidgets.QApplication.activeWindow()

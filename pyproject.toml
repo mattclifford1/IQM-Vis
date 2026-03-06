@@ -75,6 +75,10 @@ build = [
 qt_api = "pyqt6"
 testpaths = ["tests"]
 addopts = "--cov=IQM_Vis --junitxml=tests/reports/junit/junit.xml"
+filterwarnings = [
+    "ignore::pyparsing.exceptions.PyparsingDeprecationWarning",
+    "ignore:.*reduce_op.*:FutureWarning",
+]
 
 [tool.coverage.run]
 omit = ["IQM_Vis/examples/*"]

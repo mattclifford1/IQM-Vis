@@ -17,7 +17,7 @@ import IQM_Vis
 import sys
 import os
 sys.path.append(os.path.abspath('..'))
-from tests.QtBot_utils import BotTester
+from tests.utils.QtBot_utils import BotTester
 
 
 def get_UI():

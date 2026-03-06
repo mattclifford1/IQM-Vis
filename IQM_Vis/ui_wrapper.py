@@ -104,7 +104,7 @@ class make_UI:
         self._check_trans()
         if self.debug:
             self._check_inputs()
-        self.app = QApplication(sys.argv)
+        self.app = QApplication.instance() or QApplication(sys.argv)
         self.window = make_app(self.app,
                                self.data_store,
                                self.transformations,

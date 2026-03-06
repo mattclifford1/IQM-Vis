@@ -8,7 +8,7 @@ import IQM_Vis
 import sys
 import os
 sys.path.append(os.path.abspath('..'))
-from tests.QtBot_utils import BotTester
+from tests.utils.QtBot_utils import BotTester
 
 def custom_MAE_function(im_ref, im_comp, **kwargs):
     L1 = np.abs(im_ref - im_comp)
@@ -42,8 +42,8 @@ def get_UI():
     transformations = {'brightness': {'min': -1.0,
                                       'max': 1.0, 'function': custom_brightness}}
 
-    images = ['/home/matt/datasets/kodak/kodim01.png',
-              '/home/matt/datasets/kodak/kodim02.png']
+    import IQM_Vis.examples.images as example_images
+    images = example_images.DEFAULT_IMAGES[:2]
 
     test_app = IQM_Vis.make_UI(transformations=transformations,
                                image_list=images,

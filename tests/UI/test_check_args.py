@@ -1,7 +1,7 @@
 # Author: Matt Clifford <matt.clifford@bristol.ac.uk>
 # License: BSD 3-Clause License
 
-from tests.QtBot_utils import BotTester
+from tests.utils.QtBot_utils import BotTester
 import IQM_Vis
 
 import sys
