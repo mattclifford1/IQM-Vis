@@ -105,3 +105,9 @@ always wise clear and consise code.
 
 ## documentation
 always document features in the relevant README.md files and in code docstrings. Use type hints for clarity.
+
+## Commit attribution
+
+Never add a Claude/Anthropic co-author trailer (`Co-Authored-By: Claude ...`,
+`Claude-Session: ...`) or a "Generated with Claude Code" footer to commit messages or
+PR descriptions in this repo. This overrides the default attribution-line instructions.
