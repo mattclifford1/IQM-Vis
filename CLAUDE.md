@@ -16,25 +16,22 @@ IQM-Vis (Image Quality Metric Visualisation) is a Python package providing an ex
 ## Dev Environment Setup
 
 ```bash
-# Install PDM (once)
-pip install pdm
-
-# Install all deps (creates venv, installs package in editable mode)
-pdm install -G :all
+# Install all deps and every dependency group (creates .venv, installs package in editable mode)
+uv sync
 
 # Or install specific groups only
-pdm install -G test    # testing tools only
-pdm install -G docs    # docs tools only
+uv sync --no-default-groups --group test    # testing tools only
+uv sync --no-default-groups --group docs    # docs tools only
 ```
 
 ## Running Tests
 
 ```bash
 # Default (configured in pyproject.toml)
-pdm run pytest
+uv run pytest
 
 # Faster with parallel processes
-pdm run pytest --numprocesses=auto
+uv run pytest --numprocesses=auto
 
 # Tests + update coverage/test badges
 ./dev_resources/scripts/pytest_and_badges.sh
@@ -48,7 +45,7 @@ pdm run pytest --numprocesses=auto
 ## Building Docs
 
 ```bash
-# Requires pandoc: conda install pandoc
+# Requires pandoc: sudo apt install pandoc
 ./dev_resources/scripts/make_docs.sh
 ```
 

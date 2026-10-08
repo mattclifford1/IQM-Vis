@@ -24,15 +24,15 @@ jobs:
         echo "code_version=$(./dev_resources/scripts/get_local_version.py)" >> $GITHUB_ENV
         echo "pypi_version=$(./dev_resources/scripts/get_latest_pypi_version.py)" >> $GITHUB_ENV
 
-    - name: Install PDM
+    - name: Install uv
       if: env.code_version != env.pypi_version
-      uses: pdm-project/setup-pdm@v4
+      uses: astral-sh/setup-uv@v6
       with:
         python-version: '3.9'
 
     - name: Build package
       if: env.code_version != env.pypi_version
-      run: pdm build
+      run: uv build
 
     - name: Publish package
       if: env.code_version != env.pypi_version

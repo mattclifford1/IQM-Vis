@@ -26,24 +26,29 @@ dependencies = [
     "scipy>=1.9.3",
     "filetype",
 ]
-version = "1.0.2"
 
 [project.urls]
 Homepage = "https://mattclifford1.github.io/IQM-Vis/"
 Repository = "https://github.com/mattclifford1/IQM-Vis"
 Paper = "https://doi.org/10.1016/j.softx.2025.102225"
 
-[tool.pdm]
-distribution = false
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.pdm.version]
-source = "file"
+[tool.hatch.version]
 path = "IQM_Vis/version.py"
 
-[tool.pdm.build]
-includes = ["IQM_Vis/"]
+[tool.hatch.build.targets.wheel]
+packages = ["IQM_Vis"]
 
-[tool.pdm.dev-dependencies]
+[tool.hatch.build.targets.sdist]
+include = ["IQM_Vis/"]
+
+[tool.uv]
+default-groups = "all"
+
+[dependency-groups]
 test = [
     "pytest",
     "pytest-qt==4.4.0",

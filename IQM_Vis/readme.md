@@ -86,25 +86,15 @@ To use a stripped down version of the application, feel free to first use our [w
 # Dev Setup (only use if editting the package)
 See the [installation](https://github.com/mattclifford1/IQM-Vis#installation) section if you are just using IQM-Vis.
 
-### Python Environment
-First create a new python venv, eg. using conda (Python 3.9+ supported, including 3.13)
-```
-conda create -n IQM_Vis python=3.9
-```
-Activate env:
-```
-conda activate IQM_Vis
-```
-
 ### Clone repo
 ```
 git clone git@github.com:mattclifford1/IQM-Vis.git
 cd IQM-Vis
 ```
 ### Install requirements and IQM-Vis in editable mode
+Uses [uv](https://docs.astral.sh/uv/) (Python 3.9+ supported, including 3.13). This creates `.venv` and installs every dependency group (test, docs, build):
 ```
-pip install pdm
-pdm install -G :all
+uv sync
 ```
 ### Run MWEs
 ```python
@@ -119,5 +109,5 @@ python IQM_Vis/examples/dataset.py
 ### Extras
 To be able to generate documentation you will also need pandoc bins via:
 ```
-conda install pandoc
+sudo apt install pandoc
 ```
